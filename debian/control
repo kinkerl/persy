@@ -1,0 +1,12 @@
+Source: persy
+Section: admin
+Priority: optional
+Maintainer: Dennis Schwertel<s@digitalkultur.net>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: persy
+Architecture: all
+Depends: python-pyinotify, python-paramiko
+Description: git backup
+ yeah!
