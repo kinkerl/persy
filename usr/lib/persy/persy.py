@@ -3,6 +3,7 @@
 from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
 import os
 import sys
+from subprocess import Popen
 import time
 from threading import Thread
 import logging , logging.handlers
@@ -44,12 +45,13 @@ hdlr.setFormatter(fmt)
 log.addHandler(hdlr)
 log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= DEBUG
 
-
+DRY = False
 dome = True
 lastevent= time.time()
 
 class InterruptWatcher:
-	"""this class solves two problems with multithreaded
+	"""taken from http://code.activestate.com/recipes/496735/
+	this class solves two problems with multithreaded
 	programs in Python, (1) a signal might be delivered
 	to any thread (which is just a malfeature) and (2) if
 	the thread that gets the signal is waiting, the signal
@@ -151,23 +153,25 @@ class TheSyncer(Thread):
 			if dome and time.time() - lastevent > self.sleep_local:
 				dome = False
 				log.info("local commit")
-				os.chdir(USERHOME)
-				for watch in WATCHED:
-					os.popen("%s add %s"%(GIT, watch))
-				if WATCHED:
-					os.popen("%s commit -am \"Backup by me\""%GIT)
-					if config['remote']['use_remote']:
-						os.popen("%s push origin master"%GIT)
-					os.popen("%s gc"%GIT)
+				if not dry:
+					os.chdir(USERHOME)
+					for watch in WATCHED:
+						os.popen("%s add %s"%(GIT, watch))
+					if WATCHED:
+						os.popen("%s commit -am \"Backup by me\""%GIT)
+						if config['remote']['use_remote']:
+							os.popen("%s push origin master"%GIT)
+						os.popen("%s gc"%GIT)
 
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and tick >= (self.sleep_remote/self.sleep_local) :
 				tick = 0
 				log.info("remote sync")
-				os.chdir(USERHOME)
-				if WATCHED:
-					os.popen("%s pull origin master"%GIT)
-					#os.popen("%s push origin master"%GIT)
+				if not dry:
+					os.chdir(USERHOME)
+					if WATCHED:
+						os.popen("%s pull origin master"%GIT)
+						#os.popen("%s push origin master"%GIT)
 
 
 def initLocal():
@@ -242,7 +246,7 @@ def main(argv):
 	parser.add_option("--init",action="store_true", default=False, help="initializes the local repository")
 	parser.add_option("--initremote",action="store_true", default=False, help="initializes the remote repository")
 	parser.add_option("--syncwithremote",action="store_true", default=False, help="syncs with a remote repository")
-	parser.add_option("--dry",action="store_true", default=False, help="no real git actions")
+	parser.add_option("--dry",action="store_true", default=False, help="dry run, no real git actions")
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
 	parser.add_option("--path", dest="path", default="", help="path on the server")
 	parser.add_option("--hostname", dest="hostname", default="", help="hostname of the remote server")
@@ -260,6 +264,7 @@ def main(argv):
 	#load and set configuration
 	global config
 	global WATCHED
+	global dry
 
 	config = ConfigObj("%s/%s/config"%(USERHOME,USERHOME_FOLDER))
 	config['remote']['use_remote'] = config['remote']['use_remote']=='True'
@@ -274,13 +279,13 @@ def main(argv):
 		if options.add_dir:
 			if type(config['local']['watched']) is str:
 				if config['local']['watched']:
-					config['local']['watched'] = (config['local']['watched'], options.add_dir)
+					config['local']['watched'] = [config['local']['watched'], options.add_dir]
 				else:
-					config['local']['watched'] = (options.add_dir)
+					config['local']['watched'] = [options.add_dir,]
 			else:
 				config['local']['watched'].append(options.add_dir)
-		print "WRITE"
 		config.write()
+		log.info("writing new config")
 		sys.exit(0)
 	elif options.syncwithremote or options.initremote:
 		if options.hostname:
@@ -288,14 +293,16 @@ def main(argv):
 		if options.path:
 			config['remote']['path'] = options.path
 		config.write()
-	else:
-		if options.hostname:
-			log.warn("hostname parameter will be ignored if the config parameter is not set")
-		if options.path:
-			log.warn("path parameter will be ignored if the config parameter is not set")
 
-	WATCHED = config['local']['watched']
+	if type(config['local']['watched']) is str:
+		config['local']['watched'] = [config['local']['watched']]
+		WATCHED = config['local']['watched']
 
+	log.info("watching over: %s"%WATCHED)
+
+	dry = options.dry
+	if dry:
+		print "--dry run--"
 
 	if options.init:
 		initLocal()
