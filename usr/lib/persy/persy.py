@@ -259,6 +259,8 @@ def main(argv):
 
 	#load and set configuration
 	global config
+	global WATCHED
+
 	config = ConfigObj("%s/%s/config"%(USERHOME,USERHOME_FOLDER))
 	config['remote']['use_remote'] = config['remote']['use_remote']=='True'
 	config['local']['sleep'] = int(config['local']['sleep']or 5) #5 is default
@@ -312,7 +314,7 @@ if __name__ == '__main__':
 	try:
 		main(sys.argv)
 	except Exception:
-		logging.root_logger.exception('Unexpected error')
+		log.exception('Unexpected error')
 		raise
 
 
