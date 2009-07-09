@@ -1,0 +1,63 @@
+Copyright (C) 2009 Dennis Schwertel <s@digitalkultur.net>
+
+persy -- sync tool based on Git
+=================================
+Since persy builds upon the infrastructure offered by Git, it shares its main
+strengths:
+* speed: recovering your data is faster that cp -a...
+* full revision history
+* space-efficient data store, with file compression and textual/binary deltas
+* efficient transport protocol to replicate the backup (faster than rsync)
+
+Dependencies
+============
+persy needs the following software at run-time:
+* git
+* python-pyinotify - to get efficient information about filesystem changes
+* python-paramiko - ssh library to initialize a remote server
+
+Installation
+============
+persy can be used just to backup your data or sync your data with multiple machines.
+persy is designed to run by its own on the computer or in an environment with at least one server in reach of every computer with synced files.
+
+
+Usage
+=====
+The normal local workflow is:
+ $ persy --config --username=USERNAME     #username used for the commits
+ $ persy --config --useremail=USERERMAIL  #useremail used for the commits
+ $ persy --initlocal                      # run once to initialize the backup system
+ $ persy --add_dir=DIR                    # DIR is the absolute path to a directory in /home/user. The directory is then integrated in persy
+ $ persy                                  # starts the persy daemon
+
+The normal workflow with a remote Server and an already initialized local repository is:
+ $ persy --config --hostname=SERVER       # SERVER = location of the server
+ $ persy --config --path=PATH             # PATH = path of the gitrepository on the server (path will be created if it does not exist)
+ $ persy --initRemote                     # created a bare git repository on the server in PATH
+ $ persy                                  # starts the persy daemon
+
+
+The normal workflow with a already initialized remote Server and no local repository. 
+ $ persy --config --hostname=SERVER       # SERVER = location of the server
+ $ persy --config --path=PATH             # PATH = path of the gitrepository on the server (path will be created if it does not exist)
+ $
+ persy --syncwithRemote                 # connects to the remote server and pulls the files from the git repository
+ $ persy                                  # starts the persy daemon
+
+
+License
+=======
+persy is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 2 of the License, or (at your option) any
+later version.
+
+persy is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with persy; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
