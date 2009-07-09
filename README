@@ -34,6 +34,7 @@ The normal local workflow is:
                                       # integrated in persy
  $ persy                              # starts the persy daemon
 
+
 The normal workflow with a remote Server and an already initialized local repository is:
  $ persy --config --hostname=SERVER   # SERVER = location of the server
  $ persy --config --path=PATH         # PATH = path of the gitrepository on 
