@@ -7,6 +7,6 @@ Standards-Version: 3.7.2
 
 Package: persy
 Architecture: all
-Depends: python-pyinotify, python-paramiko
+Depends: git-core, git, python-pyinotify, python-paramiko
 Description: git backup
  yeah!
