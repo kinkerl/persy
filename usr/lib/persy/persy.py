@@ -23,9 +23,13 @@ CONFIGFILE='config'
 
 
 
-DEFAULT_CONFIG="""[local]
+DEFAULT_CONFIG="""[general]
+username = default
+useremail = default 
+
+[local]
 sleep = 5
-watched = 
+watched =
 
 [remote]
 use_remote = False
@@ -171,7 +175,7 @@ class TheSyncer(Thread):
 					os.chdir(USERHOME)
 					if WATCHED:
 						os.popen("%s pull origin master"%GIT)
-						#os.popen("%s push origin master"%GIT)
+						os.popen("%s push origin master"%GIT)
 
 
 def initLocal():
@@ -292,6 +296,7 @@ def main(argv):
 			config['remote']['hostname'] = options.hostname
 		if options.path:
 			config['remote']['path'] = options.path
+		config['remote']['use_remote'] = True
 		config.write()
 
 	if type(config['local']['watched']) is str:
@@ -309,7 +314,7 @@ def main(argv):
 	elif options.initremote:
 		initRemote()
 	elif options.syncwithremote:
-		connectToRemote()
+		syncwithRemote()
 	else:
 		if args:
 			print "unknown parameters: %s"%", ".join(args)
