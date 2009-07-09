@@ -9,4 +9,4 @@ Package: persy
 Architecture: all
 Depends: git-core, git, python-pyinotify, python-paramiko
 Description: persy
- THIS IS EXPERIMENTAL, DONT USE IT!
+ I AM EXPERIMENTAL, DONT USE ME!
