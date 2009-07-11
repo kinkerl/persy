@@ -10,7 +10,7 @@ import logging , logging.handlers
 from configobj import ConfigObj
 import threading, time, os, signal, sys, operator
 import paramiko
-
+import persygit.PersyGit
 
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
@@ -37,6 +37,7 @@ sleep = 30
 hostname = 
 path = 
 """
+git = PersyGit(USERHOME)
 
 #init logging
 log = logging.getLogger("")
@@ -144,6 +145,7 @@ class TheSyncer(Thread):
 		self.sleep_remote = sleep_remote
 		self.sleep_local = sleep_local
 
+
 	def run(self):
 		global lastevent
 		global dome
@@ -157,38 +159,30 @@ class TheSyncer(Thread):
 			if dome and time.time() - lastevent > self.sleep_local:
 				dome = False
 				log.info("local commit")
-				if not dry:
-					os.chdir(USERHOME)
-					for watch in WATCHED:
-						os.popen("%s add %s"%(GIT, watch))
-					if WATCHED:
-						os.popen("%s commit -am \"Backup by me\""%GIT)
-						if config['remote']['use_remote']:
-							os.popen("%s push origin master"%GIT)
-						os.popen("%s gc"%GIT)
-
+				if not dry and WATCHED:
+					git.add(WATCHED)
+					git.commit('Backup by me')
+					if config['remote']['use_remote']:
+						git.push('origin','master')
+					git.gc()
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and tick >= (self.sleep_remote/self.sleep_local) :
 				tick = 0
 				log.info("remote sync")
-				if not dry:
-					os.chdir(USERHOME)
-					if WATCHED:
-						os.popen("%s pull origin master"%GIT)
-						os.popen("%s push origin master"%GIT)
-
+				if not dry and if WATCHED:
+					git.pull('origin','master')
+					git.push('origin','master')
 
 def initLocal():
 	'''initialises the local repository'''
-	os.chdir(USERHOME)
 	if os.path.isdir("%s/%s"%(USERHOME,USERHOME_GITREPO)):
 		log.warn("git directory in %s already exists"%USERHOME)
 	if not config['general']['username'] or not config['general']['useremail']:
 		log.critical('usernae oder useremail not set, cannot create git repository')
 		sys.exit(-1)
-	os.popen("%s init"%GIT)
-	os.popen("%s config user.name \"%s\""%(GIT,config['general']['username']))
-	os.popen("%s config user.email \"%s\""%(GIT,config['general']['useremail']))
+	git.init()
+	git.config('user.name',config['general']['username'])
+	git.config('user.email',config['general']['useremail'])
 
 def initRemote():
 	'''initialises the remote repository'''
@@ -213,9 +207,9 @@ def syncWithRemote():
 	else:
 		#i dont use clone because of massive errors when using it
 		initLocal()
-		os.chdir(USERHOME)
-		os.popen("%s remote add origin ssh://%s/%s"%(GIT,config['remote']['hostname'],config['remote']['path']))
-		os.popen("%s pull origin master"%GIT)
+		url = "ssh://%s/%s"%(GIT,config['remote']['hostname'],config['remote']['path'])
+		git.remoteAdd('origin',url)
+		git.pull('origin','master')
 		if not config['remote']['use_remote']:
 			config['remote']['use_remote'] = True
 			config.write()

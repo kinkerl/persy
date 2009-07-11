@@ -15,6 +15,13 @@ class PersyGit():
 		self.GIT_DIR = '.git'
 		self.GIT_WORKING_TREE ='.'
 
+	def gc(self):
+		'''garbage collector'''
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('gc')
+		subprocess.check_call(callcmd)
+
 	def init(self, bare=False):
 		'''initialize an empty repository'''
 		callcmd = []
@@ -71,4 +78,13 @@ class PersyGit():
 		callcmd.append('pull')
 		callcmd.append(target)
 		callcmd.append(branch)
+		subprocess.check_call(callcmd)
+
+	def remoteAdd(nickname, url):
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('remote')
+		callcmd.append('add')
+		callcmd.append(nickname)
+		callcmd.append(url)
 		subprocess.check_call(callcmd)
