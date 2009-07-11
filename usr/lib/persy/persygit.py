@@ -1,42 +1,74 @@
 #!/usr/bin/env python
 
 import os
+import subprocess
 
 GIT = '/usr/bin/git'
 
-Class PersyGit():
-	self.workdirectory = ""
+class PersyGit():
 
-	def __init__(self, workdirectory):
-		self.workdirectory = workdirectory
+	def __precmd__():
+		return "GIT_DIR=%s; GIT_WORKING_TREE=%s;"%(os.path.join(self.repositorydir, self.GIT_DIR),os.path.join(self.repositorydir, self.GIT_WORKING_TREE))
+
+	def __init__(self, repositorydir):
+		self.repositorydir = repositorydir
+		self.GIT_DIR = '.git'
+		self.GIT_WORKING_TREE ='.'
 
 	def init(self, bare=False):
+		'''initialize an empty repository'''
+		callcmd = []
+		callcmd.append(GIT)
 		if bare:
-			cbare = '--bare'
-		else:
-			cbare = ''
-		os.popen("%s %s init"%(GIT, cbare))
+			callcmd.append('--bare')
+		callcmd.append('init')
+		subprocess.check_call(callcmd)
 
-	def config(self,key, value, makeglobal=False)
-		cmd = "%s config "%GIT
+	def config(self,key, value, makeglobal=False):
+		'''sets the configuration in git'''
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('config')
 		if makeglobal:
-			cmd += '--global'
-		cmd += " %s %s"%(key,value)
-		os.popen(cmd)
+			callcmd.append('--global')
+		callcmd.append(key)
+		callcmd.append(value)
+		subprocess.check_call(callcmd)
 
 	def commit(self, message):
 		'''send commits'''
-		os.popen("%s commit -am \"Backup by me\""%GIT)
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('commit')
+		callcmd.append('-am')
+		callcmd.append(message)
+		subprocess.check_call(callcmd)
 
 	def add(self, files):
 		'''accepts a single file as a str or a list of files as str or file'''
 		if type(files) is str:
 			files = [files]
 		for f in files:
-			os.popen("%s add %s"%(GIT, f))
+			callcmd = []
+			callcmd.append(GIT)
+			callcmd.append('add')
+			callcmd.append(f)
+			subprocess.check_call(callcmd)
 
 	def push(self, target='', branch=''):
-		os.popen("%s push %s %s"%(GIT, target, branch))
+		'''pushes to a repository'''
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('push')
+		callcmd.append(target)
+		callcmd.append(branch)
+		subprocess.check_call(callcmd)
 
 	def pull(self, target='', branch=''):
-		os.popen("%s pull %s %s"%(GIT,target, branch))
+		'''pulls from a repository'''
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('pull')
+		callcmd.append(target)
+		callcmd.append(branch)
+		subprocess.check_call(callcmd)
