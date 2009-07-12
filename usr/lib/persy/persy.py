@@ -1,5 +1,22 @@
 #!/usr/bin/env python
 
+#License
+#=======
+#persy is free software: you can redistribute it and/or modify it
+#under the terms of the GNU General Public License as published by the Free
+#Software Foundation, either version 2 of the License, or (at your option) any
+#later version.
+
+#persy is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with persy; if not, write to the Free Software
+#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
 from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
 import os
 import sys
@@ -10,12 +27,12 @@ import logging , logging.handlers
 from configobj import ConfigObj
 import threading, time, os, signal, sys, operator
 import paramiko
-import persygit.PersyGit
+import persygit
 
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
-GIT = '/usr/bin/git'
+
 USERHOME = os.environ["HOME"]
 USERHOME_FOLDER = '.persy'
 USERHOME_GITREPO = '.git'
@@ -37,7 +54,8 @@ sleep = 30
 hostname = 
 path = 
 """
-git = PersyGit(USERHOME)
+#initialzing the git binding
+git = persygit.PersyGit(USERHOME)
 
 #init logging
 log = logging.getLogger("")
@@ -169,7 +187,7 @@ class TheSyncer(Thread):
 			if config['remote']['use_remote'] and tick >= (self.sleep_remote/self.sleep_local) :
 				tick = 0
 				log.info("remote sync")
-				if not dry and if WATCHED:
+				if not dry and WATCHED:
 					git.pull('origin','master')
 					git.push('origin','master')
 
