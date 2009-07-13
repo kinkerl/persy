@@ -21,21 +21,19 @@ import subprocess
 
 GIT = '/usr/bin/git'
 
-class PersyGit():
-
+class PuG():
+	'''Persy`s uncomplicated Git '''
 	def __getEnv__(self):
 		ret = {}
-		#ret['PWD'] = self.repositorydir
-		ret['GIT_DIR'] = os.path.join(self.repositorydir, self.GIT_DIR)
-		ret['GIT_WORK_TREE'] = os.path.join(self.repositorydir, self.GIT_WORK_TREE)
+		ret['GIT_DIR'] = os.path.join(self.GIT_WORK_TREE, self.GIT_DIR)
+		ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
 		return ret
 
-	def __init__(self, repositorydir, GIT_DIR='.git', GIT_WORK_TREE='.'):
-		'''repositorydir = the root git directory
+	def __init__(self, GIT_WORK_TREE, GIT_DIR='.git', ):
+		'''
 GIT_DIR = the git index folder, relative to the repositorydir (default = .git)
-GIT_WORK_TREE = the git repostitory, relative to the repositorydir (default = None=
+GIT_WORK_TREE = the root git repostitory
 '''
-		self.repositorydir = repositorydir
 		self.GIT_DIR = GIT_DIR
 		self.GIT_WORK_TREE = GIT_WORK_TREE
 
