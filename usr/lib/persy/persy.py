@@ -189,7 +189,6 @@ class TheSyncer(Thread):
 				log.info("remote sync")
 				if not dry and WATCHED:
 					git.pull('origin','master')
-					git.push('origin','master')
 
 def initLocal():
 	'''initialises the local repository'''
