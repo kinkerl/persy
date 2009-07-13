@@ -210,10 +210,15 @@ def initRemote():
 	client.load_system_host_keys()
 	client.connect(config['remote']['hostname'] )
 	#the follow commands are executet on a remote host. we can not know the path to git, mkdir and cd so we will not replace them with a absolute path 
-	stdin, stdout, stderr = client.exec_command("mkdir -m 700 %s"%config['remote']['path'])
-	stdin, stdout, stderr = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
+	stdin1, stdout1, stderr1 = client.exec_command("mkdir -m 700 %s"%config['remote']['path'])
+	stdin2, stdout2, stderr2 = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
 	client.close()
-	if not config['remote']['use_remote']:
+	if stderr1:
+		log.critical(stderr1)
+	elif stderr2:
+		log.critical(stderr2)
+	elif not config['remote']['use_remote']:
+		#no errors:so we are save to use the remote
 		config['remote']['use_remote'] = True
 		config.write()
 
