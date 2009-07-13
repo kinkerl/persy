@@ -55,7 +55,7 @@ hostname =
 path = 
 """
 #initialzing the git binding
-git = persygit.PersyGit(USERHOME)
+git = pug.PuG(USERHOME)
 
 #init logging
 log = logging.getLogger("")
