@@ -23,11 +23,6 @@ GIT = '/usr/bin/git'
 
 class PuG():
 	'''Persy`s uncomplicated Git '''
-	def __getEnv__(self):
-		ret = {}
-		ret['GIT_DIR'] = os.path.join(self.GIT_WORK_TREE, self.GIT_DIR)
-		ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
-		return ret
 
 	def __init__(self, GIT_WORK_TREE, GIT_DIR='.git', ):
 		'''
@@ -36,6 +31,12 @@ GIT_WORK_TREE = the root git repostitory
 '''
 		self.GIT_DIR = GIT_DIR
 		self.GIT_WORK_TREE = GIT_WORK_TREE
+	
+	def __getEnv__(self):
+		ret = {}
+		ret['GIT_DIR'] = os.path.join(self.GIT_WORK_TREE, self.GIT_DIR)
+		ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
+		return ret
 
 	def gc(self, *params):
 		'''garbage collector'''
