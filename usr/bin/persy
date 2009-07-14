@@ -1,4 +1,4 @@
 #!/bin/bash
-
+#starter script for persy
 /usr/lib/persy/persy.py $@
 
