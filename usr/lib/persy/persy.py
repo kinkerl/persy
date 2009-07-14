@@ -70,6 +70,7 @@ log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= DE
 DRY = False
 dome = True
 lastevent= time.time()
+WATCHED=[]
 
 class InterruptWatcher:
 	"""taken from http://code.activestate.com/recipes/496735/
@@ -234,6 +235,7 @@ def syncWithRemote():
 
 def runLocal():
 	'''The normal syncer'''
+	global WATCHED
 	InterruptWatcher()
 	#flags for the filesystem events we want to watch out for
 	FLAGS=EventsCodes.ALL_FLAGS
@@ -318,8 +320,8 @@ def main(argv):
 
 	if type(config['local']['watched']) is str:
 		config['local']['watched'] = [config['local']['watched']]
-		WATCHED = config['local']['watched']
 
+	WATCHED = config['local']['watched']
 	
 	#initialzing the git binding
 	git = pug.PuG(USERHOME, GIT_DIR=os.path.join(PERSY_DIR,'git'))
