@@ -334,7 +334,7 @@ def main(argv):
 	elif options.initremote:
 		initRemote()
 	elif options.syncwithremote:
-		syncwithRemote()
+		syncWithRemote()
 	elif options.browse:
 		browse()
 	else:
@@ -348,7 +348,7 @@ if __name__ == '__main__':
 	try:
 		main(sys.argv)
 	except Exception, e:
-		log.exception('Unexpected error' + e)
+		log.exception('Unexpected error' + e.__str__())
 		raise
 
 
