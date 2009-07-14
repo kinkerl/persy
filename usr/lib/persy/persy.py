@@ -248,6 +248,7 @@ def runLocal():
 		wdd = wm.add_watch("%s"%(watch), mask, rec=True)
 
 	log.info("Starting persy")
+	log.info("watching over: %s"%WATCHED)
 	if not WATCHED:
 		log.warn("watching no directories")
 	tester = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
@@ -320,7 +321,6 @@ def main(argv):
 		config['local']['watched'] = [config['local']['watched']]
 		WATCHED = config['local']['watched']
 
-	log.info("watching over: %s"%WATCHED)
 	
 	#initialzing the git binding
 	git = pug.PuG(USERHOME, GIT_DIR=os.path.join(PERSY_DIR,'git'))
