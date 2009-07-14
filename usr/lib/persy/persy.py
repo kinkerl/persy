@@ -264,6 +264,7 @@ def main(argv):
 	#cli options
 	from optparse import OptionParser
 	parser = OptionParser()
+	parser.add_option("--start",action="store_true", default=False, help="starts persy")
 	parser.add_option("--init",action="store_true", default=False, help="initializes the local repository")
 	parser.add_option("--initremote",action="store_true", default=False, help="initializes the remote repository")
 	parser.add_option("--syncwithremote",action="store_true", default=False, help="syncs with a remote repository")
@@ -338,11 +339,12 @@ def main(argv):
 		syncWithRemote()
 	elif options.browse:
 		browse()
-	else:
-		if args:
-			print "unknown parameters: %s"%", ".join(args)
-			sys.exit(-1)
+	elif options.start:
 		runLocal()
+	else:
+		print "unknown parameters"
+		sys.exit(-1)
+
 
 
 if __name__ == '__main__':
