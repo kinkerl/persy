@@ -233,6 +233,10 @@ def syncWithRemote():
 			config['remote']['use_remote'] = True
 			config.write()
 
+def gitignore():
+	pass
+	#list every file in /home/user
+	#add every file (if not already done) to .gitignore if they are not part WATCHED
 
 def runLocal():
 	'''The normal syncer'''
