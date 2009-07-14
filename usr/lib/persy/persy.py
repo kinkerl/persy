@@ -34,8 +34,7 @@ __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
 
 USERHOME = os.environ["HOME"]
-USERHOME_FOLDER = '.persy'
-USERHOME_GITREPO = '.git'
+PERSY_DIR = '.persy'
 CONFIGFILE='config'
 
 
@@ -57,10 +56,10 @@ path =
 
 #init logging
 log = logging.getLogger("")
-if not os.path.isdir("%s/%s"%(USERHOME,USERHOME_FOLDER)):
-		os.popen("mkdir %s/%s"%(USERHOME,USERHOME_FOLDER))
-os.popen("touch %s/%s/default.log"%(USERHOME,USERHOME_FOLDER))
-hdlr = logging.handlers.RotatingFileHandler("%s/%s/default.log"%(USERHOME,USERHOME_FOLDER), "a", 1000000, 3)
+if not os.path.isdir("%s/%s"%(USERHOME,PERSY_DIR)):
+		os.popen("mkdir %s/%s"%(USERHOME,PERSY_DIR))
+os.popen("touch %s/%s/default.log"%(USERHOME,PERSY_DIR))
+hdlr = logging.handlers.RotatingFileHandler("%s/%s/default.log"%(USERHOME,PERSY_DIR), "a", 1000000, 3)
 fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
 hdlr.setFormatter(fmt)
 log.addHandler(hdlr)
@@ -190,8 +189,6 @@ class TheSyncer(Thread):
 
 def initLocal():
 	'''initialises the local repository'''
-	if os.path.isdir("%s/%s"%(USERHOME,USERHOME_GITREPO)):
-		log.warn("git directory in %s already exists"%USERHOME)
 	if not config['general']['username'] or not config['general']['useremail']:
 		log.critical('usernae oder useremail not set, cannot create git repository')
 		sys.exit(-1)
@@ -273,10 +270,10 @@ def main(argv):
 
 
 	#create programdirectory and a default config file
-	if not os.path.exists(os.path.join(USERHOME,USERHOME_FOLDER)):
-		os.makedirs(os.path.join(USERHOME,USERHOME_FOLDER))
-	if not os.path.exists(os.path.join(USERHOME,USERHOME_FOLDER,CONFIGFILE)):
-		with open(os.path.join(USERHOME,USERHOME_FOLDER,CONFIGFILE), "w+") as f:
+	if not os.path.exists(os.path.join(USERHOME,PERSY_DIR)):
+		os.makedirs(os.path.join(USERHOME,PERSY_DIR))
+	if not os.path.exists(os.path.join(USERHOME,PERSY_DIR,CONFIGFILE)):
+		with open(os.path.join(USERHOME,PERSY_DIR,CONFIGFILE), "w+") as f:
 			f.write(DEFAULT_CONFIG)
 
 	#load and set configuration
@@ -285,7 +282,7 @@ def main(argv):
 	global dry
 	global git
 
-	config = ConfigObj("%s/%s/config"%(USERHOME,USERHOME_FOLDER))
+	config = ConfigObj(os.path.join(USERHOME,PERSY_DIR,'config'))
 	config['remote']['use_remote'] = config['remote']['use_remote']=='True'
 	config['local']['sleep'] = int(config['local']['sleep']or 5) #5 is default
 	config['remote']['sleep'] = int(config['remote']['sleep']or 30) #30 is default
@@ -321,7 +318,7 @@ def main(argv):
 	log.info("watching over: %s"%WATCHED)
 	
 	#initialzing the git binding
-	git = pug.PuG(USERHOME)
+	git = pug.PuG(USERHOME, GIT_DIR=os.path.join(PERSY_DIR,'git'))
 
 	dry = options.dry
 	if dry:
