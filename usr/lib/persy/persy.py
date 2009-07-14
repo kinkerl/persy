@@ -37,7 +37,8 @@ USERHOME = os.environ["HOME"]
 PERSY_DIR = '.persy'
 CONFIGFILE='config'
 LOGFILE='default.log'
-
+SERVER_NICK='origin'
+BRANCH='master'
 
 DEFAULT_CONFIG="""[general]
 username = default
@@ -57,7 +58,7 @@ path =
 #init logging
 log = logging.getLogger("")
 if not os.path.isdir(os.path.join(USERHOME,PERSY_DIR)):
-		os.popen("mkdir %s"%os.path.join(USERHOME,PERSY_DIR))
+	os.makedirs(os.path.join(USERHOME,PERSY_DIR))
 logf = os.path.join(USERHOME,PERSY_DIR,LOGFILE)
 os.popen("touch %s"%logf)
 hdlr = logging.handlers.RotatingFileHandler(logf, "a", 1000000, 3)
@@ -179,14 +180,14 @@ class TheSyncer(Thread):
 					git.add(WATCHED)
 					git.commit('Backup by me')
 					if config['remote']['use_remote']:
-						git.push('origin','master')
+						git.push(SERVER_NICK,BRANCH)
 					git.gc()
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and tick >= (self.sleep_remote/self.sleep_local) :
 				tick = 0
 				log.info("remote sync")
 				if not dry and WATCHED:
-					git.pull('origin','master')
+					git.pull(SERVER_NICK,BRANCH)
 
 def initLocal():
 	'''initialises the local repository'''
@@ -225,9 +226,8 @@ def syncWithRemote():
 	else:
 		#i dont use clone because of massive errors when using it
 		initLocal()
-		url = "ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path'])
-		git.remoteAdd('origin',url)
-		git.pull('origin','master')
+		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
+		git.pull(SERVER_NICK,BRANCH)
 		if not config['remote']['use_remote']:
 			config['remote']['use_remote'] = True
 			config.write()
@@ -235,7 +235,6 @@ def syncWithRemote():
 def runLocal():
 	'''The normal syncer'''
 	InterruptWatcher()
-
 	#flags for the filesystem events we want to watch out for
 	FLAGS=EventsCodes.ALL_FLAGS
 	mask = FLAGS['IN_MODIFY'] | FLAGS['IN_DELETE_SELF']|FLAGS['IN_DELETE'] | FLAGS['IN_CREATE'] | FLAGS['IN_CLOSE_WRITE'] | FLAGS['IN_MOVE_SELF'] | FLAGS['IN_MOVED_TO'] | FLAGS['IN_MOVED_FROM'] # watched events
@@ -264,9 +263,9 @@ def main(argv):
 	from optparse import OptionParser
 	parser = OptionParser()
 	parser.add_option("--init",action="store_true", default=False, help="initializes the local repository")
-	parser.add_option("--browse",action="store_true", default=False, help="start a browser (gitk)")
 	parser.add_option("--initremote",action="store_true", default=False, help="initializes the remote repository")
 	parser.add_option("--syncwithremote",action="store_true", default=False, help="syncs with a remote repository")
+	parser.add_option("--browse",action="store_true", default=False, help="start a browser (gitk)")
 	parser.add_option("--dry",action="store_true", default=False, help="dry run, no real git actions")
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
 	parser.add_option("--path", dest="path", default="", help="path on the server")
