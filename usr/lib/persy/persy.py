@@ -18,14 +18,14 @@
 
 
 from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
+from subprocess import Popen
+from threading import Thread
+from configobj import ConfigObj
 import os
 import sys
-from subprocess import Popen
 import time
-from threading import Thread
 import logging , logging.handlers
-from configobj import ConfigObj
-import threading, time, os, signal, sys, operator
+import time, signal, operator
 import paramiko
 import pug
 
