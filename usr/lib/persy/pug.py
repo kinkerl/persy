@@ -148,6 +148,7 @@ GIT_WORK_TREE = the root git repostitory
 			raise Exception("pull: %i"+rc)
 
 	def remoteAdd(self, nickname, url, *params):
+		'''adds a remote repository'''
 		callcmd = []
 		callcmd.append(GIT)
 		callcmd.append('remote')
@@ -161,6 +162,7 @@ GIT_WORK_TREE = the root git repostitory
 			raise Exception("remoteAdd: %i"+rc)
 
 	def status(self, *params):
+		'''prints the status messages from git'''
 		callcmd = []
 		callcmd.append(GIT)
 		callcmd.append('status')
@@ -171,6 +173,7 @@ GIT_WORK_TREE = the root git repostitory
 			raise Exception("status: %i"+rc)
 
 	def log(self, *params):
+		'''prints the log messages from git'''
 		callcmd = []
 		callcmd.append(GIT)
 		callcmd.append('log')
