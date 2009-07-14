@@ -36,7 +36,7 @@ __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 USERHOME = os.environ["HOME"]
 PERSY_DIR = '.persy'
 CONFIGFILE='config'
-
+LOGFILE='default.log'
 
 
 DEFAULT_CONFIG="""[general]
@@ -56,10 +56,11 @@ path =
 
 #init logging
 log = logging.getLogger("")
-if not os.path.isdir("%s/%s"%(USERHOME,PERSY_DIR)):
-		os.popen("mkdir %s/%s"%(USERHOME,PERSY_DIR))
-os.popen("touch %s/%s/default.log"%(USERHOME,PERSY_DIR))
-hdlr = logging.handlers.RotatingFileHandler("%s/%s/default.log"%(USERHOME,PERSY_DIR), "a", 1000000, 3)
+if not os.path.isdir(os.path.join(USERHOME,PERSY_DIR)):
+		os.popen("mkdir %s"%os.path.join(USERHOME,PERSY_DIR))
+logf = os.path.join(USERHOME,PERSY_DIR,LOGFILE)
+os.popen("touch %s"%logf)
+hdlr = logging.handlers.RotatingFileHandler(logf, "a", 1000000, 3)
 fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
 hdlr.setFormatter(fmt)
 log.addHandler(hdlr)
