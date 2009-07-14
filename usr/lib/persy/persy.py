@@ -253,12 +253,16 @@ def runLocal():
 	tester.start()
 	notifier.loop()
 
+def browse():
+	git.command("gitk")
+
 def main(argv):
 	args = argv[1:]
 	#cli options
 	from optparse import OptionParser
 	parser = OptionParser()
 	parser.add_option("--init",action="store_true", default=False, help="initializes the local repository")
+	parser.add_option("--browse",action="store_true", default=False, help="start a browser (gitk)")
 	parser.add_option("--initremote",action="store_true", default=False, help="initializes the remote repository")
 	parser.add_option("--syncwithremote",action="store_true", default=False, help="syncs with a remote repository")
 	parser.add_option("--dry",action="store_true", default=False, help="dry run, no real git actions")
@@ -330,6 +334,8 @@ def main(argv):
 		initRemote()
 	elif options.syncwithremote:
 		syncwithRemote()
+	elif options.browse:
+		browse()
 	else:
 		if args:
 			print "unknown parameters: %s"%", ".join(args)

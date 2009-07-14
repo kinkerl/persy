@@ -36,6 +36,7 @@ GIT_WORK_TREE = the root git repostitory
 		ret = {}
 		ret['GIT_DIR'] = os.path.join(self.GIT_WORK_TREE, self.GIT_DIR)
 		ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
+		ret['DISPLAY']=os.environ['DISPLAY']
 		return ret
 
 	def gc(self, *params):
@@ -45,9 +46,9 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append('gc')
 		for param in params:
 			callcmd.append(param)
-		rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+		rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("gc: "+rc)
+			raise Exception("gc: %i "%rc)
 
 	def init(self, bare=False, *params):
 		'''initialize an empty repository'''
@@ -58,9 +59,9 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append('init')
 		for param in params:
 			callcmd.append(param)
-		rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+		rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("init: "+rc)
+			raise Exception("init: %i "%rc)
 
 	def config(self,key, value, makeglobal=False):
 		'''sets the configuration in git'''
@@ -71,7 +72,7 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append('--global')
 		callcmd.append(key)
 		callcmd.append(value)
-		rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+		rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 		if not rc  == 0:
 			raise Exception("config: "+rc)
 
@@ -84,9 +85,20 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(param)
 		callcmd.append('-m')
 		callcmd.append(message)
-		rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+		rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 		if not rc  == 0:
 			raise Exception("commit: "+rc)
+
+	def command(self, cmd, *params):
+		'''executes any command, but with environment variables set. mainly used the start gitk in a nice way'''
+		callcmd = []
+		callcmd.append(cmd)
+		for param in params:
+			callcmd.append(param)
+		rc = subprocess.Popen(callcmd, shell=True, env=self.__getEnv__()).wait()
+		if not rc  == 0:
+			raise Exception("command: "+rc)
+			
 
 	def add(self, files, *params):
 		'''accepts a single file as a str or a list of files as str or file'''
@@ -99,9 +111,9 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(f)
 			for param in params:
 				callcmd.append(param)
-			rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+			rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 			if not rc  == 0:
-				raise Exception("add: "+rc)
+				raise Exception("add: %i "%rc)
 
 	def push(self, target='', branch='', *params):
 		'''pushes to a repository'''
@@ -112,7 +124,7 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append(branch)
 		for param in params:
 			callcmd.append(param)
-		rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+		rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 		if not rc  == 0:
 			raise Exception("push: "+rc)
 
@@ -125,7 +137,7 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append(branch)
 		for param in params:
 			callcmd.append(param)
-		rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+		rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 		if not rc  == 0:
 			raise Exception("pull: "+rc)
 
@@ -138,7 +150,7 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append(url)
 		for param in params:
 			callcmd.append(param)
-		rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+		rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 		if not rc  == 0:
 			raise Exception("remoteAdd: "+rc)
 
@@ -148,7 +160,7 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append('status')
 		for param in params:
 			callcmd.append(param)
-		rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+		rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 		if not rc  == 0:
 			raise Exception("status: "+rc)
 
@@ -158,6 +170,6 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append('log')
 		for param in params:
 			callcmd.append(param)
-		rc = subprocess.Popen(callcmd, env=self.__getEnv__())
+		rc = subprocess.Popen(callcmd, env=self.__getEnv__()).wait()
 		if not rc  == 0:
 			raise Exception("log: "+rc)
