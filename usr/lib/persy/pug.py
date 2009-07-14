@@ -80,7 +80,7 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append(value)
 		rc = subprocess.Popen(callcmd, stdout=self.stdout, stdin=self.stdin, stderr=self.stderr, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("config: %i"+rc)
+			raise Exception("config: %i"%rc)
 
 	def commit(self, message, *params):
 		'''send commits'''
@@ -93,7 +93,7 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append(message)
 		rc = subprocess.Popen(callcmd, stdout=self.stdout, stdin=self.stdin, stderr=self.stderr, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("commit: %i"+rc)
+			raise Exception("commit: %i"%rc)
 
 	def command(self, cmd, *params):
 		'''executes any command, but with environment variables set. mainly used the start gitk in a nice way'''
@@ -132,7 +132,7 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(param)
 		rc = subprocess.Popen(callcmd, stdout=self.stdout, stdin=self.stdin, stderr=self.stderr, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("push: %i"+rc)
+			raise Exception("push: %i"%rc)
 
 	def pull(self, target='', branch='', *params):
 		'''pulls from a repository'''
@@ -145,7 +145,7 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(param)
 		rc = subprocess.Popen(callcmd, stdout=self.stdout, stdin=self.stdin, stderr=self.stderr, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("pull: %i"+rc)
+			raise Exception("pull: %i"%rc)
 
 	def remoteAdd(self, nickname, url, *params):
 		'''adds a remote repository'''
@@ -159,7 +159,7 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(param)
 		rc = subprocess.Popen(callcmd, stdout=self.stdout, stdin=self.stdin, stderr=self.stderr, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("remoteAdd: %i"+rc)
+			raise Exception("remoteAdd: %i"%rc)
 
 	def status(self, *params):
 		'''prints the status messages from git'''
@@ -170,7 +170,7 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(param)
 		rc = subprocess.Popen(callcmd, stdout=self.stdout, stdin=self.stdin, stderr=self.stderr, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("status: %i"+rc)
+			raise Exception("status: %i"%rc)
 
 	def log(self, *params):
 		'''prints the log messages from git'''
@@ -181,4 +181,4 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(param)
 		rc = subprocess.Popen(callcmd, stdout=self.stdout, stdin=self.stdin, stderr=self.stderr, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("log: %i"+rc)
+			raise Exception("log: %i"%rc)
