@@ -1,3 +1,13 @@
+persy (0.2) jaunty; urgency=low
+
+  * introduced the git abstraction PuG
+  * lots of changes
+  * lots of cleanups
+  * lots of bugfixes
+  * yay
+
+ -- Dennis Schwertel <s@digitalkultur.net>  14 Jul 2009 17:56:00 +0000
+
 persy (0.1) jaunty; urgency=low
 
   * Initial release
