@@ -33,10 +33,10 @@ GIT_WORK_TREE = the root git repostitory
 		self.GIT_WORK_TREE = GIT_WORK_TREE
 	
 	def __getEnv__(self):
-		ret = {}
+		'''Gets all the default environment variables and add some new'''
+		ret = os.environ
 		ret['GIT_DIR'] = os.path.join(self.GIT_WORK_TREE, self.GIT_DIR)
 		ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
-		ret['DISPLAY']=os.environ['DISPLAY']
 		return ret
 
 	def gc(self, *params):
