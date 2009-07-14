@@ -34,9 +34,9 @@ GIT_WORK_TREE = the root git repostitory
 '''
 		self.GIT_DIR = GIT_DIR
 		self.GIT_WORK_TREE = GIT_WORK_TREE
-		self.stdin=None
-		self.stderr=None
-		self.stdout=None
+		self.stdin=stdin
+		self.stderr=stderr
+		self.stdout=stdout
 	
 	def __getEnv__(self):
 		'''Gets all the default environment variables and add some new'''
