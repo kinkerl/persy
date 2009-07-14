@@ -233,6 +233,7 @@ def syncWithRemote():
 			config['remote']['use_remote'] = True
 			config.write()
 
+
 def runLocal():
 	'''The normal syncer'''
 	global WATCHED
@@ -263,7 +264,7 @@ def main(argv):
 	args = argv[1:]
 	#cli options
 	from optparse import OptionParser
-	parser = OptionParser()
+	parser = OptionParser(usage = "usage: %prog [options]")
 	parser.add_option("--start",action="store_true", default=False, help="starts persy")
 	parser.add_option("--init",action="store_true", default=False, help="initializes the local repository")
 	parser.add_option("--initremote",action="store_true", default=False, help="initializes the remote repository")
@@ -271,6 +272,8 @@ def main(argv):
 	parser.add_option("--browse",action="store_true", default=False, help="start a browser (gitk)")
 	parser.add_option("--dry",action="store_true", default=False, help="dry run, no real git actions")
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
+	parser.add_option("--username", dest="username", default="", help="username used to commit")
+	parser.add_option("--useremail", dest="useremail", default="", help="useremail used to commit")
 	parser.add_option("--path", dest="path", default="", help="path on the server")
 	parser.add_option("--hostname", dest="hostname", default="", help="hostname of the remote server")
 	parser.add_option("--add_dir", dest="add_dir", default="", help="add local wachted folders")
@@ -300,6 +303,10 @@ def main(argv):
 			config['remote']['hostname'] = options.hostname
 		if options.path:
 			config['remote']['path'] = options.path
+		if options.username:
+			config['general']['username'] = options.username
+		if options.useremail:
+			config['general']['useremail'] = options.useremail
 		if options.add_dir:
 			if type(config['local']['watched']) is str:
 				if config['local']['watched']:
@@ -343,6 +350,7 @@ def main(argv):
 		runLocal()
 	else:
 		print "unknown parameters"
+		parser.print_help()
 		sys.exit(-1)
 
 
