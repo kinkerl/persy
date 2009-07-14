@@ -27,7 +27,7 @@ import logging , logging.handlers
 from configobj import ConfigObj
 import threading, time, os, signal, sys, operator
 import paramiko
-import persygit
+import pug
 
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
@@ -340,8 +340,8 @@ def main(argv):
 if __name__ == '__main__':
 	try:
 		main(sys.argv)
-	except Exception:
-		log.exception('Unexpected error')
+	except Exception, e:
+		log.exception('Unexpected error' + e)
 		raise
 
 
