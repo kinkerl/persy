@@ -54,8 +54,6 @@ sleep = 30
 hostname = 
 path = 
 """
-#initialzing the git binding
-git = pug.PuG(USERHOME)
 
 #init logging
 log = logging.getLogger("")
@@ -285,6 +283,7 @@ def main(argv):
 	global config
 	global WATCHED
 	global dry
+	global git
 
 	config = ConfigObj("%s/%s/config"%(USERHOME,USERHOME_FOLDER))
 	config['remote']['use_remote'] = config['remote']['use_remote']=='True'
@@ -320,6 +319,9 @@ def main(argv):
 		WATCHED = config['local']['watched']
 
 	log.info("watching over: %s"%WATCHED)
+	
+	#initialzing the git binding
+	git = pug.PuG(USERHOME)
 
 	dry = options.dry
 	if dry:
