@@ -103,7 +103,7 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(param)
 		rc = subprocess.Popen(callcmd, stdout=self.stdout, stdin=self.stdin, stderr=self.stderr, shell=True, env=self.__getEnv__()).wait()
 		if not rc  == 0:
-			raise Exception("command: %i"+rc)
+			raise Exception("command %s: %i"+%(cmd,rc))
 			
 
 	def add(self, files, *params):
