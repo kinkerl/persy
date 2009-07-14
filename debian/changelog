@@ -1,3 +1,9 @@
+persy (0.2.1) jaunty; urgency=low
+
+  * small bugfixes which prevented 0.2 to work
+
+ -- Dennis Schwertel <s@digitalkultur.net>  14 Jul 2009 18:56:00 +0000
+
 persy (0.2) jaunty; urgency=low
 
   * introduced the git abstraction PuG
