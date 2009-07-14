@@ -225,7 +225,7 @@ def syncWithRemote():
 	else:
 		#i dont use clone because of massive errors when using it
 		initLocal()
-		url = "ssh://%s/%s"%(GIT,config['remote']['hostname'],config['remote']['path'])
+		url = "ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path'])
 		git.remoteAdd('origin',url)
 		git.pull('origin','master')
 		if not config['remote']['use_remote']:
