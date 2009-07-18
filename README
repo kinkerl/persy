@@ -12,15 +12,16 @@ strengths:
 Dependencies
 ============
 persy needs the following software at run-time:
-* git
+* git-core
 * python-pyinotify - to get efficient information about filesystem changes
 * python-paramiko - ssh library to initialize a remote server
 
 Installation
 ============
 persy can be used just to backup your data or sync your data with multiple 
-machines. persy is designed to run by its own on the computer or in an 
-environment with at least one server in reach of every computer with synced files.
+machines. persy is designed to run by its own on a computer as a revision based
+backup application or in an environment with multiple computers and at least 
+one server to keep files and folder in sync between them. 
 
 
 Usage
