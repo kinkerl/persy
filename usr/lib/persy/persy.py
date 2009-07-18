@@ -37,6 +37,8 @@ USERHOME = os.environ["HOME"]
 PERSY_DIR = '.persy'
 CONFIGFILE='config'
 LOGFILE='default.log'
+GITIGNOREFILE='.gitignore'
+
 SERVER_NICK='origin'
 BRANCH='master'
 
@@ -234,7 +236,18 @@ def syncWithRemote():
 			config.write()
 
 def gitignore():
-	pass
+	current = os.listdir(USERHOME)
+	for f in WATCHED:
+		if not f.startswith(USERHOME):
+			continue #savetycheck
+		#strip dir stuff, the +1 is for the file seperator
+		f = f[len(USERHOME)+1:]
+		f = f[:f.index('/')]
+		if f in current:
+			current.remove(f)
+	with open(os.path.join(USERHOME,PERSY_DIR,GITIGNOREFILE), "w+") as f:
+		for c in current:
+			f.write(c)
 	#list every file in /home/user
 	#add every file (if not already done) to .gitignore if they are not part WATCHED
 
