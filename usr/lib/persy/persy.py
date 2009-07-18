@@ -41,8 +41,8 @@ SERVER_NICK='origin'
 BRANCH='master'
 
 DEFAULT_CONFIG="""[general]
-username = default
-useremail = default 
+name = default
+mail = default 
 
 [local]
 sleep = 5
@@ -192,12 +192,12 @@ class TheSyncer(Thread):
 
 def initLocal():
 	'''initialises the local repository'''
-	if not config['general']['username'] or not config['general']['useremail']:
+	if not config['general']['name'] or not config['general']['mail']:
 		log.critical('usernae oder useremail not set, cannot create git repository')
 		sys.exit(-1)
 	git.init()
-	git.config('user.name',config['general']['username'])
-	git.config('user.email',config['general']['useremail'])
+	git.config('user.name',config['general']['name'])
+	git.config('user.email',config['general']['mail'])
 
 def initRemote():
 	'''initialises the remote repository'''
@@ -276,8 +276,8 @@ def main(argv):
 	parser.add_option("--browse",action="store_true", default=False, help="start a browser (gitk)")
 	parser.add_option("--dry",action="store_true", default=False, help="dry run, no real git actions")
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
-	parser.add_option("--username", dest="username", default="", help="username used to commit")
-	parser.add_option("--useremail", dest="useremail", default="", help="useremail used to commit")
+	parser.add_option("--name", dest="name", default="", help="username used in commit")
+	parser.add_option("--mail", dest="mail", default="", help="useremail used in commit")
 	parser.add_option("--path", dest="path", default="", help="path on the server")
 	parser.add_option("--hostname", dest="hostname", default="", help="hostname of the remote server")
 	parser.add_option("--add_dir", dest="add_dir", default="", help="add local wachted folders")
@@ -308,9 +308,9 @@ def main(argv):
 		if options.path:
 			config['remote']['path'] = options.path
 		if options.username:
-			config['general']['username'] = options.username
+			config['general']['name'] = options.name
 		if options.useremail:
-			config['general']['useremail'] = options.useremail
+			config['general']['mail'] = options.mail
 		if options.add_dir:
 			if type(config['local']['watched']) is str:
 				if config['local']['watched']:
