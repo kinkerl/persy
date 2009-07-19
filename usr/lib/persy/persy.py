@@ -34,10 +34,13 @@ __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
 
 USERHOME = os.environ["HOME"]
-PERSY_DIR = '.persy'
-CONFIGFILE='config'
-LOGFILE='default.log'
-GITIGNOREFILE='.gitignore'
+PERSY_DIR = os.path.join(USERHOME, '.persy') 
+GIT_DIR = os.path.join(PERSY_DIR,'git')
+CONFIGFILE=os.path.join(PERSY_DIR,'config')
+LOGFILE=os.path.join(PERSY_DIR,'default.log')
+GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
+
+
 
 SERVER_NICK='origin'
 BRANCH='master'
@@ -59,11 +62,10 @@ path =
 
 #init logging
 log = logging.getLogger("")
-if not os.path.isdir(os.path.join(USERHOME,PERSY_DIR)):
-	os.makedirs(os.path.join(USERHOME,PERSY_DIR))
-logf = os.path.join(USERHOME,PERSY_DIR,LOGFILE)
-os.popen("touch %s"%logf)
-hdlr = logging.handlers.RotatingFileHandler(logf, "a", 1000000, 3)
+if not os.path.isdir(PERSY_DIR):
+	os.makedirs(PERSY_DIR)
+os.popen("touch %s"%LOGFILE)
+hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
 fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
 hdlr.setFormatter(fmt)
 log.addHandler(hdlr)
@@ -200,6 +202,7 @@ def initLocal():
 	git.init()
 	git.config('user.name',config['general']['name'])
 	git.config('user.email',config['general']['mail'])
+	gitignore()
 
 def initRemote():
 	'''initialises the remote repository'''
@@ -242,12 +245,13 @@ def gitignore():
 			continue #savetycheck
 		#strip dir stuff, the +1 is for the file seperator
 		f = f[len(USERHOME)+1:]
-		f = f[:f.index('/')]
+		if os.sep in f:
+			f = f[:f.index(os.sep)]
 		if f in current:
 			current.remove(f)
-	with open(os.path.join(USERHOME,PERSY_DIR,GITIGNOREFILE), "w+") as f:
+	with open(os.path.join(PERSY_DIR,GITIGNOREFILE), "w+") as f:
 		for c in current:
-			f.write(c)
+			f.write(c+"\n")
 	#list every file in /home/user
 	#add every file (if not already done) to .gitignore if they are not part WATCHED
 
@@ -277,6 +281,12 @@ def runLocal():
 def browse():
 	git.command("gitk")
 
+def gitlog():
+	git.log()
+
+def gitstatus():
+	git.status()
+
 def main(argv):
 	args = argv[1:]
 	#cli options
@@ -286,8 +296,12 @@ def main(argv):
 	parser.add_option("--init",action="store_true", default=False, help="initializes the local repository")
 	parser.add_option("--initremote",action="store_true", default=False, help="initializes the remote repository")
 	parser.add_option("--syncwithremote",action="store_true", default=False, help="syncs with a remote repository")
-	parser.add_option("--browse",action="store_true", default=False, help="start a browser (gitk)")
 	parser.add_option("--dry",action="store_true", default=False, help="dry run, no real git actions")
+	parser.add_option("--browse",action="store_true", default=False, help="start a browser (gitk)")
+	parser.add_option("--log",action="store_true", default=False, help="prints git log")
+	parser.add_option("--status",action="store_true", default=False, help="prints git status")
+	parser.add_option("--ignore",action="store_true", default=False, help="recreates list of all ignored files")
+
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
 	parser.add_option("--name", dest="name", default="", help="username used in commit")
 	parser.add_option("--mail", dest="mail", default="", help="useremail used in commit")
@@ -298,10 +312,10 @@ def main(argv):
 
 
 	#create programdirectory and a default config file
-	if not os.path.exists(os.path.join(USERHOME,PERSY_DIR)):
-		os.makedirs(os.path.join(USERHOME,PERSY_DIR))
-	if not os.path.exists(os.path.join(USERHOME,PERSY_DIR,CONFIGFILE)):
-		with open(os.path.join(USERHOME,PERSY_DIR,CONFIGFILE), "w+") as f:
+	if not os.path.exists(PERSY_DIR):
+		os.makedirs(PERSY_DIR)
+	if not os.path.exists(CONFIGFILE):
+		with open(CONFIGFILE, "w+") as f:
 			f.write(DEFAULT_CONFIG)
 
 	#load and set configuration
@@ -310,7 +324,7 @@ def main(argv):
 	global dry
 	global git
 
-	config = ConfigObj(os.path.join(USERHOME,PERSY_DIR,'config'))
+	config = ConfigObj(CONFIGFILE)
 	config['remote']['use_remote'] = config['remote']['use_remote']=='True'
 	config['local']['sleep'] = int(config['local']['sleep']or 5) #5 is default
 	config['remote']['sleep'] = int(config['remote']['sleep']or 30) #30 is default
@@ -349,7 +363,7 @@ def main(argv):
 	WATCHED = config['local']['watched']
 	
 	#initialzing the git binding
-	git = pug.PuG(USERHOME, GIT_DIR=os.path.join(PERSY_DIR,'git'))
+	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR)
 
 	dry = options.dry
 	if dry:
@@ -365,6 +379,12 @@ def main(argv):
 		browse()
 	elif options.start:
 		runLocal()
+	elif options.log:
+		gitlog()
+	elif options.status:
+		gitstatus()
+	elif options.ignore:
+		gitignore()
 	else:
 		print "unknown parameters"
 		parser.print_help()
@@ -376,7 +396,7 @@ if __name__ == '__main__':
 	try:
 		main(sys.argv)
 	except Exception, e:
-		log.exception('Unexpected error' + e.__str__())
+		log.info('Unexpected error: ' + e.message)
 		raise
 
 

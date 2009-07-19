@@ -172,8 +172,9 @@ GIT_WORK_TREE = the root git repostitory
 		for param in params:
 			callcmd.append(param)
 		rc = self.execute(callcmd)
-		if not rc  == 0:
-			raise Exception("status: %i"%rc)
+		#status doesnt return 0 if everything is ok so we skip this test
+		#if not rc  == 0:
+		#	raise Exception("status: %i"%rc)
 
 	def log(self, *params):
 		'''prints the log messages from git'''
