@@ -231,6 +231,12 @@ def initRemote():
 def syncWithRemote():
 	'''Syncs with a remote server'''
 	#i dont use clone because of massive errors when using it
+	if not config['remote']['hostname']:
+		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
+		sys.exit(-1)
+	if not config['remote']['path']:
+		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
+		sys.exit(-1)
 	initLocal()
 	git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 	git.pull(SERVER_NICK,BRANCH)
