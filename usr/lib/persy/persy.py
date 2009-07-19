@@ -193,8 +193,11 @@ class TheSyncer(Thread):
 
 def initLocal():
 	'''initialises the local repository'''
-	if not config['general']['name'] or not config['general']['mail']:
-		log.critical('usernae oder useremail not set, cannot create git repository')
+	if not config['general']['name'] :
+		log.critical('username not set, cannot create git repository. use "persy --config --name=NAME" to set one')
+		sys.exit(-1)
+	if not config['general']['mail']:
+		log.critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
 		sys.exit(-1)
 	git.init()
 	git.config('user.name',config['general']['name'])
@@ -203,9 +206,12 @@ def initLocal():
 
 def initRemote():
 	'''initialises the remote repository'''
-	if not config['remote']['hostname'] or not config['remote']['path']:
-		log.critical("no hostname or remote path set, cant init remote server")
-		return
+	if not config['remote']['hostname']:
+		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
+		sys.exit(-1)
+	if not config['remote']['path']:
+		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
+		sys.exit(-1)
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
 	client.connect(config['remote']['hostname'] )
@@ -224,16 +230,13 @@ def initRemote():
 
 def syncWithRemote():
 	'''Syncs with a remote server'''
-	if not config['remote']['hostname'] or not config['remote']['path']:
-		log.critical("no hostname or remote path set, cant add remote server")
-	else:
-		#i dont use clone because of massive errors when using it
-		initLocal()
-		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
-		git.pull(SERVER_NICK,BRANCH)
-		if not config['remote']['use_remote']:
-			config['remote']['use_remote'] = True
-			config.write()
+	#i dont use clone because of massive errors when using it
+	initLocal()
+	git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
+	git.pull(SERVER_NICK,BRANCH)
+	if not config['remote']['use_remote']:
+		config['remote']['use_remote'] = True
+		config.write()
 
 def gitignore():
 	current = os.listdir(USERHOME)
