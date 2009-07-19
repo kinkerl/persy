@@ -245,6 +245,9 @@ def syncWithRemote():
 		config.write()
 
 def gitignore():
+	'''creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with "git clean")'''
+	#list every file in /home/USER
+	#add every file and folder (if not already done) to .gitignore if they are not part WATCHED
 	current = os.listdir(USERHOME)
 	for f in WATCHED:
 		if not f.startswith(USERHOME):
@@ -258,8 +261,7 @@ def gitignore():
 	with open(os.path.join(PERSY_DIR,GITIGNOREFILE), "w+") as f:
 		for c in current:
 			f.write(c+"\n")
-	#list every file in /home/user
-	#add every file (if not already done) to .gitignore if they are not part WATCHED
+
 
 def runLocal():
 	'''The normal syncer'''
