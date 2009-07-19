@@ -54,7 +54,7 @@ GIT_WORK_TREE = the root git repostitory
 			stderr = self.stderr
 		return subprocess.Popen(callcmd, stdout=stdout, stdin=stdin, stderr=stderr, close_fds=True, env=self.__getEnv__()).wait()
 
-	def gc(self, *params):
+	def gc(self, stdin=None, stdout=None, stderr=None, *params):
 		'''garbage collector'''
 		callcmd = []
 		callcmd.append(GIT)
@@ -101,7 +101,8 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append('-m')
 		callcmd.append(message)
 		rc = self.execute(callcmd, stdin, stdout, stderr)
-		if not rc  == 0:
+		#dont know! rc == 1 = nothing new added to commit!
+		if not (rc  == 0 or rc == 1):
 			raise Exception("commit: %i"%rc)
 
 	def command(self, cmd, stdin=None, stdout=None, stderr=None, *params):
@@ -123,6 +124,7 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd = []
 			callcmd.append(GIT)
 			callcmd.append('add')
+			callcmd.append('-A') # removes deleted files!
 			callcmd.append(f)
 			for param in params:
 				callcmd.append(param)
@@ -140,7 +142,8 @@ GIT_WORK_TREE = the root git repostitory
 		for param in params:
 			callcmd.append(param)
 		rc = self.execute(callcmd, stdin, stdout, stderr)
-		if not rc  == 0:
+		#no errors or nothing to push (128)
+		if not (rc == 0 or rc == 128):
 			raise Exception("push: %i"%rc)
 
 	def pull(self, target='', branch='', stdin=None, stdout=None, stderr=None, *params):
@@ -153,7 +156,8 @@ GIT_WORK_TREE = the root git repostitory
 		for param in params:
 			callcmd.append(param)
 		rc = self.execute(callcmd, stdin, stdout, stderr)
-		if not rc  == 0:
+		#no errors or nothing to pull (128)
+		if not (rc == 0 or rc == 128):
 			raise Exception("pull: %i"%rc)
 
 	def remoteAdd(self, nickname, url, stdin=None, stdout=None, stderr=None, *params):

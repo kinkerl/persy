@@ -153,7 +153,6 @@ class FileChangeHandler(ProcessEvent):
 
 	def check(self):
 		global lastevent
-		global dome
 		lastevent = time.time()
 
 
@@ -176,20 +175,41 @@ class TheSyncer(Thread):
 			log.debug("nap")
 			#only do if changed occured (dome==True) and only at least 2 seconds after the last event
 			if not self.lastevent_done == lastevent and time.time() - lastevent > self.sleep_local:
-				self.lastevent_done == lastevent
+				self.lastevent_done = lastevent
 				log.info("local commit")
 				if not dry and WATCHED:
-					git.add(WATCHED)
-					git.commit('Backup by me')
+					try:
+						git.add(WATCHED)
+					except Exception as e:
+						log.warn(e.__str__())
+
+					try:
+						git.commit('Backup by me')
+					except Exception as e:
+						log.critical(e.__str__())
+
+					try:
+						git.gc()
+					except Exception as e:
+						log.warn(e.__str__())
+
 					if config['remote']['use_remote']:
-						git.push(SERVER_NICK,BRANCH)
-					git.gc()
+						try:
+							git.push(SERVER_NICK,BRANCH)
+						except Exception as e:
+							log.critical(e.__str__())
+
+
+				
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and tick >= (self.sleep_remote/self.sleep_local) :
 				tick = 0
 				log.info("remote sync")
 				if not dry and WATCHED:
-					git.pull(SERVER_NICK,BRANCH)
+					try:
+						git.pull(SERVER_NICK,BRANCH)
+					except Exception as e:
+						log.critical(e.__str__())
 
 def initLocal():
 	'''initialises the local repository'''
@@ -306,7 +326,7 @@ def main(argv):
 	args = argv[1:]
 	#cli options
 	from optparse import OptionParser
-	parser = OptionParser(usage = "usage: %prog [options]")
+	parser = OptionParser(usage = "use --start to start the daemon")
 	parser.add_option("--start",action="store_true", default=False, help="starts persy")
 	parser.add_option("--init",action="store_true", default=False, help="initializes the local repository")
 	parser.add_option("--initremote",action="store_true", default=False, help="initializes the remote repository")
@@ -378,7 +398,7 @@ def main(argv):
 	WATCHED = config['local']['watched']
 	
 	#initialzing the git binding
-	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdout=file(os.devnull), stderr=file(os.devnull))
+	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdin=file(os.devnull), stdout=file(os.devnull), stderr=file(os.devnull))
 
 	dry = options.dry
 	if dry:
