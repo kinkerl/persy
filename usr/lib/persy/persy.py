@@ -199,10 +199,13 @@ def initLocal():
 	if not config['general']['mail']:
 		log.critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
 		sys.exit(-1)
-	git.init()
-	git.config('user.name',config['general']['name'])
-	git.config('user.email',config['general']['mail'])
-	gitignore()
+	try:
+		git.init()
+		git.config('user.name',config['general']['name'])
+		git.config('user.email',config['general']['mail'])
+		gitignore()
+	except Exception as e:
+		log.critical(e.__str__())		
 
 def initRemote():
 	'''initialises the remote repository'''
@@ -238,12 +241,16 @@ def syncWithRemote():
 		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
 		sys.exit(-1)
 	initLocal()
-	git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
-	git.pull(SERVER_NICK,BRANCH)
+	try:
+		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
+		git.pull(SERVER_NICK,BRANCH)
+	except Exception as e:
+		log.critical(e.__str__())		
+
 	if not config['remote']['use_remote']:
 		config['remote']['use_remote'] = True
 		config.write()
-
+	
 def gitignore():
 	'''creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with "git clean")'''
 	#list every file in /home/USER
