@@ -287,13 +287,13 @@ def runLocal():
 	notifier.loop()
 
 def browse():
-	git.command("gitk")
+	git.command("gitk", stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
 def gitlog():
-	git.log()
+	git.log(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
 def gitstatus():
-	git.status()
+	git.status(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
 def main(argv):
 	args = argv[1:]
@@ -371,7 +371,7 @@ def main(argv):
 	WATCHED = config['local']['watched']
 	
 	#initialzing the git binding
-	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR)
+	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdout=file(os.devnull), stderr=file(os.devnull))
 
 	dry = options.dry
 	if dry:
@@ -403,8 +403,8 @@ def main(argv):
 if __name__ == '__main__':
 	try:
 		main(sys.argv)
-	except Exception, e:
-		log.info('Unexpected error: ' + e.message)
+	except Exception as e:
+		log.info('Unexpected error: ' + e.__str__())
 		raise
 
 
