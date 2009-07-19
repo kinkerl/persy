@@ -32,7 +32,7 @@ import pug
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
-
+# files and dirs used by persy
 USERHOME = os.environ["HOME"]
 PERSY_DIR = os.path.join(USERHOME, '.persy') 
 GIT_DIR = os.path.join(PERSY_DIR,'git')
@@ -40,8 +40,7 @@ CONFIGFILE=os.path.join(PERSY_DIR,'config')
 LOGFILE=os.path.join(PERSY_DIR,'default.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 
-
-
+#git variables
 SERVER_NICK='origin'
 BRANCH='master'
 
@@ -72,7 +71,6 @@ log.addHandler(hdlr)
 log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= DEBUG
 
 DRY = False
-dome = True
 lastevent= time.time()
 WATCHED=[]
 
@@ -157,8 +155,6 @@ class FileChangeHandler(ProcessEvent):
 		global lastevent
 		global dome
 		lastevent = time.time()
-		dome = True
-		
 
 
 class TheSyncer(Thread):
@@ -166,6 +162,7 @@ class TheSyncer(Thread):
 		Thread.__init__(self)
 		self.sleep_remote = sleep_remote
 		self.sleep_local = sleep_local
+		self.lastevent_done = 0
 
 
 	def run(self):
@@ -178,8 +175,8 @@ class TheSyncer(Thread):
 			tick += 1
 			log.debug("nap")
 			#only do if changed occured (dome==True) and only at least 2 seconds after the last event
-			if dome and time.time() - lastevent > self.sleep_local:
-				dome = False
+			if not self.lastevent_done == lastevent and time.time() - lastevent > self.sleep_local:
+				self.lastevent_done == lastevent
 				log.info("local commit")
 				if not dry and WATCHED:
 					git.add(WATCHED)
