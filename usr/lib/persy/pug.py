@@ -45,7 +45,7 @@ GIT_WORK_TREE = the root git repostitory
 		ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
 		return ret
 
-	def execute(self, callcmd, stdin, stdout, stderr):
+	def execute(self, callcmd, stdin=None, stdout=None, stderr=None):
 		if not stdin:
 			stdin = self.stdin
 		if not stdout:
