@@ -59,8 +59,6 @@ hostname =
 path = 
 """
 
-
-DRY = False
 lastevent= time.time()
 WATCHED=[]
 
@@ -167,7 +165,7 @@ class TheSyncer(Thread):
 			if not self.lastevent_done == lastevent and time.time() - lastevent > self.sleep_local:
 				self.lastevent_done = lastevent
 				log.info("local commit")
-				if not dry and WATCHED:
+				if WATCHED:
 					try:
 						git.add(WATCHED)
 					except Exception as e:
@@ -195,7 +193,7 @@ class TheSyncer(Thread):
 			if config['remote']['use_remote'] and tick >= (self.sleep_remote/self.sleep_local) :
 				tick = 0
 				log.info("remote sync")
-				if not dry and WATCHED:
+				if WATCHED:
 					try:
 						git.pull(SERVER_NICK,BRANCH)
 					except Exception as e:
@@ -333,7 +331,6 @@ def main(argv):
 	parser.add_option("--init",action="store_true", default=False, help="initializes the local repository")
 	parser.add_option("--initremote",action="store_true", default=False, help="initializes the remote repository")
 	parser.add_option("--syncwithremote",action="store_true", default=False, help="syncs with a remote repository")
-	parser.add_option("--dry",action="store_true", default=False, help="dry run, no real git actions")
 	parser.add_option("--browse",action="store_true", default=False, help="start a browser (gitk)")
 	parser.add_option("--log",action="store_true", default=False, help="prints git log")
 	parser.add_option("--status",action="store_true", default=False, help="prints git status")
@@ -358,7 +355,6 @@ def main(argv):
 	#load and set configuration
 	global config
 	global WATCHED
-	global dry
 	global git
 
 	config = ConfigObj(CONFIGFILE)
@@ -401,10 +397,6 @@ def main(argv):
 	
 	#initialzing the git binding
 	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdin=file(os.devnull), stdout=file(os.devnull), stderr=file(os.devnull))
-
-	dry = options.dry
-	if dry:
-		print "--dry run--"
 
 	if options.init:
 		initLocal()
