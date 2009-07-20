@@ -230,7 +230,8 @@ def initRemote():
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
 	client.connect(config['remote']['hostname'] )
-	#the follow commands are executet on a remote host. we can not know the path to git, mkdir and cd so we will not replace them with a absolute path 
+	# the follow commands are executet on a remote host. we can not know the path to git, 
+	# mkdir and cd so we will not replace them with a absolute path 
 	stdin1, stdout1, stderr1 = client.exec_command("mkdir -m 700 %s"%config['remote']['path'])
 	stdin2, stdout2, stderr2 = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
 	client.close()
