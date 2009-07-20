@@ -407,9 +407,9 @@ def main(argv):
 	WATCHED = config['local']['watched']
 	
 	#initialzing the git binding
-	stdin = None
-	stdout = None
-	stderr = None
+	stdin = None #default stdin
+	stdout = None #default stdout
+	stderr = None #default stderr
 	if not options.verbose:
 		stdin = file(os.devnull)
 		stdout = file(os.devnull)
