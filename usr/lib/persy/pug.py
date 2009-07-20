@@ -102,7 +102,7 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append(message)
 		rc = self.execute(callcmd, stdin, stdout, stderr)
 		#dont know! rc == 1 = nothing new added to commit!
-		if not (rc  == 0 or rc == 1):
+		if not (rc  == 0 or rc == 1 or rc == 128):
 			raise Exception("commit: %i"%rc)
 
 	def command(self, cmd, stdin=None, stdout=None, stderr=None, *params):

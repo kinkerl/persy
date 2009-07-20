@@ -61,6 +61,7 @@ path =
 
 lastevent= time.time()
 WATCHED=[]
+log = ''
 
 class InterruptWatcher:
 	"""taken from http://code.activestate.com/recipes/496735/
@@ -312,6 +313,7 @@ def main(argv):
 	args = argv[1:]
 
 	#init logging
+	global log
 	log = logging.getLogger("")
 	if not os.path.isdir(PERSY_DIR):
 		os.makedirs(PERSY_DIR)
@@ -423,7 +425,7 @@ if __name__ == '__main__':
 	try:
 		main(sys.argv)
 	except Exception as e:
-		log.info('Unexpected error: ' + e.__str__())
+		print 'Unexpected error: ' + e.__str__()
 		raise
 
 
