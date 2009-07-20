@@ -322,18 +322,6 @@ def gitstatus():
 def main(argv):
 	args = argv[1:]
 
-	#init logging
-	global log
-	log = logging.getLogger("")
-	if not os.path.isdir(PERSY_DIR):
-		os.makedirs(PERSY_DIR)
-	os.popen("touch %s"%LOGFILE)
-	hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
-	fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
-	hdlr.setFormatter(fmt)
-	log.addHandler(hdlr)
-	log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= DEBUG
-
 	#cli options
 	from optparse import OptionParser
 	parser = OptionParser(usage = "use --start to start the daemon")
@@ -345,7 +333,7 @@ def main(argv):
 	parser.add_option("--log",action="store_true", default=False, help="prints git log")
 	parser.add_option("--status",action="store_true", default=False, help="prints git status")
 	parser.add_option("--ignore",action="store_true", default=False, help="recreates list of all ignored files")
-	parser.add_option("--verbose",action="store_true", default=False, help="verbose")
+	parser.add_option("--verbose",action="store_true", default=False, help="print git output to stdout and set loglevel to DEBUG")
 
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
 	parser.add_option("--name", dest="name", default="", help="username used in commit")
@@ -362,6 +350,19 @@ def main(argv):
 	if not os.path.exists(CONFIGFILE):
 		with open(CONFIGFILE, "w+") as f:
 			f.write(DEFAULT_CONFIG)
+
+	#init logging
+	global log
+	log = logging.getLogger("")
+	os.popen("touch %s"%LOGFILE)
+	hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
+	fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
+	hdlr.setFormatter(fmt)
+	log.addHandler(hdlr)
+	if options.verbose:
+		log.setLevel(logging.DEBUG) #set verbosity to show all messages of severity >= DEBUG
+	else:
+		log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= INFO
 
 	#load and set configuration
 	global config
