@@ -159,22 +159,25 @@ class TheSyncer(Thread):
 
 		while True:
 			time.sleep(self.sleep_local)
-			log.debug("nap")
+			log.debug('tick')
 			#only do if changed occured (dome==True) and only at least 2 seconds after the last event
 			if not self.lastcommit == lastevent and time.time() - lastevent > self.sleep_local:
 				self.lastcommit = lastevent
-				log.info("local commit")
+				log.info('local commit')
 				if WATCHED:
+					log.debug('git add')
 					try:
 						git.add(WATCHED)
 					except Exception as e:
 						log.warn(e.__str__())
 
+					log.debug('git commit')
 					try:
 						git.commit('Backup by me')
 					except Exception as e:
 						log.critical(e.__str__())
 
+					log.debug('git gc')
 					try:
 						git.gc()
 					except Exception as e:
@@ -186,13 +189,15 @@ class TheSyncer(Thread):
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
 				self.lastsync = time.time()
-				log.info("remote sync")
+				log.info('remote sync')
 				if WATCHED:
+					log.debug('git pull')
 					try:
 						git.pull(SERVER_NICK,BRANCH)
 					except Exception as e:
 						log.critical(e.__str__())
 
+					log.debug('git push')
 					try:
 						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
