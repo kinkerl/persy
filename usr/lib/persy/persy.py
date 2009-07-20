@@ -150,16 +150,14 @@ class TheSyncer(Thread):
 		self.sleep_remote = sleep_remote
 		self.sleep_local = sleep_local
 		self.lastcommit = 0
+		self.lastsync = 0
 
 
 	def run(self):
 		global lastevent
-		global dome
-		tick = 0
 
 		while True:
 			time.sleep(self.sleep_local)
-			tick += 1
 			log.debug("nap")
 			#only do if changed occured (dome==True) and only at least 2 seconds after the last event
 			if not self.lastcommit == lastevent and time.time() - lastevent > self.sleep_local:
@@ -190,8 +188,8 @@ class TheSyncer(Thread):
 
 				
 			#autopull and push updates every x secs
-			if config['remote']['use_remote'] and tick >= (self.sleep_remote/self.sleep_local) :
-				tick = 0
+			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
+				self.lastsync = time.time()
 				log.info("remote sync")
 				if WATCHED:
 					try:
