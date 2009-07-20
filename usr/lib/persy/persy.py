@@ -407,10 +407,14 @@ def main(argv):
 	WATCHED = config['local']['watched']
 	
 	#initialzing the git binding
-	if options.verbose:
-		git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR)
-	else:
-		git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdin=file(os.devnull), stdout=file(os.devnull), stderr=file(os.devnull))
+	stdin = None
+	stdout = None
+	stderr = None
+	if not options.verbose:
+		stdin = file(os.devnull)
+		stdout = file(os.devnull)
+		stderr = file(os.devnull)
+	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdin=stdin, stdout=stdout, stderr=stderr)
 
 	if options.init:
 		initLocal()
