@@ -200,10 +200,10 @@ class TheSyncer(Thread):
 
 def initLocal():
 	'''initialises the local repository'''
-	if not config['general']['name'] :
+	if not config.has_key('general') or not config['general'].has_key('name') or not config['general']['name'] :
 		log.critical('username not set, cannot create git repository. use "persy --config --name=NAME" to set one')
 		sys.exit(-1)
-	if not config['general']['mail']:
+	if not config.has_key('general') or not config['general'].has_key('mail') or not config['general']['mail']:
 		log.critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
 		sys.exit(-1)
 	try:
@@ -216,10 +216,10 @@ def initLocal():
 
 def initRemote():
 	'''initialises the remote repository'''
-	if not config['remote']['hostname']:
+	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
 		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
 		sys.exit(-1)
-	if not config['remote']['path']:
+	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
 		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
 		sys.exit(-1)
 	client = paramiko.SSHClient()
@@ -232,20 +232,24 @@ def initRemote():
 	if stderr1:
 		log.warn("error creating dir, maybe it exists already?")
 	elif stderr2:
-		log.critical("err git init")
+		log.critical("error on remote git init")
 	elif not config['remote']['use_remote']:
 		#no errors:so we are save to use the remote
 		config['remote']['use_remote'] = True
 		config.write()
-	git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
+	try:
+		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
+	except Exception as e:
+		log.critical(e.__str__())		
+
 
 def syncWithRemote():
 	'''Syncs with a remote server'''
 	#i dont use clone because of massive errors when using it
-	if not config['remote']['hostname']:
+	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
 		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
 		sys.exit(-1)
-	if not config['remote']['path']:
+	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
 		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
 		sys.exit(-1)
 	initLocal()
