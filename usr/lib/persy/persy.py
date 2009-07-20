@@ -180,11 +180,6 @@ class TheSyncer(Thread):
 					except Exception as e:
 						log.warn(e.__str__())
 
-					if config['remote']['use_remote']:
-						try:
-							git.push(SERVER_NICK,BRANCH)
-						except Exception as e:
-							log.critical(e.__str__())
 
 
 				
@@ -195,6 +190,11 @@ class TheSyncer(Thread):
 				if WATCHED:
 					try:
 						git.pull(SERVER_NICK,BRANCH)
+					except Exception as e:
+						log.critical(e.__str__())
+
+					try:
+						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
 						log.critical(e.__str__())
 
@@ -230,13 +230,14 @@ def initRemote():
 	stdin2, stdout2, stderr2 = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
 	client.close()
 	if stderr1:
-		log.critical(stderr1)
+		log.warn("error creating dir, maybe it exists already?")
 	elif stderr2:
-		log.critical(stderr2)
+		log.critical("err git init")
 	elif not config['remote']['use_remote']:
 		#no errors:so we are save to use the remote
 		config['remote']['use_remote'] = True
 		config.write()
+	git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 
 def syncWithRemote():
 	'''Syncs with a remote server'''
@@ -335,6 +336,7 @@ def main(argv):
 	parser.add_option("--log",action="store_true", default=False, help="prints git log")
 	parser.add_option("--status",action="store_true", default=False, help="prints git status")
 	parser.add_option("--ignore",action="store_true", default=False, help="recreates list of all ignored files")
+	parser.add_option("--verbose",action="store_true", default=False, help="verbose")
 
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
 	parser.add_option("--name", dest="name", default="", help="username used in commit")
@@ -396,7 +398,10 @@ def main(argv):
 	WATCHED = config['local']['watched']
 	
 	#initialzing the git binding
-	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdin=file(os.devnull), stdout=file(os.devnull), stderr=file(os.devnull))
+	if options.verbose:
+		git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR)
+	else:
+		git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdin=file(os.devnull), stdout=file(os.devnull), stderr=file(os.devnull))
 
 	if options.init:
 		initLocal()
