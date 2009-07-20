@@ -149,7 +149,7 @@ class TheSyncer(Thread):
 		Thread.__init__(self)
 		self.sleep_remote = sleep_remote
 		self.sleep_local = sleep_local
-		self.lastevent_done = 0
+		self.lastcommit = 0
 
 
 	def run(self):
@@ -162,8 +162,8 @@ class TheSyncer(Thread):
 			tick += 1
 			log.debug("nap")
 			#only do if changed occured (dome==True) and only at least 2 seconds after the last event
-			if not self.lastevent_done == lastevent and time.time() - lastevent > self.sleep_local:
-				self.lastevent_done = lastevent
+			if not self.lastcommit == lastevent and time.time() - lastevent > self.sleep_local:
+				self.lastcommit = lastevent
 				log.info("local commit")
 				if WATCHED:
 					try:
