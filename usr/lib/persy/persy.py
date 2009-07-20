@@ -59,16 +59,6 @@ hostname =
 path = 
 """
 
-#init logging
-log = logging.getLogger("")
-if not os.path.isdir(PERSY_DIR):
-	os.makedirs(PERSY_DIR)
-os.popen("touch %s"%LOGFILE)
-hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
-fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
-hdlr.setFormatter(fmt)
-log.addHandler(hdlr)
-log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= DEBUG
 
 DRY = False
 lastevent= time.time()
@@ -324,6 +314,18 @@ def gitstatus():
 
 def main(argv):
 	args = argv[1:]
+
+	#init logging
+	log = logging.getLogger("")
+	if not os.path.isdir(PERSY_DIR):
+		os.makedirs(PERSY_DIR)
+	os.popen("touch %s"%LOGFILE)
+	hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
+	fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
+	hdlr.setFormatter(fmt)
+	log.addHandler(hdlr)
+	log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= DEBUG
+
 	#cli options
 	from optparse import OptionParser
 	parser = OptionParser(usage = "use --start to start the daemon")
