@@ -165,8 +165,10 @@ class TheSyncer(Thread):
 		Thread.__init__(self)
 		self.sleep_remote = sleep_remote
 		self.sleep_local = sleep_local
+		self.ignore_time = 60 #one hour
 		self.lastcommit = 0
 		self.lastsync = 0
+		self.lastignore = 0
 		self.running = True
 
 	def stop(self):
@@ -222,6 +224,10 @@ class TheSyncer(Thread):
 						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
 						log.critical(e.__str__())
+			#start git ignore on a regular basis (ignoring unwatched files)
+			if time.time() - self.lastignore >  self.ignore_time:
+				self.lastignore = time.time()
+				gitignore()
 
 def initLocal():
 	'''initialises the local repository'''
@@ -381,6 +387,9 @@ def persy_stop():
 	log.info("stop working")
 	try:
 		worker.stop()
+	except RuntimeError:
+		pass
+	try:
 		notifier.stop()
 	except RuntimeError:
 		pass
@@ -421,6 +430,11 @@ def runLocal():
 	menuItem.connect('activate',persy_toggle)
 	menu.append(menuItem)
 
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+	menuItem.get_children()[0].set_label('start gitk')
+	menuItem.connect('activate', browse)
+	menu.append(menuItem)
+
 	menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
 	menuItem.get_children()[0].set_label('show Log')
 	menuItem.connect('activate', showlog)
@@ -442,8 +456,15 @@ def runLocal():
 
 	gtk.main()
 
-def browse():
-	git.command("gitk", stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+#just ignore the widget
+def browse(wiget=None):
+	class Starter(Thread):
+		def __init__(self,git):
+			Thread.__init__(self)
+			self.git = git
+		def run(self):
+			self.git.command("gitk", stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+	Starter(git).start()
 
 def gitlog():
 	git.log(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
