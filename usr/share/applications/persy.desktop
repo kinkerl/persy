@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Categories=Application;Education;
+Categories=GNOME;Utility;
 Comment=personal sync
 Exec=persy --start
 GenericName=personal sync
