@@ -204,19 +204,19 @@ class TheSyncer(Thread):
 					try:
 						git.add(WATCHED)
 					except Exception as e:
-						log.warn(e.__str__())
+						log.warn(str(e))
 
 					log.debug('git commit')
 					try:
 						git.commit('Backup by me')
 					except Exception as e:
-						critical(e.__str__())
+						critical(str(e))
 
 					log.debug('git gc')
 					try:
 						git.gc()
 					except Exception as e:
-						log.warn(e.__str__())
+						log.warn(str(e))
 
 
 
@@ -230,13 +230,13 @@ class TheSyncer(Thread):
 					try:
 						git.pull(SERVER_NICK,BRANCH)
 					except Exception as e:
-						critical(e.__str__())
+						critical(str(e))
 
 					log.debug('git push')
 					try:
 						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
-						critical(e.__str__())
+						critical(str(e))
 			#start git ignore on a regular basis (ignoring unwatched files)
 			if time.time() - self.lastignore >  self.ignore_time:
 				self.lastignore = time.time()
@@ -258,7 +258,7 @@ def initLocal():
 		git.config('user.email',config['general']['mail'])
 		gitignore()
 	except Exception as e:
-		critical(e.__str__())		
+		critical(str(e))		
 
 def initRemote():
 	'''initialises the remote repository'''
@@ -287,7 +287,7 @@ def initRemote():
 	try:
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 	except Exception as e:
-		critical(e.__str__())		
+		critical(str(e))		
 
 
 def syncWithRemote():
@@ -304,7 +304,7 @@ def syncWithRemote():
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 		git.pull(SERVER_NICK,BRANCH)
 	except Exception as e:
-		critical(e.__str__())		
+		critical(str(e))		
 
 	if not config['remote']['use_remote']:
 		config['remote']['use_remote'] = True
@@ -653,7 +653,7 @@ if __name__ == '__main__':
 	try:
 		main(sys.argv)
 	except Exception as e:
-		print 'Unexpected error: ' + e.__str__()
+		print 'Unexpected error: ' + str(e)
 		raise
 
 
