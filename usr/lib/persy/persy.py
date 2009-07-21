@@ -628,10 +628,6 @@ def main(argv):
 	stdin = None #default stdin
 	stdout = std #default stdout
 	stderr = std #default stderr
-	if not options.verbose:
-		stdin = file(os.devnull)
-		stdout = file(os.devnull)
-		stderr = file(os.devnull)
 	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdin=stdin, stdout=stdout, stderr=stderr)
 
 	if options.init:
