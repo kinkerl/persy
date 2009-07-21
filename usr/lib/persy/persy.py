@@ -197,7 +197,7 @@ class TheSyncer(Thread):
 					try:
 						git.commit('Backup by me')
 					except Exception as e:
-						log.critical(e.__str__())
+						critical(e.__str__())
 
 					log.debug('git gc')
 					try:
@@ -217,25 +217,27 @@ class TheSyncer(Thread):
 					try:
 						git.pull(SERVER_NICK,BRANCH)
 					except Exception as e:
-						log.critical(e.__str__())
+						critical(e.__str__())
 
 					log.debug('git push')
 					try:
 						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
-						log.critical(e.__str__())
+						critical(e.__str__())
 			#start git ignore on a regular basis (ignoring unwatched files)
 			if time.time() - self.lastignore >  self.ignore_time:
 				self.lastignore = time.time()
 				gitignore()
 
+	
+
 def initLocal():
 	'''initialises the local repository'''
 	if not config.has_key('general') or not config['general'].has_key('name') or not config['general']['name'] :
-		log.critical('username not set, cannot create git repository. use "persy --config --name=NAME" to set one')
+		critical('username not set, cannot create git repository. use "persy --config --name=NAME" to set one')
 		sys.exit(-1)
 	if not config.has_key('general') or not config['general'].has_key('mail') or not config['general']['mail']:
-		log.critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
+		critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
 		sys.exit(-1)
 	try:
 		git.init()
@@ -243,15 +245,15 @@ def initLocal():
 		git.config('user.email',config['general']['mail'])
 		gitignore()
 	except Exception as e:
-		log.critical(e.__str__())		
+		critical(e.__str__())		
 
 def initRemote():
 	'''initialises the remote repository'''
 	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
-		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
+		critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
 		sys.exit(-1)
 	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
-		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
+		critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
 		sys.exit(-1)
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
@@ -264,7 +266,7 @@ def initRemote():
 	if stderr1:
 		log.warn("error creating dir, maybe it exists already?")
 	elif stderr2:
-		log.critical("error on remote git init")
+		critical("error on remote git init")
 	elif not config['remote']['use_remote']:
 		#no errors:so we are save to use the remote
 		config['remote']['use_remote'] = True
@@ -272,24 +274,24 @@ def initRemote():
 	try:
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 	except Exception as e:
-		log.critical(e.__str__())		
+		critical(e.__str__())		
 
 
 def syncWithRemote():
 	'''Syncs with a remote server'''
 	#i dont use clone because of massive errors when using it
 	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
-		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
+		critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
 		sys.exit(-1)
 	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
-		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
+		critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
 		sys.exit(-1)
 	initLocal()
 	try:
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 		git.pull(SERVER_NICK,BRANCH)
 	except Exception as e:
-		log.critical(e.__str__())		
+		critical(e.__str__())		
 
 	if not config['remote']['use_remote']:
 		config['remote']['use_remote'] = True
@@ -324,6 +326,12 @@ def popup_menu_cb(widget, button, time, data = None):
 	if data:
 		data.show_all()
 		data.popup(None, None, None, 3, time)
+
+def critical(msg):
+	log.critical(msg)
+	statusIcon.set_from_file(ICON_STOP)#from_stock(gtk.STOCK_HOME)
+
+
 
 def about(widget, data = None):
 	dlg = gtk.AboutDialog()
