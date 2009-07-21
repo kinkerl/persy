@@ -75,7 +75,8 @@ GIT_WORK_TREE = the root git repostitory
 		for param in params:
 			callcmd.append(param)
 		rc = self.execute(callcmd, stdin, stdout, stderr)
-		if not rc  == 0:
+		#0 = all ok, 128 = reinitialized, all ok
+		if not (rc  == 0 or rc == 128):
 			raise Exception("init: %i "%rc)
 
 	def config(self,key, value, makeglobal=False, stdin=None, stdout=None, stderr=None):
