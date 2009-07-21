@@ -548,7 +548,6 @@ def main(argv):
 	parser.add_option("--hostname", dest="hostname", default="", help="hostname of the remote server")
 	parser.add_option("--add_dir", dest="add_dir", default="", help="add local wachted folders")
 	(options, args) = parser.parse_args(args)
-	sys.exit(0)
 
 	#create programdirectory and a default config file
 	if not os.path.exists(PERSY_DIR):
