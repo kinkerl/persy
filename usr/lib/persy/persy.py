@@ -29,6 +29,12 @@ import time, signal, operator
 import paramiko
 import pug
 
+import gtk
+import pygtk
+#Initializing the gtk's thread engine
+#we NEED this because of the STRANGE (F***ING) thread problem with gtk
+gtk.gdk.threads_init()
+
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
@@ -160,6 +166,7 @@ class TheSyncer(Thread):
 		while True:
 			time.sleep(self.sleep_local)
 			log.debug('tick')
+
 			#only do if changed occured (dome==True) and only at least 2 seconds after the last event
 			if not self.lastcommit == lastevent and time.time() - lastevent > self.sleep_local:
 				self.lastcommit = lastevent
@@ -287,29 +294,86 @@ def gitignore():
 		for c in current:
 			f.write(c+"\n")
 
+def quit_cb(widget, data = None):
+	if data:
+		data.set_visible(False)
+	gtk.main_quit()
+
+def popup_menu_cb(widget, button, time, data = None):
+	if button == 3:
+		if data:
+			data.show_all()
+			data.popup(None, None, None, 3, time)
+	pass
+
+def activate_icon_cb(widget, data = None):
+	window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+	window.set_resizable(True)  
+	window.set_title("Persy Log")
+	window.set_border_width(0)
+
+	sw = gtk.ScrolledWindow()
+	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+	textview = gtk.TextView()
+	textbuffer = textview.get_buffer()
+	sw.add(textview)
+	sw.show()
+	textview.show()
+	window.add(sw)
+
+	infile = open("/home/kinkerl/.persy/default.log", "r")
+
+	if infile:
+		string = infile.read()
+		infile.close()
+		textbuffer.set_text(string)
+
+	window.show()
+
+
 
 def runLocal():
 	'''The normal syncer'''
 	global WATCHED
+	log.info("Starting persy")
+	log.info("watching over: %s"%WATCHED)
+
+	if not WATCHED:
+		log.warn("watching no directories")
+
 	InterruptWatcher()
 	#flags for the filesystem events we want to watch out for
 	FLAGS=EventsCodes.ALL_FLAGS
 	mask = FLAGS['IN_MODIFY'] | FLAGS['IN_DELETE_SELF']|FLAGS['IN_DELETE'] | FLAGS['IN_CREATE'] | FLAGS['IN_CLOSE_WRITE'] | FLAGS['IN_MOVE_SELF'] | FLAGS['IN_MOVED_TO'] | FLAGS['IN_MOVED_FROM'] # watched events
 
 	wm = WatchManager()
-	notifier = Notifier(wm, FileChangeHandler())
-
 	#addin the watched directories
 	for watch in WATCHED:
 		wdd = wm.add_watch("%s"%(watch), mask, rec=True)
 
-	log.info("Starting persy")
-	log.info("watching over: %s"%WATCHED)
-	if not WATCHED:
-		log.warn("watching no directories")
 	tester = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
 	tester.start()
-	notifier.loop()
+	
+	notifier = ThreadedNotifier(wm, FileChangeHandler())
+	notifier.start()
+
+	statusIcon = gtk.StatusIcon()
+
+	menu = gtk.Menu()
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+	menuItem.connect('activate', activate_icon_cb)
+	menu.append(menuItem)
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+	menuItem.connect('activate', quit_cb, statusIcon)
+	menu.append(menuItem)
+
+	statusIcon.set_from_stock(gtk.STOCK_HOME)
+	statusIcon.set_tooltip("Persy")
+	statusIcon.connect('activate', activate_icon_cb)
+	statusIcon.connect('popup-menu', popup_menu_cb, menu)
+	statusIcon.set_visible(True)
+
+	gtk.main()
 
 def browse():
 	git.command("gitk", stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
