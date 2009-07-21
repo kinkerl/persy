@@ -67,7 +67,16 @@ path =
 
 lastevent= time.time()
 WATCHED=[]
-log = ''
+
+log = None
+worker = None
+notifier = None
+statusIcon = None
+
+ICON_IDLE = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy_idle.png'
+ICON_STOP = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy_stop.png'
+ICON_RUN = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy_run.png'
+LOGO = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy.png'
 
 class InterruptWatcher:
 	"""taken from http://code.activestate.com/recipes/496735/
@@ -158,12 +167,16 @@ class TheSyncer(Thread):
 		self.sleep_local = sleep_local
 		self.lastcommit = 0
 		self.lastsync = 0
+		self.running = True
 
+	def stop(self):
+		self.running = False
 
 	def run(self):
 		global lastevent
+		self.running = True
 
-		while True:
+		while self.running:
 			time.sleep(self.sleep_local)
 			log.debug('tick')
 
@@ -295,18 +308,36 @@ def gitignore():
 			f.write(c+"\n")
 
 def quit_cb(widget, data = None):
+	persy_stop()
 	if data:
 		data.set_visible(False)
 	gtk.main_quit()
+	sys.exit(0)
 
 def popup_menu_cb(widget, button, time, data = None):
-	if button == 3:
-		if data:
-			data.show_all()
-			data.popup(None, None, None, 3, time)
-	pass
+	if data:
+		data.show_all()
+		data.popup(None, None, None, 3, time)
 
-def activate_icon_cb(widget, data = None):
+def about(widget, data = None):
+	dlg = gtk.AboutDialog()
+	dlg.set_title("About Persy")
+	dlg.set_version('0.3')
+	dlg.set_program_name("Persy")
+	dlg.set_comments("personal sync")
+	dlg.set_authors([
+		"Dennis Schwertel <s@digitalkultur.net>"
+	])
+	dlg.set_icon_from_file(ICON_IDLE)
+	dlg.set_logo(gtk.gdk.pixbuf_new_from_file(LOGO))
+	def close(w, res):
+		if res == gtk.RESPONSE_CANCEL:
+			w.hide()
+	dlg.connect("response", close)
+	dlg.show()
+
+
+def showlog(widget, data = None):
 	window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 	window.set_resizable(True)  
 	window.set_title("Persy Log")
@@ -321,20 +352,47 @@ def activate_icon_cb(widget, data = None):
 	textview.show()
 	window.add(sw)
 
-	infile = open("/home/kinkerl/.persy/default.log", "r")
+	infile = open(LOGFILE, "r")
 
 	if infile:
 		string = infile.read()
 		infile.close()
 		textbuffer.set_text(string)
-
+	window.set_default_size(500,400)
 	window.show()
 
+def persy_toggle(widget, data = None):
+	if widget.active:
+		persy_start()
+	else:
+		persy_stop()
 
+def persy_start():
+	global worker
+	global notifier
+	log.info("start working")
+	worker.start()
+	notifier.start()
+	statusIcon.set_from_file(ICON_RUN)#from_stock(gtk.STOCK_HOME)
+
+def persy_stop():
+	global worker
+	global notifier
+	log.info("stop working")
+	try:
+		worker.stop()
+		notifier.stop()
+	except RuntimeError:
+		pass
+	statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
 
 def runLocal():
 	'''The normal syncer'''
 	global WATCHED
+	global worker
+	global notifier
+	global statusIcon
+
 	log.info("Starting persy")
 	log.info("watching over: %s"%WATCHED)
 
@@ -351,25 +409,34 @@ def runLocal():
 	for watch in WATCHED:
 		wdd = wm.add_watch("%s"%(watch), mask, rec=True)
 
-	tester = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
-	tester.start()
+	worker = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
 	
 	notifier = ThreadedNotifier(wm, FileChangeHandler())
-	notifier.start()
 
 	statusIcon = gtk.StatusIcon()
-
 	menu = gtk.Menu()
-	menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-	menuItem.connect('activate', activate_icon_cb)
+
+	menuItem = gtk.CheckMenuItem("start/stop Persy")
+	menuItem.set_active(False)
+	menuItem.connect('activate',persy_toggle)
 	menu.append(menuItem)
+
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
+	menuItem.get_children()[0].set_label('show Log')
+	menuItem.connect('activate', showlog)
+	menu.append(menuItem)
+
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+	menuItem.connect('activate', about)
+	menu.append(menuItem)
+
 	menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
 	menuItem.connect('activate', quit_cb, statusIcon)
 	menu.append(menuItem)
 
-	statusIcon.set_from_stock(gtk.STOCK_HOME)
+	statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
 	statusIcon.set_tooltip("Persy")
-	statusIcon.connect('activate', activate_icon_cb)
+#	statusIcon.connect('activate', showlog)
 	statusIcon.connect('popup-menu', popup_menu_cb, menu)
 	statusIcon.set_visible(True)
 
