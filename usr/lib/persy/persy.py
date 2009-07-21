@@ -446,6 +446,8 @@ def persy_stop():
 			pass
 		except OSError:
 			pass
+		except KeyError:
+			pass
 	statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
 
 
