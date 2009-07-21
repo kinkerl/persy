@@ -37,7 +37,7 @@ GIT_WORK_TREE = the root git repostitory
 		self.stdin=stdin
 		self.stderr=stderr
 		self.stdout=stdout
-	
+
 	def __getEnv__(self):
 		'''Gets all the default environment variables and add some new'''
 		ret = os.environ
@@ -114,7 +114,7 @@ GIT_WORK_TREE = the root git repostitory
 		rc = self.execute(callcmd, stdin, stdout, stderr)
 		if not rc  == 0:
 			raise Exception("command %s: %i"%(cmd,rc))
-			
+
 
 	def add(self, files, stdin=None, stdout=None, stderr=None, *params):
 		'''accepts a single file as a str or a list of files as str or file'''
