@@ -542,13 +542,13 @@ def main(argv):
 	parser.add_option("--verbose",action="store_true", default=False, help="print git output to stdout and set loglevel to DEBUG")
 
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
-	parser.add_option("--name", dest="name", default="", help="username used in commit")
+	parser.add_option("--uname", dest="uname", default="", help="username used in commit")
 	parser.add_option("--mail", dest="mail", default="", help="useremail used in commit")
 	parser.add_option("--path", dest="path", default="", help="path on the server")
 	parser.add_option("--hostname", dest="hostname", default="", help="hostname of the remote server")
 	parser.add_option("--add_dir", dest="add_dir", default="", help="add local wachted folders")
 	(options, args) = parser.parse_args(args)
-
+	sys.exit(0)
 
 	#create programdirectory and a default config file
 	if not os.path.exists(PERSY_DIR):
@@ -585,8 +585,8 @@ def main(argv):
 			config['remote']['hostname'] = options.hostname
 		if options.path:
 			config['remote']['path'] = options.path
-		if options.name:
-			config['general']['name'] = options.name
+		if options.uname:
+			config['general']['name'] = options.uname
 		if options.mail:
 			config['general']['mail'] = options.mail
 		if options.add_dir:
@@ -597,6 +597,7 @@ def main(argv):
 					config['local']['watched'] = [options.add_dir,]
 			else:
 				config['local']['watched'].append(options.add_dir)
+		print config
 		config.write()
 		log.info("writing new config")
 		sys.exit(0)

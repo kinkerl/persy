@@ -27,7 +27,7 @@ one server to keep files and folder in sync between them.
 Usage
 =====
 The normal local workflow is:
- $ persy --config --name=USERNAME       # username used for the commits
+ $ persy --config --uname=USERNAME      # username used for the commits
  $ persy --config --mail=MAIL           # useremail used for the commits
  $ persy --init                         # run once to initialize the backup system
  $ persy --config --add_dir=DIR         # DIR is the absolute path to a directory 
@@ -47,7 +47,7 @@ The normal workflow with a remote Server and an already initialized local reposi
 The normal workflow with a already initialized remote Server and no local repository. 
 IMPORTANT: the synced directories should be empty before the sync. i had some problems 
 with already existing files. you can start a sync and then add new files to the synced directory.
- $ persy --config --name=USERNAME       # username used for the commits
+ $ persy --config --uname=USERNAME      # username used for the commits
  $ persy --config --email=MAIL          # useremail used for the commits
  $ persy --config --hostname=SERVER     # SERVER = identifier(ip) of the server
  $ persy --config --path=PATH           # PATH = absolute path of the gitrepository on the 
