@@ -580,15 +580,21 @@ def main(argv):
 	config['remote']['sleep'] = int(config['remote']['sleep']or 30) #30 is default
 
 	if options.config:
+		changed = False
 		if options.hostname:
+			changed = True
 			config['remote']['hostname'] = options.hostname
 		if options.path:
+			changed = True
 			config['remote']['path'] = options.path
 		if options.uname:
+			changed = True
 			config['general']['name'] = options.uname
 		if options.mail:
+			changed = True
 			config['general']['mail'] = options.mail
 		if options.add_dir:
+			changed = True
 			if type(config['local']['watched']) is str:
 				if config['local']['watched']:
 					config['local']['watched'] = [config['local']['watched'], options.add_dir]
@@ -596,8 +602,11 @@ def main(argv):
 					config['local']['watched'] = [options.add_dir,]
 			else:
 				config['local']['watched'].append(options.add_dir)
-		config.write()
-		log.info("writing new config")
+		if changed:
+			config.write()
+			log.info("writing new config")
+		else:
+			log.warn("nothing changed, maybe wrong attribute names?")
 		sys.exit(0)
 	elif options.syncwithremote or options.initremote:
 		if options.hostname:
