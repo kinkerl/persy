@@ -330,7 +330,8 @@ def popup_menu_cb(widget, button, time, data = None):
 
 def critical(msg):
 	log.critical(msg)
-	statusIcon.set_from_file(ICON_STOP)#from_stock(gtk.STOCK_HOME)
+	if statusIcon:
+		statusIcon.set_from_file(ICON_STOP)#from_stock(gtk.STOCK_HOME)
 
 
 
