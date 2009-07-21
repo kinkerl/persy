@@ -43,7 +43,7 @@ __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
 # files and dirs used by persy
 USERHOME = os.environ["HOME"]
-PERSY_DIR = os.path.join(USERHOME, '.persy') 
+PERSY_DIR = os.path.join(USERHOME, '.persy')
 GIT_DIR = os.path.join(PERSY_DIR,'git')
 CONFIGFILE=os.path.join(PERSY_DIR,'config')
 LOGFILE=os.path.join(PERSY_DIR,'default.log')
@@ -56,7 +56,7 @@ BRANCH='master'
 
 DEFAULT_CONFIG="""[general]
 name = default
-mail = default 
+mail = default
 
 [local]
 sleep = 5
@@ -65,8 +65,8 @@ watched =
 [remote]
 use_remote = False
 sleep = 30
-hostname = 
-path = 
+hostname =
+path =
 """
 
 lastevent= time.time()
@@ -220,7 +220,7 @@ class TheSyncer(Thread):
 
 
 
-				
+
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
 				self.lastsync = time.time()
@@ -242,7 +242,7 @@ class TheSyncer(Thread):
 				self.lastignore = time.time()
 				gitignore()
 
-	
+
 
 def initLocal():
 	'''initialises the local repository'''
@@ -258,7 +258,7 @@ def initLocal():
 		git.config('user.email',config['general']['mail'])
 		gitignore()
 	except Exception as e:
-		critical(str(e))		
+		critical(str(e))
 
 def initRemote():
 	'''initialises the remote repository'''
@@ -271,8 +271,8 @@ def initRemote():
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
 	client.connect(config['remote']['hostname'] )
-	# the follow commands are executet on a remote host. we can not know the path to git, 
-	# mkdir and cd so we will not replace them with a absolute path 
+	# the follow commands are executet on a remote host. we can not know the path to git,
+	# mkdir and cd so we will not replace them with a absolute path
 	stdin1, stdout1, stderr1 = client.exec_command("mkdir -m 700 %s"%config['remote']['path'])
 	stdin2, stdout2, stderr2 = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
 	client.close()
@@ -287,7 +287,7 @@ def initRemote():
 	try:
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 	except Exception as e:
-		critical(str(e))		
+		critical(str(e))
 
 
 def syncWithRemote():
@@ -304,12 +304,12 @@ def syncWithRemote():
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 		git.pull(SERVER_NICK,BRANCH)
 	except Exception as e:
-		critical(str(e))		
+		critical(str(e))
 
 	if not config['remote']['use_remote']:
 		config['remote']['use_remote'] = True
 		config.write()
-	
+
 def gitignore():
 	'''creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with "git clean")'''
 	#list every file in /home/USER
@@ -370,7 +370,7 @@ def showgitlog(widget, data = None):
 
 def showlog(widget, data = None, filename=None):
 	window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-	window.set_resizable(True)  
+	window.set_resizable(True)
 	window.set_title("Persy Log")
 	window.set_border_width(0)
 
@@ -382,10 +382,10 @@ def showlog(widget, data = None, filename=None):
 	sw.show()
 	textview.show()
 	window.add(sw)
-	
+
 	if filename:
 		infile = open(filename, "r")
-	else:	
+	else:
 		infile = open(LOGFILE, "r")
 
 	if infile:
@@ -424,7 +424,7 @@ def persy_start():
 
 	worker = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
 	notifier = ThreadedNotifier(wm, FileChangeHandler())
-	
+
 	worker.start()
 	notifier.start()
 	statusIcon.set_from_file(ICON_RUN)#from_stock(gtk.STOCK_HOME)
@@ -450,7 +450,7 @@ def persy_stop():
 
 
 
-	
+
 def runLocal():
 	'''The normal syncer'''
 	global WATCHED
