@@ -29,7 +29,7 @@ Usage
 The normal local workflow is:
  $ persy --config --name=USERNAME       # username used for the commits
  $ persy --config --mail=MAIL           # useremail used for the commits
- $ persy --initlocal                    # run once to initialize the backup system
+ $ persy --init                         # run once to initialize the backup system
  $ persy --config --add_dir=DIR         # DIR is the absolute path to a directory 
                                         # in /home/user (example: /home/username/documents).
                                         # The directory is then integrated in persy
