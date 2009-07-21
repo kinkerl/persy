@@ -558,9 +558,9 @@ def main(argv):
 			config['remote']['hostname'] = options.hostname
 		if options.path:
 			config['remote']['path'] = options.path
-		if options.username:
+		if options.name:
 			config['general']['name'] = options.name
-		if options.useremail:
+		if options.mail:
 			config['general']['mail'] = options.mail
 		if options.add_dir:
 			if type(config['local']['watched']) is str:
