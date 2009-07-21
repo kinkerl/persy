@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Categories=Application;Education;
+Comment=personal sync
+Exec=persy --start
+GenericName=personal sync
+Icon=persy.png
+Name=Persy
+Type=Application
