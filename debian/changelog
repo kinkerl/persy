@@ -1,4 +1,4 @@
-persy (0.4) jaunty; urgency=low
+persy (0.3.2) jaunty; urgency=low
 
   * added desktop entry + icon
   * added notifications on critical error
