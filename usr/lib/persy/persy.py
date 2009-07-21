@@ -343,7 +343,8 @@ def popup_menu_cb(widget, button, time, data = None):
 def critical(msg):
 	log.critical(msg)
 	persyNotifier().notify(msg)
-	statusIcon.set_from_file(ICON_STOP)#from_stock(gtk.STOCK_HOME)
+	if statusIcon:
+		statusIcon.set_from_file(ICON_STOP)#from_stock(gtk.STOCK_HOME)
 
 
 
@@ -584,9 +585,9 @@ def main(argv):
 			config['remote']['hostname'] = options.hostname
 		if options.path:
 			config['remote']['path'] = options.path
-		if options.username:
+		if options.name:
 			config['general']['name'] = options.name
-		if options.useremail:
+		if options.mail:
 			config['general']['mail'] = options.mail
 		if options.add_dir:
 			if type(config['local']['watched']) is str:
