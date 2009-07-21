@@ -1,3 +1,12 @@
+persy (0.3) jaunty; urgency=low
+
+  * fist implementation of a tray icon
+  * much better error handling
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  21 Jul 2009 14:46:00 +0000
+
+
 persy (0.2.1) jaunty; urgency=low
 
   * small bugfixes which prevented 0.2 to work
