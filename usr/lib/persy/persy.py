@@ -29,6 +29,12 @@ import time, signal, operator
 import paramiko
 import pug
 
+import gtk
+import pygtk
+#Initializing the gtk's thread engine
+#we NEED this because of the STRANGE (F***ING) thread problem with gtk
+gtk.gdk.threads_init()
+
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
@@ -38,6 +44,7 @@ PERSY_DIR = os.path.join(USERHOME, '.persy')
 GIT_DIR = os.path.join(PERSY_DIR,'git')
 CONFIGFILE=os.path.join(PERSY_DIR,'config')
 LOGFILE=os.path.join(PERSY_DIR,'default.log')
+LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 
 #git variables
@@ -61,7 +68,16 @@ path =
 
 lastevent= time.time()
 WATCHED=[]
-log = ''
+
+log = None
+worker = None
+notifier = None
+statusIcon = None
+
+ICON_IDLE = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy_idle.png'
+ICON_STOP = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy_stop.png'
+ICON_RUN = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy_run.png'
+LOGO = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy.png'
 
 class InterruptWatcher:
 	"""taken from http://code.activestate.com/recipes/496735/
@@ -150,16 +166,23 @@ class TheSyncer(Thread):
 		Thread.__init__(self)
 		self.sleep_remote = sleep_remote
 		self.sleep_local = sleep_local
+		self.ignore_time = 60 #one hour
 		self.lastcommit = 0
 		self.lastsync = 0
+		self.lastignore = 0
+		self.running = True
 
+	def stop(self):
+		self.running = False
 
 	def run(self):
 		global lastevent
+		self.running = True
 
-		while True:
+		while self.running:
 			time.sleep(self.sleep_local)
 			log.debug('tick')
+
 			#only do if changed occured (dome==True) and only at least 2 seconds after the last event
 			if not self.lastcommit == lastevent and time.time() - lastevent > self.sleep_local:
 				self.lastcommit = lastevent
@@ -175,7 +198,7 @@ class TheSyncer(Thread):
 					try:
 						git.commit('Backup by me')
 					except Exception as e:
-						log.critical(e.__str__())
+						critical(e.__str__())
 
 					log.debug('git gc')
 					try:
@@ -195,21 +218,27 @@ class TheSyncer(Thread):
 					try:
 						git.pull(SERVER_NICK,BRANCH)
 					except Exception as e:
-						log.critical(e.__str__())
+						critical(e.__str__())
 
 					log.debug('git push')
 					try:
 						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
-						log.critical(e.__str__())
+						critical(e.__str__())
+			#start git ignore on a regular basis (ignoring unwatched files)
+			if time.time() - self.lastignore >  self.ignore_time:
+				self.lastignore = time.time()
+				gitignore()
+
+	
 
 def initLocal():
 	'''initialises the local repository'''
 	if not config.has_key('general') or not config['general'].has_key('name') or not config['general']['name'] :
-		log.critical('username not set, cannot create git repository. use "persy --config --name=NAME" to set one')
+		critical('username not set, cannot create git repository. use "persy --config --name=NAME" to set one')
 		sys.exit(-1)
 	if not config.has_key('general') or not config['general'].has_key('mail') or not config['general']['mail']:
-		log.critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
+		critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
 		sys.exit(-1)
 	try:
 		git.init()
@@ -217,15 +246,15 @@ def initLocal():
 		git.config('user.email',config['general']['mail'])
 		gitignore()
 	except Exception as e:
-		log.critical(e.__str__())		
+		critical(e.__str__())		
 
 def initRemote():
 	'''initialises the remote repository'''
 	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
-		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
+		critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
 		sys.exit(-1)
 	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
-		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
+		critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
 		sys.exit(-1)
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
@@ -238,7 +267,7 @@ def initRemote():
 	if stderr1:
 		log.warn("error creating dir, maybe it exists already?")
 	elif stderr2:
-		log.critical("error on remote git init")
+		critical("error on remote git init")
 	elif not config['remote']['use_remote']:
 		#no errors:so we are save to use the remote
 		config['remote']['use_remote'] = True
@@ -246,24 +275,24 @@ def initRemote():
 	try:
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 	except Exception as e:
-		log.critical(e.__str__())		
+		critical(e.__str__())		
 
 
 def syncWithRemote():
 	'''Syncs with a remote server'''
 	#i dont use clone because of massive errors when using it
 	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
-		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
+		critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
 		sys.exit(-1)
 	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
-		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
+		critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
 		sys.exit(-1)
 	initLocal()
 	try:
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 		git.pull(SERVER_NICK,BRANCH)
 	except Exception as e:
-		log.critical(e.__str__())		
+		critical(e.__str__())		
 
 	if not config['remote']['use_remote']:
 		config['remote']['use_remote'] = True
@@ -287,32 +316,180 @@ def gitignore():
 		for c in current:
 			f.write(c+"\n")
 
+def quit_cb(widget, data = None):
+	persy_stop()
+	if data:
+		data.set_visible(False)
+	gtk.main_quit()
+	sys.exit(0)
 
-def runLocal():
-	'''The normal syncer'''
-	global WATCHED
-	InterruptWatcher()
-	#flags for the filesystem events we want to watch out for
+def popup_menu_cb(widget, button, time, data = None):
+	if data:
+		data.show_all()
+		data.popup(None, None, None, 3, time)
+
+def critical(msg):
+	log.critical(msg)
+	statusIcon.set_from_file(ICON_STOP)#from_stock(gtk.STOCK_HOME)
+
+
+
+def about(widget, data = None):
+	dlg = gtk.AboutDialog()
+	dlg.set_title("About Persy")
+	dlg.set_version('0.3')
+	dlg.set_program_name("Persy")
+	dlg.set_comments("personal sync")
+	dlg.set_authors([
+		"Dennis Schwertel <s@digitalkultur.net>"
+	])
+	dlg.set_icon_from_file(ICON_IDLE)
+	dlg.set_logo(gtk.gdk.pixbuf_new_from_file(LOGO))
+	def close(w, res):
+		if res == gtk.RESPONSE_CANCEL:
+			w.hide()
+	dlg.connect("response", close)
+	dlg.show()
+
+def showgitlog(widget, data = None):
+	showlog(widget, data, LOGFILE_GIT)
+
+def showlog(widget, data = None, filename=None):
+	window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+	window.set_resizable(True)  
+	window.set_title("Persy Log")
+	window.set_border_width(0)
+
+	sw = gtk.ScrolledWindow()
+	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+	textview = gtk.TextView()
+	textbuffer = textview.get_buffer()
+	sw.add(textview)
+	sw.show()
+	textview.show()
+	window.add(sw)
+	
+	if filename:
+		infile = open(filename, "r")
+	else:	
+		infile = open(LOGFILE, "r")
+
+	if infile:
+		string = infile.read()
+		infile.close()
+		textbuffer.set_text(string)
+	window.set_default_size(500,400)
+	window.show()
+
+def persy_toggle(widget, data = None):
+	if widget.active:
+		persy_start()
+	else:
+		persy_stop()
+
+def persy_start():
+	global worker
+	global notifier
+	log.info("start working")
+
 	FLAGS=EventsCodes.ALL_FLAGS
 	mask = FLAGS['IN_MODIFY'] | FLAGS['IN_DELETE_SELF']|FLAGS['IN_DELETE'] | FLAGS['IN_CREATE'] | FLAGS['IN_CLOSE_WRITE'] | FLAGS['IN_MOVE_SELF'] | FLAGS['IN_MOVED_TO'] | FLAGS['IN_MOVED_FROM'] # watched events
 
 	wm = WatchManager()
-	notifier = Notifier(wm, FileChangeHandler())
-
 	#addin the watched directories
 	for watch in WATCHED:
 		wdd = wm.add_watch("%s"%(watch), mask, rec=True)
 
+	worker = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
+	notifier = ThreadedNotifier(wm, FileChangeHandler())
+	
+	worker.start()
+	notifier.start()
+	statusIcon.set_from_file(ICON_RUN)#from_stock(gtk.STOCK_HOME)
+
+def persy_stop():
+	global worker
+	global notifier
+	log.info("stop working")
+	if worker:
+		try:
+			worker.stop()
+			worker.join()
+		except RuntimeError:
+			pass
+	if notifier:
+		try:
+			notifier.stop()
+		except RuntimeError:
+			pass
+		except OSError:
+			pass
+	statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
+
+
+
+	
+def runLocal():
+	'''The normal syncer'''
+	global WATCHED
+	global statusIcon
+
 	log.info("Starting persy")
 	log.info("watching over: %s"%WATCHED)
+
 	if not WATCHED:
 		log.warn("watching no directories")
-	tester = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
-	tester.start()
-	notifier.loop()
 
-def browse():
-	git.command("gitk", stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+	InterruptWatcher()
+
+	statusIcon = gtk.StatusIcon()
+	menu = gtk.Menu()
+
+	menuItem = gtk.CheckMenuItem("start/stop Persy")
+	menuItem.set_active(False)
+	menuItem.connect('activate',persy_toggle)
+	menu.append(menuItem)
+
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+	menuItem.get_children()[0].set_label('start gitk')
+	menuItem.connect('activate', browse)
+	menu.append(menuItem)
+
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
+	menuItem.get_children()[0].set_label('show Log')
+	menuItem.connect('activate', showlog)
+	menu.append(menuItem)
+
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
+	menuItem.get_children()[0].set_label('show git Log')
+	menuItem.connect('activate', showgitlog)
+	menu.append(menuItem)
+
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+	menuItem.connect('activate', about)
+	menu.append(menuItem)
+
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+	menuItem.connect('activate', quit_cb, statusIcon)
+	menu.append(menuItem)
+
+	statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
+	statusIcon.set_tooltip("Persy")
+#	statusIcon.connect('activate', showlog)
+	statusIcon.connect('popup-menu', popup_menu_cb, menu)
+	statusIcon.set_visible(True)
+
+	gtk.main()
+
+#just ignore the widget
+def browse(wiget=None):
+	class Starter(Thread):
+		def __init__(self,git):
+			Thread.__init__(self)
+			self.git = git
+		def run(self):
+			self.git.command("gitk", stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+	Starter(git).start()
 
 def gitlog():
 	git.log(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
@@ -407,11 +584,14 @@ def main(argv):
 		config['local']['watched'] = [config['local']['watched']]
 
 	WATCHED = config['local']['watched']
-	
+
+
 	#initialzing the git binding
+	os.popen("touch %s"%LOGFILE_GIT)
+	std = open(LOGFILE_GIT, 'a')
 	stdin = None #default stdin
-	stdout = None #default stdout
-	stderr = None #default stderr
+	stdout = std #default stdout
+	stderr = std #default stderr
 	if not options.verbose:
 		stdin = file(os.devnull)
 		stdout = file(os.devnull)
