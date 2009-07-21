@@ -377,6 +377,18 @@ def persy_start():
 	global worker
 	global notifier
 	log.info("start working")
+
+	FLAGS=EventsCodes.ALL_FLAGS
+	mask = FLAGS['IN_MODIFY'] | FLAGS['IN_DELETE_SELF']|FLAGS['IN_DELETE'] | FLAGS['IN_CREATE'] | FLAGS['IN_CLOSE_WRITE'] | FLAGS['IN_MOVE_SELF'] | FLAGS['IN_MOVED_TO'] | FLAGS['IN_MOVED_FROM'] # watched events
+
+	wm = WatchManager()
+	#addin the watched directories
+	for watch in WATCHED:
+		wdd = wm.add_watch("%s"%(watch), mask, rec=True)
+
+	worker = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
+	notifier = ThreadedNotifier(wm, FileChangeHandler())
+	
 	worker.start()
 	notifier.start()
 	statusIcon.set_from_file(ICON_RUN)#from_stock(gtk.STOCK_HOME)
@@ -387,19 +399,23 @@ def persy_stop():
 	log.info("stop working")
 	try:
 		worker.stop()
+		worker.join()
 	except RuntimeError:
 		pass
 	try:
 		notifier.stop()
 	except RuntimeError:
 		pass
+	except OSError:
+		pass
 	statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
 
+
+
+	
 def runLocal():
 	'''The normal syncer'''
 	global WATCHED
-	global worker
-	global notifier
 	global statusIcon
 
 	log.info("Starting persy")
@@ -409,18 +425,6 @@ def runLocal():
 		log.warn("watching no directories")
 
 	InterruptWatcher()
-	#flags for the filesystem events we want to watch out for
-	FLAGS=EventsCodes.ALL_FLAGS
-	mask = FLAGS['IN_MODIFY'] | FLAGS['IN_DELETE_SELF']|FLAGS['IN_DELETE'] | FLAGS['IN_CREATE'] | FLAGS['IN_CLOSE_WRITE'] | FLAGS['IN_MOVE_SELF'] | FLAGS['IN_MOVED_TO'] | FLAGS['IN_MOVED_FROM'] # watched events
-
-	wm = WatchManager()
-	#addin the watched directories
-	for watch in WATCHED:
-		wdd = wm.add_watch("%s"%(watch), mask, rec=True)
-
-	worker = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
-	
-	notifier = ThreadedNotifier(wm, FileChangeHandler())
 
 	statusIcon = gtk.StatusIcon()
 	menu = gtk.Menu()
