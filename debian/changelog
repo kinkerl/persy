@@ -1,3 +1,9 @@
+persy (0.3.2) jaunty; urgency=low
+
+  * fixed typo that was breaking any --config attempts
+
+ -- Philip Morrell <ubuntu.emorrp1@mamber.net> 21 Jul 2009 16:30:49 +0100
+
 persy (0.3.1) jaunty; urgency=low
 
   * fixed absolute path problem
