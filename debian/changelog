@@ -1,3 +1,11 @@
+persy (0.4) jaunty; urgency=low
+
+  * added desktop entry + icon
+  * added notifications on critical error
+
+ -- Dennis Schwertel <s@digitalkultur.net>  21 Jul 2009 14:51:00 +0000
+
+
 persy (0.3.1) jaunty; urgency=low
 
   * fixed absolute path problem

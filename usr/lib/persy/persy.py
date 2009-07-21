@@ -29,6 +29,9 @@ import time, signal, operator
 import paramiko
 import pug
 
+import pynotify
+
+
 import gtk
 import pygtk
 #Initializing the gtk's thread engine
@@ -78,6 +81,15 @@ ICON_IDLE = '/usr/lib/persy/persy_idle.png'
 ICON_STOP = '/usr/lib/persy/persy_stop.png'
 ICON_RUN = '/usr/lib/persy/persy_run.png'
 LOGO = '/usr/lib/persy/persy.png'
+
+class persyNotifier:
+	'''Enables integration with external notifiers'''
+	def __init__(self):
+		pynotify.init("Persy")
+	 
+	def notify(self, detail):
+		pynotify.Notification("Persy", detail, ICON_STOP).show()
+
 
 class InterruptWatcher:
 	"""taken from http://code.activestate.com/recipes/496735/
@@ -330,6 +342,7 @@ def popup_menu_cb(widget, button, time, data = None):
 
 def critical(msg):
 	log.critical(msg)
+	persyNotifier().notify(msg)
 	statusIcon.set_from_file(ICON_STOP)#from_stock(gtk.STOCK_HOME)
 
 
@@ -386,6 +399,14 @@ def persy_toggle(widget, data = None):
 		persy_start()
 	else:
 		persy_stop()
+
+def persy_sync_toggle(widget, data = None):
+	if widget.active:
+		config['remote']['use_remote'] = True
+	else:
+		config['remote']['use_remote'] = False
+
+	config.write()
 
 def persy_start():
 	global worker
@@ -449,6 +470,12 @@ def runLocal():
 	menuItem.set_active(False)
 	menuItem.connect('activate',persy_toggle)
 	menu.append(menuItem)
+
+	menuItem = gtk.CheckMenuItem("sync Remote")
+	menuItem.set_active(config['remote']['use_remote'])
+	menuItem.connect('activate',persy_sync_toggle)
+	menu.append(menuItem)
+
 
 	menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
 	menuItem.get_children()[0].set_label('start gitk')
