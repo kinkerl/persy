@@ -44,6 +44,7 @@ PERSY_DIR = os.path.join(USERHOME, '.persy')
 GIT_DIR = os.path.join(PERSY_DIR,'git')
 CONFIGFILE=os.path.join(PERSY_DIR,'config')
 LOGFILE=os.path.join(PERSY_DIR,'default.log')
+LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 
 #git variables
@@ -350,8 +351,10 @@ def about(widget, data = None):
 	dlg.connect("response", close)
 	dlg.show()
 
+def showgitlog(widget, data = None):
+	showlog(widget, data, LOGFILE_GIT)
 
-def showlog(widget, data = None):
+def showlog(widget, data = None, filename=None):
 	window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 	window.set_resizable(True)  
 	window.set_title("Persy Log")
@@ -365,8 +368,11 @@ def showlog(widget, data = None):
 	sw.show()
 	textview.show()
 	window.add(sw)
-
-	infile = open(LOGFILE, "r")
+	
+	if filename:
+		infile = open(filename, "r")
+	else:	
+		infile = open(LOGFILE, "r")
 
 	if infile:
 		string = infile.read()
@@ -405,17 +411,19 @@ def persy_stop():
 	global worker
 	global notifier
 	log.info("stop working")
-	try:
-		worker.stop()
-		worker.join()
-	except RuntimeError:
-		pass
-	try:
-		notifier.stop()
-	except RuntimeError:
-		pass
-	except OSError:
-		pass
+	if worker:
+		try:
+			worker.stop()
+			worker.join()
+		except RuntimeError:
+			pass
+	if notifier:
+		try:
+			notifier.stop()
+		except RuntimeError:
+			pass
+		except OSError:
+			pass
 	statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
 
 
@@ -450,6 +458,11 @@ def runLocal():
 	menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
 	menuItem.get_children()[0].set_label('show Log')
 	menuItem.connect('activate', showlog)
+	menu.append(menuItem)
+
+	menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
+	menuItem.get_children()[0].set_label('show git Log')
+	menuItem.connect('activate', showgitlog)
 	menu.append(menuItem)
 
 	menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
@@ -571,11 +584,14 @@ def main(argv):
 		config['local']['watched'] = [config['local']['watched']]
 
 	WATCHED = config['local']['watched']
-	
+
+
 	#initialzing the git binding
+	os.popen("touch %s"%LOGFILE_GIT)
+	std = open(LOGFILE_GIT, 'a')
 	stdin = None #default stdin
-	stdout = None #default stdout
-	stderr = None #default stderr
+	stdout = std #default stdout
+	stderr = std #default stderr
 	if not options.verbose:
 		stdin = file(os.devnull)
 		stdout = file(os.devnull)
