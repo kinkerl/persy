@@ -597,7 +597,6 @@ def main(argv):
 					config['local']['watched'] = [options.add_dir,]
 			else:
 				config['local']['watched'].append(options.add_dir)
-		print config
 		config.write()
 		log.info("writing new config")
 		sys.exit(0)
