@@ -74,10 +74,10 @@ worker = None
 notifier = None
 statusIcon = None
 
-ICON_IDLE = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy_idle.png'
-ICON_STOP = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy_stop.png'
-ICON_RUN = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy_run.png'
-LOGO = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy.png'
+ICON_IDLE = '/usr/lib/persy/persy_idle.png'
+ICON_STOP = '/usr/lib/persy/persy_stop.png'
+ICON_RUN = '/usr/lib/persy/persy_run.png'
+LOGO = '/usr/lib/persy/persy.png'
 
 class InterruptWatcher:
 	"""taken from http://code.activestate.com/recipes/496735/
