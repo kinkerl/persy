@@ -3,6 +3,7 @@ persy (0.3.2) jaunty; urgency=low
   * added desktop entry + icon
   * added notifications on critical error
   * fixed typo that was breaking any config attempts -- thanks to Philip Morrell
+  * lot of fixes (again, thanks!)
 
  -- Dennis Schwertel <s@digitalkultur.net>  21 Jul 2009 14:51:00 +0000
 
