@@ -70,7 +70,7 @@ path =
 """
 
 lastevent= time.time()
-WATCHED=[]
+
 
 log = None
 worker = None
@@ -192,10 +192,10 @@ class TheSyncer(Thread):
 			if not self.lastcommit == lastevent and time.time() - lastevent > self.sleep_local:
 				self.lastcommit = lastevent
 				log.info('local commit')
-				if WATCHED:
+				if config['local']['watched']:
 					log.debug('git add')
 					try:
-						git.add(WATCHED)
+						git.add(config['local']['watched'])
 					except Exception as e:
 						log.warn(str(e))
 
@@ -215,7 +215,7 @@ class TheSyncer(Thread):
 			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
 				self.lastsync = time.time()
 				log.info('remote sync')
-				if WATCHED:
+				if config['local']['watched']:
 					log.debug('git pull')
 					try:
 						git.pull(SERVER_NICK,BRANCH)
@@ -235,7 +235,7 @@ class TheSyncer(Thread):
 
 class Talker:
 	"""logging, notifications and communications with the outside!"""
-	def __init__(self):
+	def __init__(self, verbose=False):
 		#init logging
 		self.log = logging.getLogger("")
 		os.popen("touch %s"%LOGFILE)
@@ -247,25 +247,36 @@ class Talker:
 		#init notify
 		pynotify.init("Persy")
 
+		self.verbose = verbose
+
 	def setLevel(self, lvl):
 		self.log.setLevel(lvl)
 
-	def debug(self, msg):
+	def debug(self, msg, verbose=None):
 		self.log.debug(msg)
+		if verbose == True or (verbose == None and self.verbose):
+			print msg
 
 
-	def info(self, msg):
+	def info(self, msg, verbose=None):
 		self.log.info(msg)
+		if verbose == True or (verbose == None and self.verbose):
+			print msg
 
-	def warn(self, msg):
+	def warn(self, msg, verbose=None):
 		self.log.warn(msg)
 		pynotify.Notification("Persy", detail, ICON_WARN).show()
+		if verbose == True or (verbose == None and self.verbose):
+			print msg
 
-	def critical(msg):
+	def critical(msg, verbose=None):
 		self.log.critical(msg)
+		if verbose == True or (verbose == None and self.verbose):
+			print msg
 		if statusIcon:
 			statusIcon.set_from_file(ICON_ERROR)#from_stock(gtk.STOCK_HOME)
 		pynotify.Notification("Persy", detail, ICON_ERROR).show()
+
 
 
 def initLocal():
@@ -339,7 +350,7 @@ def gitignore():
 	#list every file in /home/USER
 	#add every file and folder (if not already done) to .gitignore if they are not part WATCHED
 	current = os.listdir(USERHOME)
-	for f in WATCHED:
+	for f in config['local']['watched']:
 		if not f.startswith(USERHOME):
 			continue #savetycheck
 		#strip dir stuff, the +1 is for the file seperator
@@ -355,13 +366,12 @@ def gitignore():
 class Persy_GTK():
 	def __init__(self):
 		'''The normal syncer'''
-		global WATCHED
 		global statusIcon
 
 		log.info("Starting persy")
-		log.info("watching over: %s"%WATCHED)
+		log.info("watching over: %s"%config['local']['watched'])
 
-		if not WATCHED:
+		if not config['local']['watched']:
 			log.warn("watching no directories")
 
 		InterruptWatcher()
@@ -496,7 +506,7 @@ def persy_start():
 
 	wm = WatchManager()
 	#addin the watched directories
-	for watch in WATCHED:
+	for watch in config['local']['watched']:
 		wdd = wm.add_watch("%s"%(watch), mask, rec=True)
 
 	worker = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
@@ -592,7 +602,6 @@ def main(argv):
 
 	#load and set configuration
 	global config
-	global WATCHED
 	global git
 
 	config = ConfigObj(CONFIGFILE)
@@ -640,9 +649,6 @@ def main(argv):
 	if type(config['local']['watched']) is str:
 		config['local']['watched'] = [config['local']['watched']]
 
-	WATCHED = config['local']['watched']
-
-
 	#initialzing the git binding
 	os.popen("touch %s"%LOGFILE_GIT)
 	std = open(LOGFILE_GIT, 'a')
@@ -672,7 +678,7 @@ def main(argv):
 			print opt.get_opt_string(),
 		sys.exit(0)
 	else:
-		print "unknown parameters"
+		log.warn("unknown parameters", verbose=True)
 		parser.print_help()
 		sys.exit(-1)
 
