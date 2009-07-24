@@ -1,3 +1,11 @@
+persy (0.3.4) jaunty; urgency=low
+ 
+  * added bash completion
+ 
+ -- Dennis Schwertel <s@digitalkultur.net> xx Jul 2009 xx:xx:xx +0100
+
+
+
 persy (0.3.3) jaunty; urgency=low
  
   * Bugfix release:
