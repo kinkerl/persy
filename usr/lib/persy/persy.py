@@ -78,8 +78,9 @@ notifier = None
 statusIcon = None
 
 ICON_IDLE = '/usr/lib/persy/persy_idle.png'
-ICON_STOP = '/usr/lib/persy/persy_stop.png'
-ICON_RUN = '/usr/lib/persy/persy_run.png'
+ICON_ERROR = '/usr/lib/persy/persy_error.png'
+ICON_OK = '/usr/lib/persy/persy_ok.png'
+ICON_BUSY = '/usr/lib/persy/persy_busy.png'
 LOGO = '/usr/lib/persy/persy.png'
 
 class persyNotifier:
@@ -88,7 +89,7 @@ class persyNotifier:
 		pynotify.init("Persy")
 	 
 	def notify(self, detail):
-		pynotify.Notification("Persy", detail, ICON_STOP).show()
+		pynotify.Notification("Persy", detail, ICON_ERROR).show()
 
 
 class InterruptWatcher:
@@ -344,7 +345,7 @@ def critical(msg):
 	log.critical(msg)
 	persyNotifier().notify(msg)
 	if statusIcon:
-		statusIcon.set_from_file(ICON_STOP)#from_stock(gtk.STOCK_HOME)
+		statusIcon.set_from_file(ICON_ERROR)#from_stock(gtk.STOCK_HOME)
 
 
 
@@ -427,7 +428,8 @@ def persy_start():
 
 	worker.start()
 	notifier.start()
-	statusIcon.set_from_file(ICON_RUN)#from_stock(gtk.STOCK_HOME)
+	statusIcon.set_from_file(ICON_OK)#from_stock(gtk.STOCK_HOME)
+	print statusIcon.get_icon_name()
 
 def persy_stop():
 	global worker
@@ -503,9 +505,8 @@ def runLocal():
 	menuItem.connect('activate', quit_cb, statusIcon)
 	menu.append(menuItem)
 
-	statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
+	statusIcon.set_from_file(ICON_IDLE)
 	statusIcon.set_tooltip("Persy")
-#	statusIcon.connect('activate', showlog)
 	statusIcon.connect('popup-menu', popup_menu_cb, menu)
 	statusIcon.set_visible(True)
 
