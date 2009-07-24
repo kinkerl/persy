@@ -50,6 +50,7 @@ install: build
 	#$(MAKE) install DESTDIR=$(CURDIR)/debian/mintupload
 	mkdir -p $(CURDIR)/debian/persy
 	cp -r $(CURDIR)/usr $(CURDIR)/debian/persy/
+	cp -r $(CURDIR)/etc $(CURDIR)/debian/persy/
 
 
 # Build architecture-independent files here.

@@ -542,6 +542,7 @@ def main(argv):
 	parser.add_option("--status",action="store_true", default=False, help="prints git status")
 	parser.add_option("--ignore",action="store_true", default=False, help="recreates list of all ignored files")
 	parser.add_option("--verbose",action="store_true", default=False, help="print git output to stdout and set loglevel to DEBUG")
+	parser.add_option("--actions",action="store_true", default=False, help="computer-readable actions in persy")
 
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
 	parser.add_option("--uname", dest="uname", default="", help="username used in commit")
@@ -648,6 +649,10 @@ def main(argv):
 		gitstatus()
 	elif options.ignore:
 		gitignore()
+	elif options.actions:
+		for opt in parser.option_list:
+			print opt.get_opt_string(),
+		sys.exit(0)
 	else:
 		print "unknown parameters"
 		parser.print_help()
