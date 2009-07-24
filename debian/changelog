@@ -1,10 +1,9 @@
 persy (0.3.4) jaunty; urgency=low
  
   * added bash completion
+  * code cleanups (logging, gtk)
  
- -- Dennis Schwertel <s@digitalkultur.net> xx Jul 2009 xx:xx:xx +0100
-
-
+ -- Dennis Schwertel <s@digitalkultur.net> 24 Jul 2009 19:04:00 +0100
 
 persy (0.3.3) jaunty; urgency=low
  

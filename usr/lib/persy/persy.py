@@ -80,17 +80,9 @@ statusIcon = None
 ICON_IDLE = '/usr/lib/persy/persy_idle.png'
 ICON_ERROR = '/usr/lib/persy/persy_error.png'
 ICON_OK = '/usr/lib/persy/persy_ok.png'
+ICON_WARN = '/usr/lib/persy/persy_warn.png'
 ICON_BUSY = '/usr/lib/persy/persy_busy.png'
 LOGO = '/usr/lib/persy/persy.png'
-
-class persyNotifier:
-	'''Enables integration with external notifiers'''
-	def __init__(self):
-		pynotify.init("Persy")
-	 
-	def notify(self, detail):
-		pynotify.Notification("Persy", detail, ICON_ERROR).show()
-
 
 class InterruptWatcher:
 	"""taken from http://code.activestate.com/recipes/496735/
@@ -211,16 +203,13 @@ class TheSyncer(Thread):
 					try:
 						git.commit('Backup by me')
 					except Exception as e:
-						critical(str(e))
+						log.critical(str(e))
 
 					log.debug('git gc')
 					try:
 						git.gc()
 					except Exception as e:
 						log.warn(str(e))
-
-
-
 
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
@@ -231,27 +220,61 @@ class TheSyncer(Thread):
 					try:
 						git.pull(SERVER_NICK,BRANCH)
 					except Exception as e:
-						critical(str(e))
+						log.critical(str(e))
 
 					log.debug('git push')
 					try:
 						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
-						critical(str(e))
+						log.critical(str(e))
 			#start git ignore on a regular basis (ignoring unwatched files)
 			if time.time() - self.lastignore >  self.ignore_time:
 				self.lastignore = time.time()
 				gitignore()
 
 
+class Talker:
+	"""logging, notifications and communications with the outside!"""
+	def __init__(self):
+		#init logging
+		self.log = logging.getLogger("")
+		os.popen("touch %s"%LOGFILE)
+		hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
+		fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
+		hdlr.setFormatter(fmt)
+		self.log.addHandler(hdlr)
+
+		#init notify
+		pynotify.init("Persy")
+
+	def setLevel(self, lvl):
+		self.log.setLevel(lvl)
+
+	def debug(self, msg):
+		self.log.debug(msg)
+
+
+	def info(self, msg):
+		self.log.info(msg)
+
+	def warn(self, msg):
+		self.log.warn(msg)
+		pynotify.Notification("Persy", detail, ICON_WARN).show()
+
+	def critical(msg):
+		self.log.critical(msg)
+		if statusIcon:
+			statusIcon.set_from_file(ICON_ERROR)#from_stock(gtk.STOCK_HOME)
+		pynotify.Notification("Persy", detail, ICON_ERROR).show()
+
 
 def initLocal():
 	'''initialises the local repository'''
 	if not config.has_key('general') or not config['general'].has_key('name') or not config['general']['name'] :
-		critical('username not set, cannot create git repository. use "persy --config --name=NAME" to set one')
+		log.critical('username not set, cannot create git repository. use "persy --config --name=NAME" to set one')
 		sys.exit(-1)
 	if not config.has_key('general') or not config['general'].has_key('mail') or not config['general']['mail']:
-		critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
+		log.critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
 		sys.exit(-1)
 	try:
 		git.init()
@@ -259,15 +282,15 @@ def initLocal():
 		git.config('user.email',config['general']['mail'])
 		gitignore()
 	except Exception as e:
-		critical(str(e))
+		log.critical(str(e))
 
 def initRemote():
 	'''initialises the remote repository'''
 	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
-		critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
+		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
 		sys.exit(-1)
 	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
-		critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
+		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
 		sys.exit(-1)
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
@@ -280,7 +303,7 @@ def initRemote():
 	if stderr1:
 		log.warn("error creating dir, maybe it exists already?")
 	elif stderr2:
-		critical("error on remote git init")
+		log.critical("error on remote git init")
 	elif not config['remote']['use_remote']:
 		#no errors:so we are save to use the remote
 		config['remote']['use_remote'] = True
@@ -288,24 +311,24 @@ def initRemote():
 	try:
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 	except Exception as e:
-		critical(str(e))
+		log.critical(str(e))
 
 
 def syncWithRemote():
 	'''Syncs with a remote server'''
 	#i dont use clone because of massive errors when using it
 	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
-		critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
+		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
 		sys.exit(-1)
 	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
-		critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
+		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
 		sys.exit(-1)
 	initLocal()
 	try:
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 		git.pull(SERVER_NICK,BRANCH)
 	except Exception as e:
-		critical(str(e))
+		log.critical(str(e))
 
 	if not config['remote']['use_remote']:
 		config['remote']['use_remote'] = True
@@ -329,88 +352,127 @@ def gitignore():
 		for c in current:
 			f.write(c+"\n")
 
-def quit_cb(widget, data = None):
-	persy_stop()
-	if data:
-		data.set_visible(False)
-	gtk.main_quit()
-	sys.exit(0)
+class Persy_GTK():
+	def __init__(self):
+		'''The normal syncer'''
+		global WATCHED
+		global statusIcon
 
-def popup_menu_cb(widget, button, time, data = None):
-	if data:
-		data.show_all()
-		data.popup(None, None, None, 3, time)
+		log.info("Starting persy")
+		log.info("watching over: %s"%WATCHED)
 
-def critical(msg):
-	log.critical(msg)
-	persyNotifier().notify(msg)
-	if statusIcon:
-		statusIcon.set_from_file(ICON_ERROR)#from_stock(gtk.STOCK_HOME)
+		if not WATCHED:
+			log.warn("watching no directories")
+
+		InterruptWatcher()
+
+		statusIcon = gtk.StatusIcon()
+		menu = gtk.Menu()
+
+		menuItem = gtk.CheckMenuItem("start/stop Persy")
+		menuItem.set_active(False)
+		menuItem.connect('activate',persy_toggle)
+		menu.append(menuItem)
+
+		menuItem = gtk.CheckMenuItem("sync Remote")
+		menuItem.set_active(config['remote']['use_remote'])
+		menuItem.connect('activate',persy_sync_toggle)
+		menu.append(menuItem)
 
 
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+		menuItem.get_children()[0].set_label('start gitk')
+		menuItem.connect('activate', browse)
+		menu.append(menuItem)
 
-def about(widget, data = None):
-	dlg = gtk.AboutDialog()
-	dlg.set_title("About Persy")
-	dlg.set_version('0.3')
-	dlg.set_program_name("Persy")
-	dlg.set_comments("personal sync")
-	dlg.set_authors([
-		"Dennis Schwertel <s@digitalkultur.net>"
-	])
-	dlg.set_icon_from_file(ICON_IDLE)
-	dlg.set_logo(gtk.gdk.pixbuf_new_from_file(LOGO))
-	def close(w, res):
-		if res == gtk.RESPONSE_CANCEL:
-			w.hide()
-	dlg.connect("response", close)
-	dlg.show()
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
+		menuItem.get_children()[0].set_label('show Log')
+		menuItem.connect('activate', self.showlog)
+		menu.append(menuItem)
 
-def showgitlog(widget, data = None):
-	showlog(widget, data, LOGFILE_GIT)
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
+		menuItem.get_children()[0].set_label('show git Log')
+		menuItem.connect('activate', self.showgitlog)
+		menu.append(menuItem)
 
-def showlog(widget, data = None, filename=None):
-	window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-	window.set_resizable(True)
-	window.set_title("Persy Log")
-	window.set_border_width(0)
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+		menuItem.connect('activate', self.about)
+		menu.append(menuItem)
 
-	sw = gtk.ScrolledWindow()
-	sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-	textview = gtk.TextView()
-	textbuffer = textview.get_buffer()
-	sw.add(textview)
-	sw.show()
-	textview.show()
-	window.add(sw)
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+		menuItem.connect('activate', self.quit_cb, statusIcon)
+		menu.append(menuItem)
 
-	if filename:
-		infile = open(filename, "r")
-	else:
-		infile = open(LOGFILE, "r")
+		statusIcon.set_from_file(ICON_IDLE)
+		statusIcon.set_tooltip("Persy")
+		statusIcon.connect('popup-menu', self.popup_menu_cb, menu)
+		statusIcon.set_visible(True)
 
-	if infile:
-		string = infile.read()
-		infile.close()
-		textbuffer.set_text(string)
-	window.set_default_size(500,400)
-	window.show()
+		gtk.main()
 
-def persy_toggle(widget, data = None):
-	if widget.active:
-		persy_start()
-	else:
+	def quit_cb(self, widget, data = None):
 		persy_stop()
+		if data:
+			data.set_visible(False)
+		gtk.main_quit()
+		sys.exit(0)
 
-def persy_sync_toggle(widget, data = None):
-	if widget.active:
-		config['remote']['use_remote'] = True
-	else:
-		config['remote']['use_remote'] = False
+	def popup_menu_cb(self, widget, button, time, data = None):
+		if data:
+			data.show_all()
+			data.popup(None, None, None, 3, time)
 
-	config.write()
+
+	def about(self, widget, data = None):
+		dlg = gtk.AboutDialog()
+		dlg.set_title("About Persy")
+		dlg.set_version('0.3')
+		dlg.set_program_name("Persy")
+		dlg.set_comments("personal sync")
+		dlg.set_authors([
+			"Dennis Schwertel <s@digitalkultur.net>"
+		])
+		dlg.set_icon_from_file(ICON_IDLE)
+		dlg.set_logo(gtk.gdk.pixbuf_new_from_file(LOGO))
+		def close(w, res):
+			if res == gtk.RESPONSE_CANCEL:
+				w.hide()
+		dlg.connect("response", close)
+		dlg.show()
+
+	def showgitlog(self, widget, data = None):
+		self.showlog(widget, data, LOGFILE_GIT)
+
+	def showlog(self, widget, data = None, filename=None):
+		window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+		window.set_resizable(True)
+		window.set_title("Persy Log")
+		window.set_border_width(0)
+
+		sw = gtk.ScrolledWindow()
+		sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+		textview = gtk.TextView()
+		textbuffer = textview.get_buffer()
+		sw.add(textview)
+		sw.show()
+		textview.show()
+		window.add(sw)
+
+		if filename:
+			infile = open(filename, "r")
+		else:
+			infile = open(LOGFILE, "r")
+
+		if infile:
+			string = infile.read()
+			infile.close()
+			textbuffer.set_text(string)
+		window.set_default_size(500,400)
+		window.show()
+
 
 def persy_start():
+	''' Starts Persy'''
 	global worker
 	global notifier
 	log.info("start working")
@@ -428,10 +490,12 @@ def persy_start():
 
 	worker.start()
 	notifier.start()
-	statusIcon.set_from_file(ICON_OK)#from_stock(gtk.STOCK_HOME)
-	print statusIcon.get_icon_name()
+	if statusIcon:
+		statusIcon.set_from_file(ICON_OK)#from_stock(gtk.STOCK_HOME)
+
 
 def persy_stop():
+	'''Stops Persy'''
 	global worker
 	global notifier
 	log.info("stop working")
@@ -450,67 +514,25 @@ def persy_stop():
 			pass
 		except KeyError:
 			pass
-	statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
+	if statusIcon:
+		statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
+
+def persy_toggle(widget, data = None):
+	if widget.active:
+		persy_start()
+	else:
+		persy_stop()
+
+def persy_sync_toggle(widget, data = None):
+	if widget.active:
+		config['remote']['use_remote'] = True
+	else:
+		config['remote']['use_remote'] = False
+
+	config.write()
 
 
 
-
-def runLocal():
-	'''The normal syncer'''
-	global WATCHED
-	global statusIcon
-
-	log.info("Starting persy")
-	log.info("watching over: %s"%WATCHED)
-
-	if not WATCHED:
-		log.warn("watching no directories")
-
-	InterruptWatcher()
-
-	statusIcon = gtk.StatusIcon()
-	menu = gtk.Menu()
-
-	menuItem = gtk.CheckMenuItem("start/stop Persy")
-	menuItem.set_active(False)
-	menuItem.connect('activate',persy_toggle)
-	menu.append(menuItem)
-
-	menuItem = gtk.CheckMenuItem("sync Remote")
-	menuItem.set_active(config['remote']['use_remote'])
-	menuItem.connect('activate',persy_sync_toggle)
-	menu.append(menuItem)
-
-
-	menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-	menuItem.get_children()[0].set_label('start gitk')
-	menuItem.connect('activate', browse)
-	menu.append(menuItem)
-
-	menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
-	menuItem.get_children()[0].set_label('show Log')
-	menuItem.connect('activate', showlog)
-	menu.append(menuItem)
-
-	menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
-	menuItem.get_children()[0].set_label('show git Log')
-	menuItem.connect('activate', showgitlog)
-	menu.append(menuItem)
-
-	menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-	menuItem.connect('activate', about)
-	menu.append(menuItem)
-
-	menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-	menuItem.connect('activate', quit_cb, statusIcon)
-	menu.append(menuItem)
-
-	statusIcon.set_from_file(ICON_IDLE)
-	statusIcon.set_tooltip("Persy")
-	statusIcon.connect('popup-menu', popup_menu_cb, menu)
-	statusIcon.set_visible(True)
-
-	gtk.main()
 
 #just ignore the widget
 def browse(wiget=None):
@@ -562,12 +584,7 @@ def main(argv):
 
 	#init logging
 	global log
-	log = logging.getLogger("")
-	os.popen("touch %s"%LOGFILE)
-	hdlr = logging.handlers.RotatingFileHandler(LOGFILE, "a", 1000000, 3)
-	fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
-	hdlr.setFormatter(fmt)
-	log.addHandler(hdlr)
+	log = Talker()
 	if options.verbose:
 		log.setLevel(logging.DEBUG) #set verbosity to show all messages of severity >= DEBUG
 	else:
@@ -643,7 +660,7 @@ def main(argv):
 	elif options.browse:
 		browse()
 	elif options.start:
-		runLocal()
+		Persy_GTK()
 	elif options.log:
 		gitlog()
 	elif options.status:
