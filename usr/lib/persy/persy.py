@@ -371,12 +371,12 @@ class Persy_GTK():
 
 		menuItem = gtk.CheckMenuItem("start/stop Persy")
 		menuItem.set_active(False)
-		menuItem.connect('activate',persy_toggle)
+		menuItem.connect('activate',self.persy_toggle)
 		menu.append(menuItem)
 
 		menuItem = gtk.CheckMenuItem("sync Remote")
 		menuItem.set_active(config['remote']['use_remote'])
-		menuItem.connect('activate',persy_sync_toggle)
+		menuItem.connect('activate',self.persy_sync_toggle)
 		menu.append(menuItem)
 
 
@@ -470,6 +470,20 @@ class Persy_GTK():
 		window.set_default_size(500,400)
 		window.show()
 
+	def persy_toggle(self, widget, data = None):
+		if widget.active:
+			persy_start()
+		else:
+			persy_stop()
+
+	def persy_sync_toggle(self, widget, data = None):
+		if widget.active:
+			config['remote']['use_remote'] = True
+		else:
+			config['remote']['use_remote'] = False
+
+		config.write()
+
 
 def persy_start():
 	''' Starts Persy'''
@@ -516,20 +530,6 @@ def persy_stop():
 			pass
 	if statusIcon:
 		statusIcon.set_from_file(ICON_IDLE)#from_stock(gtk.STOCK_HOME)
-
-def persy_toggle(widget, data = None):
-	if widget.active:
-		persy_start()
-	else:
-		persy_stop()
-
-def persy_sync_toggle(widget, data = None):
-	if widget.active:
-		config['remote']['use_remote'] = True
-	else:
-		config['remote']['use_remote'] = False
-
-	config.write()
 
 
 
