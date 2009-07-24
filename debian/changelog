@@ -1,12 +1,22 @@
+persy (0.3.3) jaunty; urgency=low
+ 
+  * Bugfix release:
+  * git logging
+  * config warnings
+  * code cleaning
+  * inotify KeyError
+  * error handling in pug.init
+ 
+ -- Philip Morrell <ubuntu.emorrp1@mamber.net> 22 Jul 2009 13:29:04 +0100
+
+
 persy (0.3.2) jaunty; urgency=low
 
   * added desktop entry + icon
   * added notifications on critical error
   * fixed typo that was breaking any config attempts -- thanks to Philip Morrell
-  * lot of fixes (again, thanks!)
 
  -- Dennis Schwertel <s@digitalkultur.net>  21 Jul 2009 14:51:00 +0000
-
 
 persy (0.3.1) jaunty; urgency=low
 
