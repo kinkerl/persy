@@ -51,6 +51,9 @@ install: build
 	mkdir -p $(CURDIR)/debian/persy
 	cp -r $(CURDIR)/usr $(CURDIR)/debian/persy/
 	cp -r $(CURDIR)/etc $(CURDIR)/debian/persy/
+	dpkg-parsechangelog 2>/dev/null | sed -ne 's/^Version: \(.*\)/\1/p' >  $(CURDIR)/debian/persy/usr/lib/persy/VERSION
+	dpkg-parsechangelog 2>/dev/null | sed -ne 's/^Version: \(.*\)/\1/p' >  $(CURDIR)/usr/lib/persy/VERSION
+
 
 
 # Build architecture-independent files here.
