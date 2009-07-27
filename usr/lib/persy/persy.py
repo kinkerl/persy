@@ -30,7 +30,7 @@ import paramiko
 import pug
 
 import pynotify
-
+import subprocess
 
 import gtk
 import pygtk
@@ -66,6 +66,8 @@ mail = default
 [local]
 sleep = 5
 watched =
+maxfilesize = 
+exclude = 
 
 [remote]
 use_remote = False
@@ -382,6 +384,25 @@ def gitignore():
 			f = f[:f.index(os.sep)]
 		if f in current:
 			current.remove(f)
+
+		if config['local']['maxfilesize']:
+			callcmd = []
+			callcmd.append('find')
+			callcmd.append(os.path.join(USERHOME,f))
+			callcmd.append('-type')
+			callcmd.append('f')
+			callcmd.append('-size')
+			callcmd.append("+" + str(config['local']['maxfilesize']) + "k")
+			(stdoutdata, stderrdata) = subprocess.Popen(callcmd, stdout=subprocess.PIPE).communicate()
+			for entry in stdoutdata.split("\n"):
+				current.append(entry)
+
+	for entry in config['local']['exclude']:
+		current.append(entry)
+
+	for entry in config['local']['exclude']:
+		current.append(entry)
+
 	with open(os.path.join(PERSY_DIR,GITIGNOREFILE), "w+") as f:
 		for c in current:
 			f.write(c+"\n")
@@ -671,6 +692,21 @@ def main(argv):
 
 	if type(config['local']['watched']) is str:
 		config['local']['watched'] = [config['local']['watched']]
+
+	if not config.has_key('local') or not config['local'].has_key('maxfilesize') or not type(config['local']['maxfilesize']) is str:
+		config['local']['maxfilesize'] = None
+	try:
+		config['local']['maxfilesize'] = int(config['local']['maxfilesize'])
+	except Exception as e:
+		config['local']['maxfilesize'] = None
+
+	if not config.has_key('local') or not config['local'].has_key('exclude'):
+		config['local']['exclude']=[]
+	if type(config['local']['exclude']) is str:
+		config['local']['exclude'] = [config['local']['exclude']]
+	if not config['local']['exclude'] is list:
+		config['local']['exclude'] = []
+
 
 	#initialzing the git binding
 	os.popen("touch %s"%LOGFILE_GIT)
