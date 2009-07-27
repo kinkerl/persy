@@ -250,7 +250,8 @@ class Talker:
 		self.log.addHandler(hdlr)
 
 		#init notify
-		pynotify.init("Persy")
+		self.notifyid = "Persy"
+		pynotify.init(self.notifyid)
 
 		self.verbose = verbose
 
@@ -270,9 +271,12 @@ class Talker:
 
 	def warn(self, msg, verbose=None):
 		self.log.warn(msg)
-		pynotify.Notification("Persy", msg, ICON_WARN).show()
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
+		try:
+			pynotify.Notification(self.notifyid, msg, ICON_WARN).show()
+		except Exception as e:
+			self.log.warn(str(e))
 
 	def critical(msg, verbose=None):
 		self.log.critical(msg)
@@ -280,7 +284,10 @@ class Talker:
 			print msg
 		if statusIcon:
 			statusIcon.set_from_file(ICON_ERROR)#from_stock(gtk.STOCK_HOME)
-		pynotify.Notification("Persy", msg, ICON_ERROR).show()
+		try:
+			pynotify.Notification(self.notifyid, msg, ICON_ERROR).show()
+		except Exception as e:
+			self.log.warn(str(e))
 
 
 
