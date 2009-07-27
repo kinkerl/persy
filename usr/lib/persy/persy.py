@@ -198,6 +198,14 @@ class TheSyncer(Thread):
 				self.lastcommit = lastevent
 				log.info('local commit')
 				if config['local']['watched']:
+					log.debug('git ignore')
+					self.lastignore = time.time()
+					try:
+						gitignore()
+					except Exception as e:
+						log.warn(str(e))
+
+
 					log.debug('git add')
 					try:
 						git.add(config['local']['watched'])
@@ -235,7 +243,10 @@ class TheSyncer(Thread):
 			#start git ignore on a regular basis (ignoring unwatched files)
 			if time.time() - self.lastignore >  self.ignore_time:
 				self.lastignore = time.time()
-				gitignore()
+				try:
+					gitignore()
+				except Exception as e:
+					log.warn(str(e))
 
 
 class Talker:
