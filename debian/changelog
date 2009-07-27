@@ -1,7 +1,10 @@
 persy (0.3.4) jaunty; urgency=low
  
   * added bash completion
-  * code cleanups (logging, gtk)
+  * code cleanups (logging, gtk, config, threads)
+  * new VERSION file introduced
+  * added exclusion of files by pattern
+  * added exclusion of files bigger than x kb
  
  -- Dennis Schwertel <s@digitalkultur.net> 24 Jul 2009 19:04:00 +0100
 
