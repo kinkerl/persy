@@ -54,7 +54,10 @@ GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 SERVER_NICK='origin'
 BRANCH='master'
 
-VERSION=file('VERSION').readline()
+try:
+	VERSION=file('VERSION').readline()
+except Exception:
+	VERSION="undefined"
 
 DEFAULT_CONFIG="""[general]
 name = default
