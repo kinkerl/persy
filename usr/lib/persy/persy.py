@@ -594,10 +594,7 @@ def main(argv):
 	#init logging
 	global log
 	log = Talker()
-	if options.verbose:
-		log.setLevel(logging.DEBUG) #set verbosity to show all messages of severity >= DEBUG
-	else:
-		log.setLevel(logging.INFO) #set verbosity to show all messages of severity >= INFO
+	log.setLevel((logging.INFO,logging.DEBUG)[options.verbose]) #set verbosity to show all messages of severity >= DEBUG
 
 	#load and set configuration
 	global config
