@@ -54,6 +54,8 @@ GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 SERVER_NICK='origin'
 BRANCH='master'
 
+VERSION=file('VERSION').readline()
+
 DEFAULT_CONFIG="""[general]
 name = default
 mail = default
@@ -265,7 +267,7 @@ class Talker:
 
 	def warn(self, msg, verbose=None):
 		self.log.warn(msg)
-		pynotify.Notification("Persy", detail, ICON_WARN).show()
+		pynotify.Notification("Persy", msg, ICON_WARN).show()
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
 
@@ -275,7 +277,7 @@ class Talker:
 			print msg
 		if statusIcon:
 			statusIcon.set_from_file(ICON_ERROR)#from_stock(gtk.STOCK_HOME)
-		pynotify.Notification("Persy", detail, ICON_ERROR).show()
+		pynotify.Notification("Persy", msg, ICON_ERROR).show()
 
 
 
@@ -436,7 +438,7 @@ class Persy_GTK():
 	def about(self, widget, data = None):
 		dlg = gtk.AboutDialog()
 		dlg.set_title("About Persy")
-		dlg.set_version('0.3')
+		dlg.set_version(VERSION)
 		dlg.set_program_name("Persy")
 		dlg.set_comments("personal sync")
 		dlg.set_authors([
