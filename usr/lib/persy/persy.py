@@ -75,6 +75,11 @@ sleep = 30
 hostname =
 path =
 """
+DEFAULT_LOCAL_SLEEP = 5
+DEFAULT_REMOTE_SLEEP = 30
+DEFAULT_REMOTE_HOSTNAME = ''
+DEFAULT_REMOTE_PATH = ''
+
 
 lastevent= time.time()
 
@@ -90,50 +95,6 @@ ICON_OK = '/usr/lib/persy/persy_ok.png'
 ICON_WARN = '/usr/lib/persy/persy_warn.png'
 ICON_BUSY = '/usr/lib/persy/persy_busy.png'
 LOGO = '/usr/lib/persy/persy.png'
-
-class InterruptWatcher:
-	"""taken from http://code.activestate.com/recipes/496735/
-	this class solves two problems with multithreaded
-	programs in Python, (1) a signal might be delivered
-	to any thread (which is just a malfeature) and (2) if
-	the thread that gets the signal is waiting, the signal
-	is ignored (which is a bug).
-
-	The watcher is a concurrent process (not thread) that
-	waits for a signal and the process that contains the
-	threads.  See Appendix A of The Little Book of Semaphores.
-	http://greenteapress.com/semaphores/
-
-	I have only tested this on Linux.  I would expect it to
-	work on the Macintosh and not work on Windows.
-	"""
-	def __init__(self):
-		""" Creates a child thread, which returns.  The parent
-		    thread waits for a KeyboardInterrupt and then kills
-		    the child thread.
-		"""
-		self.child = os.fork()
-		if self.child == 0:
-			return
-		else:
-			self.watch()
-
-	def watch(self):
-		try:
-			os.wait()
-		except KeyboardInterrupt:
-			# I put the capital B in KeyBoardInterrupt so I can
-			# tell when the Watcher gets the SIGINT
-			print 'KeyBoardInterrupt'
-			self.kill()
-		sys.exit()
-
-	def kill(self):
-		try:
-			os.kill(self.child, signal.SIGKILL)
-		except OSError: pass
-
-
 
 class FileChangeHandler(ProcessEvent):
 	def process_IN_MODIFY(self, event):
@@ -418,7 +379,7 @@ class Persy_GTK():
 		if not config['local']['watched']:
 			log.warn("watching no directories")
 
-		InterruptWatcher()
+		#InterruptWatcher()
 
 		statusIcon = gtk.StatusIcon()
 		menu = gtk.Menu()
@@ -462,7 +423,13 @@ class Persy_GTK():
 		statusIcon.connect('popup-menu', self.popup_menu_cb, menu)
 		statusIcon.set_visible(True)
 
-		gtk.main()
+		try:
+			gtk.main()
+		except KeyboardInterrupt:
+			log.info("bye!", verbose=True)
+			sys.exit(0)
+		except Exception as e:
+			log.critical(str(e), verbose=True)
 
 	def quit_cb(self, widget, data = None):
 		persy_stop()
@@ -649,9 +616,6 @@ def main(argv):
 	global git
 
 	config = ConfigObj(CONFIGFILE)
-	config['remote']['use_remote'] = config['remote']['use_remote']=='True'
-	config['local']['sleep'] = int(config['local']['sleep']or 5) #5 is default
-	config['remote']['sleep'] = int(config['remote']['sleep']or 30) #30 is default
 
 	if options.config:
 		changed = False
@@ -690,22 +654,80 @@ def main(argv):
 		config['remote']['use_remote'] = True
 		config.write()
 
+
+	#config check if everything is ok
+
+	#general name
+	if not config['general'].has_key('name') or not config['general']['name']:
+		config['general']['name'] = 'default'
+
+	#general mail
+	if not config['general'].has_key('mail') or not config['general']['mail']:
+		config['general']['name'] = 'mail'
+
+	#local sleep
+	if not config['local'].has_key('sleep') or not config['local']['sleep']:
+		config['local']['sleep'] = DEFAULT_LOCAL_SLEEP
+
+	if not type(config['local']['sleep']) is int:
+		try:
+			config['local']['sleep'] = int(config['local']['sleep'])
+		except Exception as e:
+			config['local']['sleep'] = DEFAULT_LOCAL_SLEEP
+
+	#local watched
+	if not config['local'].has_key('watched') or not config['local']['watched']:
+		config['local']['watched'] = []
+
 	if type(config['local']['watched']) is str:
 		config['local']['watched'] = [config['local']['watched']]
 
-	if not config.has_key('local') or not config['local'].has_key('maxfilesize') or not type(config['local']['maxfilesize']) is str:
-		config['local']['maxfilesize'] = None
-	try:
-		config['local']['maxfilesize'] = int(config['local']['maxfilesize'])
-	except Exception as e:
-		config['local']['maxfilesize'] = None
+	if not type(config['local']['watched']) is list:
+		config['local']['watched'] = []
 
-	if not config.has_key('local') or not config['local'].has_key('exclude'):
+	#local maxfilesize
+	if not config['local'].has_key('maxfilesize') or not type(config['local']['maxfilesize']) is str:
+		config['local']['maxfilesize'] = None
+	if not type(config['local']['maxfilesize']) is int:
+		try:
+			config['local']['maxfilesize'] = int(config['local']['maxfilesize'])
+		except Exception as e:
+			config['local']['maxfilesize'] = None
+
+	#local exclude
+	if not config['local'].has_key('exclude'):
 		config['local']['exclude']=[]
 	if type(config['local']['exclude']) is str:
 		config['local']['exclude'] = [config['local']['exclude']]
-	if not config['local']['exclude'] is list:
+	if not type(config['local']['exclude']) is list:
 		config['local']['exclude'] = []
+
+	#remote use_remote
+	if not config['remote'].has_key('use_remote'):
+		config['remote']['use_remote'] = False
+	if type(config['remote']['use_remote']) is str and config['remote']['use_remote'].lower()  == 'true':
+		config['remote']['use_remote'] = True
+	if not type(config['remote']['use_remote']) is bool:
+		config['remote']['use_remote'] = False
+
+	#remote sleep
+	if not config['remote'].has_key('sleep') or not config['remote']['sleep']:
+		config['remote']['sleep'] = DEFAULT_REMOTE_SLEEP
+
+	if not type(config['remote']['sleep']) is int:
+		try:
+			config['remote']['sleep'] = int(config['remote']['sleep'])
+		except Exception as e:
+			config['remote']['sleep'] = DEFAULT_REMOTE_SLEEP
+
+	#remote hostname
+	if not config['remote'].has_key('hostname') or not type(config['remote']['hostname']) is str:
+		config['remote']['hostname'] = DEFAULT_REMOTE_HOSTNAME
+
+	#remote path
+	if not config['remote'].has_key('path') or not type(config['remote']['path']) is str:
+		config['remote']['path'] = DEFAULT_REMOTE_PATH
+
 
 
 	#initialzing the git binding
