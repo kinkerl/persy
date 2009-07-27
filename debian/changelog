@@ -5,6 +5,7 @@ persy (0.3.4) jaunty; urgency=low
   * new VERSION file introduced
   * added exclusion of files by pattern
   * added exclusion of files bigger than x kb
+  * removed git-gc after a commit for performance
  
  -- Dennis Schwertel <s@digitalkultur.net> 24 Jul 2009 19:04:00 +0100
 
