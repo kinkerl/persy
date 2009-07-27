@@ -283,12 +283,6 @@ def initLocal():
 
 def initRemote():
 	'''initialises the remote repository'''
-	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
-		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
-		sys.exit(-1)
-	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
-		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
-		sys.exit(-1)
 	client = paramiko.SSHClient()
 	client.load_system_host_keys()
 	client.connect(config['remote']['hostname'] )
@@ -314,12 +308,6 @@ def initRemote():
 def syncWithRemote():
 	'''Syncs with a remote server'''
 	#i dont use clone because of massive errors when using it
-	if not config.has_key('remote') or not config['remote'].has_key('hostname') or not config['remote']['hostname']:
-		log.critical('no hostname set, cant init remote server. use "persy --config --hostname=HOSTNAME" to set one')
-		sys.exit(-1)
-	if not config.has_key('remote') or not config['remote'].has_key('path') or not config['remote']['path']:
-		log.critical('no remote path set, cant init remote server. use "persy --config --path=PATH" to set one')
-		sys.exit(-1)
 	initLocal()
 	try:
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
