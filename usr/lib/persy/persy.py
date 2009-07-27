@@ -181,11 +181,11 @@ class TheSyncer(Thread):
 					except Exception as e:
 						log.critical(str(e))
 
-					log.debug('git gc')
-					try:
-						git.gc()
-					except Exception as e:
-						log.warn(str(e))
+					#log.debug('git gc')
+					#try:
+					#	git.gc()
+					#except Exception as e:
+					#	log.warn(str(e))
 
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
