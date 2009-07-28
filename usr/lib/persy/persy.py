@@ -50,12 +50,14 @@ LOGFILE=os.path.join(PERSY_DIR,'default.log')
 LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 
+VERSION_FILE = '/usr/lib/persy/VERSION'
+
 #git variables
 SERVER_NICK='origin'
 BRANCH='master'
 
 try:
-	VERSION=file('VERSION').readline()
+	VERSION=file(VERSION_FILE).readline()
 except Exception:
 	VERSION="undefined"
 
