@@ -442,6 +442,11 @@ class Persy_GTK():
 		dlg.set_version(VERSION)
 		dlg.set_program_name("Persy")
 		dlg.set_comments("personal sync")
+		try:
+			dlg.set_license(open('/usr/share/common-licenses/GPL').read())
+		except Exception as e:
+			log.warn(str(e))
+
 		dlg.set_authors([
 			"Dennis Schwertel <s@digitalkultur.net>"
 		])

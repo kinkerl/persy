@@ -2,6 +2,7 @@ persy (0.3.5) jaunty; urgency=low
  
   * fixed path to VERSION file
   * make the code more robust
+  * added GPL in the about dialog
  
  -- Dennis Schwertel <s@digitalkultur.net> 28 Jul 2009 19:04:00 +0100
 
