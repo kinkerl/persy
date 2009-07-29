@@ -224,12 +224,14 @@ class Talker:
 		fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
 		hdlr.setFormatter(fmt)
 		self.log.addHandler(hdlr)
+		self.verbose = verbose
 
 		#init notify
 		self.notifyid = "Persy"
-		pynotify.init(self.notifyid)
-
-		self.verbose = verbose
+		try:
+			pynotify.init(self.notifyid)
+		except Exception as e:
+			self.log.warn(str(e))
 
 	def setLevel(self, lvl):
 		self.log.setLevel(lvl)
