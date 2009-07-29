@@ -362,7 +362,7 @@ def optimize():
 	try:
 		git.gc()
 	except Exception as e:
-		log.warn(str(e))
+		log.warn(str(e), verbose=True)
 
 class Persy_GTK():
 	def __init__(self):

@@ -54,7 +54,7 @@ GIT_WORK_TREE = the root git repostitory
 			stderr = self.stderr
 		return subprocess.Popen(callcmd, stdout=stdout, stdin=stdin, stderr=stderr, close_fds=True, env=self.__getEnv__()).wait()
 
-	def gc(self, stdin=None, stdout=None, stderr=None, *params):
+	def gc(self, stdin=None, stdout=None, stderr=None, params = []):
 		'''garbage collector'''
 		callcmd = []
 		callcmd.append(GIT)
@@ -65,7 +65,7 @@ GIT_WORK_TREE = the root git repostitory
 		if not rc  == 0:
 			raise Exception("gc: %i "%rc)
 
-	def init(self, bare=False, stdin=None, stdout=None, stderr=None, *params):
+	def init(self, bare=False, stdin=None, stdout=None, stderr=None, params = []):
 		'''initialize an empty repository'''
 		callcmd = []
 		callcmd.append(GIT)
@@ -92,7 +92,7 @@ GIT_WORK_TREE = the root git repostitory
 		if not rc  == 0:
 			raise Exception("config: %i"%rc)
 
-	def commit(self, message, stdin=None, stdout=None, stderr=None, *params):
+	def commit(self, message, stdin=None, stdout=None, stderr=None, params = []):
 		'''send commits'''
 		callcmd = []
 		callcmd.append(GIT)
@@ -106,7 +106,7 @@ GIT_WORK_TREE = the root git repostitory
 		if not (rc  == 0 or rc == 1 or rc == 128):
 			raise Exception("commit: %i"%rc)
 
-	def command(self, cmd, stdin=None, stdout=None, stderr=None, *params):
+	def command(self, cmd, stdin=None, stdout=None, stderr=None, params = []):
 		'''executes any command, but with environment variables set. mainly used the start gitk in a nice way'''
 		callcmd = []
 		callcmd.append(cmd)
@@ -117,7 +117,7 @@ GIT_WORK_TREE = the root git repostitory
 			raise Exception("command %s: %i"%(cmd,rc))
 
 
-	def add(self, files, stdin=None, stdout=None, stderr=None, *params):
+	def add(self, files, stdin=None, stdout=None, stderr=None, params = []):
 		'''accepts a single file as a str or a list of files as str or file'''
 		if type(files) is str:
 			files = [files]
@@ -133,7 +133,7 @@ GIT_WORK_TREE = the root git repostitory
 			if not rc  == 0:
 				raise Exception("add: %i "%rc)
 
-	def push(self, target='', branch='', stdin=None, stdout=None, stderr=None, *params):
+	def push(self, target='', branch='', stdin=None, stdout=None, stderr=None, params = []):
 		'''pushes to a repository'''
 		callcmd = []
 		callcmd.append(GIT)
@@ -147,7 +147,7 @@ GIT_WORK_TREE = the root git repostitory
 		if not (rc == 0 or rc == 128):
 			raise Exception("push: %i"%rc)
 
-	def pull(self, target='', branch='', stdin=None, stdout=None, stderr=None, *params):
+	def pull(self, target='', branch='', stdin=None, stdout=None, stderr=None, params = []):
 		'''pulls from a repository'''
 		callcmd = []
 		callcmd.append(GIT)
@@ -161,7 +161,7 @@ GIT_WORK_TREE = the root git repostitory
 		if not (rc == 0 or rc == 128):
 			raise Exception("pull: %i"%rc)
 
-	def remoteAdd(self, nickname, url, stdin=None, stdout=None, stderr=None, *params):
+	def remoteAdd(self, nickname, url, stdin=None, stdout=None, stderr=None, params = []):
 		'''adds a remote repository'''
 		callcmd = []
 		callcmd.append(GIT)
@@ -175,7 +175,7 @@ GIT_WORK_TREE = the root git repostitory
 		if not rc  == 0:
 			raise Exception("remoteAdd: %i"%rc)
 
-	def status(self, stdin=None, stdout=None, stderr=None, *params):
+	def status(self, stdin=None, stdout=None, stderr=None, params = []):
 		'''prints the status messages from git'''
 		callcmd = []
 		callcmd.append(GIT)
@@ -187,7 +187,7 @@ GIT_WORK_TREE = the root git repostitory
 		#if not rc  == 0:
 		#	raise Exception("status: %i"%rc)
 
-	def log(self, stdin=None, stdout=None, stderr=None, *params):
+	def log(self, stdin=None, stdout=None, stderr=None, params = []):
 		'''prints the log messages from git'''
 		callcmd = []
 		callcmd.append(GIT)
