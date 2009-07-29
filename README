@@ -33,7 +33,7 @@ The normal local workflow is:
  $ persy --config --add_dir=DIR         # DIR is the absolute path to a directory 
                                         # in /home/user (example: /home/username/documents).
                                         # The directory is then integrated in persy
- $ persy --start                        # starts the persy daemon
+ $ persy                                # starts persy
 
 
 The normal workflow with a remote Server and an already initialized local repository is:
@@ -41,7 +41,7 @@ The normal workflow with a remote Server and an already initialized local reposi
  $ persy --config --path=PATH           # PATH = absolute path of the gitrepository on 
                                         # the server (path will be created if it does not exist)
  $ persy --initRemote                   # created a bare git repository on the server in PATH
- $ persy --start                        # starts the persy daemon
+ $ persy                                # starts persy 
 
 
 The normal workflow with a already initialized remote Server and no local repository. 
@@ -55,7 +55,7 @@ with already existing files. you can start a sync and then add new files to the 
  $ persy --config --add_dir=DIR         # add the same DIR to persy as on the other machines
  $ persy --syncwithremote               # connects to the remote server and 
                                         # pulls the files from the git repository
- $ persy --start                        # starts the persy daemon
+ $ persy                                # starts persy
 
 License
 =======

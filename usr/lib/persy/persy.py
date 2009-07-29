@@ -96,7 +96,7 @@ ICON_IDLE = '/usr/lib/persy/persy_idle.png'
 ICON_ERROR = '/usr/lib/persy/persy_error.png'
 ICON_OK = '/usr/lib/persy/persy_ok.png'
 ICON_WARN = '/usr/lib/persy/persy_warn.png'
-ICON_BUSY = '/usr/lib/persy/persy_busy.png'
+ICON_UNSYNCED = '/usr/lib/persy/persy_busy.png'
 LOGO = '/usr/lib/persy/persy.png'
 
 class FileChangeHandler(ProcessEvent):
@@ -183,6 +183,7 @@ class TheSyncer(Thread):
 						git.commit('Backup by me')
 					except Exception as e:
 						log.critical(str(e))
+					log.unsynced_changes(True)
 
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
@@ -200,6 +201,7 @@ class TheSyncer(Thread):
 						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
 						log.critical(str(e))
+					log.unsynced_changes(False)
 			#start git ignore on a regular basis (ignoring unwatched files)
 			if time.time() - self.lastignore >  self.ignore_time:
 				self.lastignore = time.time()
@@ -228,6 +230,20 @@ class Talker:
 		except Exception as e:
 			self.log.warn(str(e))
 
+		self.resetError()
+
+	def resetError(self):
+		self.error = False
+
+	def unsynced_changes(self, uc):
+		if not self.error:
+			if uc:
+				if statusIcon:
+					statusIcon.set_from_file(ICON_UNSYNCED)
+			else:
+				if statusIcon:
+					statusIcon.set_from_file(ICON_OK)
+
 	def setLevel(self, lvl):
 		self.log.setLevel(lvl)
 
@@ -235,7 +251,6 @@ class Talker:
 		self.log.debug(msg)
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
-
 
 	def info(self, msg, verbose=None):
 		self.log.info(msg)
@@ -375,7 +390,7 @@ def optimize():
 		log.warn(str(e), verbose=True)
 
 class Persy_GTK():
-	def __init__(self):
+	def __init__(self, start):
 		'''The normal syncer'''
 		global statusIcon
 
@@ -435,6 +450,8 @@ class Persy_GTK():
 		statusIcon.connect('popup-menu', self.popup_menu_cb, menu)
 		statusIcon.set_visible(True)
 
+		if start:
+			persy_start()
 		try:
 			gtk.main()
 		except KeyboardInterrupt:
@@ -544,6 +561,7 @@ def persy_start():
 	worker = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
 	notifier = ThreadedNotifier(wm, FileChangeHandler())
 
+	log.resetError()
 	worker.start()
 	notifier.start()
 	if statusIcon:
@@ -765,8 +783,6 @@ def main(argv):
 		syncWithRemote()
 	elif options.browse:
 		browse()
-	elif options.start:
-		Persy_GTK()
 	elif options.log:
 		gitlog()
 	elif options.status:
@@ -780,9 +796,12 @@ def main(argv):
 			print opt.get_opt_string(),
 		sys.exit(0)
 	else:
-		log.warn("unknown parameters", verbose=True)
-		parser.print_help()
-		sys.exit(-1)
+		#START!
+		Persy_GTK(options.start)
+
+#		log.warn("unknown parameters", verbose=True)
+#		parser.print_help()
+#		sys.exit(-1)
 
 
 
