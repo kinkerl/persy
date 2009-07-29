@@ -184,12 +184,6 @@ class TheSyncer(Thread):
 					except Exception as e:
 						log.critical(str(e))
 
-					#log.debug('git gc')
-					#try:
-					#	git.gc()
-					#except Exception as e:
-					#	log.warn(str(e))
-
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
 				self.lastsync = time.time()
@@ -360,6 +354,15 @@ def gitignore():
 	with open(os.path.join(PERSY_DIR,GITIGNOREFILE), "w+") as f:
 		for c in current:
 			f.write(c+"\n")
+
+
+def optimize():
+	log.info('starting optimization', verbose=True)
+	log.debug('git gc')
+	try:
+		git.gc()
+	except Exception as e:
+		log.warn(str(e))
 
 class Persy_GTK():
 	def __init__(self):
@@ -585,6 +588,7 @@ def main(argv):
 	parser.add_option("--ignore",action="store_true", default=False, help="recreates list of all ignored files")
 	parser.add_option("--verbose",action="store_true", default=False, help="print git output to stdout and set loglevel to DEBUG")
 	parser.add_option("--actions",action="store_true", default=False, help="computer-readable actions in persy")
+	parser.add_option("--optimize",action="store_true", default=False, help="optimizes the stored files. saves space and improves performance")
 
 	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
 	parser.add_option("--uname", dest="uname", default="", help="username used in commit")
@@ -749,6 +753,8 @@ def main(argv):
 		gitstatus()
 	elif options.ignore:
 		gitignore()
+	elif options.optimize:
+		optimize()
 	elif options.actions:
 		for opt in parser.option_list:
 			print opt.get_opt_string(),
