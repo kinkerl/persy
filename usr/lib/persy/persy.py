@@ -359,8 +359,18 @@ def gitignore():
 def optimize():
 	log.info('starting optimization', verbose=True)
 	log.debug('git gc')
+	class Starter(Thread):
+		def __init__(self,git):
+			Thread.__init__(self)
+			self.git = git
+		def run(self):
+			try:
+				git.gc()
+			except Exception as e:
+				log.warn(str(e), verbose=True)
+
 	try:
-		git.gc()
+		Starter(git).start()
 	except Exception as e:
 		log.warn(str(e), verbose=True)
 
@@ -394,6 +404,12 @@ class Persy_GTK():
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
 		menuItem.get_children()[0].set_label('start gitk')
 		menuItem.connect('activate', browse)
+		menu.append(menuItem)
+
+
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+		menuItem.get_children()[0].set_label('optimize')
+		menuItem.connect('activate', self.optimize)
 		menu.append(menuItem)
 
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
@@ -505,6 +521,10 @@ class Persy_GTK():
 			config['remote']['use_remote'] = False
 
 		config.write()
+
+	def optimize(self, widget, data = None):
+		optimize()
+		
 
 
 def persy_start():
