@@ -51,6 +51,7 @@ LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 
 VERSION_FILE = '/usr/lib/persy/VERSION'
+LICENSE_FILE = '/usr/share/common-licenses/GPL-2'
 
 #git variables
 SERVER_NICK='origin'
@@ -443,7 +444,7 @@ class Persy_GTK():
 		dlg.set_program_name("Persy")
 		dlg.set_comments("personal sync")
 		try:
-			dlg.set_license(open('/usr/share/common-licenses/GPL').read())
+			dlg.set_license(open(LICENSE_FILE).read())
 		except Exception as e:
 			log.warn(str(e))
 
