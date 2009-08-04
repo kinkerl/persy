@@ -97,6 +97,7 @@ ICON_ERROR = '/usr/lib/persy/persy_error.png'
 ICON_OK = '/usr/lib/persy/persy_ok.png'
 ICON_WARN = '/usr/lib/persy/persy_warn.png'
 ICON_UNSYNCED = '/usr/lib/persy/persy_busy.png'
+ICON_UNTRACKED = '/usr/lib/persy/persy_untracked.png'
 LOGO = '/usr/lib/persy/persy.png'
 
 class FileChangeHandler(ProcessEvent):
@@ -135,6 +136,7 @@ class FileChangeHandler(ProcessEvent):
 	def check(self):
 		global lastevent
 		lastevent = time.time()
+		log.untracked_changes(True)
 
 
 class TheSyncer(Thread):
@@ -183,6 +185,7 @@ class TheSyncer(Thread):
 						git.commit('Backup by me')
 					except Exception as e:
 						log.critical(str(e))
+					log.untracked_changes(False)
 					log.unsynced_changes(True)
 
 			#autopull and push updates every x secs
@@ -235,6 +238,15 @@ class Talker:
 	def resetError(self):
 		self.error = False
 
+	def untracked_changes(self, uc):
+		if not self.error:
+			if uc:
+				if statusIcon:
+					statusIcon.set_from_file(ICON_UNTRACKED)
+			else:
+				if statusIcon:
+					statusIcon.set_from_file(ICON_OK)
+
 	def unsynced_changes(self, uc):
 		if not self.error:
 			if uc:
@@ -266,7 +278,7 @@ class Talker:
 		except Exception as e:
 			self.log.warn(str(e))
 
-	def critical(msg, verbose=None):
+	def critical(self, msg, verbose=None):
 		self.log.critical(msg)
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
