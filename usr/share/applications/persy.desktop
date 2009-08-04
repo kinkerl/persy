@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Categories=GNOME;Utility;
 Comment=personal sync
-Exec=persy --start
+Exec=persy
 GenericName=personal sync
 Icon=persy.png
 Name=Persy
