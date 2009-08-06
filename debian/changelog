@@ -5,8 +5,12 @@ persy (0.3.5) jaunty; urgency=low
   * added GPL in the about dialog
   * added optimize function
   * added new icons for untracked and unsynced files
+  * added new svg icons
+  * created a markdown README file
+  * lots of bugfixes
+  * added untracked and unsynced status (experimental)
  
- -- Dennis Schwertel <s@digitalkultur.net> 28 Jul 2009 19:04:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net> 06 Aug 2009 20:33:00 +0100
 
 persy (0.3.4) jaunty; urgency=low
  
