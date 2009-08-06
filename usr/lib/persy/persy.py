@@ -50,7 +50,7 @@ LOGFILE=os.path.join(PERSY_DIR,'default.log')
 LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 
-VERSION_FILE = '/usr/lib/persy/VERSION'
+
 LICENSE_FILE = '/usr/share/common-licenses/GPL-2'
 
 #git variables
@@ -58,7 +58,9 @@ SERVER_NICK='origin'
 BRANCH='master'
 
 try:
-	VERSION=file(VERSION_FILE).readline()
+	import apt
+	c = apt.Cache()
+	VERSION=c["persy"].installedVersion
 except Exception:
 	VERSION="undefined"
 
