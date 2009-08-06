@@ -16,26 +16,32 @@
 #along with persy; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+try:
+	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
+	from subprocess import Popen
+	from threading import Thread
+	from configobj import ConfigObj
+	import os
+	import sys
+	import time
+	import logging , logging.handlers
+	import time, signal, operator
+	import paramiko
+	import pug
 
-from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
-from subprocess import Popen
-from threading import Thread
-from configobj import ConfigObj
-import os
-import sys
-import time
-import logging , logging.handlers
-import time, signal, operator
-import paramiko
-import pug
+	import pynotify
+	import subprocess
 
-import pynotify
-import subprocess
+	import gtk
+	import pygtk
+	#Initializing the gtk's thread engine
+	#we NEED this because of the STRANGE (F***ING) thread problem with gtk
+	pygtk.require("2.0")
+except Exception as e:
+	print "You do not have all the dependencies or an error occured when initialising one of the dependencies!"
+	print str(e)
+	sys.exit(1)
 
-import gtk
-import pygtk
-#Initializing the gtk's thread engine
-#we NEED this because of the STRANGE (F***ING) thread problem with gtk
 gtk.gdk.threads_init()
 
 __author__ = "Dennis Schwertel"
