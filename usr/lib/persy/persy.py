@@ -51,6 +51,7 @@ __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 USERHOME = os.environ["HOME"]
 PERSY_DIR = os.path.join(USERHOME, '.persy')
 GIT_DIR = os.path.join(PERSY_DIR,'git')
+GIT_LOCKFILE = os.path.join(GIT_DIR,'index.lock')
 CONFIGFILE=os.path.join(PERSY_DIR,'config')
 LOGFILE=os.path.join(PERSY_DIR,'default.log')
 LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
@@ -663,6 +664,7 @@ def main(argv):
 		with open(CONFIGFILE, "w+") as f:
 			f.write(DEFAULT_CONFIG)
 
+
 	#init logging
 	global log
 	log = Talker()
@@ -788,6 +790,18 @@ def main(argv):
 
 
 	#initialzing the git binding
+
+	#if persy is interrupted while git was running, a git.lockfile me be present. we have to remove it!
+	if os.path.exists(GIT_LOCKFILE):
+		try: 
+			os.remove(GIT_LOCKFILE)
+		except Exception as e:
+			log.warn(str(e))
+		else:
+			log.warn("removed git lock file")
+
+
+
 	os.popen("touch %s"%LOGFILE_GIT)
 	std = open(LOGFILE_GIT, 'a')
 	stdin = None #default stdin
