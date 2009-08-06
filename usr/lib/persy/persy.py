@@ -100,13 +100,13 @@ worker = None
 notifier = None
 statusIcon = None
 
-ICON_IDLE = '/usr/lib/persy/persy_idle.png'
-ICON_ERROR = '/usr/lib/persy/persy_error.png'
+ICON_IDLE = '/usr/lib/persy/persy.svg'
 ICON_OK = '/usr/lib/persy/persy_ok.png'
-ICON_WARN = '/usr/lib/persy/persy_warn.png'
 ICON_UNSYNCED = '/usr/lib/persy/persy_busy.png'
 ICON_UNTRACKED = '/usr/lib/persy/persy_untracked.png'
-LOGO = '/usr/lib/persy/persy.png'
+ICON_WARN = '/usr/lib/persy/persy_warn.png'
+ICON_ERROR = '/usr/lib/persy/persy_error.png'
+LOGO = '/usr/lib/persy/persy.svg'
 
 class FileChangeHandler(ProcessEvent):
 	def process_IN_MODIFY(self, event):
@@ -508,7 +508,7 @@ class Persy_GTK():
 			"Dennis Schwertel <s@digitalkultur.net>"
 		])
 		dlg.set_icon_from_file(ICON_IDLE)
-		dlg.set_logo(gtk.gdk.pixbuf_new_from_file(LOGO))
+		dlg.set_logo(gtk.gdk.pixbuf_new_from_file_at_size(LOGO, 150, 144))
 		def close(w, res):
 			if res == gtk.RESPONSE_CANCEL:
 				w.hide()
