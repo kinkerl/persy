@@ -10,7 +10,7 @@ strengths:
 * efficient transport protocol to replicate the backup (faster than rsync)
 
 Dependencies
-============
+------------
 persy needs the following software at run-time:
 
  *    git-core
@@ -18,7 +18,7 @@ persy needs the following software at run-time:
  *    python-paramiko - ssh library to initialize a remote server
 
 Installation
-============
+------------
 persy can be used just to backup your data or sync your data with multiple 
 machines. persy is designed to run by its own on a computer as a revision based
 backup application or in an environment with multiple computers and at least 
@@ -26,7 +26,7 @@ one server to keep files and folder in sync between them.
 
 
 Usage
-=====
+------------
 The normal local workflow is:
 
      $ persy --config --uname=USERNAME      # username used for the commits
@@ -62,7 +62,7 @@ with already existing files. you can start a sync and then add new files to the 
      $ persy                                # starts persy
 
 License
-=======
+------------
 persy is free software: you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
 Software Foundation, either version 2 of the License, or (at your option) any
