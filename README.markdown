@@ -12,6 +12,7 @@ strengths:
 Dependencies
 ============
 persy needs the following software at run-time:
+
 *    git-core
 *    python-pyinotify - to get efficient information about filesystem changes
 *    python-paramiko - ssh library to initialize a remote server
