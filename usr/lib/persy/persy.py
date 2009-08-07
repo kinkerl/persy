@@ -102,11 +102,11 @@ notifier = None
 statusIcon = None
 
 ICON_IDLE = '/usr/lib/persy/persy.svg'
-ICON_OK = '/usr/lib/persy/persy_ok.png'
-ICON_UNSYNCED = '/usr/lib/persy/persy_busy.png'
-ICON_UNTRACKED = '/usr/lib/persy/persy_untracked.png'
-ICON_WARN = '/usr/lib/persy/persy_warn.png'
-ICON_ERROR = '/usr/lib/persy/persy_error.png'
+ICON_OK = '/usr/lib/persy/persy_ok.svg'
+ICON_UNSYNCED = '/usr/lib/persy/persy_unsynced.svg'
+ICON_UNTRACKED = '/usr/lib/persy/persy_untracked.svg'
+ICON_WARN = '/usr/lib/persy/persy_warn.svg'
+ICON_ERROR = '/usr/lib/persy/persy_error.svg'
 LOGO = '/usr/lib/persy/persy.svg'
 
 class FileChangeHandler(ProcessEvent):
