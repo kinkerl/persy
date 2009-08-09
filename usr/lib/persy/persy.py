@@ -195,7 +195,8 @@ class TheSyncer(Thread):
 					except Exception as e:
 						log.critical(str(e))
 					log.untracked_changes(False)
-					log.unsynced_changes(True)
+					if config['remote']['use_remote']:
+						log.unsynced_changes(True)
 
 			#autopull and push updates every x secs
 			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
