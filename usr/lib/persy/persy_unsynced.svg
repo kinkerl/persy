@@ -17,7 +17,7 @@
    inkscape:export-filename="percy 2.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="persy_unsynced.svg"
+   sodipodi:docname="persy_untracked.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    version="1.0">
   <sodipodi:namedview
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.22627417"
-     inkscape:cx="323.89589"
-     inkscape:cy="694.01381"
+     inkscape:zoom="0.16"
+     inkscape:cx="232.6872"
+     inkscape:cy="930.4612"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -535,5 +535,19 @@
        sodipodi:ry="406.5864"
        d="M 1710.3145,1245.6097 A 406.5864,406.5864 0 1 1 897.14175,1245.6097 A 406.5864,406.5864 0 1 1 1710.3145,1245.6097 z"
        transform="translate(-494.32583,547.3933)" />
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:25.60000038;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect72311"
+       width="132.45334"
+       height="340.29514"
+       x="732.0625"
+       y="1393.0458" />
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:25.60000038;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect72315"
+       width="132.45334"
+       height="340.29514"
+       x="737.716"
+       y="1852.6652" />
   </g>
 </svg>
