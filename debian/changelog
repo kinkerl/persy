@@ -1,6 +1,7 @@
 persy (0.3.6) jaunty; urgency=low
 
   * added svg icons for all the stati 
+  * added secret cli option to set environment variables in the parent shell
   * lots of bugfixes
 
  -- Dennis Schwertel <s@digitalkultur.net> 06 Aug 2009 23:33:00 +0100
