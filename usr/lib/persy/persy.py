@@ -280,6 +280,7 @@ class Talker:
 			print msg
 
 	def warn(self, msg, verbose=None):
+		self.error = True
 		self.log.warn(msg)
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
@@ -289,6 +290,7 @@ class Talker:
 			self.log.warn(str(e))
 
 	def critical(self, msg, verbose=None):
+		self.error = True
 		self.log.critical(msg)
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
