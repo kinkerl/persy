@@ -51,6 +51,8 @@ install: build
 	mkdir -p $(CURDIR)/debian/persy
 	cp -r $(CURDIR)/usr $(CURDIR)/debian/persy/
 	cp -r $(CURDIR)/etc $(CURDIR)/debian/persy/
+
+	#builds(compresses) the manpage
 	mkdir -p $(CURDIR)/debian/persy/usr/share/man/man1
 	gzip -c --best $(CURDIR)/usr/share/man/man1/persy.1 > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
 
