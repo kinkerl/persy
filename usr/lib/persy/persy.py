@@ -57,10 +57,19 @@ LOGFILE=os.path.join(PERSY_DIR,'default.log')
 LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 
+GITBROWSER = "gitk"
+
+ICON_IDLE = '/usr/lib/persy/persy.svg'
+ICON_OK = '/usr/lib/persy/persy_ok.svg'
+ICON_UNSYNCED = '/usr/lib/persy/persy_unsynced.svg'
+ICON_UNTRACKED = '/usr/lib/persy/persy_untracked.svg'
+ICON_WARN = '/usr/lib/persy/persy_warn.svg'
+ICON_ERROR = '/usr/lib/persy/persy_error.svg'
+LOGO = '/usr/lib/persy/persy.svg'
 
 LICENSE_FILE = '/usr/share/common-licenses/GPL-2'
 
-#git variables
+#git variables used by persy
 SERVER_NICK='origin'
 BRANCH='master'
 
@@ -71,45 +80,43 @@ try:
 except Exception:
 	VERSION="undefined"
 
+
+DEFAULT_LOCAL_SLEEP = 5
+DEFAULT_REMOTE_SLEEP = 30
+DEFAULT_REMOTE_HOSTNAME = ''
+DEFAULT_REMOTE_PATH = ''
+
 DEFAULT_CONFIG="""[general]
 name = default
 mail = default
 
 [local]
-sleep = 5
+sleep = %i
 watched =
 maxfilesize = 
 exclude = 
 
 [remote]
 use_remote = False
-sleep = 30
-hostname =
-path =
-"""
-DEFAULT_LOCAL_SLEEP = 5
-DEFAULT_REMOTE_SLEEP = 30
-DEFAULT_REMOTE_HOSTNAME = ''
-DEFAULT_REMOTE_PATH = ''
+sleep = %i
+hostname = %s
+path = %s
+"""%(DEFAULT_LOCAL_SLEEP, DEFAULT_REMOTE_SLEEP, DEFAULT_REMOTE_HOSTNAME, DEFAULT_REMOTE_PATH)
 
-
+#the last filechange event
 lastevent= time.time()
 
-
+#global stuff
 log = None
 worker = None
 notifier = None
 statusIcon = None
 
-ICON_IDLE = '/usr/lib/persy/persy.svg'
-ICON_OK = '/usr/lib/persy/persy_ok.svg'
-ICON_UNSYNCED = '/usr/lib/persy/persy_unsynced.svg'
-ICON_UNTRACKED = '/usr/lib/persy/persy_untracked.svg'
-ICON_WARN = '/usr/lib/persy/persy_warn.svg'
-ICON_ERROR = '/usr/lib/persy/persy_error.svg'
-LOGO = '/usr/lib/persy/persy.svg'
 
 class FileChangeHandler(ProcessEvent):
+	'''Callback for the pyinotify library. 
+Accepts Events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True'''
+
 	def process_IN_MODIFY(self, event):
 		log.debug("modify: %s"% event.pathname)
 		self.check()
@@ -149,6 +156,10 @@ class FileChangeHandler(ProcessEvent):
 
 
 class TheSyncer(Thread):
+	'''The syncing logic.
+executing the local commits, the remote pulls/pushs and the updating of the ignore file after self.ignore_time minutes.
+'''
+
 	def __init__(self, sleep_remote, sleep_local):
 		Thread.__init__(self)
 		self.sleep_remote = sleep_remote
@@ -301,6 +312,168 @@ class Talker:
 		except Exception as e:
 			self.log.warn(str(e))
 
+class Persy_GTK():
+	'''the gtk main loop and the status icon'''
+
+	def __init__(self, start):
+		global statusIcon
+
+		log.info("Starting persy")
+		log.info("watching over: %s"%config['local']['watched'])
+
+		if not config['local']['watched']:
+			log.warn("watching no directories")
+
+		#InterruptWatcher()
+
+		statusIcon = gtk.StatusIcon()
+		menu = gtk.Menu()
+
+		menuItem = gtk.CheckMenuItem("start/stop Persy")
+		menuItem.set_active(False)
+		menuItem.connect('activate',self.persy_toggle)
+		menu.append(menuItem)
+
+		menuItem = gtk.CheckMenuItem("sync Remote")
+		menuItem.set_active(config['remote']['use_remote'])
+		menuItem.connect('activate',self.persy_sync_toggle)
+		menu.append(menuItem)
+
+
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+		menuItem.get_children()[0].set_label('start gitk')
+		menuItem.connect('activate', browse)
+		menu.append(menuItem)
+
+
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+		menuItem.get_children()[0].set_label('optimize')
+		menuItem.connect('activate', self.optimize)
+		menu.append(menuItem)
+
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
+		menuItem.get_children()[0].set_label('show Log')
+		menuItem.connect('activate', self.showlog)
+		menu.append(menuItem)
+
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
+		menuItem.get_children()[0].set_label('show git Log')
+		menuItem.connect('activate', self.showgitlog)
+		menu.append(menuItem)
+
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+		menuItem.connect('activate', self.about)
+		menu.append(menuItem)
+
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+		menuItem.connect('activate', self.quit_cb, statusIcon)
+		menu.append(menuItem)
+
+		statusIcon.set_from_file(ICON_IDLE)
+		statusIcon.set_tooltip("Persy")
+		statusIcon.connect('popup-menu', self.popup_menu_cb, menu)
+		statusIcon.set_visible(True)
+
+		if start:
+			persy_start()
+		try:
+			gtk.main()
+		except KeyboardInterrupt:
+			log.info("bye!", verbose=True)
+			sys.exit(0)
+		except Exception as e:
+			log.critical(str(e), verbose=True)
+
+	def quit_cb(self, widget, data = None):
+		'''stopts persy'''
+		persy_stop()
+		if data:
+			data.set_visible(False)
+		gtk.main_quit()
+		sys.exit(0)
+
+	def popup_menu_cb(self, widget, button, time, data = None):
+		'''show the rightclick menu'''
+		if data:
+			data.show_all()
+			data.popup(None, None, None, 3, time)
+
+
+	def about(self, widget, data = None):
+		'''show the about dialog'''
+		dlg = gtk.AboutDialog()
+		dlg.set_title("About Persy")
+		dlg.set_version(VERSION)
+		dlg.set_program_name("Persy")
+		dlg.set_comments("personal sync")
+		try:
+			dlg.set_license(open(LICENSE_FILE).read())
+		except Exception as e:
+			log.warn(str(e))
+
+		dlg.set_authors([
+			"Dennis Schwertel <s@digitalkultur.net>"
+		])
+		dlg.set_icon_from_file(ICON_IDLE)
+		dlg.set_logo(gtk.gdk.pixbuf_new_from_file_at_size(LOGO, 150, 144))
+		def close(w, res):
+			if res == gtk.RESPONSE_CANCEL:
+				w.hide()
+		dlg.connect("response", close)
+		dlg.show()
+
+	def showgitlog(self, widget, data = None):
+		'''displays the git log'''
+		self.showlog(widget, data, LOGFILE_GIT)
+
+	def showlog(self, widget, data = None, filename=None):
+		'''displays the default.log'''
+		window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+		window.set_resizable(True)
+		window.set_title("Persy Log")
+		window.set_border_width(0)
+
+		sw = gtk.ScrolledWindow()
+		sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+		textview = gtk.TextView()
+		textbuffer = textview.get_buffer()
+		sw.add(textview)
+		sw.show()
+		textview.show()
+		window.add(sw)
+
+		if filename:
+			infile = open(filename, "r")
+		else:
+			infile = open(LOGFILE, "r")
+
+		if infile:
+			string = infile.read()
+			infile.close()
+			textbuffer.set_text(string)
+		window.set_default_size(500,400)
+		window.show()
+
+	def persy_toggle(self, widget, data = None):
+		'''toggles the state of persy (start/stop)'''
+		if widget.active:
+			persy_start()
+		else:
+			persy_stop()
+
+	def persy_sync_toggle(self, widget, data = None):
+		'''toggles the sync state (use_remote) of persy (True/False) '''
+		if widget.active:
+			config['remote']['use_remote'] = True
+		else:
+			config['remote']['use_remote'] = False
+
+		config.write()
+
+	def optimize(self, widget, data = None):
+		'''calls the optimize function'''
+		optimize()
+		
 
 
 def initLocal():
@@ -396,15 +569,16 @@ def gitignore():
 
 
 def optimize():
+	'''executes git-gc'''
 	log.info('starting optimization', verbose=True)
-	log.debug('git gc')
 	class Starter(Thread):
 		def __init__(self,git):
 			Thread.__init__(self)
 			self.git = git
 		def run(self):
 			try:
-				git.gc()
+				log.debug('git gc')
+				self.git.gc()
 			except Exception as e:
 				log.warn(str(e), verbose=True)
 
@@ -413,159 +587,6 @@ def optimize():
 	except Exception as e:
 		log.warn(str(e), verbose=True)
 
-class Persy_GTK():
-	def __init__(self, start):
-		'''The normal syncer'''
-		global statusIcon
-
-		log.info("Starting persy")
-		log.info("watching over: %s"%config['local']['watched'])
-
-		if not config['local']['watched']:
-			log.warn("watching no directories")
-
-		#InterruptWatcher()
-
-		statusIcon = gtk.StatusIcon()
-		menu = gtk.Menu()
-
-		menuItem = gtk.CheckMenuItem("start/stop Persy")
-		menuItem.set_active(False)
-		menuItem.connect('activate',self.persy_toggle)
-		menu.append(menuItem)
-
-		menuItem = gtk.CheckMenuItem("sync Remote")
-		menuItem.set_active(config['remote']['use_remote'])
-		menuItem.connect('activate',self.persy_sync_toggle)
-		menu.append(menuItem)
-
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label('start gitk')
-		menuItem.connect('activate', browse)
-		menu.append(menuItem)
-
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label('optimize')
-		menuItem.connect('activate', self.optimize)
-		menu.append(menuItem)
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
-		menuItem.get_children()[0].set_label('show Log')
-		menuItem.connect('activate', self.showlog)
-		menu.append(menuItem)
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
-		menuItem.get_children()[0].set_label('show git Log')
-		menuItem.connect('activate', self.showgitlog)
-		menu.append(menuItem)
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-		menuItem.connect('activate', self.about)
-		menu.append(menuItem)
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-		menuItem.connect('activate', self.quit_cb, statusIcon)
-		menu.append(menuItem)
-
-		statusIcon.set_from_file(ICON_IDLE)
-		statusIcon.set_tooltip("Persy")
-		statusIcon.connect('popup-menu', self.popup_menu_cb, menu)
-		statusIcon.set_visible(True)
-
-		if start:
-			persy_start()
-		try:
-			gtk.main()
-		except KeyboardInterrupt:
-			log.info("bye!", verbose=True)
-			sys.exit(0)
-		except Exception as e:
-			log.critical(str(e), verbose=True)
-
-	def quit_cb(self, widget, data = None):
-		persy_stop()
-		if data:
-			data.set_visible(False)
-		gtk.main_quit()
-		sys.exit(0)
-
-	def popup_menu_cb(self, widget, button, time, data = None):
-		if data:
-			data.show_all()
-			data.popup(None, None, None, 3, time)
-
-
-	def about(self, widget, data = None):
-		dlg = gtk.AboutDialog()
-		dlg.set_title("About Persy")
-		dlg.set_version(VERSION)
-		dlg.set_program_name("Persy")
-		dlg.set_comments("personal sync")
-		try:
-			dlg.set_license(open(LICENSE_FILE).read())
-		except Exception as e:
-			log.warn(str(e))
-
-		dlg.set_authors([
-			"Dennis Schwertel <s@digitalkultur.net>"
-		])
-		dlg.set_icon_from_file(ICON_IDLE)
-		dlg.set_logo(gtk.gdk.pixbuf_new_from_file_at_size(LOGO, 150, 144))
-		def close(w, res):
-			if res == gtk.RESPONSE_CANCEL:
-				w.hide()
-		dlg.connect("response", close)
-		dlg.show()
-
-	def showgitlog(self, widget, data = None):
-		self.showlog(widget, data, LOGFILE_GIT)
-
-	def showlog(self, widget, data = None, filename=None):
-		window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-		window.set_resizable(True)
-		window.set_title("Persy Log")
-		window.set_border_width(0)
-
-		sw = gtk.ScrolledWindow()
-		sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-		textview = gtk.TextView()
-		textbuffer = textview.get_buffer()
-		sw.add(textview)
-		sw.show()
-		textview.show()
-		window.add(sw)
-
-		if filename:
-			infile = open(filename, "r")
-		else:
-			infile = open(LOGFILE, "r")
-
-		if infile:
-			string = infile.read()
-			infile.close()
-			textbuffer.set_text(string)
-		window.set_default_size(500,400)
-		window.show()
-
-	def persy_toggle(self, widget, data = None):
-		if widget.active:
-			persy_start()
-		else:
-			persy_stop()
-
-	def persy_sync_toggle(self, widget, data = None):
-		if widget.active:
-			config['remote']['use_remote'] = True
-		else:
-			config['remote']['use_remote'] = False
-
-		config.write()
-
-	def optimize(self, widget, data = None):
-		optimize()
-		
 
 
 def persy_start():
@@ -618,14 +639,15 @@ def persy_stop():
 
 
 
-#just ignore the widget
+#just ignore the widget if started from cli
 def browse(wiget=None):
+	'''starts the default git browser'''
 	class Starter(Thread):
 		def __init__(self,git):
 			Thread.__init__(self)
 			self.git = git
 		def run(self):
-			self.git.command("gitk", stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+			self.git.command(GITBROWSER, stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 	Starter(git).start()
 
 def gitlog():
