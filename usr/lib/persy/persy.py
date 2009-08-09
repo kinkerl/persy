@@ -34,14 +34,14 @@ try:
 
 	import gtk
 	import pygtk
-	#Initializing the gtk's thread engine
-	#we NEED this because of the STRANGE (F***ING) thread problem with gtk
 	pygtk.require("2.0")
 except Exception as e:
 	print "You do not have all the dependencies or an error occured when initialising one of the dependencies!"
 	print str(e)
 	sys.exit(1)
 
+#Initializing the gtk's thread engine
+#we NEED this because of the STRANGE (F***ING) thread problem with gtk
 gtk.gdk.threads_init()
 
 __author__ = "Dennis Schwertel"
@@ -57,8 +57,10 @@ LOGFILE=os.path.join(PERSY_DIR,'default.log')
 LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 
+#the default gui git browser
 GITBROWSER = "gitk"
 
+#path to some files and icons
 ICON_IDLE = '/usr/lib/persy/persy.svg'
 ICON_OK = '/usr/lib/persy/persy_ok.svg'
 ICON_UNSYNCED = '/usr/lib/persy/persy_unsynced.svg'
@@ -67,12 +69,14 @@ ICON_WARN = '/usr/lib/persy/persy_warn.svg'
 ICON_ERROR = '/usr/lib/persy/persy_error.svg'
 LOGO = '/usr/lib/persy/persy.svg'
 
+#path to the license file
 LICENSE_FILE = '/usr/share/common-licenses/GPL-2'
 
 #git variables used by persy
 SERVER_NICK='origin'
 BRANCH='master'
 
+#retrieving the installed version of persy
 try:
 	import apt
 	c = apt.Cache()
@@ -80,7 +84,7 @@ try:
 except Exception:
 	VERSION="undefined"
 
-
+#default config entries
 DEFAULT_LOCAL_SLEEP = 5
 DEFAULT_REMOTE_SLEEP = 30
 DEFAULT_REMOTE_HOSTNAME = ''
@@ -115,7 +119,7 @@ statusIcon = None
 
 class FileChangeHandler(ProcessEvent):
 	'''Callback for the pyinotify library. 
-Accepts Events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True'''
+Accepts events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True'''
 
 	def process_IN_MODIFY(self, event):
 		log.debug("modify: %s"% event.pathname)
@@ -236,7 +240,10 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 
 
 class Talker:
-	"""logging, notifications and communications with the outside!"""
+	'''logging, notifications and communications with the outside!
+if the critical or warning function is called, the Talker goes into an "error occured" mode:
+The statusicon will not change to any other state until this errorstate is reseted.
+'''
 	def __init__(self, verbose=False):
 		#init logging
 		self.log = logging.getLogger("")
@@ -257,9 +264,11 @@ class Talker:
 		self.resetError()
 
 	def resetError(self):
+		'''resets the error state'''
 		self.error = False
 
 	def untracked_changes(self, uc):
+		'''sets or unsets the untracked_changes status -> sets the status icon'''
 		if not self.error:
 			if uc:
 				if statusIcon:
@@ -269,6 +278,7 @@ class Talker:
 					statusIcon.set_from_file(ICON_OK)
 
 	def unsynced_changes(self, uc):
+		'''sets or unsets the unsynced_changes status -> sets the status icon'''
 		if not self.error:
 			if uc:
 				if statusIcon:
@@ -278,29 +288,36 @@ class Talker:
 					statusIcon.set_from_file(ICON_OK)
 
 	def setLevel(self, lvl):
+		'''set the logging level. see logging.INFO,logging.DEBUG... for more information'''
 		self.log.setLevel(lvl)
 
 	def debug(self, msg, verbose=None):
+		'''logs a debug message'''
 		self.log.debug(msg)
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
 
 	def info(self, msg, verbose=None):
+		'''logs a info message'''
 		self.log.info(msg)
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
 
 	def warn(self, msg, verbose=None):
+		''' logs a warning message, changes the status icon, fires a notification and sets the error state'''
 		self.error = True
 		self.log.warn(msg)
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
+		if statusIcon:
+			statusIcon.set_from_file(ICON_WARN)#from_stock(gtk.STOCK_HOME)
 		try:
 			pynotify.Notification(self.notifyid, msg, ICON_WARN).show()
 		except Exception as e:
 			self.log.warn(str(e))
 
 	def critical(self, msg, verbose=None):
+		''' logs a critical message, changes the status icon, fires a notification and sets the error state'''
 		self.error = True
 		self.log.critical(msg)
 		if verbose == True or (verbose == None and self.verbose):
@@ -651,9 +668,11 @@ def browse(wiget=None):
 	Starter(git).start()
 
 def gitlog():
+	'''executes the git-log command'''
 	git.log(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
 def gitstatus():
+	'''executes the git-status command'''
 	git.status(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
 def main(argv):
@@ -688,7 +707,6 @@ def main(argv):
 	if not os.path.exists(CONFIGFILE):
 		with open(CONFIGFILE, "w+") as f:
 			f.write(DEFAULT_CONFIG)
-
 
 	#init logging
 	global log
@@ -740,7 +758,7 @@ def main(argv):
 
 
 	#config check if everything is ok
-
+	#================================
 	#general name
 	if not config['general'].has_key('name') or not config['general']['name']:
 		config['general']['name'] = 'default'
@@ -815,7 +833,7 @@ def main(argv):
 
 
 	#initialzing the git binding
-
+	#===========================
 	#if persy is interrupted while git was running, a git.lockfile me be present. we have to remove it!
 	if os.path.exists(GIT_LOCKFILE):
 		try: 
@@ -825,14 +843,14 @@ def main(argv):
 		else:
 			log.warn("removed git lock file")
 
-
-
+	#init pug
 	os.popen("touch %s"%LOGFILE_GIT)
 	std = open(LOGFILE_GIT, 'a')
 	stdin = None #default stdin
 	stdout = std #default stdout
 	stderr = std #default stderr
 	git = pug.PuG(USERHOME, GIT_DIR=GIT_DIR, stdin=stdin, stdout=stdout, stderr=stderr)
+
 
 	if options.init:
 		initLocal()
@@ -857,11 +875,6 @@ def main(argv):
 	else:
 		#START!
 		Persy_GTK(options.start)
-
-#		log.warn("unknown parameters", verbose=True)
-#		parser.print_help()
-#		sys.exit(-1)
-
 
 
 if __name__ == '__main__':
