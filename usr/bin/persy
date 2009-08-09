@@ -19,5 +19,22 @@
 #along with persy; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-/usr/lib/persy/persy.py $@
+if [ "$1" = "--setenv" ]
+	then
+		echo "yay! you are using the secret hidden method to set environment variables in the parent shell."
+		echo "you have to SOURCE this script. this means, call it this way (the DOT is imporant!):"
+		echo ""
+		echo ". persy --setenv"
+		echo ""
+		echo "the following environment variables were set (if called correct):"
+		echo "GIT_DIR=$HOME/.persy/git"
+		echo "GIT_WORK_TREE=$HOME"
+		export "GIT_DIR"=$HOME/.persy/git
+		export "GIT_WORK_TREE"=$HOME
+		
+	else 
+		/usr/lib/persy/persy.py $@
+fi
+
+
 
