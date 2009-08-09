@@ -4,6 +4,6 @@ Categories=GNOME;Utility;
 Comment=personal sync
 Exec=persy
 GenericName=personal sync
-Icon=persy.svg
+Icon=persy
 Name=Persy
 Type=Application
