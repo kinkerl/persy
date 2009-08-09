@@ -869,6 +869,7 @@ def main(argv):
 	elif options.optimize:
 		optimize()
 	elif options.actions:
+		#this i used for cli completion
 		for opt in parser.option_list:
 			print opt.get_opt_string(),
 		sys.exit(0)
