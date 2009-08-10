@@ -387,7 +387,11 @@ class Persy_GTK():
 		menu.append(menuItem)
 
 		statusIcon.set_from_file(ICON_IDLE)
-		statusIcon.set_tooltip("Persy")
+		watched = 'watching over: \n'
+		for x in config['local']['watched']:
+			watched += "- " + x + '\n'
+		watched = watched[:-1]
+		statusIcon.set_tooltip(watched)
 		statusIcon.connect('popup-menu', self.popup_menu_cb, menu)
 		statusIcon.set_visible(True)
 
