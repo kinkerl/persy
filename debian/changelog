@@ -1,5 +1,5 @@
 persy (0.3.7) jaunty; urgency=low
-
+  * fortune support
   * lots of bugfixes
 
  -- Dennis Schwertel <s@digitalkultur.net> 11 Aug 2009 12:34:00 +0100
