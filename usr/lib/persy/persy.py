@@ -163,9 +163,10 @@ Accepts events from the library if a file changes and sets the lastevent time an
 	def check(self, event, typ="undefined"):
 		global lastevent
 		try:
-			log.debug("%s: %s"% (typ, event.pathname))
-		except:
-			log.warn("error with %s event. maybe problem with pathname?"%typ)
+			log.debug("%s: %s"% (typ, event.path))
+		except Exception as e:
+			log.warn("error with %s event. maybe problem with path?"%typ)
+			log.warn(str(e))
 		
 		lastevent = time.time()
 		log.untracked_changes(True)
