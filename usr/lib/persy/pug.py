@@ -15,9 +15,19 @@
 #You should have received a copy of the GNU General Public License
 #along with persy; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+try:
+	import os
+	import subprocess
 
-import os
-import subprocess
+except ImportError as e:
+	print "You do not have all the dependencies:"
+	print str(e)
+	sys.exit(1)
+	
+except Exception as e:
+	print "An error occured when initialising one of the dependencies!"
+	print str(e)
+	sys.exit(1)
 
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
