@@ -356,7 +356,7 @@ The statusicon will not change to any other state until this errorstate is reset
 class Persy_GTK():
 	'''the gtk main loop and the status icon'''
 
-	def __init__(self, start):
+	def __init__(self, start=False):
 		global statusIcon
 
 		log.info("Starting persy")
@@ -371,7 +371,7 @@ class Persy_GTK():
 		menu = gtk.Menu()
 
 		menuItem = gtk.CheckMenuItem("start/stop Persy")
-		menuItem.set_active(False)
+		menuItem.set_active(start)
 		menuItem.connect('activate',self.persy_toggle)
 		menu.append(menuItem)
 
