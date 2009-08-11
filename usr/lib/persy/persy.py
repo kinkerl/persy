@@ -96,7 +96,8 @@ elif aptCache.has_key("qgit"):
 
 #xterm terminal
 XTERM = "xterm"
-
+#fortune
+FORTUNE = "fortune"
 
 
 #default config entries
@@ -187,6 +188,23 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.lastignore = 0
 		self.running = True
 
+	def generateCommitMessage(self):
+		'''generates a nice commit message'''
+		commitDesc = 'Backup by me'
+		if config['general']['fortune']:
+			try:
+				callcmd = []
+				callcmd.append(FORTUNE)
+				callcmd.append('-n')
+				callcmd.append('80')
+				callcmd.append('-s')
+				(stdoutdata, stderrdata) = subprocess.Popen(callcmd, stdout=subprocess.PIPE).communicate()
+				commitDesc = stdoutdata.strip("\n\r")
+			except Exception as e:
+				log.warn("problem with fortune ")
+				log.warn(str(e))
+		return commitDesc
+
 	def stop(self):
 		self.running = False
 
@@ -219,7 +237,7 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 
 					log.debug('git commit')
 					try:
-						git.commit('Backup by me')
+						git.commit(self.generateCommitMessage())
 					except Exception as e:
 						log.critical(str(e))
 					log.untracked_changes(False)
@@ -789,6 +807,15 @@ def main(argv):
 	#general mail
 	if not config['general'].has_key('mail') or not config['general']['mail']:
 		config['general']['name'] = 'mail'
+	
+	#general fortune
+	if not config['general'].has_key('fortune'):
+		config['general']['fortune'] = False
+	if type(config['general']['fortune']) is str and config['general']['fortune'].lower()  == 'true':
+		config['general']['fortune'] = True
+	if not type(config['general']['fortune']) is bool:
+		config['general']['fortune'] = False
+
 
 	#local sleep
 	if not config['local'].has_key('sleep') or not config['local']['sleep']:
