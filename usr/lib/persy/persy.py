@@ -31,6 +31,7 @@ try:
 
 	import pynotify
 	import subprocess
+	import apt
 
 	import gtk
 	import pygtk
@@ -63,9 +64,6 @@ LOGFILE=os.path.join(PERSY_DIR,'default.log')
 LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
 
-#the default gui git browser
-GITBROWSER = "gitk"
-
 #path to some files and icons
 ICON_IDLE = '/usr/lib/persy/persy.svg'
 ICON_OK = '/usr/lib/persy/persy_ok.svg'
@@ -83,12 +81,23 @@ SERVER_NICK='origin'
 BRANCH='master'
 
 #retrieving the installed version of persy
+aptCache = apt.Cache()
 try:
-	import apt
-	c = apt.Cache()
-	VERSION=c["persy"].installedVersion
+	VERSION=aptCache["persy"].installedVersion
 except Exception:
 	VERSION="undefined"
+
+#the default gui git browser
+GITBROWSER = ""
+if aptCache.has_key("gitk"):
+	GITBROWSER = "gitk"
+elif aptCache.has_key("qgit"):
+	GITBROWSER = "qgit"
+
+#xterm terminal
+XTERM = "xterm"
+
+
 
 #default config entries
 DEFAULT_LOCAL_SLEEP = 5
@@ -452,31 +461,34 @@ class Persy_GTK():
 
 	def showlog(self, widget, data = None, filename=None):
 		'''displays the default.log'''
-		window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-		window.set_resizable(True)
-		window.set_title("Persy Log")
-		window.set_border_width(0)
+		'''executes git-gc'''
+		log.debug('show log')
+		class Starter(Thread):
+			def __init__(self):
+				Thread.__init__(self)
+			def run(self):
+				try:
+					callcmd = []
+					callcmd.append('xterm')
+					callcmd.append('-e')
+					callcmd.append('tail')
+					callcmd.append('-f')
+	
+					if filename:
+						callcmd.append(filename)
+					else:
+						callcmd.append(LOGFILE)
 
-		sw = gtk.ScrolledWindow()
-		sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-		textview = gtk.TextView()
-		textbuffer = textview.get_buffer()
-		sw.add(textview)
-		sw.show()
-		textview.show()
-		window.add(sw)
+					(stdoutdata, stderrdata) = subprocess.Popen(callcmd, stdout=subprocess.PIPE).communicate()
+				except Exception as e:
+					log.warn(str(e), verbose=True)
 
-		if filename:
-			infile = open(filename, "r")
-		else:
-			infile = open(LOGFILE, "r")
+		try:
+			Starter().start()
+		except Exception as e:
+			log.warn(str(e), verbose=True)
 
-		if infile:
-			string = infile.read()
-			infile.close()
-			textbuffer.set_text(string)
-		window.set_default_size(500,400)
-		window.show()
+
 
 	def persy_toggle(self, widget, data = None):
 		'''toggles the state of persy (start/stop)'''
