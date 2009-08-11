@@ -201,8 +201,7 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 				(stdoutdata, stderrdata) = subprocess.Popen(callcmd, stdout=subprocess.PIPE).communicate()
 				commitDesc = stdoutdata.strip("\n\r")
 			except Exception as e:
-				log.warn("problem with fortune ")
-				log.warn(str(e))
+				pass #just silently do nothing
 		return commitDesc
 
 	def stop(self):
