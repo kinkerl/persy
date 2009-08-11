@@ -1,3 +1,9 @@
+persy (0.3.7) jaunty; urgency=low
+
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net> 11 Aug 2009 12:34:00 +0100
+
 persy (0.3.6) jaunty; urgency=low
 
   * added svg icons for all the stati 
