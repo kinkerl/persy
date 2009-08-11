@@ -442,6 +442,7 @@ class Persy_GTK():
 		try:
 			dlg.set_license(open(LICENSE_FILE).read())
 		except Exception as e:
+			dlg.set_license("Sorry, i have a problem finding/reading the licence")
 			log.warn(str(e))
 
 		dlg.set_authors([
