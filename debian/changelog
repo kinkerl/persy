@@ -7,7 +7,7 @@ persy (0.3.6) jaunty; urgency=low
   * added support for qgit (gitk is still prefered)
   * lots of bugfixes
 
- -- Dennis Schwertel <s@digitalkultur.net> 06 Aug 2009 23:33:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net> 11 Aug 2009 12:34:00 +0100
 
 
 
