@@ -56,6 +56,7 @@ GIT_WORK_TREE = the root git repostitory
 		return ret
 
 	def execute(self, callcmd, stdin=None, stdout=None, stderr=None):
+		'''executes any command with pug. uses the persy environment variables'''
 		if not stdin:
 			stdin = self.stdin
 		if not stdout:
