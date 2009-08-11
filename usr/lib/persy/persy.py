@@ -370,7 +370,7 @@ class Persy_GTK():
 
 
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label('start gitk')
+		menuItem.get_children()[0].set_label("start %s"%GITBROWSER)
 		menuItem.connect('activate', browse)
 		menu.append(menuItem)
 
@@ -469,7 +469,7 @@ class Persy_GTK():
 			def run(self):
 				try:
 					callcmd = []
-					callcmd.append('xterm')
+					callcmd.append(XTERM)
 					callcmd.append('-e')
 					callcmd.append('tail')
 					callcmd.append('-f')
