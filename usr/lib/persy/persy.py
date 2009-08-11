@@ -35,8 +35,14 @@ try:
 	import gtk
 	import pygtk
 	pygtk.require("2.0")
+
+except ImportError as e:
+	print "You do not have all the dependencies:"
+	print str(e)
+	sys.exit(1)
+	
 except Exception as e:
-	print "You do not have all the dependencies or an error occured when initialising one of the dependencies!"
+	print "An error occured when initialising one of the dependencies!"
 	print str(e)
 	sys.exit(1)
 
