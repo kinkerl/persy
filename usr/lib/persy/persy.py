@@ -122,35 +122,59 @@ class FileChangeHandler(ProcessEvent):
 Accepts events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True'''
 
 	def process_IN_MODIFY(self, event):
-		log.debug("modify: %s"% event.pathname)
+		try:
+			log.debug("modify: %s"% event.pathname)
+		except:
+			log.warn("error with modify event. maybe problem with pathname?")
 		self.check()
 
 	def process_IN_DELETE_SELF(self, event):
-		log.debug("delete_self: %s"% event.pathname)
+		try:
+			log.debug("delete_self: %s"% event.pathname)
+		except:
+			log.warn("error with delete_self event. maybe problem with pathname?")
 		self.check()
 
 	def process_IN_DELETE(self, event):
-		log.debug("delete: %s"% event.pathname)
+		try:
+			log.debug("delete: %s"% event.pathname)
+		except:
+			log.warn("error with delete event. maybe problem with pathname?")
 		self.check()
 
 	def process_IN_CREATE(self, event):
-		log.debug("create: %s"% event.pathname)
+		try:
+			log.debug("create: %s"% event.pathname)
+		except:
+			log.warn("error with create event. maybe problem with pathname?")
 		self.check()
 
 	def process_IN_CLOSE_WRITE(self, event):
-		log.debug("write: %s"% event.pathname)
+		try:
+			log.debug("close_write: %s"% event.pathname)
+		except:
+			log.warn("error with close_write event. maybe problem with pathname?")
 		self.check()
 
 	def process_IN_MOVE_SELF(self, event):
-		log.debug("move_self: %s"% event.pathname)
+		try:
+			log.debug("move_self: %s"% event.pathname)
+		except:
+			log.warn("error with move_self event. maybe problem with pathname?")
 		self.check()
 
 	def process_IN_MOVED_TO(self, event):
-		log.debug("move_to: %s"% event.pathname)
+		try:
+			log.debug("move_to: %s"% event.pathname)
+		except:
+			log.warn("error with move_to event. maybe problem with pathname?")
 		self.check()
 
 	def process_IN_MOVED_FROM(self, event):
-		log.debug("move_from: %s"% event.pathname)
+		try:
+			log.debug("move_from: %s"% event.pathname)
+		except:
+			log.warn("error with move_from event. maybe problem with pathname?")
 		self.check()
 
 	def check(self):
