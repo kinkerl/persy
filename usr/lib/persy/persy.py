@@ -472,6 +472,8 @@ class Persy_GTK():
 					callcmd.append(XTERM)
 					callcmd.append('-e')
 					callcmd.append('tail')
+					callcmd.append('-n')
+					callcmd.append('100')
 					callcmd.append('-f')
 	
 					if filename:
