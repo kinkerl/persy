@@ -8,6 +8,40 @@ backup application or in an environment with multiple computers and at least
 one server to keep files and folder in sync between them.
 .SH OPTIONS
 look at persy --help for more information about options
+.SH USAGE
+The normal local workflow is:
+
+     $ persy --config --uname=USERNAME      # username used for the commits
+     $ persy --config --mail=MAIL           # useremail used for the commits
+     $ persy --init                         # run once to initialize the backup system
+     $ persy --config --add_dir=DIR         # DIR is the absolute path to a directory 
+                                            # in /home/user (example: /home/username/documents).
+                                            # The directory is then integrated in persy
+     $ persy                                # starts persy
+
+
+The normal workflow with a remote Server and an already initialized local repository is:
+
+     $ persy --config --hostname=SERVER     # SERVER = location of the server
+     $ persy --config --path=PATH           # PATH = absolute path of the gitrepository on 
+                                            # the server (path will be created if it does not exist)
+     $ persy --initRemote                   # created a bare git repository on the server in PATH
+     $ persy                                # starts persy 
+
+
+The normal workflow with a already initialized remote Server and no local repository. 
+IMPORTANT: the synced directories should be empty before the sync. i had some problems 
+with already existing files. you can start a sync and then add new files to the synced directory.
+
+     $ persy --config --uname=USERNAME      # username used for the commits
+     $ persy --config --email=MAIL          # useremail used for the commits
+     $ persy --config --hostname=SERVER     # SERVER = identifier(ip) of the server
+     $ persy --config --path=PATH           # PATH = absolute path of the gitrepository on the 
+                                            # server
+     $ persy --config --add_dir=DIR         # add the same DIR to persy as on the other machines
+     $ persy --syncwithremote               # connects to the remote server and 
+                                            # pulls the files from the git repository
+     $ persy                                # starts persy
 
 .SH SEE ALSO
 Persy on Github: <http://github.com/kinkerl/persy>
