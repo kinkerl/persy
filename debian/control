@@ -7,6 +7,6 @@ Standards-Version: 3.7.2
 
 Package: persy
 Architecture: all
-Depends: git-core, git, python-pyinotify, python-paramiko, python-gtk2, python-notify, python (>= 2.5), python (<< 3), gitk
+Depends: git-core, git, python-pyinotify, python-paramiko, python-gtk2, python-notify, python (>= 2.5), python (<< 3), gitk | qgit, gnome-terminal | konsole | xterm
 Description: persy
  persy can be used just to backup your data or sync your data with multiple machines. persy is designed to run by its own on the computer or in an environment with at least one server in reach of every computer with synced files.
