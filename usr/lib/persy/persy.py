@@ -122,63 +122,36 @@ class FileChangeHandler(ProcessEvent):
 Accepts events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True'''
 
 	def process_IN_MODIFY(self, event):
-		try:
-			log.debug("modify: %s"% event.pathname)
-		except:
-			log.warn("error with modify event. maybe problem with pathname?")
-		self.check()
+		self.check(event, "IN_MODIFY")
 
 	def process_IN_DELETE_SELF(self, event):
-		try:
-			log.debug("delete_self: %s"% event.pathname)
-		except:
-			log.warn("error with delete_self event. maybe problem with pathname?")
-		self.check()
+		self.check(event, "IN_DELETE_SELF")
 
 	def process_IN_DELETE(self, event):
-		try:
-			log.debug("delete: %s"% event.pathname)
-		except:
-			log.warn("error with delete event. maybe problem with pathname?")
-		self.check()
+		self.check(event, "IN_DELETE")
 
 	def process_IN_CREATE(self, event):
-		try:
-			log.debug("create: %s"% event.pathname)
-		except:
-			log.warn("error with create event. maybe problem with pathname?")
-		self.check()
+		self.check(event, "IN_CREATE")
 
 	def process_IN_CLOSE_WRITE(self, event):
-		try:
-			log.debug("close_write: %s"% event.pathname)
-		except:
-			log.warn("error with close_write event. maybe problem with pathname?")
-		self.check()
+		self.check(event, "IN_CLOSE_WRITE")
 
 	def process_IN_MOVE_SELF(self, event):
-		try:
-			log.debug("move_self: %s"% event.pathname)
-		except:
-			log.warn("error with move_self event. maybe problem with pathname?")
-		self.check()
+		self.check(event, "IN_MOVE_SELF")
 
 	def process_IN_MOVED_TO(self, event):
-		try:
-			log.debug("move_to: %s"% event.pathname)
-		except:
-			log.warn("error with move_to event. maybe problem with pathname?")
-		self.check()
+		self.check(event, "IN_MOVED_TO")
 
 	def process_IN_MOVED_FROM(self, event):
-		try:
-			log.debug("move_from: %s"% event.pathname)
-		except:
-			log.warn("error with move_from event. maybe problem with pathname?")
-		self.check()
+		self.check(event, "IN_MOVED_FROM")
 
-	def check(self):
+	def check(self, event, typ="undefined"):
 		global lastevent
+		try:
+			log.debug("%s: %s"% (typ, event.pathname))
+		except:
+			log.warn("error with %s event. maybe problem with pathname?"%typ)
+		
 		lastevent = time.time()
 		log.untracked_changes(True)
 
