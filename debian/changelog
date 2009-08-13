@@ -1,4 +1,4 @@
-persy (0.3.7) jaunty; urgency=low
+persy (0.4) jaunty; urgency=low
   * fortune support
   * new icons for unsynced and untracked
   * lots of bugfixes
