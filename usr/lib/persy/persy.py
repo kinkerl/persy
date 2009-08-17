@@ -617,9 +617,6 @@ def gitignore():
 	for entry in config['local']['exclude']:
 		current.append(entry)
 
-	for entry in config['local']['exclude']:
-		current.append(entry)
-
 	with open(os.path.join(PERSY_DIR,GITIGNOREFILE), "w+") as f:
 		for c in current:
 			f.write(c+"\n")
