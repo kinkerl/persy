@@ -593,10 +593,17 @@ def gitignore():
 	#add every file and folder (if not already done) to .gitignore if they are not part WATCHED
 	current = os.listdir(USERHOME)
 	for f in config['local']['watched']:
-		if not f.startswith(USERHOME):
-			continue #savetycheck
+		#if not f.startswith(USERHOME):
+		if f.startswith(USERHOME): #if absolute path
 		#strip dir stuff, the +1 is for the file seperator
-		f = f[len(USERHOME)+1:]
+			f = f[len(USERHOME)+1:]
+		elif f.startswith('~'):
+			f = f[2:] #strip the ~/
+		elif f.startswith('/'):
+			#continue #savetycheck
+			#i assume if it still starts with /, its outside of /home
+			continue
+
 		if os.sep in f:
 			f = f[:f.index(os.sep)]
 		if f in current:
