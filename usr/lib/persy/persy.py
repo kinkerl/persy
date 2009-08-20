@@ -597,8 +597,10 @@ def gitignore():
 		if f.startswith(USERHOME): #if absolute path
 		#strip dir stuff, the +1 is for the file seperator
 			f = f[len(USERHOME)+1:]
-		elif f.startswith('~'):
+		elif f.startswith('~/'):
 			f = f[2:] #strip the ~/
+		elif f.startswith('./'):
+			f = f[2:] #strip the ./
 		elif f.startswith('/'):
 			#continue #savetycheck
 			#i assume if it still starts with /, its outside of /home
