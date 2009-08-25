@@ -1,4 +1,11 @@
+persy (0.4.1) jaunty; urgency=low
+
+  * added support for short forms of added directories
+
+ -- Dennis Schwertel <s@digitalkultur.net> 25 Aug 2009 20:20:00 +0100
+
 persy (0.4) jaunty; urgency=low
+
   * fortune support
   * new icons for unsynced and untracked
   * lots of bugfixes
