@@ -47,6 +47,7 @@ GIT_WORK_TREE = the root git repostitory
 		self.stdin=stdin
 		self.stderr=stderr
 		self.stdout=stdout
+		self.cwd = os.environ["HOME"]
 
 	def __getEnv__(self):
 		'''Gets all the default environment variables and add some new'''
@@ -63,7 +64,7 @@ GIT_WORK_TREE = the root git repostitory
 			stdout = self.stdout
 		if not stderr:
 			stderr = self.stderr
-		return subprocess.Popen(callcmd, stdout=stdout, stdin=stdin, stderr=stderr, close_fds=True, env=self.__getEnv__()).wait()
+		return subprocess.Popen(callcmd, stdout=stdout, stdin=stdin, stderr=stderr, close_fds=True, env=self.__getEnv__(), cwd=self.cwd).wait()
 
 	def gc(self, stdin=None, stdout=None, stderr=None, params = []):
 		'''garbage collector'''
