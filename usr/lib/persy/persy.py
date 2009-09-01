@@ -186,7 +186,6 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.lastcommit = 0
 		self.lastsync = 0
 		self.lastignore = 0
-		self.lastrenotify = time.time()
 		self.running = True
 
 	def generateCommitMessage(self):
@@ -268,19 +267,6 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 					gitignore()
 				except Exception as e:
 					log.warn(str(e))
-			#restarts tne notify hook, it hangs for no apparent reason
-			if time.time() - self.lastrenotify > 60:
-				self.lastrenotify = time.time()
-				if notifier:
-					try:
-						notifier.stop()
-					except RuntimeError:
-						pass
-					except OSError:
-						pass
-					except KeyError:
-						pass
-					notify_init()
 
 
 class Talker:
@@ -666,10 +652,12 @@ def optimize():
 
 
 
-
-def notify_init():
-	log.info("inits notify hook")
+def persy_start():
+	''' Starts Persy'''
+	global worker
 	global notifier
+	log.info("start working")
+
 	FLAGS=EventsCodes.ALL_FLAGS
 	mask = FLAGS['IN_MODIFY'] | FLAGS['IN_DELETE_SELF']|FLAGS['IN_DELETE'] | FLAGS['IN_CREATE'] | FLAGS['IN_CLOSE_WRITE'] | FLAGS['IN_MOVE_SELF'] | FLAGS['IN_MOVED_TO'] | FLAGS['IN_MOVED_FROM'] # watched events
 
@@ -677,21 +665,13 @@ def notify_init():
 	#addin the watched directories
 	for watch in config['local']['watched']:
 		wdd = wm.add_watch("%s"%(watch), mask, rec=True)
-	notifier = ThreadedNotifier(wm, FileChangeHandler())
-	notifier.start()
 
-
-def persy_start():
-	''' Starts Persy'''
-	global worker
-	log.info("start working")
 	worker = TheSyncer(config['remote']['sleep'], config['local']['sleep'])
-	worker.start()
+	notifier = ThreadedNotifier(wm, FileChangeHandler())
+
 	log.resetError()
-
-	notify_init()
-
-
+	worker.start()
+	notifier.start()
 	if statusIcon:
 		statusIcon.set_from_file(ICON_OK)#from_stock(gtk.STOCK_HOME)
 
@@ -743,9 +723,6 @@ def gitstatus():
 
 def main(argv):
 	args = argv[1:]
-
-	#change in the userhome for all actions
-	os.chdir(USERHOME)
 
 	#cli options
 	from optparse import OptionParser
