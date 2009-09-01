@@ -724,6 +724,9 @@ def gitstatus():
 def main(argv):
 	args = argv[1:]
 
+	#change in the userhome for all actions
+	os.chdir(USERHOME)
+
 	#cli options
 	from optparse import OptionParser
 	parser = OptionParser(usage = "use --start to start the daemon")
