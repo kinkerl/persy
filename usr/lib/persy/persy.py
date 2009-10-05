@@ -90,9 +90,9 @@ except Exception:
 
 #the default gui git browser
 GITBROWSER = ""
-if aptCache.has_key("gitk"):
+if aptCache["gitk"].installedVersion:
 	GITBROWSER = "gitk"
-elif aptCache.has_key("qgit"):
+elif aptCache["qgit"].installedVersion:
 	GITBROWSER = "qgit"
 
 #xterm terminal
