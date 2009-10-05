@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 #License
 #=======
@@ -17,12 +18,12 @@
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 try:
+	import sys
 	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
 	from subprocess import Popen
 	from threading import Thread
 	from configobj import ConfigObj
 	import os
-	import sys
 	import time
 	import logging , logging.handlers
 	import time, signal, operator
