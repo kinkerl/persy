@@ -29,7 +29,7 @@ else:
     FIRST_SIGNAL = signal.SIGTERM # 15
     SECOND_SIGNAL = signal.SIGKILL # 9
 
-DEFAULT_TIMEOUT = 5
+DEFAULT_TIMEOUT = 0  
 DEFAULT_WAIT_TIME = 0.25
 
 
@@ -48,7 +48,11 @@ class Subprocess2(object):
 
         self.start_time = time.time()
         self.process = subprocess.Popen(*args, **kwags)
-        self.wait_loop()
+        #only use a timeout if the a timeout is set larger than 0
+        if DEFAULT_TIMEOUT > 0:
+                self.wait_loop()
+        else:
+                self.process.wait()
 
     def wait_loop(self):
         """

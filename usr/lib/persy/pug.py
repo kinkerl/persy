@@ -65,7 +65,7 @@ GIT_WORK_TREE = the root git repostitory
 			stdout = self.stdout
 		if not stderr:
 			stderr = self.stderr
-		p = subprocess2.Subprocess2(callcmd, stdout=stdout, stdin=stdin, stderr=stderr, close_fds=True, env=self.__getEnv__(), cwd=self.cwd,timeout = 10)
+		p = subprocess2.Subprocess2(callcmd, stdout=stdout, stdin=stdin, stderr=stderr, close_fds=True, env=self.__getEnv__(), cwd=self.cwd )# ,timeout = 10)
 		return p.process.returncode
 
 	def gc(self, stdin=None, stdout=None, stderr=None, params = []):
