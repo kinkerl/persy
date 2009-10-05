@@ -388,10 +388,11 @@ class Persy_GTK():
 		menu.append(menuItem)
 
 
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label("start %s"%GITBROWSER)
-		menuItem.connect('activate', browse)
-		menu.append(menuItem)
+		if GITBROWSER != "":
+			menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+			menuItem.get_children()[0].set_label("start %s"%GITBROWSER)
+			menuItem.connect('activate', browse)
+			menu.append(menuItem)
 
 
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
