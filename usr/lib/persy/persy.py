@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 #License
 #=======
@@ -17,12 +18,12 @@
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 try:
+	import sys
 	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
 	from subprocess import Popen
 	from threading import Thread
 	from configobj import ConfigObj
 	import os
-	import sys
 	import time
 	import logging , logging.handlers
 	import time, signal, operator
@@ -383,12 +384,11 @@ class Persy_GTK():
 		menuItem.connect('activate',self.persy_sync_toggle)
 		menu.append(menuItem)
 
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label("start %s"%config['general']['prefgitbrowser'])
-		menuItem.connect('activate', browse)
-		menu.append(menuItem)
-
+		if config['general']['prefgitbrowser'] != "":
+			menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+			menuItem.get_children()[0].set_label("start %s"%config['general']['prefgitbrowser'])
+			menuItem.connect('activate', browse)
+			menu.append(menuItem)
 
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
 		menuItem.get_children()[0].set_label('optimize')
@@ -823,20 +823,20 @@ def main(argv):
 
 	#general gitgui
 	if not config['general'].has_key('prefgitbrowser'):
-		if aptCache.has_key(GITGUI[0]):
+		if aptCache[ GITGUI[0]].installedVersion:
 			config['general']['prefgitbrowser'] = GITGUI[0]
-		elif aptCache.has_key(GITGUI[1]):
+		elif aptCache[ GITGUI[1]].installedVersion:
 			config['general']['prefgitbrowser'] = GITGUI[1]
 		else:
 			log.critical("gitk and qgit is not installed, this should not happen!")
 			config['general']['prefgitbrowser'] = ""
 	if type(config['general']['prefgitbrowser']) is str:
-		if config['general']['prefgitbrowser'].lower() in GITGUI and aptCache.has_key(config['general']['prefgitbrowser'].lower()):
+		if config['general']['prefgitbrowser'].lower() in GITGUI and aptCache[config['general']['prefgitbrowser'].lower()].installedVersion:
 			config['general']['prefgitbrowser'] = config['general']['prefgitbrowser'].lower()
 		else:
-			if aptCache.has_key(GITGUI[0]):
+			if aptCache[ GITGUI[0]].installedVersion:
 				config['general']['prefgitbrowser'] = GITGUI[0]
-			elif aptCache.has_key(GITGUI[1]):
+			elif aptCache[ GITGUI[1]].installedVersion:
 				config['general']['prefgitbrowser'] = GITGUI[1]
 			else:
 				log.warn("gitk and qgit is not installed, this should not happen!")
@@ -844,9 +844,6 @@ def main(argv):
 	if not type(config['general']['prefgitbrowser']) is str:
 		log.warn("the config for the prefered git browser is broken?")
 		config['general']['prefgitbrowser'] = ""
-
-
-
 
 
 	#local sleep
