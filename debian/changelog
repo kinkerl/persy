@@ -1,3 +1,10 @@
+persy (0.4.3) jaunty; urgency=low
+
+  * added a config option for a prefered gui browser
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net> 1 Sep 2009 14:20:00 +0100
+
 persy (0.4.2) jaunty; urgency=low
 
   * lots of bugfixes
