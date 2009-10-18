@@ -12,10 +12,10 @@ You can view the SOURCE and the WIKI on http://wiki.github.com/kinkerl/persy
 
 Since persy builds upon the infrastructure offered by Git, it shares its main
 strengths:
-* speed: recovering your data is faster that cp -a...
-* full revision history
-* space-efficient data store, with file compression and textual/binary deltas
-* efficient transport protocol to replicate the backup (faster than rsync)
+ *    speed: recovering your data is faster that cp -a...
+ *    full revision history
+ *    space-efficient data store, with file compression and textual/binary deltas
+ *    efficient transport protocol to replicate the backup (faster than rsync)
 
 Dependencies
 ------------
