@@ -1,6 +1,7 @@
 persy (0.4.3) jaunty; urgency=low
 
   * added a config option for a prefered gui browser
+  * added active remote sync
   * lots of bugfixes
 
  -- Dennis Schwertel <s@digitalkultur.net> 1 Sep 2009 14:20:00 +0100
