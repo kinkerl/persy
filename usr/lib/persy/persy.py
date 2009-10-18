@@ -185,6 +185,10 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.lastsync = 0
 		self.lastignore = 0
 		self.running = True
+		self.onetimesync = False #if set will sync one time!
+	
+	def setonetimesync(self):
+		self.onetimesync = True
 
 	def generateCommitMessage(self):
 		'''generates a nice commit message'''
@@ -237,12 +241,11 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 						git.commit(self.generateCommitMessage())
 					except Exception as e:
 						log.critical(str(e))
-					log.untracked_changes(False)
-					if config['remote']['use_remote']:
-						log.unsynced_changes(True)
+					log.unsynced_changes(True)
 
 			#autopull and push updates every x secs
-			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
+			if self.onetimesync or (config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote):
+				self.onetimesync = False
 				self.lastsync = time.time()
 				log.info('remote sync')
 				if config['local']['watched']:
@@ -379,7 +382,12 @@ class Persy_GTK():
 		menuItem.connect('activate',self.persy_toggle)
 		menu.append(menuItem)
 
-		menuItem = gtk.CheckMenuItem("sync Remote")
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+		menuItem.get_children()[0].set_label('sync Remote')
+		menuItem.connect('activate', self.persy_sync_remote)
+		menu.append(menuItem)
+
+		menuItem = gtk.CheckMenuItem("auto sync Remote")
 		menuItem.set_active(config['remote']['use_remote'])
 		menuItem.connect('activate',self.persy_sync_toggle)
 		menu.append(menuItem)
@@ -514,6 +522,15 @@ class Persy_GTK():
 			persy_start()
 		else:
 			persy_stop()
+
+	def persy_sync_remote(self, widget, data = None):
+		global worker
+		log.info("onetimesync")
+		if worker:
+			try:
+				worker.setonetimesync()
+			except RuntimeError:
+				pass
 
 	def persy_sync_toggle(self, widget, data = None):
 		'''toggles the sync state (use_remote) of persy (True/False) '''
