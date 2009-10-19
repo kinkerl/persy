@@ -27,7 +27,7 @@ strengths:
  *    efficient transport protocol to replicate the backup (faster than rsync)
 
 Dependencies
-------------
+============
 persy needs the following software at run-time:
 
  *    git-core
@@ -36,16 +36,16 @@ persy needs the following software at run-time:
  *    gitk or qgit as a graphical git browser
 
 Installation
-------------
+============
 If you can, install the deb package. It will take care of "all" problems. 
 After the installaton you will have to do some configuraton depending on your environment, needs and whishes.
 
 Usage
-------------
+============
 How to configure persy and use it
 
 Setup for a local usage
-============
+------------
 The normal local configuration is:
 
      $ persy --config --uname=USERNAME      # username used for the commits
@@ -59,7 +59,7 @@ The normal local configuration is:
 
 
 Setup for syncing and/o usinga remote backup
-============
+------------
 If you want to sync or backup your files on a remote server, you have to enable a public key authentication 
 for the server!!!
 
@@ -87,7 +87,7 @@ with already existing files. you can start a sync and then add new files to the 
      $ persy                                # starts persy
 
 License
-------------
+============
 persy is free software: you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
 Software Foundation, either version 2 of the License, or (at your option) any
