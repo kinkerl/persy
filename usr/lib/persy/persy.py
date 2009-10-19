@@ -33,18 +33,18 @@ try:
 	import pynotify
 	import subprocess
 	import apt
-
+	import gettext
 	import gtk
 	import pygtk
 	pygtk.require("2.0")
 
 except ImportError as e:
-	print "You do not have all the dependencies:"
+	print _("You do not have all the dependencies:")
 	print str(e)
 	sys.exit(1)
 	
 except Exception as e:
-	print "An error occured when initialising one of the dependencies!"
+	print _("An error occured when initialising one of the dependencies!")
 	print str(e)
 	sys.exit(1)
 
@@ -74,6 +74,11 @@ ICON_WARN = '/usr/lib/persy/persy_warn.svg'
 ICON_ERROR = '/usr/lib/persy/persy_error.svg'
 LOGO = '/usr/lib/persy/persy.svg'
 
+#localizations
+#LOCALEDIR='/usr/lib/persy/locale'
+#
+LOCALEDIR='/home/kinkerl/devel/persy/persy/usr/lib/persy/locale'
+
 #path to the license file
 LICENSE_FILE = '/usr/share/common-licenses/GPL-2'
 
@@ -86,7 +91,7 @@ aptCache = apt.Cache()
 try:
 	VERSION=aptCache["persy"].installedVersion
 except Exception:
-	VERSION="undefined"
+	VERSION=_("undefined")
 
 #the default gui git browser
 GITGUI=["gitk", "qgit"] #possible browsers
@@ -164,7 +169,7 @@ Accepts events from the library if a file changes and sets the lastevent time an
 		try:
 			log.debug("%s: %s"% (typ, event.path))
 		except Exception as e:
-			log.warn("error with %s event. maybe problem with path?"%typ)
+			log.warn(_("error with %s event. maybe problem with path?")%typ)
 			log.warn(str(e))
 		
 		lastevent = time.time()
@@ -377,39 +382,39 @@ class Persy_GTK():
 		statusIcon = gtk.StatusIcon()
 		menu = gtk.Menu()
 
-		menuItem = gtk.CheckMenuItem("start/stop Persy")
+		menuItem = gtk.CheckMenuItem(_("start/stop Persy"))
 		menuItem.set_active(start)
 		menuItem.connect('activate',self.persy_toggle)
 		menu.append(menuItem)
 
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label('sync Remote')
+		menuItem.get_children()[0].set_label(_('sync Remote'))
 		menuItem.connect('activate', self.persy_sync_remote)
 		menu.append(menuItem)
 
-		menuItem = gtk.CheckMenuItem("auto sync Remote")
+		menuItem = gtk.CheckMenuItem(_("auto sync Remote"))
 		menuItem.set_active(config['remote']['use_remote'])
 		menuItem.connect('activate',self.persy_sync_toggle)
 		menu.append(menuItem)
 
 		if config['general']['prefgitbrowser'] != "":
 			menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-			menuItem.get_children()[0].set_label("start %s"%config['general']['prefgitbrowser'])
+			menuItem.get_children()[0].set_label(_("start %s")%config['general']['prefgitbrowser'])
 			menuItem.connect('activate', browse)
 			menu.append(menuItem)
 
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label('optimize')
+		menuItem.get_children()[0].set_label(_('optimize'))
 		menuItem.connect('activate', self.optimize)
 		menu.append(menuItem)
 
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
-		menuItem.get_children()[0].set_label('show Log')
+		menuItem.get_children()[0].set_label(_('show Log'))
 		menuItem.connect('activate', self.showlog)
 		menu.append(menuItem)
 
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
-		menuItem.get_children()[0].set_label('show git Log')
+		menuItem.get_children()[0].set_label(_('show git Log'))
 		menuItem.connect('activate', self.showgitlog)
 		menu.append(menuItem)
 
@@ -422,7 +427,7 @@ class Persy_GTK():
 		menu.append(menuItem)
 
 		statusIcon.set_from_file(ICON_IDLE)
-		watched = 'watching over: \n'
+		watched = _('watching over:')+' \n'
 		for x in config['local']['watched']:
 			watched += "- " + x + '\n'
 		watched = watched[:-1]
@@ -458,14 +463,14 @@ class Persy_GTK():
 	def about(self, widget, data = None):
 		'''show the about dialog'''
 		dlg = gtk.AboutDialog()
-		dlg.set_title("About Persy")
+		dlg.set_title(_("About Persy"))
 		dlg.set_version(VERSION)
 		dlg.set_program_name("Persy")
-		dlg.set_comments("personal sync")
+		dlg.set_comments(_("personal sync"))
 		try:
 			dlg.set_license(open(LICENSE_FILE).read())
 		except Exception as e:
-			dlg.set_license("Sorry, i have a problem finding/reading the licence")
+			dlg.set_license(_("Sorry, i have a problem finding/reading the licence"))
 			log.warn(str(e))
 
 		dlg.set_authors([
@@ -550,10 +555,10 @@ class Persy_GTK():
 def initLocal():
 	'''initialises the local repository'''
 	if not config.has_key('general') or not config['general'].has_key('name') or not config['general']['name'] :
-		log.critical('username not set, cannot create git repository. use "persy --config --name=NAME" to set one')
+		log.critical(_('username not set, cannot create git repository. use "persy --config --name=NAME" to set one'))
 		sys.exit(-1)
 	if not config.has_key('general') or not config['general'].has_key('mail') or not config['general']['mail']:
-		log.critical('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one')
+		log.critical(_('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one'))
 		sys.exit(-1)
 	try:
 		git.init()
@@ -574,9 +579,9 @@ def initRemote():
 	stdin2, stdout2, stderr2 = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
 	client.close()
 	if stderr1:
-		log.warn("error creating dir, maybe it exists already?")
+		log.warn(_("error creating dir, maybe it exists already?"))
 	elif stderr2:
-		log.critical("error on remote git init")
+		log.critical(_("error on remote git init"))
 	elif not config['remote']['use_remote']:
 		#no errors:so we are save to use the remote
 		config['remote']['use_remote'] = True
@@ -738,30 +743,33 @@ def gitstatus():
 def main(argv):
 	args = argv[1:]
 
+	#init the localisation
+	gettext.install("messages", LOCALEDIR)
+
 	#change in the userhome for all actions
 	os.chdir(USERHOME)
 
 	#cli options
 	from optparse import OptionParser
-	parser = OptionParser(usage = "use --start to start the daemon")
-	parser.add_option("--start",action="store_true", default=False, help="starts persy")
-	parser.add_option("--init",action="store_true", default=False, help="initializes the local repository")
-	parser.add_option("--initremote",action="store_true", default=False, help="initializes the remote repository")
-	parser.add_option("--syncwithremote",action="store_true", default=False, help="syncs with a remote repository")
-	parser.add_option("--browse",action="store_true", default=False, help="start a browser (gitk)")
-	parser.add_option("--log",action="store_true", default=False, help="prints git log")
-	parser.add_option("--status",action="store_true", default=False, help="prints git status")
-	parser.add_option("--ignore",action="store_true", default=False, help="recreates list of all ignored files")
-	parser.add_option("--verbose",action="store_true", default=False, help="print git output to stdout and set loglevel to DEBUG")
-	parser.add_option("--actions",action="store_true", default=False, help="computer-readable actions in persy")
-	parser.add_option("--optimize",action="store_true", default=False, help="optimizes the stored files. saves space and improves performance")
+	parser = OptionParser(usage = _("use --start to start the daemon"))
+	parser.add_option("--start",action="store_true", default=False, help=_("starts persy"))
+	parser.add_option("--init",action="store_true", default=False, help=_("initializes the local repository"))
+	parser.add_option("--initremote",action="store_true", default=False, help=_("initializes the remote repository"))
+	parser.add_option("--syncwithremote",action="store_true", default=False, help=_("syncs with a remote repository"))
+	parser.add_option("--browse",action="store_true", default=False, help=_("start a browser (gitk)"))
+	parser.add_option("--log",action="store_true", default=False, help=_("prints git log"))
+	parser.add_option("--status",action="store_true", default=False, help=_("prints git status"))
+	parser.add_option("--ignore",action="store_true", default=False, help=_("recreates list of all ignored files"))
+	parser.add_option("--verbose",action="store_true", default=False, help=_("print git output to stdout and set loglevel to DEBUG"))
+	parser.add_option("--actions",action="store_true", default=False, help=_("computer-readable actions in persy"))
+	parser.add_option("--optimize",action="store_true", default=False, help=_("optimizes the stored files. saves space and improves performance"))
 
-	parser.add_option("--config",action="store_true", default=False, help="needed to change configurations")
-	parser.add_option("--uname", dest="uname", default="", help="username used in commit")
-	parser.add_option("--mail", dest="mail", default="", help="useremail used in commit")
-	parser.add_option("--path", dest="path", default="", help="path on the server")
-	parser.add_option("--hostname", dest="hostname", default="", help="hostname of the remote server")
-	parser.add_option("--add_dir", dest="add_dir", default="", help="add local wachted folders")
+	parser.add_option("--config",action="store_true", default=False, help=_("needed flag to change configurations"))
+	parser.add_option("--uname", dest="uname", default="", help=_("username used in commit"))
+	parser.add_option("--mail", dest="mail", default="", help=_("useremail used in commit"))
+	parser.add_option("--path", dest="path", default="", help=_("path on the server"))
+	parser.add_option("--hostname", dest="hostname", default="", help=_("hostname of the remote server"))
+	parser.add_option("--add_dir", dest="add_dir", default="", help=_("add local wachted folders"))
 	(options, args) = parser.parse_args(args)
 
 	#create programdirectory and a default config file
@@ -809,7 +817,7 @@ def main(argv):
 			config.write()
 			log.info("writing new config")
 		else:
-			log.warn("nothing changed, maybe wrong attribute names?")
+			log.warn(_("nothing changed, maybe wrong attribute names?"))
 		sys.exit(0)
 	elif options.syncwithremote or options.initremote:
 		if options.hostname:
@@ -845,7 +853,7 @@ def main(argv):
 		elif aptCache[ GITGUI[1]].installedVersion:
 			config['general']['prefgitbrowser'] = GITGUI[1]
 		else:
-			log.critical("gitk and qgit is not installed, this should not happen!")
+			log.critical(_("gitk and qgit is not installed, this should not happen!"))
 			config['general']['prefgitbrowser'] = ""
 	if type(config['general']['prefgitbrowser']) is str:
 		if config['general']['prefgitbrowser'].lower() in GITGUI and aptCache[config['general']['prefgitbrowser'].lower()].installedVersion:
@@ -856,10 +864,10 @@ def main(argv):
 			elif aptCache[ GITGUI[1]].installedVersion:
 				config['general']['prefgitbrowser'] = GITGUI[1]
 			else:
-				log.warn("gitk and qgit is not installed, this should not happen!")
+				log.warn(_("gitk and qgit is not installed, this should not happen!"))
 				config['general']['prefgitbrowser'] = ""
 	if not type(config['general']['prefgitbrowser']) is str:
-		log.warn("the config for the prefered git browser is broken?")
+		log.warn(_("the config for the prefered git browser is broken?"))
 		config['general']['prefgitbrowser'] = ""
 
 
@@ -937,7 +945,7 @@ def main(argv):
 		except Exception as e:
 			log.warn(str(e))
 		else:
-			log.warn("removed git lock file")
+			log.warn(_("removed git lock file"))
 
 	#init pug
 	os.popen("touch %s"%LOGFILE_GIT)
