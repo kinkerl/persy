@@ -47,6 +47,9 @@ The normal local workflow is:
      $ persy                                # starts persy
 
 
+If you want to sync or backup your files on a remote server, you have to enable a public key authentication 
+for the server!!!
+
 The normal workflow with a remote Server and an already initialized local repository is:
 
      $ persy --config --hostname=SERVER     # SERVER = location of the server
