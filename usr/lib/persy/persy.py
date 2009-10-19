@@ -112,6 +112,7 @@ DEFAULT_REMOTE_PATH = ''
 DEFAULT_CONFIG="""[general]
 name = default
 mail = default
+prefgitbrowser=gitk
 fortune=False
 
 [local]
