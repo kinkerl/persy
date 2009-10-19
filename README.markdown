@@ -2,12 +2,21 @@ Copyright (C) 2009 Dennis Schwertel <s@digitalkultur.net>
 
 persy -- sync tool based on Git
 =================================
+persy can be used just to backup your data or sync your data with multiple
+machines. persy is designed to run by its own on a computer as a revision based
+backup application or in an environment with multiple computers and at least
+one server to keep files and folder in sync between them.
+
+You can report BUGS, ask QUESTIONS and DOWNLOAD persy on https://launchpad.net/persy
+You can view the SOURCE and the WIKI on http://wiki.github.com/kinkerl/persy
+
 Since persy builds upon the infrastructure offered by Git, it shares its main
 strengths:
-* speed: recovering your data is faster that cp -a...
-* full revision history
-* space-efficient data store, with file compression and textual/binary deltas
-* efficient transport protocol to replicate the backup (faster than rsync)
+
+ *    speed: recovering your data is faster that cp -a...
+ *    full revision history
+ *    space-efficient data store, with file compression and textual/binary deltas
+ *    efficient transport protocol to replicate the backup (faster than rsync)
 
 Dependencies
 ------------
@@ -37,6 +46,9 @@ The normal local workflow is:
                                             # The directory is then integrated in persy
      $ persy                                # starts persy
 
+
+If you want to sync or backup your files on a remote server, you have to enable a public key authentication 
+for the server!!!
 
 The normal workflow with a remote Server and an already initialized local repository is:
 

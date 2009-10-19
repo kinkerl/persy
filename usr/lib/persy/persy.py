@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 #License
 #=======
@@ -17,12 +18,12 @@
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 try:
+	import sys
 	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
 	from subprocess import Popen
 	from threading import Thread
 	from configobj import ConfigObj
 	import os
-	import sys
 	import time
 	import logging , logging.handlers
 	import time, signal, operator
@@ -88,11 +89,8 @@ except Exception:
 	VERSION="undefined"
 
 #the default gui git browser
-GITBROWSER = ""
-if aptCache.has_key("gitk"):
-	GITBROWSER = "gitk"
-elif aptCache.has_key("qgit"):
-	GITBROWSER = "qgit"
+GITGUI=["gitk", "qgit"] #possible browsers
+
 
 #xterm terminal
 XTERM = "xterm"
@@ -102,7 +100,7 @@ FORTUNE = "fortune"
 
 #default config entries
 DEFAULT_LOCAL_SLEEP = 5
-DEFAULT_REMOTE_SLEEP = 30
+DEFAULT_REMOTE_SLEEP = 300
 DEFAULT_REMOTE_HOSTNAME = ''
 DEFAULT_REMOTE_PATH = ''
 
@@ -118,7 +116,7 @@ exclude =
 
 [remote]
 use_remote = False
-sleep = %i
+sleep = %if
 hostname = %s
 path = %s
 """%(DEFAULT_LOCAL_SLEEP, DEFAULT_REMOTE_SLEEP, DEFAULT_REMOTE_HOSTNAME, DEFAULT_REMOTE_PATH)
@@ -187,6 +185,10 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.lastsync = 0
 		self.lastignore = 0
 		self.running = True
+		self.onetimesync = False #if set will sync one time!
+	
+	def setonetimesync(self):
+		self.onetimesync = True
 
 	def generateCommitMessage(self):
 		'''generates a nice commit message'''
@@ -239,12 +241,11 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 						git.commit(self.generateCommitMessage())
 					except Exception as e:
 						log.critical(str(e))
-					log.untracked_changes(False)
-					if config['remote']['use_remote']:
-						log.unsynced_changes(True)
+					log.unsynced_changes(True)
 
 			#autopull and push updates every x secs
-			if config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote:
+			if self.onetimesync or (config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote):
+				self.onetimesync = False
 				self.lastsync = time.time()
 				log.info('remote sync')
 				if config['local']['watched']:
@@ -381,17 +382,21 @@ class Persy_GTK():
 		menuItem.connect('activate',self.persy_toggle)
 		menu.append(menuItem)
 
-		menuItem = gtk.CheckMenuItem("sync Remote")
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+		menuItem.get_children()[0].set_label('sync Remote')
+		menuItem.connect('activate', self.persy_sync_remote)
+		menu.append(menuItem)
+
+		menuItem = gtk.CheckMenuItem("auto sync Remote")
 		menuItem.set_active(config['remote']['use_remote'])
 		menuItem.connect('activate',self.persy_sync_toggle)
 		menu.append(menuItem)
 
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label("start %s"%GITBROWSER)
-		menuItem.connect('activate', browse)
-		menu.append(menuItem)
-
+		if config['general']['prefgitbrowser'] != "":
+			menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+			menuItem.get_children()[0].set_label("start %s"%config['general']['prefgitbrowser'])
+			menuItem.connect('activate', browse)
+			menu.append(menuItem)
 
 		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
 		menuItem.get_children()[0].set_label('optimize')
@@ -517,6 +522,15 @@ class Persy_GTK():
 			persy_start()
 		else:
 			persy_stop()
+
+	def persy_sync_remote(self, widget, data = None):
+		global worker
+		log.info("onetimesync")
+		if worker:
+			try:
+				worker.setonetimesync()
+			except RuntimeError:
+				pass
 
 	def persy_sync_toggle(self, widget, data = None):
 		'''toggles the sync state (use_remote) of persy (True/False) '''
@@ -710,7 +724,7 @@ def browse(wiget=None):
 			Thread.__init__(self)
 			self.git = git
 		def run(self):
-			self.git.command(GITBROWSER, stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+			self.git.command(config['general']['prefgitbrowser'], stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 	Starter(git).start()
 
 def gitlog():
@@ -723,6 +737,9 @@ def gitstatus():
 
 def main(argv):
 	args = argv[1:]
+
+	#change in the userhome for all actions
+	os.chdir(USERHOME)
 
 	#cli options
 	from optparse import OptionParser
@@ -820,6 +837,30 @@ def main(argv):
 		config['general']['fortune'] = True
 	if not type(config['general']['fortune']) is bool:
 		config['general']['fortune'] = False
+
+	#general gitgui
+	if not config['general'].has_key('prefgitbrowser'):
+		if aptCache[ GITGUI[0]].installedVersion:
+			config['general']['prefgitbrowser'] = GITGUI[0]
+		elif aptCache[ GITGUI[1]].installedVersion:
+			config['general']['prefgitbrowser'] = GITGUI[1]
+		else:
+			log.critical("gitk and qgit is not installed, this should not happen!")
+			config['general']['prefgitbrowser'] = ""
+	if type(config['general']['prefgitbrowser']) is str:
+		if config['general']['prefgitbrowser'].lower() in GITGUI and aptCache[config['general']['prefgitbrowser'].lower()].installedVersion:
+			config['general']['prefgitbrowser'] = config['general']['prefgitbrowser'].lower()
+		else:
+			if aptCache[ GITGUI[0]].installedVersion:
+				config['general']['prefgitbrowser'] = GITGUI[0]
+			elif aptCache[ GITGUI[1]].installedVersion:
+				config['general']['prefgitbrowser'] = GITGUI[1]
+			else:
+				log.warn("gitk and qgit is not installed, this should not happen!")
+				config['general']['prefgitbrowser'] = ""
+	if not type(config['general']['prefgitbrowser']) is str:
+		log.warn("the config for the prefered git browser is broken?")
+		config['general']['prefgitbrowser'] = ""
 
 
 	#local sleep
