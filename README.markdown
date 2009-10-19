@@ -58,7 +58,7 @@ The normal local configuration is:
      $ persy                                # starts persy
 
 
-Setup for syncing and/o usinga remote backup
+Setup for syncing and/or using a remote backup
 ------------
 If you want to sync or backup your files on a remote server, you have to enable a public key authentication 
 for the server!!!
