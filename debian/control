@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Dennis Schwertel<s@digitalkultur.net>
 Build-Depends: debhelper (>= 5)
 Standards-Version: 3.7.2
+Homepage: https://launchpad.net/persy
 
 Package: persy
 Architecture: all

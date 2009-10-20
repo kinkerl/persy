@@ -1,3 +1,10 @@
+persy (0.5) jaunty; urgency=low
+
+  * localization started
+  * readme improved
+
+ -- Dennis Schwertel <s@digitalkultur.net> 18 Okt 2009 14:20:00 +0100
+
 persy (0.4.3) jaunty; urgency=low
 
   * added a config option for a prefered gui browser
