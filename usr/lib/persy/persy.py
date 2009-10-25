@@ -223,7 +223,9 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.lastignore = 0
 		self.running = True
 		self.onetimesync = False #if set will sync one time!
-	
+		self.errorlocalcounter = 0
+		self.errorremotecounter = 0
+		
 	def setonetimesync(self):
 		self.onetimesync = True
 
@@ -264,21 +266,29 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 					try:
 						gitignore()
 					except Exception as e:
-						log.warn(str(e))
+						self.errorlocalcounter += 1
+						if self.errorlocalcounter > 1:
+							log.warn(str(e))
 
 
 					log.debug('git add')
 					try:
 						git.add(config['local']['watched'])
 					except Exception as e:
-						log.warn(str(e))
+						self.errorlocalcounter += 1
+						if self.errorlocalcounter > 1:
+							log.warn(str(e))
 
 					log.debug('git commit')
 					try:
 						git.commit(self.generateCommitMessage())
 					except Exception as e:
-						log.critical(str(e))
-					log.unsynced_changes(True)
+						self.errorlocalcounter += 1
+						if self.errorlocalcounter > 1:						
+							log.critical(str(e))
+					else: 
+						self.errorlocalcounter = 0					
+						log.unsynced_changes(True)
 
 			#autopull and push updates every x secs
 			if self.onetimesync or (config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote):
@@ -286,18 +296,30 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 				self.lastsync = time.time()
 				log.info('remote sync')
 				if config['local']['watched']:
+					okcounter = 0
 					log.debug('git pull')
 					try:
 						git.pull(SERVER_NICK,BRANCH)
 					except Exception as e:
-						log.critical(str(e))
+						self.errorremotecounter += 1
+						if self.errorremotecounter > 2:
+							log.critical(str(e))
+					else:
+						okcounter += 1
 
 					log.debug('git push')
 					try:
 						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
-						log.critical(str(e))
-					log.unsynced_changes(False)
+						self.errorremotecounter += 1
+						if self.errorremotecounter > 2:					
+							log.critical(str(e))
+					else:
+						okcounter += 1
+
+					if okcounter >= 2:
+						self.errorlocalcounter = 0	
+						log.unsynced_changes(False)
 			#start git ignore on a regular basis (ignoring unwatched files)
 			if time.time() - self.lastignore >  self.ignore_time:
 				self.lastignore = time.time()
