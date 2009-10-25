@@ -609,41 +609,50 @@ class Persy_GTK():
 def initLocal():
 	'''initialises the local repository'''
 	if not config.has_key('general') or not config['general'].has_key('name') or not config['general']['name'] :
-		log.critical(_('username not set, cannot create git repository. use "persy --config --name=NAME" to set one'))
+		log.critical(_('username not set, cannot create git repository. use "persy --config --name=NAME" to set one'), verbose=True)
 		sys.exit(-1)
 	if not config.has_key('general') or not config['general'].has_key('mail') or not config['general']['mail']:
-		log.critical(_('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one'))
+		log.critical(_('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one'), verbose=True)
 		sys.exit(-1)
+
+	log.info("initialising local repository...", verbose=True)
+	
 	try:
 		git.init()
 		git.config('user.name',config['general']['name'])
 		git.config('user.email',config['general']['mail'])
 		gitignore()
 	except Exception as e:
-		log.critical(str(e))
+		log.critical(str(e), verbose=True)
+	else:
+		log.info("done", verbose=True)
 
 def initRemote():
 	'''initialises the remote repository'''
-	client = paramiko.SSHClient()
-	client.load_system_host_keys()
-	client.connect(config['remote']['hostname'] )
-	# the follow commands are executet on a remote host. we can not know the path to git,
-	# mkdir and cd so we will not replace them with a absolute path
-	stdin1, stdout1, stderr1 = client.exec_command("mkdir -m 700 %s"%config['remote']['path'])
-	stdin2, stdout2, stderr2 = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
-	client.close()
-	if stderr1:
-		log.warn(_("error creating dir, maybe it exists already?"))
-	elif stderr2:
-		log.critical(_("error on remote git init"))
-	elif not config['remote']['use_remote']:
-		#no errors:so we are save to use the remote
-		config['remote']['use_remote'] = True
-		config.write()
-	try:
+
+	log.info("initialising and adding remote repository...", verbose=True)
+	try:	
+		client = paramiko.SSHClient()
+		client.load_system_host_keys()
+		client.connect(config['remote']['hostname'] )
+		# the follow commands are executet on a remote host. we can not know the path to git,
+		# mkdir and cd so we will not replace them with a absolute path
+		stdin1, stdout1, stderr1 = client.exec_command("mkdir -m 700 %s"%config['remote']['path'])
+		stdin2, stdout2, stderr2 = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
+		client.close()
+		if stderr1:
+			log.warn(_("error creating dir, maybe it exists already?"), verbose=True)
+		elif stderr2:
+			log.critical(_("error on remote git init"), verbose=True)
+		elif not config['remote']['use_remote']:
+			#no errors:so we are save to use the remote
+			config['remote']['use_remote'] = True
+			config.write()
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 	except Exception as e:
-		log.critical(str(e))
+		log.critical(str(e), verbose=True)
+	else:
+		log.info("done", verbose=True)
 
 
 def syncWithRemote():
