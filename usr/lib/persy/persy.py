@@ -118,7 +118,12 @@ DEFAULT_CONFIG="""# persy configuration file
 # on every machine different and get a nice git history
 name = default
 mail = default
+
+# the prefered gui git browser. possible values are gitk and qgit. if you want 
+# more, mail me.
 prefgitbrowser=gitk
+
+# use small fortune lines in the git commit description (True/False)
 fortune=False
 
 
