@@ -116,13 +116,14 @@ mail = default
 
 # configurations for the local backup
 [local]
-# the local sleep time in secounds. a backup is only done after this time
+# the local sleep delay time in secounds. a backup is only done after this time
+# after the last file action
 sleep = %i
 
 # a coma seperated list auf the files and directories, persy is syncing
 watched =
 
-# the maximal allowed filesize for the synced files
+# the maximal allowed filesize for the synced files in bytes
 maxfilesize = 
 
 # a regular expression to match against every file. matches are excuded
@@ -131,13 +132,13 @@ exclude =
 
 # configuration for a remote backup/sync
 [remote]
-# backup and sync to a remote host
+# backup and sync to a remote host (False/True)
 use_remote = False
 
-# the interval in which a sync happens
+# the interval in which a sync happens in seconds
 sleep = %if
 
-# the host adress of the remote server
+# the host adress of the remote server as ip or name
 hostname = %s
 
 # the absolute path on the remote server to the git repository
