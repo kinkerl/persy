@@ -615,7 +615,7 @@ def initLocal():
 		log.critical(_('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one'), verbose=True)
 		sys.exit(-1)
 
-	log.info("initialising local repository...", verbose=True)
+	log.info(_("initialising local repository..."), verbose=True)
 	
 	try:
 		git.init()
@@ -625,12 +625,12 @@ def initLocal():
 	except Exception as e:
 		log.critical(str(e), verbose=True)
 	else:
-		log.info("done", verbose=True)
+		log.info(_("done"), verbose=True)
 
 def initRemote():
 	'''initialises the remote repository'''
 
-	log.info("initialising and adding remote repository...", verbose=True)
+	log.info(_("initialising and adding remote repository..."), verbose=True)
 	try:	
 		client = paramiko.SSHClient()
 		client.load_system_host_keys()
@@ -652,7 +652,7 @@ def initRemote():
 	except Exception as e:
 		log.critical(str(e), verbose=True)
 	else:
-		log.info("done", verbose=True)
+		log.info(_("done"), verbose=True)
 
 
 def syncWithRemote():
