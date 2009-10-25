@@ -176,7 +176,7 @@ msgstr ""
 
 #: persy.py:948
 msgid "removed git lock file"
-msgstr ""
+msgstr "entferne git lock datei"
 
 #~ msgid "test"
 #~ msgstr "thetest"
