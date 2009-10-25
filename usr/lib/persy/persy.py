@@ -105,19 +105,42 @@ DEFAULT_REMOTE_HOSTNAME = ''
 DEFAULT_REMOTE_PATH = ''
 
 DEFAULT_CONFIG="""[general]
+#persy configuration file
+
+# default name and mail for a commit. the default name and mail is fine and is 
+# only interessting if you want to sync multiple machines. you can set the name
+# on every machine different and get a nice git history
 name = default
 mail = default
 
+
+# configurations for the local backup
 [local]
+# the local sleep time in secounds. a backup is only done after this time
 sleep = %i
+
+# a coma seperated list auf the files and directories, persy is syncing
 watched =
+
+# the maximal allowed filesize for the synced files
 maxfilesize = 
+
+# a regular expression to match against every file. matches are excuded
 exclude = 
 
+
+# configuration for a remote backup/sync
 [remote]
+# backup and sync to a remote host
 use_remote = False
+
+# the interval in which a sync happens
 sleep = %if
+
+# the host adress of the remote server
 hostname = %s
+
+# the absolute path on the remote server to the git repository
 path = %s
 """%(DEFAULT_LOCAL_SLEEP, DEFAULT_REMOTE_SLEEP, DEFAULT_REMOTE_HOSTNAME, DEFAULT_REMOTE_PATH)
 
