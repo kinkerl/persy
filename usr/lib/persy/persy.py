@@ -104,9 +104,10 @@ DEFAULT_REMOTE_SLEEP = 300
 DEFAULT_REMOTE_HOSTNAME = ''
 DEFAULT_REMOTE_PATH = ''
 
-DEFAULT_CONFIG="""[general]
-#persy configuration file
+DEFAULT_CONFIG="""# persy configuration file
 
+# general configuration
+[general]
 # default name and mail for a commit. the default name and mail is fine and is 
 # only interessting if you want to sync multiple machines. you can set the name
 # on every machine different and get a nice git history
