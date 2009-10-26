@@ -56,7 +56,6 @@ def getSoftwareVersion(name):
 		print _("using apt-cache to find out about installed apps and versions..")
 		apt_pkg.InitConfig()
 		apt_pkg.InitSystem()
-		print _("done!")
 		aptCache = apt_pkg.GetCache()
 	try:
 		return aptCache[name].CurrentVer.VerStr
