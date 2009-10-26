@@ -142,7 +142,12 @@ DEFAULT_CONFIG="""# persy configuration file
 # on every machine different and get a nice git history
 name = default
 mail = default
+
+# the prefered gui git browser. possible values are gitk and qgit. if you want 
+# more, mail me.
 prefgitbrowser=gitk
+
+# use small fortune lines in the git commit description (True/False)
 fortune=False
 
 
@@ -244,7 +249,9 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.lastignore = 0
 		self.running = True
 		self.onetimesync = False #if set will sync one time!
-	
+		self.errorlocalcounter = 0
+		self.errorremotecounter = 0
+		
 	def setonetimesync(self):
 		self.onetimesync = True
 
@@ -285,21 +292,29 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 					try:
 						gitignore()
 					except Exception as e:
-						log.warn(str(e))
+						self.errorlocalcounter += 1
+						if self.errorlocalcounter > 1:
+							log.warn(str(e))
 
 
 					log.debug('git add')
 					try:
 						git.add(config['local']['watched'])
 					except Exception as e:
-						log.warn(str(e))
+						self.errorlocalcounter += 1
+						if self.errorlocalcounter > 1:
+							log.warn(str(e))
 
 					log.debug('git commit')
 					try:
 						git.commit(self.generateCommitMessage())
 					except Exception as e:
-						log.critical(str(e))
-					log.unsynced_changes(True)
+						self.errorlocalcounter += 1
+						if self.errorlocalcounter > 1:						
+							log.critical(str(e))
+					else: 
+						self.errorlocalcounter = 0					
+						log.unsynced_changes(True)
 
 			#autopull and push updates every x secs
 			if self.onetimesync or (config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote):
@@ -307,18 +322,30 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 				self.lastsync = time.time()
 				log.info('remote sync')
 				if config['local']['watched']:
+					okcounter = 0
 					log.debug('git pull')
 					try:
 						git.pull(SERVER_NICK,BRANCH)
 					except Exception as e:
-						log.critical(str(e))
+						self.errorremotecounter += 1
+						if self.errorremotecounter > 2:
+							log.critical(str(e))
+					else:
+						okcounter += 1
 
 					log.debug('git push')
 					try:
 						git.push(SERVER_NICK,BRANCH)
 					except Exception as e:
-						log.critical(str(e))
-					log.unsynced_changes(False)
+						self.errorremotecounter += 1
+						if self.errorremotecounter > 2:					
+							log.critical(str(e))
+					else:
+						okcounter += 1
+
+					if okcounter >= 2:
+						self.errorlocalcounter = 0	
+						log.unsynced_changes(False)
 			#start git ignore on a regular basis (ignoring unwatched files)
 			if time.time() - self.lastignore >  self.ignore_time:
 				self.lastignore = time.time()
@@ -608,41 +635,50 @@ class Persy_GTK():
 def initLocal():
 	'''initialises the local repository'''
 	if not config.has_key('general') or not config['general'].has_key('name') or not config['general']['name'] :
-		log.critical(_('username not set, cannot create git repository. use "persy --config --name=NAME" to set one'))
+		log.critical(_('username not set, cannot create git repository. use "persy --config --name=NAME" to set one'), verbose=True)
 		sys.exit(-1)
 	if not config.has_key('general') or not config['general'].has_key('mail') or not config['general']['mail']:
-		log.critical(_('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one'))
+		log.critical(_('mail not set, cannot create git repository. use "persy --config --mail=MAIL" to set one'), verbose=True)
 		sys.exit(-1)
+
+	log.info(_("initialising local repository..."), verbose=True)
+	
 	try:
 		git.init()
 		git.config('user.name',config['general']['name'])
 		git.config('user.email',config['general']['mail'])
 		gitignore()
 	except Exception as e:
-		log.critical(str(e))
+		log.critical(str(e), verbose=True)
+	else:
+		log.info(_("done"), verbose=True)
 
 def initRemote():
 	'''initialises the remote repository'''
-	client = paramiko.SSHClient()
-	client.load_system_host_keys()
-	client.connect(config['remote']['hostname'] )
-	# the follow commands are executet on a remote host. we can not know the path to git,
-	# mkdir and cd so we will not replace them with a absolute path
-	stdin1, stdout1, stderr1 = client.exec_command("mkdir -m 700 %s"%config['remote']['path'])
-	stdin2, stdout2, stderr2 = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
-	client.close()
-	if stderr1:
-		log.warn(_("error creating dir, maybe it exists already?"))
-	elif stderr2:
-		log.critical(_("error on remote git init"))
-	elif not config['remote']['use_remote']:
-		#no errors:so we are save to use the remote
-		config['remote']['use_remote'] = True
-		config.write()
-	try:
+
+	log.info(_("initialising and adding remote repository..."), verbose=True)
+	try:	
+		client = paramiko.SSHClient()
+		client.load_system_host_keys()
+		client.connect(config['remote']['hostname'] )
+		# the follow commands are executet on a remote host. we can not know the path to git,
+		# mkdir and cd so we will not replace them with a absolute path
+		stdin1, stdout1, stderr1 = client.exec_command("mkdir -m 700 %s"%config['remote']['path'])
+		stdin2, stdout2, stderr2 = client.exec_command("cd %s && git --bare init"%config['remote']['path'])
+		client.close()
+		if stderr1:
+			log.warn(_("error creating dir, maybe it exists already?"), verbose=True)
+		elif stderr2:
+			log.critical(_("error on remote git init"), verbose=True)
+		elif not config['remote']['use_remote']:
+			#no errors:so we are save to use the remote
+			config['remote']['use_remote'] = True
+			config.write()
 		git.remoteAdd(SERVER_NICK,"ssh://%s/%s"%(config['remote']['hostname'],config['remote']['path']))
 	except Exception as e:
-		log.critical(str(e))
+		log.critical(str(e), verbose=True)
+	else:
+		log.info(_("done"), verbose=True)
 
 
 def syncWithRemote():
