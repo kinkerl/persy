@@ -557,7 +557,7 @@ class Persy_GTK():
 			"Dennis Schwertel <s@digitalkultur.net>"
 		])
 		dlg.set_icon_from_file(LOGO)
-		dlg.set_logo(gtk.gdk.pixbuf_new_from_file_at_size(LOGO, 150, 144))
+		dlg.set_logo(gtk.gdk.pixbuf_new_from_file_at_size(LOGO, 128, 128))
 		def close(w, res):
 			if res == gtk.RESPONSE_CANCEL:
 				w.hide()
