@@ -93,7 +93,7 @@ LOGO = '/usr/lib/persy/persy.svg'
 #localizations
 #LOCALEDIR='/usr/lib/persy/locale'
 #
-LOCALEDIR='/home/kinkerl/devel/persy/persy/usr/lib/persy/locale'
+LOCALEDIR='/usr/lib/persy/locale'
 #init the localisation
 gettext.install("messages", LOCALEDIR)
 
