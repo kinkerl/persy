@@ -32,7 +32,7 @@ try:
 
 	import pynotify
 	import subprocess
-	import apt
+	import apt_pkg
 	import gettext
 	import gtk
 	import pygtk
@@ -47,6 +47,21 @@ except Exception as e:
 	print _("An error occured when initialising one of the dependencies!")
 	print str(e)
 	sys.exit(1)
+
+
+def getSoftwareVersion(name):
+	"""returns the version of a installed software as a String. Returns None if not installed"""
+	global aptCache
+	if not aptCache:
+		apt_pkg.init()
+		aptCache = apt_pkg.GetCache()
+	try:
+		return aptCache[name].CurrentVer.VerStr
+	except Exception as e:
+		print e
+		return None
+
+
 
 #Initializing the gtk's thread engine
 #we NEED this because of the STRANGE (F***ING) thread problem with gtk
@@ -78,6 +93,8 @@ LOGO = '/usr/lib/persy/persy.svg'
 #LOCALEDIR='/usr/lib/persy/locale'
 #
 LOCALEDIR='/home/kinkerl/devel/persy/persy/usr/lib/persy/locale'
+#init the localisation
+gettext.install("messages", LOCALEDIR)
 
 #path to the license file
 LICENSE_FILE = '/usr/share/common-licenses/GPL-2'
@@ -86,11 +103,17 @@ LICENSE_FILE = '/usr/share/common-licenses/GPL-2'
 SERVER_NICK='origin'
 BRANCH='master'
 
+
+#aptCache is global for version retrieving
+#this is set with the first call of getSoftwareVersion()
+aptCache = None
+
 #retrieving the installed version of persy
-aptCache = apt.Cache()
 try:
-	VERSION=aptCache["persy"].installedVersion
-except Exception:
+	VERSION=getSoftwareVersion('persy')
+	if not VERSION:
+		VERSION=_("undefined")
+except Exception as e:
 	VERSION=_("undefined")
 
 #the default gui git browser
@@ -161,6 +184,8 @@ log = None
 worker = None
 notifier = None
 statusIcon = None
+
+
 
 
 class FileChangeHandler(ProcessEvent):
@@ -770,9 +795,6 @@ def gitstatus():
 def main(argv):
 	args = argv[1:]
 
-	#init the localisation
-	gettext.install("messages", LOCALEDIR)
-
 	#change in the userhome for all actions
 	os.chdir(USERHOME)
 
@@ -875,20 +897,20 @@ def main(argv):
 
 	#general gitgui
 	if not config['general'].has_key('prefgitbrowser'):
-		if aptCache[ GITGUI[0]].installedVersion:
+		if getSoftwareVersion(GITGUI[0]):
 			config['general']['prefgitbrowser'] = GITGUI[0]
-		elif aptCache[ GITGUI[1]].installedVersion:
+		elif getSoftwareVersion(GITGUI[1]):
 			config['general']['prefgitbrowser'] = GITGUI[1]
 		else:
 			log.critical(_("gitk and qgit is not installed, this should not happen!"))
 			config['general']['prefgitbrowser'] = ""
 	if type(config['general']['prefgitbrowser']) is str:
-		if config['general']['prefgitbrowser'].lower() in GITGUI and aptCache[config['general']['prefgitbrowser'].lower()].installedVersion:
+		if config['general']['prefgitbrowser'].lower() in GITGUI and getSoftwareVersion(config['general']['prefgitbrowser']):
 			config['general']['prefgitbrowser'] = config['general']['prefgitbrowser'].lower()
 		else:
-			if aptCache[ GITGUI[0]].installedVersion:
+			if getSoftwareVersion(GITGUI[0]):
 				config['general']['prefgitbrowser'] = GITGUI[0]
-			elif aptCache[ GITGUI[1]].installedVersion:
+			elif getSoftwareVersion(GITGUI[1]):
 				config['general']['prefgitbrowser'] = GITGUI[1]
 			else:
 				log.warn(_("gitk and qgit is not installed, this should not happen!"))
