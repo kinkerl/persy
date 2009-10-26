@@ -556,7 +556,7 @@ class Persy_GTK():
 		dlg.set_authors([
 			"Dennis Schwertel <s@digitalkultur.net>"
 		])
-		dlg.set_icon_from_file(ICON_IDLE)
+		dlg.set_icon_from_file(LOGO)
 		dlg.set_logo(gtk.gdk.pixbuf_new_from_file_at_size(LOGO, 150, 144))
 		def close(w, res):
 			if res == gtk.RESPONSE_CANCEL:
