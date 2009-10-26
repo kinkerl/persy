@@ -53,7 +53,8 @@ def getSoftwareVersion(name):
 	"""returns the version of a installed software as a String. Returns None if not installed"""
 	global aptCache
 	if not aptCache:
-		apt_pkg.init()
+		apt_pkg.InitConfig()
+		apt_pkg.InitSystem()
 		aptCache = apt_pkg.GetCache()
 	try:
 		return aptCache[name].CurrentVer.VerStr
