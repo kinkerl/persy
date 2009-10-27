@@ -3,8 +3,13 @@ persy (0.5) jaunty; urgency=low
   * The "media whore" release
   * localization started
   * readme improved
+  * updated configfile with more default values 
+  * updated configfile with some explanations
+  * replaced a deprecated python-apt function
+  * set icon svg size to 128x128px (and fixing a gtk warning with this)
+  * implemented delayed error reporting (finaly!)
 
- -- Dennis Schwertel <s@digitalkultur.net> 18 Okt 2009 14:20:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net> 27 Okt 2009 10:20:00 +0100
 
 persy (0.4.3) jaunty; urgency=low
 
