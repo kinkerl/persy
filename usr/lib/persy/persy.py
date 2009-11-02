@@ -18,6 +18,23 @@
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 try:
+	import gettext
+	#localizations
+	LOCALEDIR='/usr/lib/persy/locale'
+	#init the localisation
+	gettext.install("messages", LOCALEDIR)
+except Exception as e:
+	print "I have problems initializing the translations (gettext). Will use plain english instead"
+	print str(e)
+
+	#check if the _ function is initialized, if not, do a fallback!
+	if not _:
+		def _(msg):
+			"""fallback-function if the original function did not initialize propperly"""
+			return msg
+
+
+try:
 	import sys
 	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
 	from subprocess import Popen
@@ -33,7 +50,7 @@ try:
 	import pynotify
 	import subprocess
 	import apt_pkg
-	import gettext
+
 	import gtk
 	import pygtk
 	pygtk.require("2.0")
@@ -91,12 +108,7 @@ ICON_WARN = '/usr/lib/persy/persy_warn.svg'
 ICON_ERROR = '/usr/lib/persy/persy_error.svg'
 LOGO = '/usr/lib/persy/persy.svg'
 
-#localizations
-#LOCALEDIR='/usr/lib/persy/locale'
-#
-LOCALEDIR='/usr/lib/persy/locale'
-#init the localisation
-gettext.install("messages", LOCALEDIR)
+
 
 #path to the license file
 LICENSE_FILE = '/usr/share/common-licenses/GPL-2'
