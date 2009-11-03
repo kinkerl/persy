@@ -46,20 +46,16 @@ try:
 	import time, signal, operator
 	import paramiko
 	import pug
-
 	import pynotify
 	import subprocess
 	import apt_pkg
-
 	import gtk
 	import pygtk
 	pygtk.require("2.0")
-
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
 	sys.exit(1)
-	
 except Exception as e:
 	print _("An error occured when initialising one of the dependencies!")
 	print str(e)
@@ -77,7 +73,6 @@ def getSoftwareVersion(name):
 	try:
 		return aptCache[name].CurrentVer.VerStr
 	except Exception as e:
-		print e
 		return None
 
 
@@ -880,9 +875,8 @@ def main(argv):
 
 	#init logging
 	global log
-	log = Talker()
+	log = Talker(options.verbose) #verbose = print ALL output to stdout
 	log.setLevel((logging.INFO,logging.DEBUG)[options.verbose]) #set verbosity to show all messages of severity >= DEBUG
-
 	#load and set configuration
 	global config
 	global git
