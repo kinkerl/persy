@@ -1074,9 +1074,11 @@ def main(argv):
 		#check if all the icons are present, just warn is something is missing
 		filestocheck = (ICON_IDLE,ICON_OK,ICON_UNSYNCED,ICON_UNTRACKED,ICON_WARN,ICON_ERROR, LOGO)
 		fileresults = map(os.path.exists,filestocheck)
+		i = 0 
 		for fileresult in fileresults:
 			if not fileresult:
-				log.warn(_("some files are missing!"))
+				log.warn(_("%s file is missing!") % filestocheck[i])
+			i += 1
 
 
 		#START!
