@@ -461,23 +461,17 @@ class Persy_GTK():
 
 		log.info("Starting persy")
 		log.info("watching over: %s"%config['local']['watched'])
-
 		if not config['local']['watched']:
 			log.warn("watching no directories")
 
-		#InterruptWatcher()
-
-		statusIcon = gtk.StatusIcon()
 		menu = gtk.Menu()
 
 		actions = []
 		actions.append(('check', start, _("start/stop Persy"), self.persy_toggle))
 		actions.append(('image', gtk.STOCK_EXECUTE, _('sync Remote'), self.persy_sync_remote))
 		actions.append(('check', config['remote']['use_remote'], _("auto sync Remote"), self.persy_sync_toggle))
-
 		if config['general']['prefgitbrowser'] != "":
 			actions.append(('image', gtk.STOCK_EXECUTE, _("start %s")%config['general']['prefgitbrowser'], browse))
-
 		actions.append(('image', gtk.STOCK_EXECUTE, _('optimize'), self.optimize))
 		actions.append(('image', gtk.STOCK_HELP, _('show Log'), self.showlog))
 		actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
@@ -495,7 +489,7 @@ class Persy_GTK():
 			menuItem.connect('activate', action[3])
 			menu.append(menuItem)
 
-
+		statusIcon = gtk.StatusIcon()
 		statusIcon.set_from_file(ICON_IDLE)
 		watched = _('watching over:')+' \n'
 		for x in config['local']['watched']:
