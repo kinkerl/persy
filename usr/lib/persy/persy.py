@@ -1031,7 +1031,7 @@ def main(argv):
 
 	#initialzing the git binding
 	#===========================
-	#if persy is interrupted while git was running, a git.lockfile me be present. we have to remove it!
+	#if persy is interrupted while git was running, a git.lockfile may be present. we have to remove it!
 	if os.path.exists(GIT_LOCKFILE):
 		try: 
 			os.remove(GIT_LOCKFILE)
