@@ -470,49 +470,31 @@ class Persy_GTK():
 		statusIcon = gtk.StatusIcon()
 		menu = gtk.Menu()
 
-		menuItem = gtk.CheckMenuItem(_("start/stop Persy"))
-		menuItem.set_active(start)
-		menuItem.connect('activate',self.persy_toggle)
-		menu.append(menuItem)
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label(_('sync Remote'))
-		menuItem.connect('activate', self.persy_sync_remote)
-		menu.append(menuItem)
-
-		menuItem = gtk.CheckMenuItem(_("auto sync Remote"))
-		menuItem.set_active(config['remote']['use_remote'])
-		menuItem.connect('activate',self.persy_sync_toggle)
-		menu.append(menuItem)
+		actions = []
+		actions.append(('check', start, _("start/stop Persy"), self.persy_toggle))
+		actions.append(('image', gtk.STOCK_EXECUTE, _('sync Remote'), self.persy_sync_remote))
+		actions.append(('check', config['remote']['use_remote'], _("auto sync Remote"), self.persy_sync_toggle))
 
 		if config['general']['prefgitbrowser'] != "":
-			menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-			menuItem.get_children()[0].set_label(_("start %s")%config['general']['prefgitbrowser'])
-			menuItem.connect('activate', browse)
+			actions.append(('image', gtk.STOCK_EXECUTE, _("start %s")%config['general']['prefgitbrowser'], browse))
+
+		actions.append(('image', gtk.STOCK_EXECUTE, _('optimize'), self.optimize))
+		actions.append(('image', gtk.STOCK_HELP, _('show Log'), self.showlog))
+		actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
+		actions.append(('image', gtk.STOCK_ABOUT, _('about'), self.about))
+		actions.append(('image', gtk.STOCK_QUIT, _('quit'), self.quit_cb))
+
+		for action in actions:
+			menuItem = None
+			if action[0] == 'image':
+				menuItem = gtk.ImageMenuItem(action[1])
+				menuItem.get_children()[0].set_label(action[2])
+			else: #check
+				menuItem = gtk.CheckMenuItem(action[2])
+				menuItem.set_active(action[1])
+			menuItem.connect('activate', action[3])
 			menu.append(menuItem)
 
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label(_('optimize'))
-		menuItem.connect('activate', self.optimize)
-		menu.append(menuItem)
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
-		menuItem.get_children()[0].set_label(_('show Log'))
-		menuItem.connect('activate', self.showlog)
-		menu.append(menuItem)
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_HELP)
-		menuItem.get_children()[0].set_label(_('show git Log'))
-		menuItem.connect('activate', self.showgitlog)
-		menu.append(menuItem)
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-		menuItem.connect('activate', self.about)
-		menu.append(menuItem)
-
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-		menuItem.connect('activate', self.quit_cb, statusIcon)
-		menu.append(menuItem)
 
 		statusIcon.set_from_file(ICON_IDLE)
 		watched = _('watching over:')+' \n'
