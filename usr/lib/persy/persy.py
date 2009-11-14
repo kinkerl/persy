@@ -39,7 +39,8 @@ try:
 	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
 	from subprocess import Popen
 	from threading import Thread
-	from configobj import ConfigObj
+	from persy_config import PersyConfig
+	from persy_helper import PersyHelper
 	import os
 	import time
 	import logging , logging.handlers
@@ -48,7 +49,6 @@ try:
 	import pug
 	import pynotify
 	import subprocess
-	import apt_pkg
 	import gtk
 	import pygtk
 	pygtk.require("2.0")
@@ -62,18 +62,6 @@ except Exception as e:
 	sys.exit(1)
 
 
-def getSoftwareVersion(name):
-	"""returns the version of a installed software as a String. Returns None if not installed"""
-	global aptCache
-	if not aptCache:
-		print _("using apt-cache to find out about installed apps and versions..")
-		apt_pkg.InitConfig()
-		apt_pkg.InitSystem()
-		aptCache = apt_pkg.GetCache()
-	try:
-		return aptCache[name].CurrentVer.VerStr
-	except Exception as e:
-		return None
 
 
 
@@ -89,10 +77,10 @@ USERHOME = os.environ["HOME"]
 PERSY_DIR = os.path.join(USERHOME, '.persy')
 GIT_DIR = os.path.join(PERSY_DIR,'git')
 GIT_LOCKFILE = os.path.join(GIT_DIR,'index.lock')
-CONFIGFILE=os.path.join(PERSY_DIR,'config')
 LOGFILE=os.path.join(PERSY_DIR,'default.log')
 LOGFILE_GIT=os.path.join(PERSY_DIR,'git.log')
 GITIGNOREFILE=os.path.join(GIT_DIR, 'info','exclude')
+CONFIGFILE=os.path.join(PERSY_DIR,'config')
 
 #path to some files and icons
 ICON_IDLE = '/usr/lib/persy/persy.svg'
@@ -113,20 +101,6 @@ SERVER_NICK='origin'
 BRANCH='master'
 
 
-#aptCache is global for version retrieving
-#this is set with the first call of getSoftwareVersion()
-aptCache = None
-
-#retrieving the installed version of persy
-try:
-	VERSION=getSoftwareVersion('persy')
-	if not VERSION:
-		VERSION=_("undefined")
-except Exception as e:
-	VERSION=_("undefined")
-
-#the default gui git browser
-GITGUI=["gitk", "qgit"] #possible browsers
 
 
 #xterm terminal
@@ -135,60 +109,6 @@ XTERM = "xterm"
 FORTUNE = "fortune"
 
 
-#default config entries
-DEFAULT_LOCAL_SLEEP = 5
-DEFAULT_REMOTE_SLEEP = 300
-DEFAULT_REMOTE_HOSTNAME = ''
-DEFAULT_REMOTE_PATH = ''
-
-DEFAULT_CONFIG="""# persy configuration file
-
-# general configuration
-[general]
-# default name and mail for a commit. the default name and mail is fine and is 
-# only interessting if you want to sync multiple machines. you can set the name
-# on every machine different and get a nice git history
-name = default
-mail = default
-
-# the prefered gui git browser. possible values are gitk and qgit. if you want 
-# more, mail me.
-prefgitbrowser=gitk
-
-# use small fortune lines in the git commit description (True/False)
-fortune=False
-
-
-# configurations for the local backup
-[local]
-# the local sleep delay time in secounds. a backup is only done after this time
-# after the last file action
-sleep = %i
-
-# a coma seperated list auf the files and directories, persy is syncing
-watched =
-
-# the maximal allowed filesize for the synced files in bytes
-maxfilesize = 
-
-# a regular expression to match against every file. matches are excuded
-exclude = 
-
-
-# configuration for a remote backup/sync
-[remote]
-# backup and sync to a remote host (False/True)
-use_remote = False
-
-# the interval in which a sync happens in seconds
-sleep = %if
-
-# the host adress of the remote server as ip or name
-hostname = %s
-
-# the absolute path on the remote server to the git repository
-path = %s
-"""%(DEFAULT_LOCAL_SLEEP, DEFAULT_REMOTE_SLEEP, DEFAULT_REMOTE_HOSTNAME, DEFAULT_REMOTE_PATH)
 
 #the last filechange event
 lastevent= time.time()
@@ -528,6 +448,16 @@ class Persy_GTK():
 		'''show the about dialog'''
 		dlg = gtk.AboutDialog()
 		dlg.set_title(_("About Persy"))
+
+		#retrieving the installed version of persy
+		VERSION=_("undefined")
+		try:
+			p = PersyHelper()
+			VERSION=p.getSoftwareVersion('persy')
+			if not VERSION:
+				VERSION=_("undefined")
+		except Exception as e:
+			pass
 		dlg.set_version(VERSION)
 		dlg.set_program_name("Persy")
 		dlg.set_comments(_("personal sync"))
@@ -845,9 +775,7 @@ def main(argv):
 	#create programdirectory and a default config file
 	if not os.path.exists(PERSY_DIR):
 		os.makedirs(PERSY_DIR)
-	if not os.path.exists(CONFIGFILE):
-		with open(CONFIGFILE, "w+") as f:
-			f.write(DEFAULT_CONFIG)
+
 
 	#init logging
 	global log
@@ -857,7 +785,8 @@ def main(argv):
 	global config
 	global git
 
-	config = ConfigObj(CONFIGFILE)
+	parser =  PersyConfig(CONFIGFILE)
+	config = parser.getConfig()
 
 	if options.config:
 		changed = False
@@ -897,111 +826,6 @@ def main(argv):
 		config.write()
 
 
-	#config check if everything is ok
-	#================================
-	#general name
-	if not config['general'].has_key('name') or not config['general']['name']:
-		config['general']['name'] = 'default'
-
-	#general mail
-	if not config['general'].has_key('mail') or not config['general']['mail']:
-		config['general']['name'] = 'mail'
-	
-	#general fortune
-	if not config['general'].has_key('fortune'):
-		config['general']['fortune'] = False
-	if type(config['general']['fortune']) is str and config['general']['fortune'].lower()  == 'true':
-		config['general']['fortune'] = True
-	if not type(config['general']['fortune']) is bool:
-		config['general']['fortune'] = False
-
-	#general gitgui
-	if not config['general'].has_key('prefgitbrowser'):
-		if getSoftwareVersion(GITGUI[0]):
-			config['general']['prefgitbrowser'] = GITGUI[0]
-		elif getSoftwareVersion(GITGUI[1]):
-			config['general']['prefgitbrowser'] = GITGUI[1]
-		else:
-			log.critical(_("gitk and qgit is not installed, this should not happen!"))
-			config['general']['prefgitbrowser'] = ""
-	if type(config['general']['prefgitbrowser']) is str:
-		if config['general']['prefgitbrowser'].lower() in GITGUI and getSoftwareVersion(config['general']['prefgitbrowser']):
-			config['general']['prefgitbrowser'] = config['general']['prefgitbrowser'].lower()
-		else:
-			if getSoftwareVersion(GITGUI[0]):
-				config['general']['prefgitbrowser'] = GITGUI[0]
-			elif getSoftwareVersion(GITGUI[1]):
-				config['general']['prefgitbrowser'] = GITGUI[1]
-			else:
-				log.warn(_("gitk and qgit is not installed, this should not happen!"))
-				config['general']['prefgitbrowser'] = ""
-	if not type(config['general']['prefgitbrowser']) is str:
-		log.warn(_("the config for the prefered git browser is broken?"))
-		config['general']['prefgitbrowser'] = ""
-
-
-	#local sleep
-	if not config['local'].has_key('sleep') or not config['local']['sleep']:
-		config['local']['sleep'] = DEFAULT_LOCAL_SLEEP
-
-	if not type(config['local']['sleep']) is int:
-		try:
-			config['local']['sleep'] = int(config['local']['sleep'])
-		except Exception as e:
-			config['local']['sleep'] = DEFAULT_LOCAL_SLEEP
-
-	#local watched
-	if not config['local'].has_key('watched') or not config['local']['watched']:
-		config['local']['watched'] = []
-
-	if type(config['local']['watched']) is str:
-		config['local']['watched'] = [config['local']['watched']]
-
-	if not type(config['local']['watched']) is list:
-		config['local']['watched'] = []
-
-	#local maxfilesize
-	if not config['local'].has_key('maxfilesize') or not type(config['local']['maxfilesize']) is str:
-		config['local']['maxfilesize'] = None
-	if not type(config['local']['maxfilesize']) is int:
-		try:
-			config['local']['maxfilesize'] = int(config['local']['maxfilesize'])
-		except Exception as e:
-			config['local']['maxfilesize'] = None
-
-	#local exclude
-	if not config['local'].has_key('exclude'):
-		config['local']['exclude']=[]
-	if type(config['local']['exclude']) is str:
-		config['local']['exclude'] = [config['local']['exclude']]
-	if not type(config['local']['exclude']) is list:
-		config['local']['exclude'] = []
-
-	#remote use_remote
-	if not config['remote'].has_key('use_remote'):
-		config['remote']['use_remote'] = False
-	if type(config['remote']['use_remote']) is str and config['remote']['use_remote'].lower()  == 'true':
-		config['remote']['use_remote'] = True
-	if not type(config['remote']['use_remote']) is bool:
-		config['remote']['use_remote'] = False
-
-	#remote sleep
-	if not config['remote'].has_key('sleep') or not config['remote']['sleep']:
-		config['remote']['sleep'] = DEFAULT_REMOTE_SLEEP
-
-	if not type(config['remote']['sleep']) is int:
-		try:
-			config['remote']['sleep'] = int(config['remote']['sleep'])
-		except Exception as e:
-			config['remote']['sleep'] = DEFAULT_REMOTE_SLEEP
-
-	#remote hostname
-	if not config['remote'].has_key('hostname') or not type(config['remote']['hostname']) is str:
-		config['remote']['hostname'] = DEFAULT_REMOTE_HOSTNAME
-
-	#remote path
-	if not config['remote'].has_key('path') or not type(config['remote']['path']) is str:
-		config['remote']['path'] = DEFAULT_REMOTE_PATH
 
 
 
