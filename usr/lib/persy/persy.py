@@ -37,11 +37,10 @@ except Exception as e:
 try:
 	import sys
 	from persy_config import PersyConfig
-	from persy_helper import PersyHelper
 	from persy_core import Core
 	from persy_gtk import PersyGtk
+	from persy_talker import Talker
 	import os
-	import logging , logging.handlers
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -56,117 +55,8 @@ __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
 
 
-class Talker:
-	'''logging, notifications and communications with the outside!
-if the critical or warning function is called, the Talker goes into an "error occured" mode:
-The statusicon will not change to any other state until this errorstate is reseted.
-'''
-	def __init__(self, config, verbose=False):
-		self.statusIcon = None
-		self.config = config
-		#init logging 
-		self.log = logging.getLogger("")
-		os.popen("touch %s"%self.config.getAttribute('LOGFILE'))
-		hdlr = logging.handlers.RotatingFileHandler(self.config.getAttribute('LOGFILE'), "a", 1000000, 3)
-		fmt = logging.Formatter("%(asctime)s %(levelname)-5s %(message)s", "%x %X")
-		hdlr.setFormatter(fmt)
-		self.log.addHandler(hdlr)
-		self.verbose = verbose
-
-		#init notify
-		self.notifyid = "Persy"
-		try:
-			pynotify.init(self.notifyid)
-		except Exception as e:
-			self.log.warn(str(e))
-
-		self.resetError()
-		
-
-	def setStatusIcon(self, icon):
-		self.statusIcon = icon
-
-	def setStart(self):
-		if self.statusIcon:
-			self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))#from_stock(gtk.STOCK_HOME)
-
-	def setStop(self):
-		if self.statusIcon:
-			self.statusIcon.set_from_file(self.config.getAttribute('ICON_IDLE'))#from_stock(gtk.STOCK_HOME)
-
-	def resetError(self):
-		'''resets the error state'''
-		self.error = False
-
-	def untracked_changes(self, uc):
-		'''sets or unsets the untracked_changes status -> sets the status icon'''
-		if not self.error:
-			if uc:
-				if self.statusIcon:
-					self.statusIcon.set_from_file(self.config.getAttribute('ICON_UNTRACKED'))
-			else:
-				if self.statusIcon:
-					self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))
-
-	def unsynced_changes(self, uc):
-		'''sets or unsets the unsynced_changes status -> sets the status icon'''
-		if not self.error:
-			if uc:
-				if self.statusIcon:
-					self.statusIcon.set_from_file(self.config.getAttribute('ICON_UNSYNCED'))
-			else:
-				if self.statusIcon:
-					self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))
-
-	def setLevel(self, lvl):
-		'''set the logging level. see logging.INFO,logging.DEBUG... for more information'''
-		self.log.setLevel(lvl)
-
-	def debug(self, msg, verbose=None):
-		'''logs a debug message'''
-		self.log.debug(msg)
-		if verbose == True or (verbose == None and self.verbose):
-			print msg
-
-	def info(self, msg, verbose=None):
-		'''logs a info message'''
-		self.log.info(msg)
-		if verbose == True or (verbose == None and self.verbose):
-			print msg
-
-	def warn(self, msg, verbose=None):
-		''' logs a warning message, changes the status icon, fires a notification and sets the error state'''
-		self.error = True
-		self.log.warn(msg)
-		if verbose == True or (verbose == None and self.verbose):
-			print msg
-		if self.statusIcon:
-			self.statusIcon.set_from_file(self.config.getAttribute('ICON_WARN'))#from_stock(gtk.STOCK_HOME)
-		try:
-			pynotify.Notification(self.notifyid, msg, self.config.getAttribute('ICON_WARN')).show()
-		except Exception as e:
-			self.log.warn(str(e))
-
-	def critical(self, msg, verbose=None):
-		''' logs a critical message, changes the status icon, fires a notification and sets the error state'''
-		self.error = True
-		self.log.critical(msg)
-		if verbose == True or (verbose == None and self.verbose):
-			print msg
-		if self.statusIcon:
-			self.statusIcon.set_from_file(self.config.getAttribute('ICON_ERROR'))#from_stock(gtk.STOCK_HOME)
-		try:
-			pynotify.Notification(self.notifyid, msg, self.config.getAttribute('ICON_ERROR')).show()
-		except Exception as e:
-			self.log.warn(str(e))
-
-
-
-
-
 
 def main(argv):
-	global log
 	args = argv[1:]
 
 	config =  PersyConfig()
@@ -243,7 +133,7 @@ def main(argv):
 
 
 	log = Talker(config, options.verbose) #verbose = print ALL output to stdout
-	log.setLevel((logging.INFO,logging.DEBUG)[options.verbose]) #set verbosity to show all messages of severity >= DEBUG
+	log.setLevel(options.verbose) #true = debug, false = info set verbosity to show all messages of severity >= DEBUG
 
 	core = Core()
 	core.init(config, log)
