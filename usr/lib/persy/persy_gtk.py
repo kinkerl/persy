@@ -63,6 +63,10 @@ except Exception as e:
 	sys.exit(1)
 
 
+#Initializing the gtk's thread engine
+#we NEED this because of the STRANGE (F***ING) thread problem with gtk
+gtk.gdk.threads_init()
+
 class PersyGtk():
 	'''the gtk main loop and the status icon'''
 
