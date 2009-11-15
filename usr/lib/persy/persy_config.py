@@ -47,6 +47,8 @@ except Exception as e:
 	print str(e)
 	sys.exit(1)
 
+__author__ = "Dennis Schwertel"
+__copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
 
 
@@ -70,13 +72,13 @@ class PersyConfig():
 		self.attributes['EXAMPLECONFIG']='/usr/lib/persy/example_config'
 
 		#path to some files and icons
-		self.attributes['ICON_IDLE'] = '/usr/lib/persy/persy.svg'
-		self.attributes['ICON_OK'] = '/usr/lib/persy/persy_ok.svg'
-		self.attributes['ICON_UNSYNCED'] = '/usr/lib/persy/persy_unsynced.svg'
-		self.attributes['ICON_UNTRACKED'] = '/usr/lib/persy/persy_untracked.svg'
-		self.attributes['ICON_WARN'] = '/usr/lib/persy/persy_warn.svg'
-		self.attributes['ICON_ERROR'] = '/usr/lib/persy/persy_error.svg'
-		self.attributes['LOGO'] = '/usr/lib/persy/persy.svg'
+		self.attributes['ICON_IDLE'] = '/usr/lib/persy/assets/persy.svg'
+		self.attributes['ICON_OK'] = '/usr/lib/persy/assets/persy_ok.svg'
+		self.attributes['ICON_UNSYNCED'] = '/usr/lib/persy/assets/persy_unsynced.svg'
+		self.attributes['ICON_UNTRACKED'] = '/usr/lib/persy/assets/persy_untracked.svg'
+		self.attributes['ICON_WARN'] = '/usr/lib/persy/assets/persy_warn.svg'
+		self.attributes['ICON_ERROR'] = '/usr/lib/persy/assets/persy_error.svg'
+		self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
 
 		#path to the license file
 		self.attributes['LICENSE_FILE'] = '/usr/share/common-licenses/GPL-2'

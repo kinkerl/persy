@@ -62,6 +62,10 @@ except Exception as e:
 	print str(e)
 	sys.exit(1)
 
+__author__ = "Dennis Schwertel"
+__copyright__ = "Copyright (C) 2009 Dennis Schwertel"
+
+
 class _Core():
 	def init(self, config, log):
 		self.config = config
