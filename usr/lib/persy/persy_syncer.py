@@ -95,9 +95,7 @@ Accepts events from the library if a file changes and sets the lastevent time an
 		except Exception as e:
 			self.log.warn(_("error with %s event. maybe problem with path?")%typ)
 			self.log.warn(str(e))
-		print "as" + event.path
 		self.eventfunc(time.time(), event.path)
-		print "bs" + event.path
 		self.log.untracked_changes(True)
 
 
