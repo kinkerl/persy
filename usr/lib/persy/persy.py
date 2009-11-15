@@ -280,7 +280,7 @@ def main(argv):
 	elif options.syncwithremote:
 		core.syncWithRemote()
 	elif options.browse:
-		browse()
+		core.browse()
 	elif options.log:
 		core.gitlog()
 	elif options.status:
