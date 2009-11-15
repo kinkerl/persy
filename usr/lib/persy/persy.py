@@ -36,24 +36,12 @@ except Exception as e:
 
 try:
 	import sys
-	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
-	from subprocess import Popen
-	from threading import Thread
 	from persy_config import PersyConfig
 	from persy_helper import PersyHelper
 	from persy_core import Core
 	from persy_gtk import PersyGtk
 	import os
-	import time
 	import logging , logging.handlers
-	import time, signal, operator
-	import paramiko
-	import pug
-	import pynotify
-	import subprocess
-	import gtk
-	import pygtk
-	pygtk.require("2.0")
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -74,8 +62,9 @@ if the critical or warning function is called, the Talker goes into an "error oc
 The statusicon will not change to any other state until this errorstate is reseted.
 '''
 	def __init__(self, config, verbose=False):
+		self.statusIcon = None
 		self.config = config
-		#init logging
+		#init logging 
 		self.log = logging.getLogger("")
 		os.popen("touch %s"%self.config.getAttribute('LOGFILE'))
 		hdlr = logging.handlers.RotatingFileHandler(self.config.getAttribute('LOGFILE'), "a", 1000000, 3)
@@ -92,6 +81,7 @@ The statusicon will not change to any other state until this errorstate is reset
 			self.log.warn(str(e))
 
 		self.resetError()
+		
 
 	def setStatusIcon(self, icon):
 		self.statusIcon = icon

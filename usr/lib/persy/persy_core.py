@@ -43,16 +43,9 @@ try:
 	from persy_helper import PersyHelper
 	from persy_syncer import TheSyncer, FileChangeHandler
 	import os
-	import time
-	import logging , logging.handlers
-	import time, signal, operator
 	import paramiko
 	import pug
-	import pynotify
 	import subprocess
-	import gtk
-	import pygtk
-	pygtk.require("2.0")
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -106,8 +99,8 @@ class _Core():
 	
 		try:
 			self.git.init()
-			self.git.config('user.name',config['general']['name'])
-			self.git.config('user.email',config['general']['mail'])
+			self.git.config('user.name',self.config['general']['name'])
+			self.git.config('user.email',self.config['general']['mail'])
 			self.gitignore()
 		except Exception as e:
 			self.log.critical(str(e), verbose=True)
@@ -133,7 +126,7 @@ class _Core():
 		try:	
 			client = paramiko.SSHClient()
 			client.load_system_host_keys()
-			client.connect(config['remote']['hostname'] )
+			client.connect(self.config['remote']['hostname'] )
 			# the follow commands are executet on a remote host. we can not know the path to git,
 			# mkdir and cd so we will not replace them with a absolute path
 			stdin1, stdout1, stderr1 = client.exec_command("mkdir -m 700 %s"%self.config['remote']['path'])
@@ -200,7 +193,7 @@ class _Core():
 				callcmd.append('-type')
 				callcmd.append('f')
 				callcmd.append('-size')
-				callcmd.append("+" + str(config['local']['maxfilesize']) + "k")
+				callcmd.append("+" + str(self.config['local']['maxfilesize']) + "k")
 				(stdoutdata, stderrdata) = subprocess.Popen(callcmd, stdout=subprocess.PIPE).communicate()
 				for entry in stdoutdata.split("\n"):
 					current.append(entry)
@@ -258,10 +251,10 @@ class _Core():
 		wm = WatchManager()
 		#addin the watched directories
 		for watch in self.config['local']['watched']:
-			wdd = wm.add_watch("%s"%(watch), mask, rec=True)
+			wdd = wm.add_watch("%s"%(watch), mask, rec=True, auto_add=True)
 
 		self.worker = TheSyncer(self, self.config, self.log, self.config['remote']['sleep'], self.config['local']['sleep'])
-		self.notifier = ThreadedNotifier(wm, FileChangeHandler(self.log))
+		self.notifier = ThreadedNotifier(wm, FileChangeHandler(self.log, self.worker.newEvent))
 
 		self.log.resetError()
 		self.worker.start()

@@ -51,8 +51,7 @@ except Exception as e:
 
 class _PersyHelper():
 	'''Functions that might be helpful in some places
-	Uses singleton pattern (see bottom)
-	'''
+	Uses singleton pattern (see bottom)'''
 
 	def __init__(self):
 		#aptCache is global for version retrieving

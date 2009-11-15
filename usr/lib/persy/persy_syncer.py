@@ -41,17 +41,9 @@ try:
 	from threading import Thread
 	from persy_config import PersyConfig
 	from persy_helper import PersyHelper
-	import os
 	import time
-	import logging , logging.handlers
-	import time, signal, operator
 	import paramiko
-	import pug
-	import pynotify
 	import subprocess
-	import gtk
-	import pygtk
-	pygtk.require("2.0")
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -65,14 +57,13 @@ __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
 
-lastevent = 0
-
 class FileChangeHandler(ProcessEvent):
 	'''Callback for the pyinotify library. 
 Accepts events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True'''
 
-	def __init__(self, log):
+	def __init__(self, log, eventfunc):
 		self.log = log
+		self.eventfunc = eventfunc
 
 	def process_IN_MODIFY(self, event):
 		self.check(event, "IN_MODIFY")
@@ -99,14 +90,14 @@ Accepts events from the library if a file changes and sets the lastevent time an
 		self.check(event, "IN_MOVED_FROM")
 
 	def check(self, event, typ="undefined"):
-		global lastevent
 		try:
 			self.log.debug("%s: %s"% (typ, event.path))
 		except Exception as e:
 			self.log.warn(_("error with %s event. maybe problem with path?")%typ)
 			self.log.warn(str(e))
-		
-		lastevent = time.time()
+		print "as" + event.path
+		self.eventfunc(time.time(), event.path)
+		print "bs" + event.path
 		self.log.untracked_changes(True)
 
 
@@ -120,6 +111,7 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 
 	def __init__(self, core, config, log, sleep_remote, sleep_local):
 		Thread.__init__(self)
+		self.lastevent = 0
 		self.core = core
 		self.config = config
 		self.sleep_remote = sleep_remote
@@ -134,6 +126,11 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.errorremotecounter = 0
 		self.log = log
 
+		self.changedFiles  =[]
+
+	def newEvent(self, time, filename):
+		self.lastevent = time
+		self.changedFiles.append(filename)
 		
 	def setonetimesync(self):
 		self.onetimesync = True
@@ -163,11 +160,10 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		while self.running:
 			time.sleep(self.sleep_local)
 			self.log.debug('tick')
-			global lastevent
 			#only do if changed occured (dome==True) and only at least 2 seconds after the last event
 
-			if not self.lastcommit == lastevent and time.time() - lastevent > self.sleep_local:
-				self.lastcommit = lastevent
+			if not self.lastcommit == self.lastevent and time.time() - self.lastevent > self.sleep_local:
+				self.lastcommit = self.lastevent
 				self.log.info('local commit')
 				if self.config['local']['watched']:
 					self.log.debug('git ignore')
@@ -182,7 +178,15 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 
 					self.log.debug('git add')
 					try:
+						#add all files
 						self.core.git_add(self.config['local']['watched'])
+
+						#explicit add changed files
+						processFiles = self.changedFiles
+						self.changedFiles = []
+						self.core.git_add(processFiles)
+
+
 					except Exception as e:
 						self.errorlocalcounter += 1
 						if self.errorlocalcounter > 1:
@@ -198,6 +202,8 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 					else: 
 						self.errorlocalcounter = 0					
 						self.log.unsynced_changes(True)
+				else:
+					self.log.debug(_('watching no directories')) 
 
 			#autopull and push updates every x secs
 			if self.onetimesync or (self.config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote):
@@ -231,6 +237,7 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 						self.log.unsynced_changes(False)
 			#start git ignore on a regular basis (ignoring unwatched files)
 			if time.time() - self.lastignore >  self.ignore_time:
+				self.log.debug('git ignore')
 				self.lastignore = time.time()
 				try:
 					self.core.gitignore()
