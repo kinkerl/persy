@@ -48,76 +48,76 @@ except Exception as e:
 	sys.exit(1)
 
 
-#default config entries
-DEFAULT_LOCAL_SLEEP = 5
-DEFAULT_REMOTE_SLEEP = 300
-DEFAULT_REMOTE_HOSTNAME = ''
-DEFAULT_REMOTE_PATH = ''
-
-DEFAULT_CONFIG="""# persy configuration file
-
-# general configuration
-[general]
-# default name and mail for a commit. the default name and mail is fine and is 
-# only interessting if you want to sync multiple machines. you can set the name
-# on every machine different and get a nice git history
-name = default
-mail = default
-
-# the prefered gui git browser. possible values are gitk and qgit. if you want 
-# more, mail me.
-prefgitbrowser=gitk
-
-# use small fortune lines in the git commit description (True/False)
-fortune=False
-
-
-# configurations for the local backup
-[local]
-# the local sleep delay time in secounds. a backup is only done after this time
-# after the last file action
-sleep = %i
-
-# a coma seperated list auf the files and directories, persy is syncing
-watched =
-
-# the maximal allowed filesize for the synced files in bytes
-maxfilesize = 
-
-# a regular expression to match against every file. matches are excuded
-exclude = 
-
-
-# configuration for a remote backup/sync
-[remote]
-# backup and sync to a remote host (False/True)
-use_remote = False
-
-# the interval in which a sync happens in seconds
-sleep = %if
-
-# the host adress of the remote server as ip or name
-hostname = %s
-
-# the absolute path on the remote server to the git repository
-path = %s
-"""%(DEFAULT_LOCAL_SLEEP, DEFAULT_REMOTE_SLEEP, DEFAULT_REMOTE_HOSTNAME, DEFAULT_REMOTE_PATH)
-
 
 
 class PersyConfig():
 	'''Handles the configuration for Persy'''
 
-	def __init__(self, configfile):
+
+	def __init__(self):
+
+		self.attributes = {}
+
+		# files and dirs used by persy
+		self.attributes['USERHOME'] = os.environ["HOME"]
+		self.attributes['PERSY_DIR'] = os.path.join(self.attributes['USERHOME'], '.persy')
+		self.attributes['GIT_DIR'] = os.path.join(self.attributes['PERSY_DIR'],'git')
+		self.attributes['GIT_LOCKFILE'] = os.path.join(self.attributes['GIT_DIR'],'index.lock')
+		self.attributes['LOGFILE']=os.path.join(self.attributes['PERSY_DIR'],'default.log')
+		self.attributes['LOGFILE_GIT']=os.path.join(self.attributes['PERSY_DIR'],'git.log')
+		self.attributes['GITIGNOREFILE']=os.path.join(self.attributes['GIT_DIR'], 'info','exclude')
+		self.attributes['CONFIGFILE']=os.path.join(self.attributes['PERSY_DIR'],'config')
+		self.attributes['EXAMPLECONFIG']='/usr/lib/persy/example_config'
+
+		#path to some files and icons
+		self.attributes['ICON_IDLE'] = '/usr/lib/persy/persy.svg'
+		self.attributes['ICON_OK'] = '/usr/lib/persy/persy_ok.svg'
+		self.attributes['ICON_UNSYNCED'] = '/usr/lib/persy/persy_unsynced.svg'
+		self.attributes['ICON_UNTRACKED'] = '/usr/lib/persy/persy_untracked.svg'
+		self.attributes['ICON_WARN'] = '/usr/lib/persy/persy_warn.svg'
+		self.attributes['ICON_ERROR'] = '/usr/lib/persy/persy_error.svg'
+		self.attributes['LOGO'] = '/usr/lib/persy/persy.svg'
+
+		#path to the license file
+		self.attributes['LICENSE_FILE'] = '/usr/share/common-licenses/GPL-2'
+
+		#git variables used by persy
+		self.attributes['SERVER_NICK']='origin'
+		self.attributes['BRANCH']='master'
+
+
+
+
+		#default config entries
+		self.attributes['DEFAULT_LOCAL_SLEEP'] = 5
+		self.attributes['DEFAULT_REMOTE_SLEEP'] = 300
+		self.attributes['DEFAULT_REMOTE_HOSTNAME'] = ''
+		self.attributes['DEFAULT_REMOTE_PATH'] = ''
+
+		try:
+			self.attributes['DEFAULT_CONFIG']= open(self.attributes['EXAMPLECONFIG']).read()%(self.attributes['DEFAULT_LOCAL_SLEEP'], self.attributes['DEFAULT_REMOTE_SLEEP'], self.attributes['DEFAULT_REMOTE_HOSTNAME'], self.attributes['DEFAULT_REMOTE_PATH'])
+		except IOError as e:
+			print str(e)
+
+
+
+
+
+
+		#xterm terminal
+		self.attributes['XTERM'] = "xterm"
+		#fortune	
+		self.attributes['FORTUNE'] = "fortune"
+
 		#the default gui git browser
-		self.GITGUI=["gitk", "qgit"] #possible browsers
+		self.attributes['GITGUI']=["gitk", "qgit"] #possible browsers
 		self.p = PersyHelper()
 
-		if not os.path.exists(configfile):
-			with open(configfile, "w+") as f:
-				f.write(DEFAULT_CONFIG)
+		if not os.path.exists(self.attributes['CONFIGFILE']):
+			with open(self.attributes['CONFIGFILE'], "w+") as f:
+				f.write(self.attributes['DEFAULT_CONFIG'])
 
-		config = ConfigObj(configfile)
+		config = ConfigObj(self.attributes['CONFIGFILE'])
 
 		#config check if everything is ok
 		#================================
@@ -140,37 +140,37 @@ class PersyConfig():
 		#general gitgui
 		if not config['general'].has_key('prefgitbrowser'):
 			if getSoftwareVersion(self.GITGUI[0]):
-				config['general']['prefgitbrowser'] = self.GITGUI[0]
+				config['general']['prefgitbrowser'] = self.attributes['GITGUI'][0]
 			elif getSoftwareVersion(self.GITGUI[1]):
-				config['general']['prefgitbrowser'] = self.GITGUI[1]
+				config['general']['prefgitbrowser'] = self.attributes['GITGUI'][1]
 			else:
-				log.critical(_("gitk and qgit is not installed, this should not happen!"))
+				#log.critical(_("gitk and qgit is not installed, this should not happen!"))
 				config['general']['prefgitbrowser'] = ""
 		if type(config['general']['prefgitbrowser']) is str:
-			if config['general']['prefgitbrowser'].lower() in self.GITGUI and self.p.getSoftwareVersion(config['general']['prefgitbrowser']):
+			if config['general']['prefgitbrowser'].lower() in self.attributes['GITGUI'] and self.p.getSoftwareVersion(config['general']['prefgitbrowser']):
 				config['general']['prefgitbrowser'] = config['general']['prefgitbrowser'].lower()
 			else:
-				if self.p.getSoftwareVersion(self.GITGUI[0]):
-					config['general']['prefgitbrowser'] = self.GITGUI[0]
+				if self.p.getSoftwareVersion(self.attributes['GITGUI'][0]):
+					config['general']['prefgitbrowser'] = self.attributes['GITGUI'][0]
 				elif self.p.getSoftwareVersion(self.GITGUI[1]):
-					config['general']['prefgitbrowser'] = self.GITGUI[1]
+					config['general']['prefgitbrowser'] = self.attributes['GITGUI'][1]
 				else:
-					log.warn(_("gitk and qgit is not installed, this should not happen!"))
+					#log.warn(_("gitk and qgit is not installed, this should not happen!"))
 					config['general']['prefgitbrowser'] = ""
 		if not type(config['general']['prefgitbrowser']) is str:
-			log.warn(_("the config for the prefered git browser is broken?"))
+			#log.warn(_("the config for the prefered git browser is broken?"))
 			config['general']['prefgitbrowser'] = ""
 
 
 		#local sleep
 		if not config['local'].has_key('sleep') or not config['local']['sleep']:
-			config['local']['sleep'] = DEFAULT_LOCAL_SLEEP
+			config['local']['sleep'] = self.attributes['DEFAULT_LOCAL_SLEEP']
 
 		if not type(config['local']['sleep']) is int:
 			try:
 				config['local']['sleep'] = int(config['local']['sleep'])
 			except Exception as e:
-				config['local']['sleep'] = DEFAULT_LOCAL_SLEEP
+				config['local']['sleep'] = self.attributes['DEFAULT_LOCAL_SLEEP']
 
 		#local watched
 		if not config['local'].has_key('watched') or not config['local']['watched']:
@@ -209,23 +209,31 @@ class PersyConfig():
 
 		#remote sleep
 		if not config['remote'].has_key('sleep') or not config['remote']['sleep']:
-			config['remote']['sleep'] = DEFAULT_REMOTE_SLEEP
+			config['remote']['sleep'] = self.attributes['DEFAULT_REMOTE_SLEEP']
 
 		if not type(config['remote']['sleep']) is int:
 			try:
 				config['remote']['sleep'] = int(config['remote']['sleep'])
 			except Exception as e:
-				config['remote']['sleep'] = DEFAULT_REMOTE_SLEEP
+				config['remote']['sleep'] = self.attributes['DEFAULT_REMOTE_SLEEP']
 
 		#remote hostname
 		if not config['remote'].has_key('hostname') or not type(config['remote']['hostname']) is str:
-			config['remote']['hostname'] = DEFAULT_REMOTE_HOSTNAME
+			config['remote']['hostname'] = self.attributes['DEFAULT_REMOTE_HOSTNAME']
 
 		#remote path
 		if not config['remote'].has_key('path') or not type(config['remote']['path']) is str:
-			config['remote']['path'] = DEFAULT_REMOTE_PATH
+			config['remote']['path'] = self.attributes['DEFAULT_REMOTE_PATH']
 
 		self.config = config
 
+	def __getitem__(self, item):
+		return self.config[item]
+
+	def write(self):
+		self.config.write()
+
+	def getAttribute(self, key):
+		return self.attributes[key]
 	def getConfig(self):
 		return self.config
