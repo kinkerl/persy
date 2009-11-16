@@ -228,7 +228,7 @@ def main(argv):
 			else:
 				config['local']['watched'].append(options.add_dir)
 		if changed:
-			self.config.write()
+			config.write()
 			log.info("writing new config")
 		else:
 			log.warn(_("nothing changed, maybe wrong attribute names?"))
@@ -239,7 +239,7 @@ def main(argv):
 		if options.path:
 			config['remote']['path'] = options.path
 		config['remote']['use_remote'] = True
-		self.config.write()
+		config.write()
 
 
 	log = Talker(config, options.verbose) #verbose = print ALL output to stdout

@@ -60,10 +60,10 @@ The normal local configuration is:
 
 Setup for syncing and/or using a remote backup
 ------------
-If you want to sync or backup your files on a remote server, you have to enable a public key authentication 
+If you want to sync or backup your files on a remote server, you have to __enable a public key authentication__ 
 for the server!!!
 
-The normal workflow with a remote Server and an already initialized local repository is:
+The normal workflow with a __blank remote Server__ and an __already initialized local repository is__:
 
      $ persy --config --hostname=SERVER     # SERVER = location of the server
      $ persy --config --path=PATH           # PATH = absolute path of the gitrepository on 
@@ -72,7 +72,7 @@ The normal workflow with a remote Server and an already initialized local reposi
      $ persy                                # starts persy 
 
 
-The normal workflow with a already initialized remote Server and no local repository. 
+The normal workflow with a __already initialized remote Server__ and __no local repository__. 
 IMPORTANT: the synced directories should be empty before the sync. i had some problems 
 with already existing files. you can start a sync and then add new files to the synced directory.
 
@@ -84,6 +84,8 @@ with already existing files. you can start a sync and then add new files to the 
      $ persy --config --add_dir=DIR         # add the same DIR to persy as on the other machines
      $ persy --syncwithremote               # connects to the remote server and 
                                             # pulls the files from the git repository
+                                            # depending on the size of your existing repository
+                                            # this can take a long(!) time
      $ persy                                # starts persy
 
 License
