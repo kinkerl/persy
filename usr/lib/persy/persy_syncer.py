@@ -179,6 +179,7 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 						#add all files
 						self.core.git_add(self.config['local']['watched'])
 
+						#i dont know if this is still necessary
 						#explicit add changed files
 						processFiles = self.changedFiles
 						self.changedFiles = []

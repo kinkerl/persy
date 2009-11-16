@@ -239,3 +239,6 @@ class PersyConfig():
 		return self.attributes[key]
 	def getConfig(self):
 		return self.config
+
+	def has_key(self, item):
+		return self.config.has_key(item)
