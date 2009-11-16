@@ -62,9 +62,10 @@ class _PersyHelper():
 	def getSoftwareVersion(self, name):
 		"""returns the version of a installed software as a String. Returns None if not installed"""
 		if not self.aptCache:
-			print _("using apt-cache to find out about installed apps and versions..")
+			print _("using apt-cache to find out about installed apps and versions...")
 			apt_pkg.InitConfig()
 			apt_pkg.InitSystem()
+			print _("...done")
 			self.aptCache = apt_pkg.GetCache()
 		try:
 			return self.aptCache[name].CurrentVer.VerStr
