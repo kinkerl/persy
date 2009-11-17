@@ -253,10 +253,12 @@ class _Core():
 		for watch in self.config['local']['watched']:
 			wdd = wm.add_watch("%s"%(watch), mask, rec=True, auto_add=True)
 
+		self.log.debug("init the syncer")
 		self.worker = TheSyncer(self, self.config, self.log, self.config['remote']['sleep'], self.config['local']['sleep'])
+		self.log.debug("init the filesystem notifier")
 		self.notifier = ThreadedNotifier(wm, FileChangeHandler(self.log, self.worker.newEvent))
-
 		self.log.resetError()
+		self.log.debug("starting syncer")
 		self.worker.start()
 		self.notifier.start()
 		self.log.setStart()
