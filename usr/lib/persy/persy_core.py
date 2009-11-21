@@ -244,7 +244,7 @@ class _Core():
 	def persy_start(self):
 		''' Starts Persy'''
 		self.log.info("start working")
-
+		self.log.setStart()
 		FLAGS=EventsCodes.ALL_FLAGS
 		mask = FLAGS['IN_MODIFY'] | FLAGS['IN_DELETE_SELF']|FLAGS['IN_DELETE'] | FLAGS['IN_CREATE'] | FLAGS['IN_CLOSE_WRITE'] | FLAGS['IN_MOVE_SELF'] | FLAGS['IN_MOVED_TO'] | FLAGS['IN_MOVED_FROM'] # watched events
 
@@ -261,7 +261,7 @@ class _Core():
 		self.log.debug("starting syncer")
 		self.worker.start()
 		self.notifier.start()
-		self.log.setStart()
+		
 		#if self.statusIcon:
 		#	statusIcon.set_from_file(config.getAttribute('ICON_OK'))#from_stock(gtk.STOCK_HOME)
 
