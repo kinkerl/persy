@@ -169,9 +169,9 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 					try:
 						self.core.gitignore()
 					except Exception as e:
-						self.errorlocalcounter += 1
-						if self.errorlocalcounter > 1:
-							self.log.warn(str(e))
+						#self.errorlocalcounter += 1
+						#if self.errorlocalcounter > 1:
+						self.log.warn(str(e))
 
 
 					self.log.debug('git add')
@@ -187,17 +187,17 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 
 
 					except Exception as e:
-						self.errorlocalcounter += 1
-						if self.errorlocalcounter > 1:
-							self.log.warn(str(e))
+						#self.errorlocalcounter += 1
+						#if self.errorlocalcounter > 1:
+						self.log.warn(str(e))
 
 					self.log.debug('git commit')
 					try:
 						self.core.git_commit(self.generateCommitMessage())
 					except Exception as e:
-						self.errorlocalcounter += 1
-						if self.errorlocalcounter > 1:						
-							self.log.critical(str(e))
+						#self.errorlocalcounter += 1
+						#if self.errorlocalcounter > 1:						
+						self.log.critical(str(e))
 					else: 
 						self.errorlocalcounter = 0					
 						self.log.unsynced_changes(True)
@@ -206,9 +206,7 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 
 			#autopull and push updates every x secs
 			if self.onetimesync or (self.config['remote']['use_remote'] and time.time() - self.lastsync > self.sleep_remote):
-				self.onetimesync = False
-				self.lastsync = time.time()
-				self.log.info('remote sync')
+				self.log.info('trying remote sync')
 				if self.config['local']['watched']:
 					okcounter = 0
 					self.log.debug('git pull')
@@ -232,6 +230,9 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 						okcounter += 1
 
 					if okcounter >= 2:
+						self.log.info('done remote sync')
+						self.onetimesync = False
+						self.lastsync = time.time()
 						self.errorlocalcounter = 0	
 						self.log.unsynced_changes(False)
 			#start git ignore on a regular basis (ignoring unwatched files)
