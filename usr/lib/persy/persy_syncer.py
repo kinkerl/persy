@@ -181,9 +181,10 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 
 						#i dont know if this is still necessary
 						#explicit add changed files
-						processFiles = self.changedFiles
+						#DISABLED BECAUSE OF SOME PROBLEMS WITH GIT SUBPROJECTS
+						#processFiles = self.changedFiles
 						self.changedFiles = []
-						self.core.git_add(processFiles)
+						#self.core.git_add(processFiles)
 
 
 					except Exception as e:
