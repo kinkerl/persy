@@ -1,6 +1,5 @@
-persy (0.6.1) karmic jaunty; urgency=low
+persy (0.6.1) karmic; urgency=low
 
-  * made a package for karmic and jaunty
   * removed an warning when changing files in a git submodule
 
  -- Dennis Schwertel <s@digitalkultur.net>  23 Nov 2009 18:20:00 +0100
