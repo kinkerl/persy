@@ -1,3 +1,11 @@
+persy (0.6) karmic; urgency=low
+
+  * The "almost there" release
+  * reorganized every single line of code
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net> 23 Nov 2009 9:20:00 +0100
+
 persy (0.5) jaunty; urgency=low
 
   * The "media whore" release
