@@ -181,11 +181,16 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 
 						#i dont know if this is still necessary
 						#explicit add changed files
-						#DISABLED BECAUSE OF SOME PROBLEMS WITH GIT SUBPROJECTS
-						#processFiles = self.changedFiles
+						processFiles = self.changedFiles
 						self.changedFiles = []
-						#self.core.git_add(processFiles)
-
+						try:
+							self.core.git_add(processFiles)
+						except Exception as e:
+							#most of the time this is only triggerted
+							#if a file is changed in a git submodule. 
+							#i dont know any good way to check for this
+							#so ignore the direct error and write this to debug
+							self.log.debug(str(e))
 
 					except Exception as e:
 						#self.errorlocalcounter += 1

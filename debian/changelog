@@ -3,7 +3,7 @@ persy (0.6.1) karmic jaunty; urgency=low
   * made a package for karmic and jaunty
   * removed an warning when changing files in a git submodule
 
- -- Dennis Schwertel <s@digitalkultur.net> 23 Nov 2009 18:20:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  23 Nov 2009 18:20:00 +0100
 
 persy (0.6) karmic; urgency=low
 
@@ -11,7 +11,7 @@ persy (0.6) karmic; urgency=low
   * reorganized every single line of code
   * lots of bugfixes
 
- -- Dennis Schwertel <s@digitalkultur.net> 23 Nov 2009 9:20:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  23 Nov 2009 9:20:00 +0100
 
 persy (0.5) jaunty; urgency=low
 
@@ -24,7 +24,7 @@ persy (0.5) jaunty; urgency=low
   * set icon svg size to 128x128px (and fixing a gtk warning with this)
   * implemented delayed error reporting (finaly!)
 
- -- Dennis Schwertel <s@digitalkultur.net> 27 Okt 2009 10:20:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  27 Oct 2009 10:20:00 +0100
 
 persy (0.4.3) jaunty; urgency=low
 
@@ -32,19 +32,19 @@ persy (0.4.3) jaunty; urgency=low
   * added active remote sync
   * lots of bugfixes
 
- -- Dennis Schwertel <s@digitalkultur.net> 18 Okt 2009 14:20:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  18 Oct 2009 14:20:00 +0100
 
 persy (0.4.2) jaunty; urgency=low
 
   * lots of bugfixes
 
- -- Dennis Schwertel <s@digitalkultur.net> 1 Sep 2009 14:20:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  1 Sep 2009 14:20:00 +0100
 
 persy (0.4.1) jaunty; urgency=low
 
   * added support for short forms of added directories
 
- -- Dennis Schwertel <s@digitalkultur.net> 25 Aug 2009 20:20:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  25 Aug 2009 20:20:00 +0100
 
 persy (0.4) jaunty; urgency=low
 
@@ -52,7 +52,7 @@ persy (0.4) jaunty; urgency=low
   * new icons for unsynced and untracked
   * lots of bugfixes
 
- -- Dennis Schwertel <s@digitalkultur.net> 13 Aug 2009 17:41:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  13 Aug 2009 17:41:00 +0100
 
 persy (0.3.6) jaunty; urgency=low
 
@@ -63,7 +63,7 @@ persy (0.3.6) jaunty; urgency=low
   * added support for qgit (gitk is still prefered)
   * lots of bugfixes
 
- -- Dennis Schwertel <s@digitalkultur.net> 11 Aug 2009 12:34:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  11 Aug 2009 12:34:00 +0100
 
 
 
@@ -71,7 +71,7 @@ persy (0.3.5.1) jaunty; urgency=low
 
   * added svg icon 
 
- -- Dennis Schwertel <s@digitalkultur.net> 06 Aug 2009 23:33:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  06 Aug 2009 23:33:00 +0100
 
 
 persy (0.3.5) jaunty; urgency=low
@@ -86,7 +86,7 @@ persy (0.3.5) jaunty; urgency=low
   * lots of bugfixes
   * added untracked and unsynced status (experimental)
  
- -- Dennis Schwertel <s@digitalkultur.net> 06 Aug 2009 20:33:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  06 Aug 2009 20:33:00 +0100
 
 persy (0.3.4) jaunty; urgency=low
  
@@ -97,7 +97,7 @@ persy (0.3.4) jaunty; urgency=low
   * added exclusion of files bigger than x kb
   * removed git-gc after a commit for performance
  
- -- Dennis Schwertel <s@digitalkultur.net> 27 Jul 2009 19:04:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  27 Jul 2009 19:04:00 +0100
 
 persy (0.3.3) jaunty; urgency=low
  
@@ -108,7 +108,7 @@ persy (0.3.3) jaunty; urgency=low
   * inotify KeyError
   * error handling in pug.init
  
- -- Philip Morrell <ubuntu.emorrp1@mamber.net> 22 Jul 2009 13:29:04 +0100
+ -- Philip Morrell <ubuntu.emorrp1@mamber.net>  22 Jul 2009 13:29:04 +0100
 
 
 persy (0.3.2) jaunty; urgency=low
