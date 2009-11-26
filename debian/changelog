@@ -1,4 +1,10 @@
-persy (0.6.1) jaunty; urgency=low
+persy (0.6.1.1) karmic; urgency=low
+
+  * fixed a show-stopper bug, thanks emorrp1
+
+ -- Dennis Schwertel <s@digitalkultur.net>  26 Nov 2009 22:20:00 +0100
+
+persy (0.6.1) karmic; urgency=low
 
   * removed an warning when changing files in a git submodule
 
