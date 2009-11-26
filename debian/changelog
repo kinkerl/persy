@@ -1,3 +1,10 @@
+persy (0.6.1.2) karmic; urgency=low
+
+  * fixed a show-stopper bug, thanks again emorrp1
+
+ -- Dennis Schwertel <s@digitalkultur.net>  26 Nov 2009 22:34:00 +0100
+
+
 persy (0.6.1.1) karmic; urgency=low
 
   * fixed a show-stopper bug, thanks emorrp1
