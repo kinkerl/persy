@@ -1,4 +1,4 @@
-persy (0.6.1) karmic; urgency=low
+persy (0.6.1) jaunty; urgency=low
 
   * removed an warning when changing files in a git submodule
 

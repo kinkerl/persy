@@ -141,9 +141,9 @@ class PersyConfig():
 
 		#general gitgui
 		if not config['general'].has_key('prefgitbrowser'):
-			if getSoftwareVersion(self.GITGUI[0]):
+			if self.p.getSoftwareVersion(self.GITGUI[0]):
 				config['general']['prefgitbrowser'] = self.attributes['GITGUI'][0]
-			elif getSoftwareVersion(self.GITGUI[1]):
+			elif self.p.getSoftwareVersion(self.GITGUI[1]):
 				config['general']['prefgitbrowser'] = self.attributes['GITGUI'][1]
 			else:
 				#log.critical(_("gitk and qgit is not installed, this should not happen!"))
