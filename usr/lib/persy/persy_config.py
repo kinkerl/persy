@@ -102,10 +102,6 @@ class PersyConfig():
 			print str(e)
 
 
-
-
-
-
 		#xterm terminal
 		self.attributes['XTERM'] = "xterm"
 		#fortune	
@@ -116,6 +112,8 @@ class PersyConfig():
 		self.p = PersyHelper()
 
 		if not os.path.exists(self.attributes['CONFIGFILE']):
+			if not os.path.exists(self.attributes['PERSY_DIR']):
+				os.mkdir(self.attributes['PERSY_DIR'])
 			with open(self.attributes['CONFIGFILE'], "w+") as f:
 				f.write(self.attributes['DEFAULT_CONFIG'])
 

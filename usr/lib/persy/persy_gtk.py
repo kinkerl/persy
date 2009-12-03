@@ -69,6 +69,24 @@ gtk.gdk.threads_init()
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
+class PersyGtkMenu():
+	def __init__(self):
+		self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+		self.window.connect("delete_event", self.delete_event)
+		self.window.connect("destroy", self.destroy)
+
+	def show(self):
+		self.window.show()
+
+	def delete_event(self, widget, event, data=None):
+		return False
+
+	def destroy(self, widget, data=None):
+		pass
+		#self.window.quit()
+
+
+
 
 class PersyGtk():
 	'''the gtk main loop and the status icon'''
@@ -85,8 +103,6 @@ class PersyGtk():
 
 		self.log.info("Starting persy gtk")
 		self.log.info("watching over: %s"%config['local']['watched'])
-		if not self.config['local']['watched']:
-			self.log.warn("watching no directories")
 
 		menu = gtk.Menu()
 
@@ -102,6 +118,8 @@ class PersyGtk():
 		actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
 		actions.append(('image', gtk.STOCK_ABOUT, _('about'), self.about))
 		actions.append(('image', gtk.STOCK_QUIT, _('quit'), self.quit_cb))
+		actions.append(('image', gtk.STOCK_ABOUT, _('settings'), self.open_menu))
+
 
 		for action in actions:
 			menuItem = None
@@ -117,11 +135,16 @@ class PersyGtk():
 		self.statusIcon = gtk.StatusIcon()
 		self.log.setStatusIcon(self.statusIcon)
 		self.statusIcon.set_from_file(self.config.getAttribute('ICON_IDLE'))
-		watched = _('watching over:')+' \n'
-		for x in self.config['local']['watched']:
-			watched += "- " + x + '\n'
-		watched = watched[:-1]
-		self.statusIcon.set_tooltip(watched)
+		if self.config['local']['watched']:
+			watched = _('watching over:')+' \n'
+			for x in self.config['local']['watched']:
+				watched += "- " + x + '\n'
+			watched = watched[:-1]
+			self.statusIcon.set_tooltip(watched)
+		else:
+			thewarning = _("watching no directories! You should add some directories over the command line (gui will follow)")
+			self.log.warn(thewarning)
+			self.statusIcon.set_tooltip(thewarning)
 		self.statusIcon.connect('popup-menu', self.popup_menu_cb, menu)
 		self.statusIcon.set_visible(True)
 
@@ -256,3 +279,6 @@ class PersyGtk():
 	def persy_stop(self):
 		self.core.persy_stop()
 		
+	def open_menu(self, widget, data = None):
+		menu = PersyGtkMenu()
+		menu.show()
