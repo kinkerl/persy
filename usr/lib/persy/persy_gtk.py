@@ -94,6 +94,7 @@ class PersyGtk():
 	def __init__(self):
 		self.statusIcon = None
 		self.core = None
+		self.usegui = False
 
 
 	def init(self, core, config, log, start=False):
@@ -116,9 +117,11 @@ class PersyGtk():
 		#actions.append(('image', gtk.STOCK_EXECUTE, _('optimize'), self.optimize))
 		actions.append(('image', gtk.STOCK_HELP, _('show Log'), self.showlog))
 		actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
+		if self.usegui:
+			actions.append(('image', gtk.STOCK_ABOUT, _('settings'), self.open_menu))
 		actions.append(('image', gtk.STOCK_ABOUT, _('about'), self.about))
 		actions.append(('image', gtk.STOCK_QUIT, _('quit'), self.quit_cb))
-		actions.append(('image', gtk.STOCK_ABOUT, _('settings'), self.open_menu))
+
 
 
 		for action in actions:
@@ -279,6 +282,11 @@ class PersyGtk():
 	def persy_stop(self):
 		self.core.persy_stop()
 		
+	def enableGui(self, gui):
+		self.usegui = gui
+
 	def open_menu(self, widget, data = None):
 		menu = PersyGtkMenu()
 		menu.show()
+
+

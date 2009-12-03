@@ -78,7 +78,7 @@ def main(argv):
 	parser.add_option("--verbose",action="store_true", default=False, help=_("print git output to stdout and set loglevel to DEBUG"))
 	parser.add_option("--actions",action="store_true", default=False, help=_("computer-readable actions in persy"))
 	parser.add_option("--optimize",action="store_true", default=False, help=_("optimizes the stored files. saves space and improves performance"))
-
+	parser.add_option("--gui",action="store_true", default=False, help=_("use the experimental configuration interface"))
 	parser.add_option("--config",action="store_true", default=False, help=_("needed flag to change configurations"))
 	parser.add_option("--uname", dest="uname", default="", help=_("username used in commit"))
 	parser.add_option("--mail", dest="mail", default="", help=_("useremail used in commit"))
@@ -177,6 +177,7 @@ def main(argv):
 
 		#START!
 		pgtk = PersyGtk()
+		pgtk.enableGui(options.gui)
 		pgtk.init(core, config, log, options.start)
 
 
