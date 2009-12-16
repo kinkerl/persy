@@ -288,9 +288,9 @@ class _Core():
 		if self.worker:
 			try:
 				self.worker.setonetimesync()
-				self.persy_stop()
 			except RuntimeError:
 				pass
+			self.persy_stop()
 
 	def persy_stop(self):
 		'''Stops Persy'''
