@@ -164,7 +164,8 @@ class PersyGtk():
 
 	def quit_cb(self, widget, data = None):
 		'''stopts persy'''
-		self.core.setonetimesyncandstop()
+		self.core.setonetimesync()
+		self.core.persy_stop()
 		if data:
 			data.set_visible(False)
 		gtk.main_quit()

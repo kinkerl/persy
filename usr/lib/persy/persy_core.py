@@ -284,14 +284,6 @@ class _Core():
 			except RuntimeError:
 				pass
 
-	def setonetimesyncandstop(self):
-		if self.worker:
-			try:
-				self.worker.setonetimesync()
-			except RuntimeError:
-				pass
-		self.persy_stop()
-
 	def persy_stop(self):
 		'''Stops Persy'''
 
