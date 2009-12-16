@@ -241,7 +241,6 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 					if okcounter >= 2:
 						self.log.info('done remote sync')
 						self.onetimesync = False
-						self.onetimecommit = True
 						self.lastsync = time.time()
 						self.errorlocalcounter = 0	
 						self.log.unsynced_changes(False)

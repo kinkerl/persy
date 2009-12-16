@@ -288,8 +288,7 @@ class _Core():
 		if self.worker:
 			try:
 				self.worker.setonetimesync()
-				self.worker.stop()
-				self.worker.join()
+				self.persy_stop()
 			except RuntimeError:
 				pass
 
