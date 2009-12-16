@@ -119,7 +119,8 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.lastsync = -1
 		self.lastignore = -1
 		self.running = True
-		self.onetimesync = False #if set will sync one time!
+		self.onetimesync = False #if set, will sync one time!
+		self.onetimecommit = False #if set, will commit one time!
 		self.errorlocalcounter = 0
 		self.errorremotecounter = 0
 		self.log = log
@@ -132,6 +133,9 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		
 	def setonetimesync(self):
 		self.onetimesync = True
+
+	def setonetimecommit(self):
+		self.onetimecommit = True
 
 	def generateCommitMessage(self):
 		'''generates a nice commit message'''
@@ -158,9 +162,8 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		while self.running:
 			time.sleep(self.sleep_local)
 			self.log.debug('tick')
-			#only do if changed occured (dome==True) and only at least 2 seconds after the last event
-
-			if not self.lastcommit == self.lastevent and time.time() - self.lastevent > self.sleep_local:
+			if self.onetimecommit or (not self.lastcommit == self.lastevent and time.time() - self.lastevent > self.sleep_local):
+				self.onetimecommit = False
 				self.lastcommit = self.lastevent
 				self.log.info('local commit')
 				if self.config['local']['watched']:
@@ -238,6 +241,7 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 					if okcounter >= 2:
 						self.log.info('done remote sync')
 						self.onetimesync = False
+						self.onetimecommit = True
 						self.lastsync = time.time()
 						self.errorlocalcounter = 0	
 						self.log.unsynced_changes(False)
