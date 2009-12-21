@@ -22,7 +22,7 @@ fortune=False
 # after the last file action
 sleep = %i
 
-# a coma seperated list auf the files and directories, persy is syncing
+# a coma seperated list of the files and directories persy is syncing
 watched =
 
 # the maximal allowed filesize for the synced files in bytes
@@ -43,5 +43,7 @@ sleep = %if
 # the host adress of the remote server as ip or name
 hostname = %s
 
-# the absolute path on the remote server to the git repository
+# the absolute path on the remote server to the git repository.
+# if you want to sync other clients with this some, choose the 
+# same remote path for all clients
 path = %s
