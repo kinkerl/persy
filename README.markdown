@@ -54,8 +54,9 @@ The normal local configuration is:
      $ persy --config --add_dir=DIR         # DIR is the absolute path to a directory 
                                             # in /home/user (example: /home/username/documents).
                                             # The directory is then integrated in persy
-     #from now on, you can start persy or/and add it to your autostart:
-     $ persy                                # starts persy
+                                            # from now on, you can start persy or/and 
+                                            # add it to your autostart:
+     $ persy --start                        # starts persy
 
 
 Setup for syncing and/or using a remote backup
@@ -71,7 +72,7 @@ The normal workflow with a __blank remote Server__ and an __already initialized 
      $ persy --config --path=PATH           # PATH = absolute path of the gitrepository on 
                                             # the server (path will be created if it does not exist)
      $ persy --initRemote                   # created a bare git repository on the server in PATH
-     $ persy                                # starts persy 
+     $ persy --start                        # starts persy 
 
 
 The normal workflow with a __already initialized remote Server__ and __no local repository__. 
@@ -88,7 +89,7 @@ with already existing files. you can start a sync and then add new files to the 
                                             # pulls the files from the git repository
                                             # depending on the size of your existing repository
                                             # this can take a long(!) time
-     $ persy                                # starts persy
+     $ persy --start                        # starts persy
 
 License
 ============
