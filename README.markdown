@@ -15,8 +15,8 @@ persy tracks changes of local files (you can choose which ones) an stores the ch
 if you want to enable a remote backup or even a sync, persy can sync and merge the changes with the server over a secure ssh connection. 
 
 
-You can report BUGS, ask QUESTIONS and DOWNLOAD persy on https://launchpad.net/persy
-You can view the SOURCE and the WIKI on http://wiki.github.com/kinkerl/persy
+You can report BUGS, ask QUESTIONS and DOWNLOAD persy on [launchpad](https://launchpad.net/persy)
+You can view the SOURCE and the WIKI on [github](http://wiki.github.com/kinkerl/persy)
 
 Since persy builds upon the infrastructure offered by Git, it shares its main
 strengths:
@@ -61,7 +61,7 @@ The normal local configuration is:
 Setup for syncing and/or using a remote backup
 ------------
 If you want to sync or backup your files on a remote server, you have to __enable a public key authentication__ 
-for the server (take a look at http://sial.org/howto/openssh/publickey-auth/ for more information).
+for the server ([more information](http://sial.org/howto/openssh/publickey-auth/ for more information)).
 No extra software on the server is required. The server just needs a ssh server with public key authentication 
 and the git-core package.
 
