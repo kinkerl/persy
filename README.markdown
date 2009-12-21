@@ -53,8 +53,8 @@ The normal local configuration is:
      $ persy --init                         # run once to initialize the backup system
      $ persy --config --add_dir=DIR         # DIR is the absolute path to a directory 
                                             # in /home/user (example: /home/username/documents).
-                                            # The directory is then integrated in persy
-                                            # from now on, you can start persy or/and 
+                                            # The directory is then integrated in persy.
+                                            # From now on, you can start persy or/and 
                                             # add it to your autostart:
      $ persy --start                        # starts persy
 
