@@ -61,8 +61,9 @@ The normal local configuration is:
 Setup for syncing and/or using a remote backup
 ------------
 If you want to sync or backup your files on a remote server, you have to __enable a public key authentication__ 
-for the server!!! No extra software on the server is required. The server just needs a ssh server with public 
-key authentication and the git-core package.
+for the server (take a look at http://sial.org/howto/openssh/publickey-auth/ for more information).
+No extra software on the server is required. The server just needs a ssh server with public key authentication 
+and the git-core package.
 
 The normal workflow with a __blank remote Server__ and an __already initialized local repository is__:
 
