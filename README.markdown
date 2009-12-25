@@ -65,7 +65,9 @@ Setup for syncing and/or using a remote backup
 If you want to sync or backup your files on a remote server, you have to __enable a public key authentication__ 
 for the server ([more information](http://sial.org/howto/openssh/publickey-auth/)).
 No extra persy serversoftware is required as you can see in this illustration:
+
 ![see illustration](http://cloud.github.com/downloads/kinkerl/persy/sync.png)
+
 The server just needs a ssh server with public key authentication and the git-core package.
 
 You only have to configure the client computer with persy installed!
