@@ -170,7 +170,7 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 					self.log.debug('git ignore')
 					self.lastignore = time.time()
 					try:
-						self.core.gitignore()
+						self.core.vcsignore()
 					except Exception as e:
 						#self.errorlocalcounter += 1
 						#if self.errorlocalcounter > 1:
@@ -249,6 +249,6 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 				self.log.debug('git ignore')
 				self.lastignore = time.time()
 				try:
-					self.core.gitignore()
+					self.core.vcsignore()
 				except Exception as e:
 					self.log.warn(str(e))

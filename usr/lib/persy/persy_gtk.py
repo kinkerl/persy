@@ -157,6 +157,8 @@ class PersyGtk():
 		try:
 			gtk.main()
 		except KeyboardInterrupt:
+			self.persy_sync_remote(None) 
+			self.persy_stop()
 			self.log.info("bye!", verbose=True)
 			sys.exit(0)
 		except Exception as e:

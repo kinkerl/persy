@@ -83,7 +83,7 @@ class _Core():
 		stdin = None #default stdin
 		stdout = std #default stdout
 		stderr = std #default stderr
-		self.git = pug.PuG(self.config.getAttribute('USERHOME'), GIT_DIR=self.config.getAttribute('GIT_DIR'), stdin=stdin, stdout=stdout, stderr=stderr)
+		self.vcs = pug.PuG(self.config.getAttribute('USERHOME'), GIT_DIR=self.config.getAttribute('GIT_DIR'), stdin=stdin, stdout=stdout, stderr=stderr)
 
 
 	def initLocal(self):
@@ -98,10 +98,10 @@ class _Core():
 		self.log.info(_("initialising local repository..."), verbose=True)
 	
 		try:
-			self.git.init()
-			self.git.config('user.name',self.config['general']['name'])
-			self.git.config('user.email',self.config['general']['mail'])
-			self.gitignore()
+			self.vcs.init()
+			self.vcs.config('user.name',self.config['general']['name'])
+			self.vcs.config('user.email',self.config['general']['mail'])
+			self.vcsignore()
 		except Exception as e:
 			self.log.critical(str(e), verbose=True)
 		else:
@@ -109,13 +109,13 @@ class _Core():
 
 
 
-	def gitlog(self):
+	def vcslog(self):
 		'''executes the git-log command'''
-		self.git.log(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+		self.vcs.log(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
-	def gitstatus(self):
+	def vcsstatus(self):
 		'''executes the git-status command'''
-		self.git.status(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+		self.vcs.status(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
 
 
@@ -141,7 +141,7 @@ class _Core():
 				self.config['remote']['use_remote'] = True
 				self.config.write()
 
-			self.git.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s/%s"%(self.config['remote']['hostname'],self.config['remote']['path']))
+			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s/%s"%(self.config['remote']['hostname'],self.config['remote']['path']))
 		except Exception as e:
 			self.log.critical(str(e), verbose=True)
 		else:
@@ -153,8 +153,8 @@ class _Core():
 		#i dont use clone because of massive errors when using it
 		self.initLocal()
 		try:
-			self.git.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s/%s"%(self.config['remote']['hostname'],self.config['remote']['path']))
-			self.git.pull(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
+			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s/%s"%(self.config['remote']['hostname'],self.config['remote']['path']))
+			self.vcs.pull(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
 		except Exception as e:
 			self.log.critical(str(e))
 
@@ -162,10 +162,10 @@ class _Core():
 			self.config['remote']['use_remote'] = True
 			self.config.write()
 
-	def gitignore(self):
+	def vcsignore(self):
 		'''creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with "git clean")'''
 		#list every file in /home/USER
-		#add every file and folder (if not already done) to .gitignore if they are not part WATCHED
+		#add every file and folder (if not already done) to .vcsignore if they are not part WATCHED
 		current = os.listdir(self.config.getAttribute('USERHOME'))
 		for f in self.config['local']['watched']:
 			#if not f.startswith(USERHOME):
@@ -210,19 +210,19 @@ class _Core():
 		'''executes git-gc'''
 		self.log.info('starting optimization', verbose=True)
 		class Starter(Thread):
-			def __init__(self,git, log):
+			def __init__(self,vcs, log):
 				Thread.__init__(self)
-				self.git = git
+				self.vcs = vcs
 				self.log = log
 			def run(self):
 				try:
 					self.log.debug('git gc')
-					self.git.gc()
+					self.vcs.gc()
 				except Exception as e:
 					self.log.warn(str(e), verbose=True)
 
 		try:
-			Starter(self.git, self.log).start()
+			Starter(self.vcs, self.log).start()
 		except Exception as e:
 			self.log.warn(str(e), verbose=True)
 
@@ -232,13 +232,13 @@ class _Core():
 	def browse(self, wiget=None):
 		'''starts the default git browser'''
 		class Starter(Thread):
-			def __init__(self,git, config):
+			def __init__(self,vcs, config):
 				Thread.__init__(self)
-				self.git = git
+				self.vcs = vcs
 				self.config = config
 			def run(self):
-				self.git.command(self.config['general']['prefgitbrowser'], stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
-		Starter(self.git, self.config).start()
+				self.vcs.command(self.config['general']['prefgitbrowser'], stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+		Starter(self.vcs, self.config).start()
 
 
 	def persy_start(self):
@@ -266,16 +266,16 @@ class _Core():
 		#	statusIcon.set_from_file(config.getAttribute('ICON_OK'))#from_stock(gtk.STOCK_HOME)
 
 	def git_add(self, item):
-		self.git.add(item)
+		self.vcs.add(item)
 		
 	def git_commit(self, item):
-		self.git.commit(item)
+		self.vcs.commit(item)
 
 	def git_pull(self, item, item2):
-		self.git.pull(item, item2)
+		self.vcs.pull(item, item2)
 
 	def git_push(self, item, item2):
-		self.git.push(item,item2)
+		self.vcs.push(item,item2)
 
 	def setonetimesync(self):
 		if self.worker:

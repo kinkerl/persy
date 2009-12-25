@@ -149,11 +149,11 @@ def main(argv):
 	elif options.browse:
 		core.browse()
 	elif options.log:
-		core.gitlog()
+		core.vcslog()
 	elif options.status:
-		core.gitstatus()
+		core.vcsstatus()
 	elif options.ignore:
-		core.gitignore()
+		core.vcsignore()
 	elif options.optimize:
 		core.optimize()
 	elif options.actions:
