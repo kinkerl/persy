@@ -4,15 +4,16 @@ persy -- sync tool based on Git
 =================================
 persy is an automated incremental backup tool for your personal files.
 it is comparable to dropbox and ubuntuone but with one major difference: 
-you dont need a fancy user account in some cloud in the internet. persy manages the sync in a local way: 
-all you need is a ssh server (local or remote doesnt matter). i have a old pc here in my local network for example. 
+you dont need a fancy user account in some cloud in the internet. persy manages the synchronization in a personal way: 
+all you need is a server with ssh and git (in your local network or remote in the internet doesnt matter). 
+i have a old pc here in my local network for example. 
 
 persy is designed to run by its own on a computer as a revision based
 backup application or in an environment with multiple computers and at least
 one server to keep files and folder in sync between them.
 
 persy tracks changes of local files (you can choose which ones) an stores the changes in a local git repository. 
-if you want to enable a remote backup or even a sync, persy can sync and merge the changes with the server over a secure ssh connection. 
+if you want to enable a remote backup or even a syncronization, persy can syncronize and merge the changes with the server over a secure ssh connection. 
 
 
 You can report BUGS, ask QUESTIONS and DOWNLOAD persy on [launchpad](https://launchpad.net/persy)
@@ -57,15 +58,17 @@ The normal local configuration is:
                                             # From now on, you can start persy or/and 
                                             # add it to your autostart:
      $ persy --start                        # starts persy
-
+You can configure your desktop environment to execute persy at login.
 
 Setup for syncing and/or using a remote backup
 ------------
 If you want to sync or backup your files on a remote server, you have to __enable a public key authentication__ 
 for the server ([more information](http://sial.org/howto/openssh/publickey-auth/)).
-No extra software on the server is required. The server just needs a ssh server with public key authentication 
-and the git-core package.
+No extra persy serversoftware is required as you can see in this illustration:
+![see illustration](http://cloud.github.com/downloads/kinkerl/persy/sync.png)
+The server just needs a ssh server with public key authentication and the git-core package.
 
+You only have to configure the client computer with persy installed!
 The normal workflow with a __blank remote Server__ and an __already initialized local repository is__:
 
      $ persy --config --hostname=SERVER     # SERVER = location of the server
@@ -73,7 +76,6 @@ The normal workflow with a __blank remote Server__ and an __already initialized 
                                             # the server (path will be created if it does not exist)
      $ persy --initRemote                   # created a bare git repository on the server in PATH
      $ persy --start                        # starts persy 
-
 
 The normal workflow with a __already initialized remote Server__ and __no local repository__. 
 IMPORTANT: the synced directories should be empty before the sync. i had some problems 
