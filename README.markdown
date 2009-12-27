@@ -69,9 +69,7 @@ You can configure your desktop environment to execute persy at login.
 
 Setup for syncing and/or using a remote backup
 ------------
-If you want to sync or backup your files on a remote server, you have to __enable a public key authentication__ 
-for the server ([more information](http://sial.org/howto/openssh/publickey-auth/)).
-No extra persy serversoftware is required as you can see in this illustration:
+If you want to sync or backup your files on a remote server, you have to __enable a public key authentication__ for the server ([more information](http://sial.org/howto/openssh/publickey-auth/)). No extra persy serversoftware is required as you can see in this illustration:
 
 ![see illustration](http://cloud.github.com/downloads/kinkerl/persy/sync.png)
 
@@ -87,8 +85,8 @@ The normal workflow with a __blank remote Server__ and an __already initialized 
      $ persy --start                        # starts persy 
 
 The normal workflow with a __already initialized remote Server__ and __no local repository__. 
-IMPORTANT: the synced directories should be empty before the sync. i had some problems 
-with already existing files. you can start a sync and then add new files to the synced directory.
+
+IMPORTANT: the synced directories should be empty before the sync. i had some problems with already existing files. you can start a sync and then add new files to the synced directory.
 
      $ persy --config --uname=USERNAME      # username used for the commits
      $ persy --config --mail=MAIL           # useremail used for the commits
