@@ -3,12 +3,12 @@
 
 #License
 #=======
-#persy is free software: you can redistribute it and/or modify it
+#markdown2man is free software: you can redistribute it and/or modify it
 #under the terms of the GNU General Public License as published by the Free
 #Software Foundation, either version 2 of the License, or (at your option) any
 #later version.
 
-#persy is distributed in the hope that it will be useful,
+#markdown2man is distributed in the hope that it will be useful,
 #but WITHOUT ANY WARRANTY; without even the implied warranty of
 #MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #General Public License for more details.
@@ -40,6 +40,7 @@ def main(argv):
 	parser = OptionParser(usage = "use --help to get more information")
 	parser.add_option("--infilename", dest="infilename", default="", help="filename of the markdown file")
 	parser.add_option("--outfilename", dest="outfilename", default="", help="filename of the manpage file")
+	parser.add_option("--modifydate", dest="date", default="", help="sets the modification timestamp. default is the current date")
 	
 	(options, args) = parser.parse_args(args)
 
@@ -49,27 +50,52 @@ def main(argv):
 	elif not options.outfilename:
 		print "outfilename missing"
 		sys.exit(1)
+	#if date not set, set the date to right now	
+	elif not options.date:
+		from time import strftime
+		options.date = strftime("%b %d, %Y")
+
 	
 	infile  = file(options.infilename)
 	outfile = file(options.outfilename, "w")
 	
 	(first, last) = options.outfilename.split("/")[-1].split(".")
 	
-	outfile.write(".TH %s %s \"Aug 9, 2009\"\n"%(first, last))
+	outfile.write(".TH %s %s \"%s\"\n"%(first.upper(), last, options.date))
 	
 
 	prevline = ""
 	insup = False
 	for line in infile.readlines():
+		#close opened RS with an RE before an new heading
 		if (line.startswith("===") or line.startswith("---")) and insup:
 			outfile.write(".RE\n")
 			insup = False	
+		#first heading
 		if line.startswith("==="):
 			prevline = ".SH " + prevline
 			continue
+		#second heading is done with an RS
 		if line.startswith("---"):
 			line = ".RS\n"
 			insup = True
+
+		#create formating for bold words
+		bolds = line.split("__")
+		if len(bolds) > 1:
+			newline = ''
+			i = 0
+			while i < len(bolds):
+				if bolds[i][0] == " ":
+					newline += bolds[i][1:]
+				else:
+					newline += bolds[i]
+				if (i + 1) < len(bolds):
+					newline += "\n.B " + bolds[i+1]+"\n"
+				i += 2
+			line = newline
+		
+		#print the last line in cache
 		outfile.write(prevline)
 		prevline = line
 
