@@ -111,7 +111,7 @@ If you have questions regarding esoteric setups, feel free to mail me.
 See also
 ===========
 You can report BUGS, ask QUESTIONS and DOWNLOAD persy on [launchpad](https://launchpad.net/persy)
-You can view the SOURCE and the WIKI on [github](http://wiki.github.com/kinkerl/persy)
+You can view the SOURCE and DEVELOPMENT on [github](http://wiki.github.com/kinkerl/persy)
 
 Author
 ============
