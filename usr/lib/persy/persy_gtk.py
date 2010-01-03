@@ -70,10 +70,108 @@ __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
 class PersyGtkMenu():
-	def __init__(self):
+	def __init__(self,  config):
+		self.config = config
 		self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 		self.window.connect("delete_event", self.delete_event)
 		self.window.connect("destroy", self.destroy)
+		
+		self.vbox = gtk.VBox(False, 0)
+		self.window.add(self.vbox)
+		self.vbox.show()
+
+		hbox = gtk.HBox(False, 0)
+		self.vbox.add(hbox)
+		hbox.show()
+		
+		self.labelName = gtk.Label(_("name"))
+		hbox.pack_start(self.labelName, True, True, 0)
+		self.labelName.show()
+		
+		self.textName = gtk.Entry()
+		hbox.pack_start(self.textName, True, True, 0)
+		self.textName.set_text(config['general']['name'])
+		self.textName.show()
+		
+		
+		
+		hbox = gtk.HBox(False, 0)
+		self.vbox.add(hbox)
+		hbox.show()
+		
+		self.labelMail = gtk.Label(_("mail"))
+		hbox.pack_start(self.labelMail, True, True, 0)
+		self.labelMail.show()
+		
+		self.textMail = gtk.Entry()
+		hbox.pack_start(self.textMail, True, True, 0)
+		self.textMail.set_text(config['general']['mail'])
+		self.textMail.show()
+		
+		
+		
+		hbox = gtk.HBox(False, 0)
+		self.vbox.add(hbox)
+		hbox.show()
+		
+		self.labelMail = gtk.Label(_("watched"))
+		hbox.pack_start(self.labelMail, True, True, 0)
+		self.labelMail.show()
+		
+		self.textWatched = gtk.Entry()
+		hbox.pack_start(self.textWatched, True, True, 0)
+		self.textWatched.set_text(", ".join(config['local']['watched']))
+		self.textWatched.show()
+		
+		
+		
+		hbox = gtk.HBox(False, 0)
+		self.vbox.add(hbox)
+		hbox.show()
+		
+		self.labelHostname = gtk.Label(_("hostname"))
+		hbox.pack_start(self.labelHostname, True, True, 0)
+		self.labelHostname.show()
+		
+		self.textHostname = gtk.Entry()
+		hbox.pack_start(self.textHostname, True, True, 0)
+		self.textHostname.set_text(config['remote']['hostname'])
+		self.textHostname.show()
+		
+		
+		
+		hbox = gtk.HBox(False, 0)
+		self.vbox.add(hbox)
+		hbox.show()
+		
+		self.labelRemotePath = gtk.Label(_("remotepath"))
+		hbox.pack_start(self.labelRemotePath, True, True, 0)
+		self.labelRemotePath.show()
+		
+		self.textRemotePath = gtk.Entry()
+		hbox.pack_start(self.textRemotePath, True, True, 0)
+		self.textRemotePath.set_text(config['remote']['path'])
+		self.textRemotePath.show()
+		
+		
+		
+		self.button = gtk.Button(_("save"))
+		self.button.connect("clicked", self.save, None)
+		#self.button.connect_object("clicked", gtk.Widget.destroy, self.window)
+		#self.vbox.add(self.button)
+		self.vbox.pack_start(self.button, True, True, 0)
+		self.button.show()
+		
+	def save(self, widget, data=None):
+		self.config['general']['name'] = self.textName.get_text()
+		self.config['general']['mail'] = self.textMail.get_text()
+		self.config['local']['watched'] = self.textWatched.get_text().split(",")
+		self.config['remote']['hostname'] = self.textHostname.get_text()
+		self.config['remote']['path'] = self.textRemotePath.get_text()
+		self.config.write()
+
+
+
 
 	def show(self):
 		self.window.show()
@@ -289,7 +387,7 @@ class PersyGtk():
 		self.usegui = gui
 
 	def open_menu(self, widget, data = None):
-		menu = PersyGtkMenu()
+		menu = PersyGtkMenu(self.config)
 		menu.show()
 
 
