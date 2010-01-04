@@ -70,9 +70,14 @@ gtk.gdk.threads_init()
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
+def striplist(l):
+	'''helper function to strip lists'''
+	return ([x.strip() for x in l])
+
 class PersyGtkMenu():
-	def __init__(self,  config):
+	def __init__(self, config, log):
 		self.config = config
+		self.log = log
 
 		self.gladefile = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy.glade'
 		self.wTree = gtk.glade.XML(self.gladefile, 'window1')
@@ -130,7 +135,7 @@ class PersyGtkMenu():
 
 		
 	def save(self, widget, data=None):
-		print "save"
+		self.log.info("saving configuration")
 		#general configuration
 		textGeneralName = self.wTree.get_widget('textGeneralName')
 		self.config['general']['name'] = textGeneralName.get_text()
@@ -151,14 +156,14 @@ class PersyGtkMenu():
 		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textLocalWatched')
-		self.config['local']['watched'] = textGeneralName.get_text().split(',')
+		self.config['local']['watched'] = striplist(textGeneralName.get_text().split(','))
 
 		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
 		#textGeneralName.set_value(config['local']['maxfilesize'])
 		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textLocalExclude')
-		self.config['local']['exclude'] = textGeneralName.get_text().split(',')
+		self.config['local']['exclude'] = striplist(textGeneralName.get_text().split(','))
 
 
 		#remote configuration
@@ -382,6 +387,6 @@ class PersyGtk():
 		self.usegui = gui
 
 	def open_menu(self, widget, data = None):
-		menu = PersyGtkMenu(self.config)
+		menu = PersyGtkMenu(self.config, self.log)
 
 

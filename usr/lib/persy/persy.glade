@@ -3,6 +3,7 @@
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="window1">
+    <property name="width_request">600</property>
     <property name="visible">True</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
@@ -19,7 +20,7 @@
                 <property name="n_columns">2</property>
                 <child>
                   <widget class="GtkLabel" id="label4">
-                    <property name="width_request">250</property>
+                    <property name="width_request">200</property>
                     <property name="visible">True</property>
                     <property name="label" translatable="yes">Name</property>
                   </widget>
@@ -139,7 +140,7 @@
                 <property name="n_columns">2</property>
                 <child>
                   <widget class="GtkLabel" id="label8">
-                    <property name="width_request">250</property>
+                    <property name="width_request">200</property>
                     <property name="visible">True</property>
                     <property name="label" translatable="yes">sleep (in s)</property>
                   </widget>
@@ -262,7 +263,7 @@
                 <property name="n_columns">2</property>
                 <child>
                   <widget class="GtkLabel" id="label12">
-                    <property name="width_request">250</property>
+                    <property name="width_request">200</property>
                     <property name="visible">True</property>
                     <property name="label" translatable="yes">use remote</property>
                   </widget>
