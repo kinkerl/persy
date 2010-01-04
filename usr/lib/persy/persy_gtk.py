@@ -75,9 +75,10 @@ def striplist(l):
 	return ([x.strip() for x in l])
 
 class PersyGtkMenu():
-	def __init__(self, config, log):
+	def __init__(self, config, log, gtkcore):
 		self.config = config
 		self.log = log
+		self.gtkcore = gtkcore
 
 		self.wTree = gtk.glade.XML(self.config.getAttribute('GLADEFILE'), 'window1')
 		self.wTree.get_widget("window1").set_icon_from_file(self.config.getAttribute('LOGO'))
@@ -85,6 +86,13 @@ class PersyGtkMenu():
 
 
 		self.wTree.get_widget("buttonSave").connect("clicked", self.save)
+		self.wTree.get_widget("buttonSave").set_label(_("save"))
+		self.wTree.get_widget("buttonBrowse").connect("clicked", self.gtkcore.browse)
+		self.wTree.get_widget("buttonBrowse").set_label(_("start"))
+		self.wTree.get_widget("buttonLog").connect("clicked", self.gtkcore.showlog)
+		self.wTree.get_widget("buttonLog").set_label(_("show"))
+		self.wTree.get_widget("buttonGitLog").connect("clicked", self.gtkcore.showgitlog)
+		self.wTree.get_widget("buttonGitLog").set_label(_("show"))
 
 		textGeneralName = self.wTree.get_widget('labelGeneral')
 		textGeneralName.set_label(_("general"))
@@ -95,6 +103,8 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('labelRemote')
 		textGeneralName.set_label(_("remote"))
 
+		textGeneralName = self.wTree.get_widget('labelDevel')
+		textGeneralName.set_label(_("development/admin"))
 
 		#general configuration
 		textGeneralName = self.wTree.get_widget('labelGeneralName')
@@ -265,12 +275,12 @@ class PersyGtk():
 		actions.append(('check', start, _("start/stop Persy"), self.persy_toggle))
 		actions.append(('image', gtk.STOCK_EXECUTE, _('sync Remote'), self.persy_sync_remote))
 		actions.append(('check', self.config['remote']['use_remote'], _("auto sync Remote"), self.persy_sync_toggle))
-		if self.config['general']['prefgitbrowser'] != "":
-			actions.append(('image', gtk.STOCK_EXECUTE, _("start %s")%config['general']['prefgitbrowser'], self.browse))
+		#if self.config['general']['prefgitbrowser'] != "":
+		#	actions.append(('image', gtk.STOCK_EXECUTE, _("start %s")%config['general']['prefgitbrowser'], self.browse))
 		#dont need it!
 		#actions.append(('image', gtk.STOCK_EXECUTE, _('optimize'), self.optimize))
-		actions.append(('image', gtk.STOCK_HELP, _('show Log'), self.showlog))
-		actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
+		#actions.append(('image', gtk.STOCK_HELP, _('show Log'), self.showlog))
+		#actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
 		if self.usegui:
 			actions.append(('image', gtk.STOCK_ABOUT, _('settings'), self.open_menu))
 		actions.append(('image', gtk.STOCK_ABOUT, _('about'), self.about))
@@ -443,6 +453,6 @@ class PersyGtk():
 		self.usegui = gui
 
 	def open_menu(self, widget, data = None):
-		menu = PersyGtkMenu(self.config, self.log)
+		menu = PersyGtkMenu(self.config, self.log, self)
 
 
