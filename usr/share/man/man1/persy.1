@@ -1,4 +1,4 @@
-.TH persy 1 "Aug 9, 2009"
+.TH PERSY 1 "Jan 04, 2010"
 .SH Name
 persy - syncronization based on Git
 
@@ -67,16 +67,20 @@ You can configure your desktop environment to execute persy at login.
 .RE
 Setup for syncing and/or using a remote backup
 .RS
-If you want to sync or backup your files on a remote server, you have to __enable a public key authentication__ 
-for the server ([more information](http://sial.org/howto/openssh/publickey-auth/)).
-No extra persy serversoftware is required as you can see in this illustration:
+If you want to sync or backup your files on a remote server, you have to 
+.B enable a public key authentication
+for the server ([more information](http://sial.org/howto/openssh/publickey-auth/)). No extra persy serversoftware is required as you can see in this illustration:
 
 ![see illustration](http://cloud.github.com/downloads/kinkerl/persy/sync.png)
 
 The server just needs a ssh server with public key authentication and the git-core package.
 
 You only have to configure the client computer with persy installed!
-The normal workflow with a __blank remote Server__ and an __already initialized local repository is__:
+The normal workflow with a 
+.B blank remote Server
+and an 
+.B already initialized local repository is
+:
 
      $ persy --config --hostname=SERVER     # SERVER = location of the server
      $ persy --config --path=PATH           # PATH = absolute path of the gitrepository on 
@@ -84,9 +88,13 @@ The normal workflow with a __blank remote Server__ and an __already initialized 
      $ persy --initRemote                   # created a bare git repository on the server in PATH
      $ persy --start                        # starts persy 
 
-The normal workflow with a __already initialized remote Server__ and __no local repository__. 
-IMPORTANT: the synced directories should be empty before the sync. i had some problems 
-with already existing files. you can start a sync and then add new files to the synced directory.
+The normal workflow with a 
+.B already initialized remote Server
+and 
+.B no local repository
+. 
+
+IMPORTANT: the synced directories should be empty before the sync. i had some problems with already existing files. you can start a sync and then add new files to the synced directory.
 
      $ persy --config --uname=USERNAME      # username used for the commits
      $ persy --config --mail=MAIL           # useremail used for the commits
@@ -100,11 +108,17 @@ with already existing files. you can start a sync and then add new files to the 
                                             # this can take a long(!) time
      $ persy --start                        # starts persy
 
-
 .RE
+.SH Advanced Usage
+You can use persy without a centralized server to which every clients connects and performes the synchronization (like in the illustration image above).
+You can also run persy without a second computer at all and synchronize with other parts(repositories) on the filesystem.
+Right now, this is not the intended use and i  will not cover this in the cli or the upcomming gui. 
+You can however configure this in the git configuration for persy ~/.persy/git/config and i try to take care of the internal implementation.
+If you have questions regarding esoteric setups, feel free to mail me.
+
 .SH See also
 You can report BUGS, ask QUESTIONS and DOWNLOAD persy on [launchpad](https://launchpad.net/persy)
-You can view the SOURCE and the WIKI on [github](http://wiki.github.com/kinkerl/persy)
+You can view the SOURCE and DEVELOPMENT on [github](http://wiki.github.com/kinkerl/persy)
 
 .SH Author
 Copyright (C) 2009 Dennis Schwertel <s@digitalkultur.net>

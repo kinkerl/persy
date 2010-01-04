@@ -79,8 +79,7 @@ class PersyGtkMenu():
 		self.config = config
 		self.log = log
 
-		self.gladefile = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy.glade'
-		self.wTree = gtk.glade.XML(self.gladefile, 'window1')
+		self.wTree = gtk.glade.XML(self.config.getAttribute('GLADEFILE'), 'window1')
 		self.wTree.get_widget("window1").set_icon_from_file(self.config.getAttribute('LOGO'))
 		self.wTree.get_widget("window1").set_title(_("Persy Settings"))
 
