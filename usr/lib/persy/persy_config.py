@@ -50,6 +50,10 @@ except Exception as e:
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
+def striplist(l):
+	'''helper function to strip lists'''
+	return ([x.strip() for x in l])
+
 
 
 class PersyConfig():
@@ -181,6 +185,8 @@ class PersyConfig():
 
 		if not type(config['local']['watched']) is list:
 			config['local']['watched'] = []
+		#remove spaces
+		config['local']['watched'] = striplist(config['local']['watched'])
 
 		#local maxfilesize
 		if not config['local'].has_key('maxfilesize') or not type(config['local']['maxfilesize']) is str:
@@ -198,6 +204,8 @@ class PersyConfig():
 			config['local']['exclude'] = [config['local']['exclude']]
 		if not type(config['local']['exclude']) is list:
 			config['local']['exclude'] = []
+		#remove spaces
+		config['local']['exclude'] = striplist(config['local']['exclude'])
 
 		#remote use_remote
 		if not config['remote'].has_key('use_remote'):

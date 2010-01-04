@@ -51,6 +51,7 @@ try:
 	import pynotify
 	import subprocess
 	import gtk
+	import gtk.glade
 	import pygtk
 	pygtk.require("2.0")
 except ImportError as e:
@@ -72,116 +73,110 @@ __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 class PersyGtkMenu():
 	def __init__(self,  config):
 		self.config = config
-		self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-		self.window.connect("delete_event", self.delete_event)
-		self.window.connect("destroy", self.destroy)
-		
-		self.vbox = gtk.VBox(False, 0)
-		self.window.add(self.vbox)
-		self.vbox.show()
 
-		hbox = gtk.HBox(False, 0)
-		self.vbox.add(hbox)
-		hbox.show()
-		
-		self.labelName = gtk.Label(_("name"))
-		hbox.pack_start(self.labelName, True, True, 0)
-		self.labelName.show()
-		
-		self.textName = gtk.Entry()
-		hbox.pack_start(self.textName, True, True, 0)
-		self.textName.set_text(config['general']['name'])
-		self.textName.show()
-		
-		
-		
-		hbox = gtk.HBox(False, 0)
-		self.vbox.add(hbox)
-		hbox.show()
-		
-		self.labelMail = gtk.Label(_("mail"))
-		hbox.pack_start(self.labelMail, True, True, 0)
-		self.labelMail.show()
-		
-		self.textMail = gtk.Entry()
-		hbox.pack_start(self.textMail, True, True, 0)
-		self.textMail.set_text(config['general']['mail'])
-		self.textMail.show()
-		
-		
-		
-		hbox = gtk.HBox(False, 0)
-		self.vbox.add(hbox)
-		hbox.show()
-		
-		self.labelMail = gtk.Label(_("watched"))
-		hbox.pack_start(self.labelMail, True, True, 0)
-		self.labelMail.show()
-		
-		self.textWatched = gtk.Entry()
-		hbox.pack_start(self.textWatched, True, True, 0)
-		self.textWatched.set_text(", ".join(config['local']['watched']))
-		self.textWatched.show()
-		
-		
-		
-		hbox = gtk.HBox(False, 0)
-		self.vbox.add(hbox)
-		hbox.show()
-		
-		self.labelHostname = gtk.Label(_("hostname"))
-		hbox.pack_start(self.labelHostname, True, True, 0)
-		self.labelHostname.show()
-		
-		self.textHostname = gtk.Entry()
-		hbox.pack_start(self.textHostname, True, True, 0)
-		self.textHostname.set_text(config['remote']['hostname'])
-		self.textHostname.show()
-		
-		
-		
-		hbox = gtk.HBox(False, 0)
-		self.vbox.add(hbox)
-		hbox.show()
-		
-		self.labelRemotePath = gtk.Label(_("remotepath"))
-		hbox.pack_start(self.labelRemotePath, True, True, 0)
-		self.labelRemotePath.show()
-		
-		self.textRemotePath = gtk.Entry()
-		hbox.pack_start(self.textRemotePath, True, True, 0)
-		self.textRemotePath.set_text(config['remote']['path'])
-		self.textRemotePath.show()
-		
-		
-		
-		self.button = gtk.Button(_("save"))
-		self.button.connect("clicked", self.save, None)
-		#self.button.connect_object("clicked", gtk.Widget.destroy, self.window)
-		#self.vbox.add(self.button)
-		self.vbox.pack_start(self.button, True, True, 0)
-		self.button.show()
+		self.gladefile = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy.glade'
+		self.wTree = gtk.glade.XML(self.gladefile, 'window1')
+
+
+		self.wTree.get_widget("buttonSave").connect("clicked", self.save)
+
+
+
+		#general configuration
+		textGeneralName = self.wTree.get_widget('textGeneralName')
+		textGeneralName.set_text(config['general']['name'])
+
+		textGeneralName = self.wTree.get_widget('textGeneralMail')
+		textGeneralName.set_text(config['general']['mail'])
+
+		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
+		textGeneralName.set_active(config['general']['fortune'])
+
+		textGeneralName = self.wTree.get_widget('textGeneralGitBrowser')
+		textGeneralName.set_text(config['general']['prefgitbrowser'])
+
+
+		#local configuration
+		textGeneralName = self.wTree.get_widget('spinLocalSleep')
+		#textGeneralName.set_value(int(config['local']['sleep']))
+		textGeneralName.set_value(-1)
+
+		textGeneralName = self.wTree.get_widget('textLocalWatched')
+		textGeneralName.set_text(", ".join(config['local']['watched']))
+
+		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
+		#textGeneralName.set_value(config['local']['maxfilesize'])
+		textGeneralName.set_value(-1)
+
+		textGeneralName = self.wTree.get_widget('textLocalExclude')
+		textGeneralName.set_text(", ".join(config['local']['exclude']))
+
+
+		#remote configuration
+		textGeneralName = self.wTree.get_widget('checkRemoteUse')
+		textGeneralName.set_active(config['remote']['use_remote'])
+
+
+		textGeneralName = self.wTree.get_widget('spinRemoteSleep')
+		#textGeneralName.set_text(config['remote']['sleep'])
+		textGeneralName.set_value(-1)
+
+		textGeneralName = self.wTree.get_widget('textRemoteHostname')
+		textGeneralName.set_text(config['remote']['hostname'])
+
+		textGeneralName = self.wTree.get_widget('textRemotePath')
+		textGeneralName.set_text(config['remote']['path'])
+
+
 		
 	def save(self, widget, data=None):
-		self.config['general']['name'] = self.textName.get_text()
-		self.config['general']['mail'] = self.textMail.get_text()
-		self.config['local']['watched'] = self.textWatched.get_text().split(",")
-		self.config['remote']['hostname'] = self.textHostname.get_text()
-		self.config['remote']['path'] = self.textRemotePath.get_text()
+		print "save"
+		#general configuration
+		textGeneralName = self.wTree.get_widget('textGeneralName')
+		self.config['general']['name'] = textGeneralName.get_text()
+
+		textGeneralName = self.wTree.get_widget('textGeneralMail')
+		self.config['general']['mail'] = textGeneralName.get_text()
+
+		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
+		self.config['general']['fortune'] = textGeneralName.get_active()
+
+		textGeneralName = self.wTree.get_widget('textGeneralGitBrowser')
+		self.config['general']['prefgitbrowser'] = textGeneralName.get_text()
+
+
+		#local configuration
+		textGeneralName = self.wTree.get_widget('spinLocalSleep')
+		#textGeneralName.set_value(int(config['local']['sleep']))
+		#textGeneralName.set_value(-1)
+
+		textGeneralName = self.wTree.get_widget('textLocalWatched')
+		self.config['local']['watched'] = textGeneralName.get_text().split(',')
+
+		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
+		#textGeneralName.set_value(config['local']['maxfilesize'])
+		#textGeneralName.set_value(-1)
+
+		textGeneralName = self.wTree.get_widget('textLocalExclude')
+		self.config['local']['exclude'] = textGeneralName.get_text().split(',')
+
+
+		#remote configuration
+		textGeneralName = self.wTree.get_widget('checkRemoteUse')
+		self.config['remote']['use_remote'] = textGeneralName.get_active()
+
+
+		textGeneralName = self.wTree.get_widget('spinRemoteSleep')
+		#textGeneralName.set_text(config['remote']['sleep'])
+		#textGeneralName.set_value(-1)
+
+		textGeneralName = self.wTree.get_widget('textRemoteHostname')
+		self.config['remote']['hostname'] = textGeneralName.get_text()
+
+		textGeneralName = self.wTree.get_widget('textRemotePath')
+		self.config['remote']['path'] = textGeneralName.get_text()
 		self.config.write()
 
-
-
-
-	def show(self):
-		self.window.show()
-
-	def delete_event(self, widget, event, data=None):
-		return False
-
-	def destroy(self, widget, data=None):
-		pass
-		#self.window.quit()
 
 
 
@@ -388,6 +383,5 @@ class PersyGtk():
 
 	def open_menu(self, widget, data = None):
 		menu = PersyGtkMenu(self.config)
-		menu.show()
 
 
