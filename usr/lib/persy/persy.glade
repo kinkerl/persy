@@ -19,10 +19,10 @@
                 <property name="n_rows">4</property>
                 <property name="n_columns">2</property>
                 <child>
-                  <widget class="GtkLabel" id="label4">
+                  <widget class="GtkLabel" id="labelGeneralName">
                     <property name="width_request">200</property>
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Name</property>
+                    <property name="label" translatable="yes">name</property>
                   </widget>
                   <packing>
                     <property name="x_options"></property>
@@ -30,9 +30,9 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label5">
+                  <widget class="GtkLabel" id="labelGeneralMail">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Mail</property>
+                    <property name="label" translatable="yes">mail</property>
                   </widget>
                   <packing>
                     <property name="top_attach">1</property>
@@ -45,6 +45,7 @@
                   <widget class="GtkEntry" id="textGeneralName">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="tooltip" translatable="yes">the username. default is fine in most cases</property>
                     <property name="invisible_char">&#x25CF;</property>
                   </widget>
                   <packing>
@@ -58,6 +59,7 @@
                   <widget class="GtkEntry" id="textGeneralMail">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="tooltip" translatable="yes">the user mail. default is fine in most cases</property>
                     <property name="invisible_char">&#x25CF;</property>
                   </widget>
                   <packing>
@@ -69,9 +71,9 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label6">
+                  <widget class="GtkLabel" id="labelGeneralFortune">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Fortune</property>
+                    <property name="label" translatable="yes">fortune</property>
                   </widget>
                   <packing>
                     <property name="top_attach">2</property>
@@ -81,9 +83,9 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label7">
+                  <widget class="GtkLabel" id="labelGeneralGitBrowser">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Git Browser</property>
+                    <property name="label" translatable="yes">git browser</property>
                   </widget>
                   <packing>
                     <property name="top_attach">3</property>
@@ -124,9 +126,9 @@
               </widget>
             </child>
             <child>
-              <widget class="GtkLabel" id="label1">
+              <widget class="GtkLabel" id="labelGeneral">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">General</property>
+                <property name="label" translatable="yes">general</property>
               </widget>
               <packing>
                 <property name="tab_fill">False</property>
@@ -139,10 +141,10 @@
                 <property name="n_rows">4</property>
                 <property name="n_columns">2</property>
                 <child>
-                  <widget class="GtkLabel" id="label8">
+                  <widget class="GtkLabel" id="labelLocalSleep">
                     <property name="width_request">200</property>
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">sleep (in s)</property>
+                    <property name="label" translatable="yes">sleep</property>
                   </widget>
                   <packing>
                     <property name="x_options"></property>
@@ -150,9 +152,9 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label9">
+                  <widget class="GtkLabel" id="labelLocalWatched">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">watched files ( , seperated)</property>
+                    <property name="label" translatable="yes">watched files</property>
                   </widget>
                   <packing>
                     <property name="top_attach">1</property>
@@ -162,9 +164,9 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label10">
+                  <widget class="GtkLabel" id="labelLocalFilesize">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">max filesize (in bytes)</property>
+                    <property name="label" translatable="yes">max filesize</property>
                   </widget>
                   <packing>
                     <property name="top_attach">2</property>
@@ -174,9 +176,9 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label11">
+                  <widget class="GtkLabel" id="labelLocalExclude">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">exclude files (regular expr)</property>
+                    <property name="label" translatable="yes">exclude files</property>
                   </widget>
                   <packing>
                     <property name="top_attach">3</property>
@@ -249,9 +251,9 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="label2">
+              <widget class="GtkLabel" id="labelLocal">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Local</property>
+                <property name="label" translatable="yes">local</property>
               </widget>
               <packing>
                 <property name="position">1</property>
@@ -265,9 +267,10 @@
                 <property name="n_rows">4</property>
                 <property name="n_columns">2</property>
                 <child>
-                  <widget class="GtkLabel" id="label12">
+                  <widget class="GtkLabel" id="labelRemoteUse">
                     <property name="width_request">200</property>
                     <property name="visible">True</property>
+                    <property name="tooltip" translatable="yes">synchronize to a remote server</property>
                     <property name="label" translatable="yes">use remote</property>
                   </widget>
                   <packing>
@@ -276,9 +279,10 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label13">
+                  <widget class="GtkLabel" id="labelRemoteSleep">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">sleep (in s)</property>
+                    <property name="tooltip" translatable="yes">remote synchronize sleep time </property>
+                    <property name="label" translatable="yes">sleep</property>
                   </widget>
                   <packing>
                     <property name="top_attach">1</property>
@@ -288,8 +292,9 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label14">
+                  <widget class="GtkLabel" id="labelRemoteHostname">
                     <property name="visible">True</property>
+                    <property name="tooltip" translatable="yes">hostname</property>
                     <property name="label" translatable="yes">hostname</property>
                   </widget>
                   <packing>
@@ -300,7 +305,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label15">
+                  <widget class="GtkLabel" id="labelRemotePath">
                     <property name="visible">True</property>
                     <property name="label" translatable="yes">path on host</property>
                   </widget>
@@ -374,9 +379,9 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="label3">
+              <widget class="GtkLabel" id="labelRemote">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Remote</property>
+                <property name="label" translatable="yes">remote</property>
               </widget>
               <packing>
                 <property name="position">2</property>

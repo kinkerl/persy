@@ -81,57 +81,112 @@ class PersyGtkMenu():
 
 		self.wTree = gtk.glade.XML(self.config.getAttribute('GLADEFILE'), 'window1')
 		self.wTree.get_widget("window1").set_icon_from_file(self.config.getAttribute('LOGO'))
-		self.wTree.get_widget("window1").set_title(_("Persy Settings"))
+		self.wTree.get_widget("window1").set_title(_("persy settings"))
 
 
 		self.wTree.get_widget("buttonSave").connect("clicked", self.save)
 
+		textGeneralName = self.wTree.get_widget('labelGeneral')
+		textGeneralName.set_label(_("general"))
+
+		textGeneralName = self.wTree.get_widget('labelLocal')
+		textGeneralName.set_label(_("local"))
+
+		textGeneralName = self.wTree.get_widget('labelRemote')
+		textGeneralName.set_label(_("remote"))
 
 
 		#general configuration
+		textGeneralName = self.wTree.get_widget('labelGeneralName')
+		textGeneralName.set_label(_("name"))
+
 		textGeneralName = self.wTree.get_widget('textGeneralName')
 		textGeneralName.set_text(config['general']['name'])
+		textGeneralName.set_tooltip_text(_("the name used in git. the default should be fine"))
+
+
+		textGeneralName = self.wTree.get_widget('labelGeneralMail')
+		textGeneralName.set_label(_("mail"))
 
 		textGeneralName = self.wTree.get_widget('textGeneralMail')
 		textGeneralName.set_text(config['general']['mail'])
+		textGeneralName.set_tooltip_text(_("the mail used in git. the default should be fine"))
+
+		textGeneralName = self.wTree.get_widget('labelGeneralFortune')
+		textGeneralName.set_label(_("fortune"))
 
 		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
 		textGeneralName.set_active(config['general']['fortune'])
+		textGeneralName.set_tooltip_text(_("use fortune messages in the git commit message. disabled is fine."))
+
+
+		textGeneralName = self.wTree.get_widget('labelGeneralGitBrowser')
+		textGeneralName.set_label(_("git browser"))
 
 		textGeneralName = self.wTree.get_widget('textGeneralGitBrowser')
 		textGeneralName.set_text(config['general']['prefgitbrowser'])
-
+		textGeneralName.set_tooltip_text(_("the prefered git browser for browsing the local persy repository"))
 
 		#local configuration
+		textGeneralName = self.wTree.get_widget('labelLocalSleep')
+		textGeneralName.set_label(_("sleep"))
+
 		textGeneralName = self.wTree.get_widget('spinLocalSleep')
 		textGeneralName.set_value(int(config['local']['sleep']))
-		#textGeneralName.set_value(-1)
+		textGeneralName.set_tooltip_text(_("time in seconds to wait for an action after a filechange occurs"))
+
+
+		textGeneralName = self.wTree.get_widget('labelLocalWatched')
+		textGeneralName.set_label(_("watched"))
 
 		textGeneralName = self.wTree.get_widget('textLocalWatched')
 		textGeneralName.set_text(", ".join(config['local']['watched']))
+		textGeneralName.set_tooltip_text(_("the folders and directories watched in persy. this is a comma seperated list"))
+
+		textGeneralName = self.wTree.get_widget('labelLocalFilesize')
+		textGeneralName.set_label(_("max filesize"))
 
 		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
 		textGeneralName.set_value(int(config['local']['maxfilesize']))
-		#textGeneralName.set_value(-1)
+		textGeneralName.set_tooltip_text(_("the maximal allowed filesize in bytes used for files in persy. all files larger than this value will be ignored"))
+
+
+		textGeneralName = self.wTree.get_widget('labelLocalExclude')
+		textGeneralName.set_label(_("exclude"))
 
 		textGeneralName = self.wTree.get_widget('textLocalExclude')
 		textGeneralName.set_text(", ".join(config['local']['exclude']))
-
+		textGeneralName.set_tooltip_text(_("exclude files which map to one of the regular expressions. the expressions are seperated by a comma"))
 
 		#remote configuration
+		textGeneralName = self.wTree.get_widget('labelRemoteUse')
+		textGeneralName.set_label(_("use remote"))
+
 		textGeneralName = self.wTree.get_widget('checkRemoteUse')
 		textGeneralName.set_active(config['remote']['use_remote'])
+		textGeneralName.set_tooltip_text(_("synchronize to the remote server"))
 
+		textGeneralName = self.wTree.get_widget('labelRemoteSleep')
+		textGeneralName.set_label(_("sleep"))
 
 		textGeneralName = self.wTree.get_widget('spinRemoteSleep')
 		textGeneralName.set_value(int(config['remote']['sleep']))
-		#textGeneralName.set_value(-1)
+		textGeneralName.set_tooltip_text(_("interval in seconds in which a synchronization with the remote host occurs"))
+
+
+		textGeneralName = self.wTree.get_widget('labelRemoteHostname')
+		textGeneralName.set_label(_("hostname"))
 
 		textGeneralName = self.wTree.get_widget('textRemoteHostname')
 		textGeneralName.set_text(config['remote']['hostname'])
+		textGeneralName.set_tooltip_text(_("the hostname of the remote server"))
+
+		textGeneralName = self.wTree.get_widget('labelRemotePath')
+		textGeneralName.set_label(_("path"))
 
 		textGeneralName = self.wTree.get_widget('textRemotePath')
 		textGeneralName.set_text(config['remote']['path'])
+		textGeneralName.set_tooltip_text(_("the path to the git repository on the remote server"))
 
 
 		
