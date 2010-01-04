@@ -81,6 +81,8 @@ class PersyGtkMenu():
 
 		self.gladefile = '/home/kinkerl/devel/persy/persy/usr/lib/persy/persy.glade'
 		self.wTree = gtk.glade.XML(self.gladefile, 'window1')
+		self.wTree.get_widget("window1").set_icon_from_file(self.config.getAttribute('LOGO'))
+		self.wTree.get_widget("window1").set_title(_("Persy Settings"))
 
 
 		self.wTree.get_widget("buttonSave").connect("clicked", self.save)
@@ -103,15 +105,15 @@ class PersyGtkMenu():
 
 		#local configuration
 		textGeneralName = self.wTree.get_widget('spinLocalSleep')
-		#textGeneralName.set_value(int(config['local']['sleep']))
-		textGeneralName.set_value(-1)
+		textGeneralName.set_value(int(config['local']['sleep']))
+		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textLocalWatched')
 		textGeneralName.set_text(", ".join(config['local']['watched']))
 
 		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
-		#textGeneralName.set_value(config['local']['maxfilesize'])
-		textGeneralName.set_value(-1)
+		textGeneralName.set_value(int(config['local']['maxfilesize']))
+		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textLocalExclude')
 		textGeneralName.set_text(", ".join(config['local']['exclude']))
@@ -123,8 +125,8 @@ class PersyGtkMenu():
 
 
 		textGeneralName = self.wTree.get_widget('spinRemoteSleep')
-		#textGeneralName.set_text(config['remote']['sleep'])
-		textGeneralName.set_value(-1)
+		textGeneralName.set_value(int(config['remote']['sleep']))
+		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textRemoteHostname')
 		textGeneralName.set_text(config['remote']['hostname'])
@@ -152,14 +154,14 @@ class PersyGtkMenu():
 
 		#local configuration
 		textGeneralName = self.wTree.get_widget('spinLocalSleep')
-		#textGeneralName.set_value(int(config['local']['sleep']))
+		self.config['local']['sleep'] = int(textGeneralName.get_value())
 		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textLocalWatched')
 		self.config['local']['watched'] = striplist(textGeneralName.get_text().split(','))
 
 		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
-		#textGeneralName.set_value(config['local']['maxfilesize'])
+		self.config['local']['maxfilesize'] = int(textGeneralName.get_value())
 		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textLocalExclude')
@@ -172,7 +174,7 @@ class PersyGtkMenu():
 
 
 		textGeneralName = self.wTree.get_widget('spinRemoteSleep')
-		#textGeneralName.set_text(config['remote']['sleep'])
+		self.config['remote']['sleep'] = int(textGeneralName.get_value())
 		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textRemoteHostname')

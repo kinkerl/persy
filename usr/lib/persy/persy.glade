@@ -190,6 +190,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x25CF;</property>
+                    <property name="adjustment">0 0 100000 1 10 0</property>
+                    <property name="numeric">True</property>
                   </widget>
                   <packing>
                     <property name="left_attach">1</property>
@@ -216,7 +218,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x25CF;</property>
-                    <property name="overwrite_mode">True</property>
+                    <property name="adjustment">0 0 100000 1 10 0</property>
+                    <property name="numeric">True</property>
                   </widget>
                   <packing>
                     <property name="left_attach">1</property>
@@ -326,6 +329,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x25CF;</property>
+                    <property name="adjustment">0 0 100000 1 10 0</property>
+                    <property name="numeric">True</property>
                   </widget>
                   <packing>
                     <property name="left_attach">1</property>
