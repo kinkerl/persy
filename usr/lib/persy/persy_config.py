@@ -225,6 +225,14 @@ class PersyConfig():
 		if not config['remote'].has_key('path') or not type(config['remote']['path']) is str:
 			config['remote']['path'] = self.attributes['DEFAULT_REMOTE_PATH']
 
+		#remote autoshare
+		if not config['remote'].has_key('autoshare'):
+			config['remote']['autoshare'] = False
+		if type(config['remote']['autoshare']) is str and config['remote']['autoshare'].lower()  == 'true':
+			config['remote']['autoshare'] = True
+		if not type(config['remote']['autoshare']) is bool:
+			config['remote']['autoshare'] = False
+
 		self.config = config
 
 	def __getitem__(self, item):

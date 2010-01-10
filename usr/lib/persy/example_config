@@ -32,7 +32,6 @@ maxfilesize = 0
 # a regular expression to match against every file. matches are excuded
 exclude = 
 
-
 # configuration for a remote backup/sync
 [remote]
 # backup and sync to a remote host (False/True)
@@ -48,3 +47,9 @@ hostname = %s
 # if you want to sync other clients with this some, choose the 
 # same remote path for all clients
 path = %s
+
+# autoshare the configfile under ~/.persy/config 
+# if this is set to True, all the computer in a sync
+# will share the configuration file
+autoshare = True
+

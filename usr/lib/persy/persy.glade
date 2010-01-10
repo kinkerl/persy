@@ -263,7 +263,7 @@
             <child>
               <widget class="GtkTable" id="table3">
                 <property name="visible">True</property>
-                <property name="n_rows">4</property>
+                <property name="n_rows">5</property>
                 <property name="n_columns">2</property>
                 <child>
                   <widget class="GtkLabel" id="labelRemoteUse">
@@ -372,6 +372,33 @@
                     <property name="right_attach">2</property>
                     <property name="top_attach">3</property>
                     <property name="bottom_attach">4</property>
+                    <property name="y_options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkCheckButton" id="checkAutoshare">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">4</property>
+                    <property name="bottom_attach">5</property>
+                    <property name="y_options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="labelAutoshare">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">autoshare config</property>
+                  </widget>
+                  <packing>
+                    <property name="top_attach">4</property>
+                    <property name="bottom_attach">5</property>
+                    <property name="x_options">GTK_FILL</property>
                     <property name="y_options"></property>
                   </packing>
                 </child>

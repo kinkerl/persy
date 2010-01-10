@@ -253,6 +253,10 @@ class _Core():
 		for watch in self.config['local']['watched']:
 			wdd = wm.add_watch("%s"%(watch), mask, rec=True, auto_add=True)
 
+		#watch for changes of the configurationfile
+		if self.config['remote']['autoshare']:
+			wdd = wm.add_watch(self.config.getAttribute('CONFIGFILE'), mask, rec=True, auto_add=True)
+
 		self.log.debug("init the syncer")
 		self.worker = TheSyncer(self, self.config, self.log, self.config['remote']['sleep'], self.config['local']['sleep'])
 		self.log.debug("init the filesystem notifier")

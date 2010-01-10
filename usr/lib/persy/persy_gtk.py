@@ -198,6 +198,14 @@ class PersyGtkMenu():
 		textGeneralName.set_text(config['remote']['path'])
 		textGeneralName.set_tooltip_text(_("the path to the git repository on the remote server"))
 
+		textGeneralName = self.wTree.get_widget('labelAutoshare')
+		textGeneralName.set_label(_("autoshare config"))
+
+		textGeneralName = self.wTree.get_widget('checkAutoshare')
+		textGeneralName.set_active(config['remote']['autoshare'])
+		textGeneralName.set_tooltip_text(_("if this is checked, all the computer in a sync will share the configuration file"))
+
+
 		#devel
 		textGeneralName = self.wTree.get_widget('labelGitBrowser')
 		textGeneralName.set_label(_("start a git browser"))
@@ -251,7 +259,6 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('comboboxGeneralGitBrowser')
 		self.config['general']['prefgitbrowser'] = textGeneralName.get_active_text()
 
-
 		#local configuration
 		textGeneralName = self.wTree.get_widget('spinLocalSleep')
 		self.config['local']['sleep'] = int(textGeneralName.get_value())
@@ -267,7 +274,6 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('textLocalExclude')
 		self.config['local']['exclude'] = self.helper.striplist(textGeneralName.get_text().split(','))
 
-
 		#remote configuration
 		textGeneralName = self.wTree.get_widget('checkRemoteUse')
 		self.config['remote']['use_remote'] = textGeneralName.get_active()
@@ -282,8 +288,12 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('textRemotePath')
 		self.config['remote']['path'] = textGeneralName.get_text()
-		self.config.write()
 
+		textGeneralName = self.wTree.get_widget('checkAutoshare')
+		self.config['remote']['autoshare'] = textGeneralName.get_active()
+
+		#write the configuration
+		self.config.write()
 
 
 
