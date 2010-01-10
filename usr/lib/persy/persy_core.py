@@ -151,7 +151,7 @@ class _Core():
 	def syncWithRemote(self):
 		'''Syncs with a remote server'''
 		#i dont use clone because of massive errors when using it
-		self.initLocal()
+		
 		try:
 			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s/%s"%(self.config['remote']['hostname'],self.config['remote']['path']))
 			self.vcs.pull(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
