@@ -26,7 +26,8 @@ sleep = %i
 watched =
 
 # the maximal allowed filesize for the synced files in bytes
-maxfilesize = 
+# 0 is the default and equals "not set"
+maxfilesize = 0
 
 # a regular expression to match against every file. matches are excuded
 exclude = 

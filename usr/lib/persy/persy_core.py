@@ -186,7 +186,7 @@ class _Core():
 			if f in current:
 				current.remove(f)
 
-			if self.config['local']['maxfilesize']:
+			if self.config['local']['maxfilesize'] and self.config['local']['maxfilesize'] > 0:
 				callcmd = []
 				callcmd.append('find')
 				callcmd.append(os.path.join(self.config.getAttribute('USERHOME'),f))

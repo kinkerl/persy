@@ -191,12 +191,12 @@ class PersyConfig():
 
 		#local maxfilesize
 		if not config['local'].has_key('maxfilesize') or not type(config['local']['maxfilesize']) is str:
-			config['local']['maxfilesize'] = None
+			config['local']['maxfilesize'] = 0
 		if not type(config['local']['maxfilesize']) is int:
 			try:
 				config['local']['maxfilesize'] = int(config['local']['maxfilesize'])
 			except Exception as e:
-				config['local']['maxfilesize'] = None
+				config['local']['maxfilesize'] = 0
 
 		#local exclude
 		if not config['local'].has_key('exclude'):

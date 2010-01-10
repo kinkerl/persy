@@ -71,14 +71,13 @@ def main(argv):
 	parser.add_option("--init",action="store_true", default=False, help=_("initializes the local repository"))
 	parser.add_option("--initremote",action="store_true", default=False, help=_("initializes the remote repository"))
 	parser.add_option("--syncwithremote",action="store_true", default=False, help=_("syncs with a remote repository"))
-	parser.add_option("--browse",action="store_true", default=False, help=_("start a browser (gitk)"))
+	parser.add_option("--browse",action="store_true", default=False, help=_("start a git browser"))
 	parser.add_option("--log",action="store_true", default=False, help=_("prints git log"))
 	parser.add_option("--status",action="store_true", default=False, help=_("prints git status"))
 	parser.add_option("--ignore",action="store_true", default=False, help=_("recreates list of all ignored files"))
 	parser.add_option("--verbose",action="store_true", default=False, help=_("print git output to stdout and set loglevel to DEBUG"))
 	parser.add_option("--actions",action="store_true", default=False, help=_("computer-readable actions in persy"))
 	parser.add_option("--optimize",action="store_true", default=False, help=_("optimizes the stored files. saves space and improves performance"))
-	parser.add_option("--gui",action="store_true", default=False, help=_("use the experimental configuration interface"))
 	parser.add_option("--config",action="store_true", default=False, help=_("needed flag to change configurations"))
 	parser.add_option("--uname", dest="uname", default="", help=_("username used in commit"))
 	parser.add_option("--mail", dest="mail", default="", help=_("useremail used in commit"))
@@ -177,7 +176,6 @@ def main(argv):
 
 		#START!
 		pgtk = PersyGtk()
-		pgtk.enableGui(options.gui)
 		pgtk.init(core, config, log, options.start)
 
 

@@ -87,12 +87,7 @@ class PersyGtkMenu():
 
 		self.wTree.get_widget("buttonSave").connect("clicked", self.save)
 		self.wTree.get_widget("buttonSave").set_label(_("save"))
-		self.wTree.get_widget("buttonBrowse").connect("clicked", self.gtkcore.browse)
-		self.wTree.get_widget("buttonBrowse").set_label(_("start"))
-		self.wTree.get_widget("buttonLog").connect("clicked", self.gtkcore.showlog)
-		self.wTree.get_widget("buttonLog").set_label(_("show"))
-		self.wTree.get_widget("buttonGitLog").connect("clicked", self.gtkcore.showgitlog)
-		self.wTree.get_widget("buttonGitLog").set_label(_("show"))
+
 
 		textGeneralName = self.wTree.get_widget('labelGeneral')
 		textGeneralName.set_label(_("general"))
@@ -198,6 +193,36 @@ class PersyGtkMenu():
 		textGeneralName.set_text(config['remote']['path'])
 		textGeneralName.set_tooltip_text(_("the path to the git repository on the remote server"))
 
+		#devel
+		textGeneralName = self.wTree.get_widget('labelGitBrowser')
+		textGeneralName.set_label(_("start a git browser"))
+		self.wTree.get_widget("buttonBrowse").connect("clicked", self.gtkcore.browse)
+		self.wTree.get_widget("buttonBrowse").set_label(_("start"))
+
+		textGeneralName = self.wTree.get_widget('labelShowLog')
+		textGeneralName.set_label(_("show log"))
+		self.wTree.get_widget("buttonLog").connect("clicked", self.gtkcore.showlog)
+		self.wTree.get_widget("buttonLog").set_label(_("show"))
+
+		textGeneralName = self.wTree.get_widget('labelShowGitLog')
+		textGeneralName.set_label(_("show git log"))
+		self.wTree.get_widget("buttonGitLog").connect("clicked", self.gtkcore.showgitlog)
+		self.wTree.get_widget("buttonGitLog").set_label(_("show"))
+
+		textGeneralName = self.wTree.get_widget('labelInitLocal')
+		textGeneralName.set_label(_("init local (beware)"))
+		self.wTree.get_widget("buttonInitLocal").connect("clicked", self.gtkcore.initLocal)
+		self.wTree.get_widget("buttonInitLocal").set_label(_("start"))
+
+		textGeneralName = self.wTree.get_widget('labelInitRemote')
+		textGeneralName.set_label(_("init remote (beware)"))
+		self.wTree.get_widget("buttonInitRemote").connect("clicked", self.gtkcore.initRemote)
+		self.wTree.get_widget("buttonInitRemote").set_label(_("start"))
+
+		textGeneralName = self.wTree.get_widget('labelSyncRemote')
+		textGeneralName.set_label(_("sync with remote (beware)"))
+		self.wTree.get_widget("buttonSyncRemote").connect("clicked", self.gtkcore.syncWithRemote)
+		self.wTree.get_widget("buttonSyncRemote").set_label(_("start"))
 
 		
 	def save(self, widget, data=None):
@@ -223,7 +248,7 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('textLocalWatched')
 		self.config['local']['watched'] = striplist(textGeneralName.get_text().split(','))
-
+		
 		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
 		self.config['local']['maxfilesize'] = int(textGeneralName.get_value())
 		#textGeneralName.set_value(-1)
@@ -252,13 +277,13 @@ class PersyGtkMenu():
 
 
 
+
 class PersyGtk():
 	'''the gtk main loop and the status icon'''
 
 	def __init__(self):
 		self.statusIcon = None
 		self.core = None
-		self.usegui = False
 
 
 	def init(self, core, config, log, start=False):
@@ -281,8 +306,7 @@ class PersyGtk():
 		#actions.append(('image', gtk.STOCK_EXECUTE, _('optimize'), self.optimize))
 		#actions.append(('image', gtk.STOCK_HELP, _('show Log'), self.showlog))
 		#actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
-		if self.usegui:
-			actions.append(('image', gtk.STOCK_ABOUT, _('settings'), self.open_menu))
+		actions.append(('image', gtk.STOCK_ABOUT, _('settings'), self.open_menu))
 		actions.append(('image', gtk.STOCK_ABOUT, _('about'), self.about))
 		actions.append(('image', gtk.STOCK_QUIT, _('quit'), self.quit_cb))
 
@@ -448,11 +472,18 @@ class PersyGtk():
 
 	def persy_stop(self):
 		self.core.persy_stop()
-		
-	def enableGui(self, gui):
-		self.usegui = gui
 
 	def open_menu(self, widget, data = None):
 		menu = PersyGtkMenu(self.config, self.log, self)
+
+	def syncWithRemote(self, widget, data = None):
+		self.core.syncWithRemote()
+
+	def initLocal(self, widget, data = None):
+		self.core.initLocal()
+
+	def initRemote(self, widget, data = None):
+		self.core.initRemote()
+
 
 
