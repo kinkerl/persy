@@ -52,7 +52,7 @@ This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell
 Take a look at the help message when using this option.
 
 
-Setup for a local usage
+Setup for a local usage (settings menu)
 ------------
 For a quick start, just run persy
 
@@ -61,12 +61,18 @@ Now you have to add some directories or files to persy. You can do this in the s
 
 ![see illustration](http://cloud.github.com/downloads/kinkerl/persy/persy_settings_quickstart.png)
 
-The watched directories and files can be in absolute format (starts with a / ) or relative to the userhome. 
+The watched directories and files can be in absolute format (starts with / ) or relative to the userhome. 
 If you want to add multiple directories, they must be formated as a comma seperated list. 
 
 After you added the directories (and maybe lookt at the other configuration options too) you might want to actually start persy.
 just rightclick on the status icon and check the "start/stop persy" checkbox.
 
+
+![see illustration](http://cloud.github.com/downloads/kinkerl/persy/start_persy.png)
+
+
+Setup for a local usage (command line)
+------------
 You can also do this configuration in the commandline. This is recommended for experienced users only and is not necessary if you configured persy with the settings menu.
 
      $ persy --config --uname=USERNAME      # username used
