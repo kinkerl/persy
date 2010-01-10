@@ -84,7 +84,6 @@ class PersyGtkMenu():
 		self.wTree.get_widget("window1").set_icon_from_file(self.config.getAttribute('LOGO'))
 		self.wTree.get_widget("window1").set_title(_("persy settings"))
 
-
 		self.wTree.get_widget("buttonSave").connect("clicked", self.save)
 		self.wTree.get_widget("buttonSave").set_label(_("save"))
 
@@ -128,8 +127,14 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('labelGeneralGitBrowser')
 		textGeneralName.set_label(_("git browser"))
 
-		textGeneralName = self.wTree.get_widget('textGeneralGitBrowser')
-		textGeneralName.set_text(config['general']['prefgitbrowser'])
+		textGeneralName = self.wTree.get_widget('comboboxGeneralGitBrowser')
+		helper = PersyHelper()
+		for browser in self.config.getAttribute('GITGUI'):
+			version = helper.getSoftwareVersion(browser)
+			if version:
+				textGeneralName.insert_text(0,browser)
+				if self.config['general']['prefgitbrowser'] == browser:
+					textGeneralName.set_active(0)
 		textGeneralName.set_tooltip_text(_("the prefered git browser for browsing the local persy repository"))
 
 		#local configuration
@@ -196,28 +201,39 @@ class PersyGtkMenu():
 		#devel
 		textGeneralName = self.wTree.get_widget('labelGitBrowser')
 		textGeneralName.set_label(_("start a git browser"))
-		self.wTree.get_widget("buttonBrowse").connect("clicked", self.gtkcore.browse)
-		self.wTree.get_widget("buttonBrowse").set_label(_("start"))
+		thewidget = self.wTree.get_widget("buttonBrowse")
+		thewidget.connect("clicked", self.gtkcore.browse)
+		thewidget.set_label(_("start"))
+		thewidget.set_tooltip_text(_("starts %s")%config['general']['prefgitbrowser'])
 
 		textGeneralName = self.wTree.get_widget('labelShowLog')
 		textGeneralName.set_label(_("show log"))
-		self.wTree.get_widget("buttonLog").connect("clicked", self.gtkcore.showlog)
-		self.wTree.get_widget("buttonLog").set_label(_("show"))
+		thewidget = self.wTree.get_widget("buttonLog")
+		thewidget.connect("clicked", self.gtkcore.showlog)
+		thewidget.set_label(_("show"))
+		thewidget.set_tooltip_text(_('show log'))
 
 		textGeneralName = self.wTree.get_widget('labelShowGitLog')
 		textGeneralName.set_label(_("show git log"))
-		self.wTree.get_widget("buttonGitLog").connect("clicked", self.gtkcore.showgitlog)
-		self.wTree.get_widget("buttonGitLog").set_label(_("show"))
+		thewidget = self.wTree.get_widget("buttonGitLog")
+		thewidget.connect("clicked", self.gtkcore.showgitlog)
+		thewidget.set_label(_("show"))
+		thewidget.set_tooltip_text(_('show git log'))
 
 		textGeneralName = self.wTree.get_widget('labelInitRemote')
-		textGeneralName.set_label(_("init remote (beware)"))
-		self.wTree.get_widget("buttonInitRemote").connect("clicked", self.gtkcore.initRemote)
-		self.wTree.get_widget("buttonInitRemote").set_label(_("start"))
+		textGeneralName.set_label(_("initialize remote server (beware)"))
+		thewidget = self.wTree.get_widget("buttonInitRemote")
+		thewidget.connect("clicked", self.gtkcore.initRemote)
+		thewidget.set_label(_("initialize"))
+		thewidget.set_tooltip_text(_('run a initialization of the remote host'))
 
 		textGeneralName = self.wTree.get_widget('labelSyncRemote')
-		textGeneralName.set_label(_("sync with remote (beware)"))
-		self.wTree.get_widget("buttonSyncRemote").connect("clicked", self.gtkcore.syncWithRemote)
-		self.wTree.get_widget("buttonSyncRemote").set_label(_("start"))
+		textGeneralName.set_label(_("new initial sync with remote (beware)"))
+		thewidget = self.wTree.get_widget("buttonSyncRemote")
+		thewidget.connect("clicked", self.gtkcore.syncWithRemote)
+		thewidget.set_label(_("synchronize"))
+		thewidget.set_tooltip_text(_('run a new initial synchronization with the remote host'))
+
 
 		
 	def save(self, widget, data=None):
@@ -232,8 +248,8 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
 		self.config['general']['fortune'] = textGeneralName.get_active()
 
-		textGeneralName = self.wTree.get_widget('textGeneralGitBrowser')
-		self.config['general']['prefgitbrowser'] = textGeneralName.get_text()
+		textGeneralName = self.wTree.get_widget('comboboxGeneralGitBrowser')
+		self.config['general']['prefgitbrowser'] = textGeneralName.get_active_text()
 
 
 		#local configuration

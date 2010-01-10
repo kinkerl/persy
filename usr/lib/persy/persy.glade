@@ -95,20 +95,6 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkEntry" id="textGeneralGitBrowser">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">&#x25CF;</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
                   <widget class="GtkCheckButton" id="checkGeneralFortune">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -120,6 +106,19 @@
                     <property name="right_attach">2</property>
                     <property name="top_attach">2</property>
                     <property name="bottom_attach">3</property>
+                    <property name="y_options"></property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkComboBox" id="comboboxGeneralGitBrowser">
+                    <property name="visible">True</property>
+                    <property name="items" translatable="yes"></property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
                     <property name="y_options"></property>
                   </packing>
                 </child>
