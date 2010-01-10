@@ -58,6 +58,9 @@ class _PersyHelper():
 		#this is set with the first call of getSoftwareVersion()
 		self.aptCache = None
 	
+	def striplist(self, l):
+		'''helper function to strip lists'''
+		return ([x.strip() for x in l])
 
 	def getSoftwareVersion(self, name):
 		"""returns the version of a installed software as a String. Returns None if not installed"""

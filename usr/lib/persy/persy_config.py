@@ -50,11 +50,6 @@ except Exception as e:
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
-def striplist(l):
-	'''helper function to strip lists'''
-	return ([x.strip() for x in l])
-
-
 
 class PersyConfig():
 	'''Handles the configuration for Persy'''
@@ -63,6 +58,7 @@ class PersyConfig():
 	def __init__(self):
 
 		self.attributes = {}
+		self.p = PersyHelper()
 
 		# files and dirs used by persy
 		self.attributes['USERHOME'] = os.environ["HOME"]
@@ -92,9 +88,6 @@ class PersyConfig():
 		self.attributes['SERVER_NICK']='origin'
 		self.attributes['BRANCH']='master'
 
-
-
-
 		#default config entries
 		self.attributes['DEFAULT_LOCAL_SLEEP'] = 5
 		self.attributes['DEFAULT_REMOTE_SLEEP'] = 300
@@ -106,7 +99,6 @@ class PersyConfig():
 		except IOError as e:
 			print str(e)
 
-
 		#xterm terminal
 		self.attributes['XTERM'] = "xterm"
 		#fortune	
@@ -114,7 +106,6 @@ class PersyConfig():
 
 		#the default gui git browser
 		self.attributes['GITGUI']=["gitk", "qgit"] #possible browsers
-		self.p = PersyHelper()
 
 		if not os.path.exists(self.attributes['CONFIGFILE']):
 			if not os.path.exists(self.attributes['PERSY_DIR']):
@@ -187,7 +178,7 @@ class PersyConfig():
 		if not type(config['local']['watched']) is list:
 			config['local']['watched'] = []
 		#remove spaces
-		config['local']['watched'] = striplist(config['local']['watched'])
+		config['local']['watched'] = self.p.striplist(config['local']['watched'])
 
 		#local maxfilesize
 		if not config['local'].has_key('maxfilesize') or not type(config['local']['maxfilesize']) is str:
@@ -206,7 +197,7 @@ class PersyConfig():
 		if not type(config['local']['exclude']) is list:
 			config['local']['exclude'] = []
 		#remove spaces
-		config['local']['exclude'] = striplist(config['local']['exclude'])
+		config['local']['exclude'] = self.p.striplist(config['local']['exclude'])
 
 		#remote use_remote
 		if not config['remote'].has_key('use_remote'):

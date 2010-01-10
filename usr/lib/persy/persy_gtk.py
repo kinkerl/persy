@@ -70,15 +70,15 @@ gtk.gdk.threads_init()
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009 Dennis Schwertel"
 
-def striplist(l):
-	'''helper function to strip lists'''
-	return ([x.strip() for x in l])
+
 
 class PersyGtkMenu():
 	def __init__(self, config, log, gtkcore):
 		self.config = config
 		self.log = log
 		self.gtkcore = gtkcore
+		self.helper = PersyHelper()
+
 
 		self.wTree = gtk.glade.XML(self.config.getAttribute('GLADEFILE'), 'window1')
 		self.wTree.get_widget("window1").set_icon_from_file(self.config.getAttribute('LOGO'))
@@ -128,9 +128,9 @@ class PersyGtkMenu():
 		textGeneralName.set_label(_("git browser"))
 
 		textGeneralName = self.wTree.get_widget('comboboxGeneralGitBrowser')
-		helper = PersyHelper()
+
 		for browser in self.config.getAttribute('GITGUI'):
-			version = helper.getSoftwareVersion(browser)
+			version = self.helper.getSoftwareVersion(browser)
 			if version:
 				textGeneralName.insert_text(0,browser)
 				if self.config['general']['prefgitbrowser'] == browser:
@@ -258,14 +258,14 @@ class PersyGtkMenu():
 		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textLocalWatched')
-		self.config['local']['watched'] = striplist(textGeneralName.get_text().split(','))
+		self.config['local']['watched'] = self.helper.striplist(textGeneralName.get_text().split(','))
 		
 		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
 		self.config['local']['maxfilesize'] = int(textGeneralName.get_value())
 		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textLocalExclude')
-		self.config['local']['exclude'] = striplist(textGeneralName.get_text().split(','))
+		self.config['local']['exclude'] = self.helper.striplist(textGeneralName.get_text().split(','))
 
 
 		#remote configuration
