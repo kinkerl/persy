@@ -32,7 +32,7 @@ except Exception as e:
 	sys.exit(1)
 
 __author__ = "Dennis Schwertel"
-__copyright__ = "Copyright (C) 2009 Dennis Schwertel"
+__copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 GIT = '/usr/bin/git'
 

@@ -17,8 +17,13 @@
 #along with persy; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
+
+__author__ = "Dennis Schwertel"
+__copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
+
+
 class VCS():
-	'''Version Controll System Bacend in Persy. http://norvig.com/python-iaq.html'''
+	'''Version Controll System Backend in Persy. http://norvig.com/python-iaq.html'''
 
 	def gc(self, stdin=None, stdout=None, stderr=None, params = []): 
 		'''garbage collection. clean up'''

@@ -68,7 +68,7 @@ except Exception as e:
 gtk.gdk.threads_init()
 
 __author__ = "Dennis Schwertel"
-__copyright__ = "Copyright (C) 2009 Dennis Schwertel"
+__copyright__ = "Copyright (C) 2010 Dennis Schwertel"
 
 
 

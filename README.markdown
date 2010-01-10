@@ -133,7 +133,7 @@ You can view the SOURCE and DEVELOPMENT on [github](http://wiki.github.com/kinke
 
 Author
 ============
-Copyright (C) 2009 Dennis Schwertel <s@digitalkultur.net>
+Copyright (C) 2009, 2010 Dennis Schwertel <s@digitalkultur.net>
 
 License
 ============
