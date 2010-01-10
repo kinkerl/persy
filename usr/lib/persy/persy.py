@@ -68,7 +68,6 @@ def main(argv):
 	from optparse import OptionParser
 	parser = OptionParser(usage = _("use --start to start the daemon"))
 	parser.add_option("--start",action="store_true", default=False, help=_("starts persy"))
-	parser.add_option("--init",action="store_true", default=False, help=_("initializes the local repository"))
 	parser.add_option("--initremote",action="store_true", default=False, help=_("initializes the remote repository"))
 	parser.add_option("--syncwithremote",action="store_true", default=False, help=_("syncs with a remote repository"))
 	parser.add_option("--browse",action="store_true", default=False, help=_("start a git browser"))
@@ -137,10 +136,12 @@ def main(argv):
 	core = Core()
 	core.init(config, log)
 
-
-
-	if options.init:
+	#check if a local repository is initialized:
+	if not core.isLocalInitialized():
 		core.initLocal()
+
+
+
 	elif options.initremote:
 		core.initRemote()
 	elif options.syncwithremote:

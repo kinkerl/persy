@@ -395,7 +395,7 @@
             <child>
               <widget class="GtkTable" id="table4">
                 <property name="visible">True</property>
-                <property name="n_rows">6</property>
+                <property name="n_rows">5</property>
                 <property name="n_columns">2</property>
                 <child>
                   <widget class="GtkLabel" id="labelGitBrowser">
@@ -476,7 +476,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkButton" id="buttonInitLocal">
+                  <widget class="GtkButton" id="buttonInitRemote">
                     <property name="label" translatable="yes">start</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -487,20 +487,6 @@
                     <property name="right_attach">2</property>
                     <property name="top_attach">3</property>
                     <property name="bottom_attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="buttonInitRemote">
-                    <property name="label" translatable="yes">start</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
                   </packing>
                 </child>
                 <child>
@@ -513,18 +499,8 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="right_attach">2</property>
-                    <property name="top_attach">5</property>
-                    <property name="bottom_attach">6</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="labelInitLocal">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">init local</property>
-                  </widget>
-                  <packing>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
+                    <property name="top_attach">4</property>
+                    <property name="bottom_attach">5</property>
                   </packing>
                 </child>
                 <child>
@@ -533,8 +509,8 @@
                     <property name="label" translatable="yes">init remote</property>
                   </widget>
                   <packing>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
+                    <property name="top_attach">3</property>
+                    <property name="bottom_attach">4</property>
                   </packing>
                 </child>
                 <child>
@@ -543,8 +519,8 @@
                     <property name="label" translatable="yes">sync with remote</property>
                   </widget>
                   <packing>
-                    <property name="top_attach">5</property>
-                    <property name="bottom_attach">6</property>
+                    <property name="top_attach">4</property>
+                    <property name="bottom_attach">5</property>
                   </packing>
                 </child>
               </widget>

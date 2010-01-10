@@ -284,6 +284,10 @@ class _Core():
 			except RuntimeError:
 				pass
 
+	def isLocalInitialized(self):
+		return os.path.exists(self.config.getAttribute('GIT_DIR'))
+
+
 	def persy_stop(self):
 		'''Stops Persy'''
 

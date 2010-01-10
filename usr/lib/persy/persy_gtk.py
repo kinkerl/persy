@@ -209,11 +209,6 @@ class PersyGtkMenu():
 		self.wTree.get_widget("buttonGitLog").connect("clicked", self.gtkcore.showgitlog)
 		self.wTree.get_widget("buttonGitLog").set_label(_("show"))
 
-		textGeneralName = self.wTree.get_widget('labelInitLocal')
-		textGeneralName.set_label(_("init local (beware)"))
-		self.wTree.get_widget("buttonInitLocal").connect("clicked", self.gtkcore.initLocal)
-		self.wTree.get_widget("buttonInitLocal").set_label(_("start"))
-
 		textGeneralName = self.wTree.get_widget('labelInitRemote')
 		textGeneralName.set_label(_("init remote (beware)"))
 		self.wTree.get_widget("buttonInitRemote").connect("clicked", self.gtkcore.initRemote)
@@ -333,7 +328,7 @@ class PersyGtk():
 			watched = watched[:-1]
 			self.statusIcon.set_tooltip(watched)
 		else:
-			thewarning = _("watching no directories! You should add some directories over the command line (gui will follow)")
+			thewarning = _("watching no directories or files! You should add some in the settings menu (local -> watched)")
 			self.log.warn(thewarning)
 			self.statusIcon.set_tooltip(thewarning)
 		self.statusIcon.connect('popup-menu', self.popup_menu_cb, menu)

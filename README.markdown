@@ -54,13 +54,25 @@ Take a look at the help message when using this option.
 
 Setup for a local usage
 ------------
-The normal local configuration is:
+For a quick start, just run persy
 
-     $ persy --config --uname=USERNAME      # username used for the commits
-     $ persy --config --mail=MAIL           # useremail used for the commits
-     $ persy --init                         # run once to initialize the backup system
-     $ persy --config --add_dir=DIR         # DIR is the absolute path to a directory 
-                                            # in /home/user (example: /home/username/documents).
+     $ persy                               
+Now you have to add some directories or files to persy. You can do this in the settings menu into the "local" tab (take a look at the screenshot).
+
+![see illustration](http://cloud.github.com/downloads/kinkerl/persy/persy_settings_quickstart.png)
+
+The watched directories and files can be in absolute format (starts with a / ) or relative to the userhome. 
+If you want to add multiple directories, they must be formated as a comma seperated list. 
+
+After you added the directories (and maybe lookt at the other configuration options too) you might want to actually start persy.
+just rightclick on the status icon and check the "start/stop persy" checkbox.
+
+You can also do this configuration in the commandline. This is recommended for experienced users only and is not necessary if you configured persy with the settings menu.
+
+     $ persy --config --uname=USERNAME      # username used
+     $ persy --config --mail=MAIL           # useremail used
+     $ persy --config --add_dir=DIR         # DIR is the path to a directory in /home/user 
+                                            # (example: /home/username/documents).
                                             # The directory is then integrated in persy.
                                             # From now on, you can start persy or/and 
                                             # add it to your autostart:
