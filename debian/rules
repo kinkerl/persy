@@ -56,8 +56,11 @@ install: build
 	mkdir -p $(CURDIR)/debian/persy/usr/share/man/man1
 	mkdir -p $(CURDIR)/usr/share/man/man1/
 	pandoc -s -w man $(CURDIR)/README.markdown -o $(CURDIR)/usr/share/man/man1/persy.1
-	#python $(CURDIR)/debian/markdown2man.py --infilename $(CURDIR)/README.markdown --outfilename $(CURDIR)/usr/share/man/man1/persy.1
 	gzip -c --best $(CURDIR)/usr/share/man/man1/persy.1 > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
+
+	#creates a html doc (stripps the github urls from the images)
+	mkdir -p $(CURDIR)/debian/persy/usr/share/doc/persy
+	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/images/g' | pandoc -o $(CURDIR)/debian/persy/usr/share/doc/persy/index.html
 
 
 
