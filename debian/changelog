@@ -1,3 +1,11 @@
+persy (0.7.1) karmic; urgency=low
+
+  * fixing missing glade dependency
+  * added autoshare ability to the configuration file
+  * some bugfixes
+ 
+ -- Dennis Schwertel <s@digitalkultur.net>  16 Jan 2010 12:10:00 +0100
+
 persy (0.7) karmic; urgency=low
 
   * new settings gui
