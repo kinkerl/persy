@@ -55,7 +55,8 @@ install: build
 	#builds(compresses) the manpage
 	mkdir -p $(CURDIR)/debian/persy/usr/share/man/man1
 	mkdir -p $(CURDIR)/usr/share/man/man1/
-	python $(CURDIR)/debian/markdown2man.py --infilename $(CURDIR)/README.markdown --outfilename $(CURDIR)/usr/share/man/man1/persy.1
+	pandoc -s -w man $(CURDIR)/README.markdown -o $(CURDIR)/usr/share/man/man1/persy.1
+	#python $(CURDIR)/debian/markdown2man.py --infilename $(CURDIR)/README.markdown --outfilename $(CURDIR)/usr/share/man/man1/persy.1
 	gzip -c --best $(CURDIR)/usr/share/man/man1/persy.1 > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
 
 
