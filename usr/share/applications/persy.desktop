@@ -1,9 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Categories=GNOME;Utility;
-Comment=personal sync
+Comment=personal synchronization
 Exec=persy
-GenericName=personal sync
+GenericName=personal synchronization
 Icon=persy
 Name=Persy
 Type=Application
