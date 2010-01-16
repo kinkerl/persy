@@ -52,13 +52,13 @@ install: build
 	cp -r $(CURDIR)/usr $(CURDIR)/debian/persy/
 	cp -r $(CURDIR)/etc $(CURDIR)/debian/persy/
 
-	#builds(compresses) the manpage
+	#builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p $(CURDIR)/debian/persy/usr/share/man/man1
-	pandoc -s -w man $(CURDIR)/README.markdown | gzip -c --best > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
+	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -w man  | gzip -c --best > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
 
-	#creates a html doc (stripps the github urls from the images)
+	#creates a html doc (replaces the github urls for the images)
 	mkdir -p $(CURDIR)/debian/persy/usr/share/doc/persy
-	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/images/g' | pandoc -c default.css -o $(CURDIR)/debian/persy/usr/share/doc/persy/index.html
+	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/file:\/\/\/usr\/share\/doc\/persy\/images/g' | pandoc -c default.css -o $(CURDIR)/debian/persy/usr/share/doc/persy/index.html
 
 
 

@@ -1,9 +1,12 @@
-* {
-	font-family:helvetica,arial,freesans,clean,sans-serif;
-	font-size:13.34px;
+body{
+	width: 800px;
+	margin: 0px auto;
 
 }
-p {
+
+p, ul {
+	font-family:helvetica,arial,freesans,clean,sans-serif;
+	font-size:13.34px;
 	font-size-adjust:none;
 	font-style:normal;
 	font-variant:normal;
@@ -24,6 +27,8 @@ pre {
 	margin:1em 0 !important;
 	overflow:auto !important;
 	padding:0.5em !important;
+	font-family:"Courier New",Courier,monospace;
+
 }
 
 a:hover {
