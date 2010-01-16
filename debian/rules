@@ -54,9 +54,7 @@ install: build
 
 	#builds(compresses) the manpage
 	mkdir -p $(CURDIR)/debian/persy/usr/share/man/man1
-	mkdir -p $(CURDIR)/usr/share/man/man1/
-	pandoc -s -w man $(CURDIR)/README.markdown -o $(CURDIR)/usr/share/man/man1/persy.1
-	gzip -c --best $(CURDIR)/usr/share/man/man1/persy.1 > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
+	pandoc -s -w man $(CURDIR)/README.markdown | gzip -c --best > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
 
 	#creates a html doc (stripps the github urls from the images)
 	mkdir -p $(CURDIR)/debian/persy/usr/share/doc/persy
