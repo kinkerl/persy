@@ -60,7 +60,7 @@ install: build
 
 	#creates a html doc (stripps the github urls from the images)
 	mkdir -p $(CURDIR)/debian/persy/usr/share/doc/persy
-	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/images/g' | pandoc -o $(CURDIR)/debian/persy/usr/share/doc/persy/index.html
+	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/images/g' | pandoc -c default.css -o $(CURDIR)/debian/persy/usr/share/doc/persy/index.html
 
 
 

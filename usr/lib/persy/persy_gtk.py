@@ -328,6 +328,7 @@ class PersyGtk():
 		#actions.append(('image', gtk.STOCK_HELP, _('show Log'), self.showlog))
 		#actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
 		actions.append(('image', gtk.STOCK_ABOUT, _('settings'), self.open_menu))
+		actions.append(('image', gtk.STOCK_HELP, _('help'), self.help))
 		actions.append(('image', gtk.STOCK_ABOUT, _('about'), self.about))
 		actions.append(('image', gtk.STOCK_QUIT, _('quit'), self.quit_cb))
 
@@ -496,6 +497,10 @@ class PersyGtk():
 
 	def open_menu(self, widget, data = None):
 		menu = PersyGtkMenu(self.config, self.log, self)
+
+	def help(self, widget, data = None):
+		import webbrowser
+		webbrowser.open(self.config.getAttribute('HTMLDOCFILE'))
 
 	def syncWithRemote(self, widget, data = None):
 		self.core.syncWithRemote()
