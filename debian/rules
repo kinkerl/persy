@@ -57,7 +57,7 @@ install: build
 
 	#builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p $(CURDIR)/debian/persy/usr/share/man/man1
-	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -w man  | gzip -c --best > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
+	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
 
 	#creates a html doc (replaces the github urls for the images)
 	mkdir -p $(CURDIR)/debian/persy/usr/share/doc/persy

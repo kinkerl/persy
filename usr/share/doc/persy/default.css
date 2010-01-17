@@ -13,11 +13,18 @@ p, ul {
 	font-weight:normal;	
 }
 
-h1 {
-	font-size:170% !important;
-	margin-top:1.5em !important;
-	padding-top:0.5em !important;
+h1, h2, h3 {
+	font-size:160%;
+	font-family:helvetica,arial,freesans,clean,sans-serif;
+	color: #777;
+	margin-top: 2em;
 }
+
+h2{
+	color: #999;
+	font-size:120%;
+}
+
 pre {
 	background-color:#F8F8FF !important;
 	border:1px solid #DEDEDE !important;
@@ -38,4 +45,13 @@ a:hover {
 a {
 	color:#4183C4;
 	text-decoration:none;
+}
+
+
+.title {
+	color: #000;
+}
+
+#name {
+	display: none;
 }

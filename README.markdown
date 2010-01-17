@@ -1,3 +1,5 @@
+% persy
+
 Name
 ============
 persy - syncronization based on Git
