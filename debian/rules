@@ -66,7 +66,6 @@ install: build
 	#grab the images from the markdown file
 	#todo: maybe there is a way to reduce traffic to github. its only 51k right now so its not that big deal.
 	mkdir -p $(CURDIR)/debian/persy/usr/share/doc/persy/images
-	cd $(CURDIR)/debian/persy/usr/share/doc/persy/images
 	sed -n -e 's/\(^.*http\)\([^)]*png\)\()\)/http\2/gp' $(CURDIR)/README.markdown | xargs wget -P $(CURDIR)/debian/persy/usr/share/doc/persy/images 
 
 
