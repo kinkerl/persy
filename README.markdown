@@ -1,4 +1,4 @@
-% persy
+% persy help
 
 Name
 ============

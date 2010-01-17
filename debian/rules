@@ -61,7 +61,7 @@ install: build
 
 	#creates a html doc (replaces the github urls for the images)
 	mkdir -p $(CURDIR)/debian/persy/usr/share/doc/persy
-	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/file:\/\/\/usr\/share\/doc\/persy\/images/g' | pandoc -c default.css -o $(CURDIR)/debian/persy/usr/share/doc/persy/index.html
+	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/file:\/\/\/usr\/share\/doc\/persy\/images/g' | pandoc --toc -c default.css -o $(CURDIR)/debian/persy/usr/share/doc/persy/index.html
 
 	#grab the images from the markdown file
 	#todo: maybe there is a way to reduce traffic to github. its only 51k right now so its not that big deal.
