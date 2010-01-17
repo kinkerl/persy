@@ -52,6 +52,9 @@ install: build
 	cp -r $(CURDIR)/usr $(CURDIR)/debian/persy/
 	cp -r $(CURDIR)/etc $(CURDIR)/debian/persy/
 
+
+
+
 	#builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p $(CURDIR)/debian/persy/usr/share/man/man1
 	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -w man  | gzip -c --best > $(CURDIR)/debian/persy/usr/share/man/man1/persy.1.gz
@@ -59,6 +62,12 @@ install: build
 	#creates a html doc (replaces the github urls for the images)
 	mkdir -p $(CURDIR)/debian/persy/usr/share/doc/persy
 	cat $(CURDIR)/README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/file:\/\/\/usr\/share\/doc\/persy\/images/g' | pandoc -c default.css -o $(CURDIR)/debian/persy/usr/share/doc/persy/index.html
+
+	#grab the images from the markdown file
+	#todo: maybe there is a way to reduce traffic to github. its only 51k right now so its not that big deal.
+	mkdir -p $(CURDIR)/debian/persy/usr/share/doc/persy/images
+	cd $(CURDIR)/debian/persy/usr/share/doc/persy/images
+	sed -n -e 's/\(^.*http\)\([^)]*png\)\()\)/http\2/gp' $(CURDIR)/README.markdown | xargs wget -P $(CURDIR)/debian/persy/usr/share/doc/persy/images 
 
 
 
