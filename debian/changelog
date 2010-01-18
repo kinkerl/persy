@@ -1,3 +1,11 @@
+persy (0.7.2) karmic; urgency=low
+
+  * fixed wrong glade file
+  * using pandoc for most of the documentation
+  * added help functionality and help files
+ 
+ -- Dennis Schwertel <s@digitalkultur.net>  18 Jan 2010 23:10:00 +0100
+
 persy (0.7.1) karmic; urgency=low
 
   * fixing missing glade dependency
