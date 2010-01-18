@@ -70,7 +70,7 @@ class PersyConfig():
 		self.attributes['GITIGNOREFILE']=os.path.join(self.attributes['GIT_DIR'], 'info','exclude')
 		self.attributes['CONFIGFILE']=os.path.join(self.attributes['PERSY_DIR'],'config')
 		self.attributes['EXAMPLECONFIG']='/usr/lib/persy/example_config'
-		self.attributes['GLADEFILE']='/home/kinkerl/devel/persy/persy/usr/lib/persy/persy.glade'
+		self.attributes['GLADEFILE']='/usr/lib/persy/persy.glade'
 		self.attributes['HTMLDOCFILE']='/usr/share/doc/persy/index.html'
 
 		#path to some files and icons
