@@ -1,0 +1,54 @@
+#!/bin/sh
+# Copyright (c) 2010 Dennis Schwertel
+#
+# AUTHOR:
+# Dennis Schwertel <s@digitalkultur.net>
+#
+# This file is part of persy
+#
+# persy is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as published
+# by the Free Software Foundation; either version 2 of the License, or (at
+# your option) any later version.
+#
+# persy is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with gomtv4vlc; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+# this script creates the helpfile and manpage for persy out of the README.markdown file. 
+
+
+#cut the filename to get the basepath so this script can be called from where ever
+FOO=${0%/*} 
+
+if [ ${FOO%${FOO#?}} =  "/" ];then
+	BASEPATH="$FOO"	
+else
+	BASEPATH="$(pwd)/$FOO"
+fi
+
+# change in this folder
+cd $BASEPATH
+
+# builds(compresses) the manpage(replaces the github urls for the images)
+echo -n 'building manpage in   usr/share/man/man1..............'
+mkdir -p usr/share/man/man1
+cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
+echo "done"
+
+# creates a html doc (replaces the github urls for the images)
+echo -n 'building html doc in  usr/share/doc/persy.............'
+mkdir -p usr/share/doc/persy
+cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/file:\/\/\/usr\/share\/doc\/persy\/images/g' | pandoc --toc -c default.css -o usr/share/doc/persy/index.html
+echo "done"
+
+# grab the images from the markdown file
+echo -n 'downloading images to usr/share/doc/persy/images .....'
+sed -n -e 's/\(^.*http\)\([^)]*png\)\()\)/http\2/gp' README.markdown | xargs wget -nc --quiet --directory-prefix=usr/share/doc/persy/images 
+echo "done"
