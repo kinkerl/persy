@@ -1,3 +1,10 @@
+persy (0.7.2.1) karmic; urgency=low
+
+  * moved the doc building code out of debian/rules and in its own script
+  * fingers crossed it will NOW build on launchpad!
+
+ -- Dennis Schwertel <s@digitalkultur.net>  18 Jan 2010 23:10:00 +0100
+
 persy (0.7.2) karmic; urgency=low
 
   * fixed wrong glade file
