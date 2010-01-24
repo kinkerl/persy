@@ -74,6 +74,10 @@ __copyright__ = "Copyright (C) 2010 Dennis Schwertel"
 
 class PersyGtkMenu():
 	def __init__(self, config, log, gtkcore):
+
+		#used do distinguish hboxes for watched entries
+		self.hboxcounter = 0;
+
 		self.config = config
 		self.log = log
 		self.gtkcore = gtkcore
@@ -116,16 +120,13 @@ class PersyGtkMenu():
 		textGeneralName.set_text(config['general']['mail'])
 		textGeneralName.set_tooltip_text(_("the mail used in git. the default should be fine"))
 
-		textGeneralName = self.wTree.get_widget('labelGeneralFortune')
-		textGeneralName.set_label(_("fortune"))
-
 		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
 		textGeneralName.set_active(config['general']['fortune'])
 		textGeneralName.set_tooltip_text(_("use fortune messages in the git commit message. disabled is fine."))
-
+		textGeneralName.set_label(_("use fortune messages in the git commit"))
 
 		textGeneralName = self.wTree.get_widget('labelGeneralGitBrowser')
-		textGeneralName.set_label(_("git browser"))
+		textGeneralName.set_label(_("default git browser"))
 
 		textGeneralName = self.wTree.get_widget('comboboxGeneralGitBrowser')
 
@@ -139,45 +140,46 @@ class PersyGtkMenu():
 
 		#local configuration
 		textGeneralName = self.wTree.get_widget('labelLocalSleep')
-		textGeneralName.set_label(_("sleep"))
+		textGeneralName.set_label(_("time to wait after an action for a backup (in seconds)"))
 
 		textGeneralName = self.wTree.get_widget('spinLocalSleep')
 		textGeneralName.set_value(int(config['local']['sleep']))
-		textGeneralName.set_tooltip_text(_("time in seconds to wait for an action after a filechange occurs"))
+		textGeneralName.set_tooltip_text(_("time to wait after an action for a backup (in seconds)"))
 
 
 		textGeneralName = self.wTree.get_widget('labelLocalWatched')
-		textGeneralName.set_label(_("watched"))
+		textGeneralName.set_label('<b>'+_("list of folders persy is watching")+'</b>')
 
-		textGeneralName = self.wTree.get_widget('textLocalWatched')
-		textGeneralName.set_text(", ".join(config['local']['watched']))
-		textGeneralName.set_tooltip_text(_("the folders and directories watched in persy. this is a comma seperated list"))
+
+		for watched in config['local']['watched']:
+			self.addWatchedEntry(None, watched)
+
+		button = self.wTree.get_widget('buttonAddWatchedEntry')
+		button.connect("clicked", self.addWatchedEntry, '')
 
 		textGeneralName = self.wTree.get_widget('labelLocalFilesize')
-		textGeneralName.set_label(_("max filesize"))
+		textGeneralName.set_label(_("maximal allowed size of files (in bytes)"))
 
 		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
 		textGeneralName.set_value(int(config['local']['maxfilesize']))
-		textGeneralName.set_tooltip_text(_("the maximal allowed filesize in bytes used for files in persy. all files larger than this value will be ignored"))
+		textGeneralName.set_tooltip_text(_("all files larger than this value will be ignored"))
 
 
 		textGeneralName = self.wTree.get_widget('labelLocalExclude')
-		textGeneralName.set_label(_("exclude"))
+		textGeneralName.set_label(_("exclude all files matching these regular expressions"))
 
 		textGeneralName = self.wTree.get_widget('textLocalExclude')
 		textGeneralName.set_text(", ".join(config['local']['exclude']))
-		textGeneralName.set_tooltip_text(_("exclude files which map to one of the regular expressions. the expressions are seperated by a comma"))
+		textGeneralName.set_tooltip_text(_("the expressions are seperated by a comma"))
 
 		#remote configuration
-		textGeneralName = self.wTree.get_widget('labelRemoteUse')
-		textGeneralName.set_label(_("use remote"))
 
 		textGeneralName = self.wTree.get_widget('checkRemoteUse')
 		textGeneralName.set_active(config['remote']['use_remote'])
 		textGeneralName.set_tooltip_text(_("synchronize to the remote server"))
 
 		textGeneralName = self.wTree.get_widget('labelRemoteSleep')
-		textGeneralName.set_label(_("sleep"))
+		textGeneralName.set_label(_("time to wait for a synchronization (in seconds)"))
 
 		textGeneralName = self.wTree.get_widget('spinRemoteSleep')
 		textGeneralName.set_value(int(config['remote']['sleep']))
@@ -192,14 +194,12 @@ class PersyGtkMenu():
 		textGeneralName.set_tooltip_text(_("the hostname of the remote server"))
 
 		textGeneralName = self.wTree.get_widget('labelRemotePath')
-		textGeneralName.set_label(_("path"))
+		textGeneralName.set_label(_("repository path on the server"))
 
 		textGeneralName = self.wTree.get_widget('textRemotePath')
 		textGeneralName.set_text(config['remote']['path'])
 		textGeneralName.set_tooltip_text(_("the path to the git repository on the remote server"))
 
-		textGeneralName = self.wTree.get_widget('labelAutoshare')
-		textGeneralName.set_label(_("autoshare config"))
 
 		textGeneralName = self.wTree.get_widget('checkAutoshare')
 		textGeneralName.set_active(config['remote']['autoshare'])
@@ -242,7 +242,7 @@ class PersyGtkMenu():
 		thewidget.set_label(_("synchronize"))
 		thewidget.set_tooltip_text(_('run a new initial synchronization with the remote host'))
 
-
+		
 		
 	def save(self, widget, data=None):
 		self.log.info("saving configuration")
@@ -262,14 +262,20 @@ class PersyGtkMenu():
 		#local configuration
 		textGeneralName = self.wTree.get_widget('spinLocalSleep')
 		self.config['local']['sleep'] = int(textGeneralName.get_value())
-		#textGeneralName.set_value(-1)
 
-		textGeneralName = self.wTree.get_widget('textLocalWatched')
-		self.config['local']['watched'] = self.helper.striplist(textGeneralName.get_text().split(','))
+
+		root = self.wTree.get_widget('vbox4')
+		tmparray = []
+		for entry in root:
+			for child in entry:
+				if child.get_name().startswith('text_'):
+					tmparray.append(child.get_text())
+		self.config['local']['watched'] = tmparray
+
+
 		
 		textGeneralName = self.wTree.get_widget('spinLocalFilesize')
 		self.config['local']['maxfilesize'] = int(textGeneralName.get_value())
-		#textGeneralName.set_value(-1)
 
 		textGeneralName = self.wTree.get_widget('textLocalExclude')
 		self.config['local']['exclude'] = self.helper.striplist(textGeneralName.get_text().split(','))
@@ -294,6 +300,68 @@ class PersyGtkMenu():
 
 		#write the configuration
 		self.config.write()
+
+	def addWatchedEntry(self, widget, watched):
+		root = self.wTree.get_widget('vbox4')
+
+		hbox = gtk.HBox()
+		hbox.set_name("hbox_%i"%self.hboxcounter)
+		
+		textLabel = gtk.Entry()
+		textLabel.set_text(watched)
+		textLabel.set_name("text_"+watched)
+		textLabel.show()
+		hbox.add(textLabel)
+
+
+		button = gtk.Button('choose')
+		button.connect("clicked", self.launchFileChooser, watched)
+		button.set_label(_('choose'))
+		button.show()
+		hbox.pack_start(button, False, False)
+		#hbox.add(button)
+
+		
+		button = gtk.Button('-')
+		button.connect("clicked", self.removeWatchedEntry, self.hboxcounter)
+		button.set_label(_(' - '))
+		button.show()
+		hbox.pack_start(button, False, False)
+		#hbox.add(button)
+		
+		hbox.show()
+		root.add(hbox)
+		self.hboxcounter += 1
+
+
+	def removeWatchedEntry(self, widget, data = None):
+		for child in widget.get_parent().get_parent().get_children():
+			if child.get_name() == "hbox_%i"%data:
+				child.destroy()
+		
+		#resize the window to the minimal size
+		self.wTree.get_widget("window1").resize(1, 1)
+
+
+	def launchFileChooser(self, widget, data = None):
+		filechooser =  gtk.FileChooserDialog(title=None	,action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
+		response = filechooser.run()
+		try:
+			if response == gtk.RESPONSE_OK:
+				filename = filechooser.get_filename()
+				#remove the userhome from the path
+				if filename.startswith(self.config.getAttribute('USERHOME')):
+					filename = filename[len(self.config.getAttribute('USERHOME'))+1:]
+			
+				for child in widget.get_parent().get_children():
+					if child.get_name() == 'text_'+data:
+						child.set_text(filename)
+		except Exception as e:
+			pass
+		finally:
+			filechooser.destroy()
+			
+
 
 
 
