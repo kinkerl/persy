@@ -172,14 +172,10 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 					try:
 						self.core.vcsignore()
 					except Exception as e:
-						#self.errorlocalcounter += 1
-						#if self.errorlocalcounter > 1:
 						self.log.warn(str(e))
-
 
 					self.log.debug('git add')
 					try:
-
 						if self.config['remote']['autoshare']:
 							self.core.git_add(self.config.getAttribute('CONFIGFILE'))
 

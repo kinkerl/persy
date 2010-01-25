@@ -237,16 +237,23 @@ class PersyConfig():
 
 		self.config = config
 
-	def __getitem__(self, item):
-		return self.config[item]
 
 	def write(self):
 		self.config.write()
 
+
 	def getAttribute(self, key):
 		return self.attributes[key]
+
+
 	def getConfig(self):
 		return self.config
 
+
 	def has_key(self, item):
 		return self.config.has_key(item)
+
+
+	def __getitem__(self, item):
+		return self.config[item]
+

@@ -96,7 +96,7 @@ class _Core():
 			sys.exit(-1)
 
 		self.log.info(_("initialising local repository..."), verbose=True)
-	
+
 		try:
 			self.vcs.init()
 			self.vcs.config('user.name',self.config['general']['name'])
@@ -108,20 +108,18 @@ class _Core():
 			self.log.info(_("done"), verbose=True)
 
 
-
 	def vcslog(self):
 		'''executes the git-log command'''
 		self.vcs.log(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
+
 
 	def vcsstatus(self):
 		'''executes the git-status command'''
 		self.vcs.status(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
 
-
 	def initRemote(self):
-		'''initialises the remote repository'''
-
+		'''initialises the remote repository and adds it to the synchronization pack'''
 		self.log.info(_("initialising and adding remote repository..."), verbose=True)
 		try:	
 			client = paramiko.SSHClient()
@@ -150,8 +148,8 @@ class _Core():
 
 	def syncWithRemote(self):
 		'''Syncs with a remote server'''
-		#i dont use clone because of massive errors when using it
-		
+		# i dont use clone because of massive errors when using it
+		# the best way iś to add the remote server and pull from it
 		try:
 			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s/%s"%(self.config['remote']['hostname'],self.config['remote']['path']))
 			self.vcs.pull(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
@@ -161,6 +159,7 @@ class _Core():
 		if not self.config['remote']['use_remote']:
 			self.config['remote']['use_remote'] = True
 			self.config.write()
+
 
 	def vcsignore(self):
 		'''creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with "git clean")'''
@@ -187,6 +186,7 @@ class _Core():
 				current.remove(f)
 
 			if self.config['local']['maxfilesize'] and self.config['local']['maxfilesize'] > 0:
+				#add files to the ignorelist if they are larger than maxfilesize
 				callcmd = []
 				callcmd.append('find')
 				callcmd.append(os.path.join(self.config.getAttribute('USERHOME'),f))
@@ -227,9 +227,7 @@ class _Core():
 			self.log.warn(str(e), verbose=True)
 
 
-
-	#just ignore the widget if started from cli
-	def browse(self, wiget=None):
+	def browse(self):
 		'''starts the default git browser'''
 		class Starter(Thread):
 			def __init__(self,vcs, config):
@@ -239,6 +237,28 @@ class _Core():
 			def run(self):
 				self.vcs.command(self.config['general']['prefgitbrowser'], stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 		Starter(self.vcs, self.config).start()
+
+
+	def persy_stop(self):
+		'''Stops Persy'''
+		self.log.info("stop working")
+		self.log.setStop()
+
+		if self.worker:
+			try:
+				self.worker.stop()
+				self.worker.join()
+			except RuntimeError:
+				pass
+		if self.notifier:
+			try:
+				self.notifier.stop()
+			except RuntimeError:
+				pass
+			except OSError:
+				pass
+			except KeyError:
+				pass
 
 
 	def persy_start(self):
@@ -269,9 +289,24 @@ class _Core():
 		#if self.statusIcon:
 		#	statusIcon.set_from_file(config.getAttribute('ICON_OK'))#from_stock(gtk.STOCK_HOME)
 
+
+	def setonetimesync(self):
+		'''if the worker is running, execute the setonetimesync function of the worker'''
+		if self.worker:
+			try:
+				self.worker.setonetimesync()
+			except RuntimeError:
+				pass
+
+
+	def isLocalInitialized(self):
+		'''returns true if the local GIT_DIR exists'''
+		return os.path.exists(self.config.getAttribute('GIT_DIR'))
+
+
 	def git_add(self, item):
 		self.vcs.add(item)
-		
+
 	def git_commit(self, item):
 		self.vcs.commit(item)
 
@@ -280,40 +315,6 @@ class _Core():
 
 	def git_push(self, item, item2):
 		self.vcs.push(item,item2)
-
-	def setonetimesync(self):
-		if self.worker:
-			try:
-				self.worker.setonetimesync()
-			except RuntimeError:
-				pass
-
-	def isLocalInitialized(self):
-		return os.path.exists(self.config.getAttribute('GIT_DIR'))
-
-
-	def persy_stop(self):
-		'''Stops Persy'''
-
-		self.log.info("stop working")
-		if self.worker:
-			try:
-				self.worker.stop()
-				self.worker.join()
-			except RuntimeError:
-				pass
-		if self.notifier:
-			try:
-				self.notifier.stop()
-			except RuntimeError:
-				pass
-			except OSError:
-				pass
-			except KeyError:
-				pass
-		self.log.setStop()
-		#if statusIcon:
-		#	statusIcon.set_from_file(config.getAttribute('ICON_IDLE'))#from_stock(gtk.STOCK_HOME)
 
 #singleton hack
 _singleton = _Core()
