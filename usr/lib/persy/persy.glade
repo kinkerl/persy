@@ -294,6 +294,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">&#x25CF;</property>
                                 <property name="adjustment">0 0 1000 1 10 10</property>
+                                <property name="climb_rate">1</property>
                                 <property name="numeric">True</property>
                               </widget>
                               <packing>
@@ -384,6 +385,7 @@
                                 <property name="invisible_char">&#x25CF;</property>
                                 <property name="width_chars">3</property>
                                 <property name="adjustment">0 0 100000 1 10 10</property>
+                                <property name="climb_rate">1</property>
                                 <property name="numeric">True</property>
                               </widget>
                               <packing>
@@ -483,6 +485,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">&#x25CF;</property>
                                 <property name="adjustment">0 0 10000 1 10 10</property>
+                                <property name="climb_rate">1</property>
                                 <property name="numeric">True</property>
                               </widget>
                               <packing>
