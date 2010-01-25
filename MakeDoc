@@ -50,5 +50,6 @@ echo "done"
 
 # grab the images from the markdown file
 echo -n 'downloading images to usr/share/doc/persy/images .....'
+rm usr/share/doc/persy/images/*.png 
 sed -n -e 's/\(^.*http\)\([^)]*png\)\()\)/http\2/gp' README.markdown | xargs wget -nc --quiet --directory-prefix=usr/share/doc/persy/images 
 echo "done"
