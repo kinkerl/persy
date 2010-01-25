@@ -55,7 +55,6 @@ Now you have to add some directories or files to persy. You can do this in the s
 ![see illustration](http://cloud.github.com/downloads/kinkerl/persy/persy_settings_quickstart.png)
 
 The watched directories and files can be in absolute format (starts with / ) or relative to the userhome. 
-If you want to add multiple directories, they must be formated as a comma seperated list. 
 
 After you added the directories (and maybe lookt at the other configuration options too) you might want to actually start persy.
 just rightclick on the status icon and check the "start/stop persy" checkbox.
