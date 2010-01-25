@@ -117,3 +117,22 @@ class PersySSH():
 			return False
 		return True
 
+	def publishLocalSSHKeys(username, password, hostname):
+		pass
+		#auf server connecten checken ob das geht mit password! und dann file hinzufügen
+
+		#check on server if file exists
+		#HOSTNAME~/.ssh/id_rsa.pub
+		#if not, push 
+		#scp ~/.ssh/id_rsa.pub HOSTNAME
+		#the files now is in ~ on the server
+
+		#check if folder ~/.ssh exists, if not:
+		#mkdir ~/.ssh
+		#chmod 700 ~/.ssh
+		#add the key
+		#cat ~/id_rsa.pub >> ~/.ssh/authorized_keys
+		#chmod 600 ~/.ssh/authorized_keys
+		#clean up
+		#rm ~/id_rsa.pub
+
