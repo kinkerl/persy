@@ -261,6 +261,7 @@
                     </child>
                   </widget>
                   <packing>
+                    <property name="expand">False</property>
                     <property name="padding">10</property>
                     <property name="position">0</property>
                   </packing>
@@ -317,6 +318,7 @@
                     </child>
                   </widget>
                   <packing>
+                    <property name="expand">False</property>
                     <property name="padding">10</property>
                     <property name="position">1</property>
                   </packing>
@@ -406,6 +408,7 @@
                     </child>
                   </widget>
                   <packing>
+                    <property name="expand">False</property>
                     <property name="padding">10</property>
                     <property name="position">2</property>
                   </packing>
@@ -615,6 +618,109 @@
                     <property name="position">1</property>
                   </packing>
                 </child>
+                <child>
+                  <widget class="GtkFrame" id="frame1">
+                    <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">none</property>
+                    <child>
+                      <widget class="GtkAlignment" id="alignment1">
+                        <property name="visible">True</property>
+                        <property name="left_padding">12</property>
+                        <child>
+                          <widget class="GtkTable" id="table2">
+                            <property name="visible">True</property>
+                            <property name="n_rows">3</property>
+                            <property name="n_columns">2</property>
+                            <child>
+                              <widget class="GtkLabel" id="label2">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">please take a quick look in the documentation before running any of these actions</property>
+                                <property name="wrap">True</property>
+                              </widget>
+                              <packing>
+                                <property name="right_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="labelSyncRemote">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="ypad">10</property>
+                                <property name="label" translatable="yes">sync with remote</property>
+                              </widget>
+                              <packing>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="labelInitRemote">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="ypad">10</property>
+                                <property name="label" translatable="yes">init remote</property>
+                              </widget>
+                              <packing>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="buttonSyncRemote">
+                                <property name="label" translatable="yes">run</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="buttonInitRemote">
+                                <property name="label" translatable="yes">run</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label1">
+                        <property name="visible">True</property>
+                        <property name="ypad">10</property>
+                        <property name="label" translatable="yes">&lt;b&gt;actions&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
+                      </widget>
+                      <packing>
+                        <property name="type">label_item</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="padding">10</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
               </widget>
               <packing>
                 <property name="position">2</property>
@@ -632,138 +738,126 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkTable" id="table8">
+              <widget class="GtkVBox" id="vbox1">
                 <property name="visible">True</property>
-                <property name="n_rows">5</property>
-                <property name="n_columns">2</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <widget class="GtkLabel" id="labelGitBrowser">
-                    <property name="width_request">120</property>
+                  <widget class="GtkFrame" id="frame9">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">start git browser</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">none</property>
+                    <child>
+                      <widget class="GtkAlignment" id="alignment9">
+                        <property name="visible">True</property>
+                        <property name="left_padding">12</property>
+                        <child>
+                          <widget class="GtkTable" id="table8">
+                            <property name="visible">True</property>
+                            <property name="n_rows">3</property>
+                            <property name="n_columns">2</property>
+                            <child>
+                              <widget class="GtkLabel" id="labelGitBrowser">
+                                <property name="width_request">300</property>
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="ypad">10</property>
+                                <property name="label" translatable="yes">start git browser</property>
+                              </widget>
+                              <packing>
+                                <property name="x_options"></property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="labelShowLog">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="ypad">10</property>
+                                <property name="label" translatable="yes">show log</property>
+                              </widget>
+                              <packing>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="labelShowGitLog">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="ypad">10</property>
+                                <property name="label" translatable="yes">show git log</property>
+                              </widget>
+                              <packing>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options">GTK_FILL</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="buttonBrowse">
+                                <property name="label" translatable="yes">start</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="buttonLog">
+                                <property name="label" translatable="yes">show</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="buttonGitLog">
+                                <property name="label" translatable="yes">show</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label7">
+                        <property name="visible">True</property>
+                        <property name="ypad">10</property>
+                        <property name="label" translatable="yes">&lt;b&gt;monitoring&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
+                      </widget>
+                      <packing>
+                        <property name="type">label_item</property>
+                      </packing>
+                    </child>
                   </widget>
                   <packing>
-                    <property name="x_options"></property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="labelShowLog">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">show log</property>
-                  </widget>
-                  <packing>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
-                    <property name="x_options"></property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="labelShowGitLog">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">show git log</property>
-                  </widget>
-                  <packing>
-                    <property name="top_attach">2</property>
-                    <property name="bottom_attach">3</property>
-                    <property name="x_options"></property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="buttonBrowse">
-                    <property name="label" translatable="yes">start</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="buttonLog">
-                    <property name="label" translatable="yes">show</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="buttonGitLog">
-                    <property name="label" translatable="yes">show</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">2</property>
-                    <property name="bottom_attach">3</property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="buttonInitRemote">
-                    <property name="label" translatable="yes">start</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="buttonSyncRemote">
-                    <property name="label" translatable="yes">start</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="labelInitRemote">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">init remote</property>
-                  </widget>
-                  <packing>
-                    <property name="top_attach">3</property>
-                    <property name="bottom_attach">4</property>
-                    <property name="y_options"></property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="labelSyncRemote">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">sync with remote</property>
-                  </widget>
-                  <packing>
-                    <property name="top_attach">4</property>
-                    <property name="bottom_attach">5</property>
-                    <property name="y_options"></property>
+                    <property name="padding">10</property>
+                    <property name="position">0</property>
                   </packing>
                 </child>
               </widget>

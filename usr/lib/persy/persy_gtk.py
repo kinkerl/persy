@@ -96,13 +96,13 @@ class PersyGtkMenu():
 		textGeneralName.set_label(_("general"))
 
 		textGeneralName = self.wTree.get_widget('labelLocal')
-		textGeneralName.set_label(_("local"))
+		textGeneralName.set_label(_("backup"))
 
 		textGeneralName = self.wTree.get_widget('labelRemote')
-		textGeneralName.set_label(_("remote"))
+		textGeneralName.set_label(_("synchronization"))
 
 		textGeneralName = self.wTree.get_widget('labelDevel')
-		textGeneralName.set_label(_("development/admin"))
+		textGeneralName.set_label(_("administration"))
 
 		#general configuration
 		textGeneralName = self.wTree.get_widget('labelGeneralName')
