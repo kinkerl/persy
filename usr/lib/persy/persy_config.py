@@ -62,6 +62,7 @@ class PersyConfig():
 
 		# files and dirs used by persy
 		self.attributes['USERHOME'] = os.environ["HOME"]
+		self.attributes['LOCALSSHDIR']=os.path.join(self.attributes['USERHOME'],'.ssh')
 		self.attributes['PERSY_DIR'] = os.path.join(self.attributes['USERHOME'], '.persy')
 		self.attributes['GIT_DIR'] = os.path.join(self.attributes['PERSY_DIR'],'git')
 		self.attributes['GIT_LOCKFILE'] = os.path.join(self.attributes['GIT_DIR'],'index.lock')

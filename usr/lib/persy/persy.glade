@@ -633,17 +633,18 @@
                         <child>
                           <widget class="GtkTable" id="table2">
                             <property name="visible">True</property>
-                            <property name="n_rows">3</property>
-                            <property name="n_columns">2</property>
+                            <property name="n_rows">5</property>
+                            <property name="n_columns">4</property>
                             <child>
                               <widget class="GtkLabel" id="label2">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
+                                <property name="ypad">10</property>
                                 <property name="label" translatable="yes">please take a quick look in the documentation before running any of these actions</property>
                                 <property name="wrap">True</property>
                               </widget>
                               <packing>
-                                <property name="right_attach">2</property>
+                                <property name="right_attach">4</property>
                               </packing>
                             </child>
                             <child>
@@ -654,51 +655,210 @@
                                 <property name="label" translatable="yes">sync with remote</property>
                               </widget>
                               <packing>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
-                                <property name="y_options"></property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="GtkLabel" id="labelInitRemote">
-                                <property name="visible">True</property>
-                                <property name="xalign">0</property>
-                                <property name="ypad">10</property>
-                                <property name="label" translatable="yes">init remote</property>
-                              </widget>
-                              <packing>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
+                                <property name="top_attach">4</property>
+                                <property name="bottom_attach">5</property>
                                 <property name="y_options"></property>
                               </packing>
                             </child>
                             <child>
                               <widget class="GtkButton" id="buttonSyncRemote">
-                                <property name="label" translatable="yes">run</property>
+                                <property name="label" translatable="yes">sync</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">3</property>
+                                <property name="right_attach">4</property>
+                                <property name="top_attach">4</property>
+                                <property name="bottom_attach">5</property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="buttonInitRemote">
+                                <property name="label" translatable="yes">create</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">3</property>
+                                <property name="right_attach">4</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="labelRemoteRepository">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="ypad">10</property>
+                                <property name="label" translatable="yes">test remote repository</property>
+                              </widget>
+                              <packing>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkImage" id="imageRemoteRepository">
+                                <property name="visible">True</property>
+                                <property name="xpad">5</property>
+                                <property name="ypad">6</property>
+                                <property name="stock">gtk-missing-image</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
+                                <property name="x_options">GTK_FILL</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkImage" id="imageServerConnection">
+                                <property name="visible">True</property>
+                                <property name="xpad">6</property>
+                                <property name="stock">gtk-missing-image</property>
                               </widget>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
                                 <property name="top_attach">2</property>
                                 <property name="bottom_attach">3</property>
-                                <property name="y_options"></property>
+                                <property name="x_options">GTK_FILL</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkButton" id="buttonInitRemote">
-                                <property name="label" translatable="yes">run</property>
+                              <widget class="GtkImage" id="imageLocalSSHKey">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
+                                <property name="xpad">6</property>
+                                <property name="ypad">6</property>
+                                <property name="stock">gtk-missing-image</property>
                               </widget>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
                                 <property name="top_attach">1</property>
                                 <property name="bottom_attach">2</property>
+                                <property name="x_options">GTK_FILL</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="labelLocalSSHKey">
+                                <property name="width_request">300</property>
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="ypad">10</property>
+                                <property name="label" translatable="yes">test local ssh key</property>
+                              </widget>
+                              <packing>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="testLocalSSHKey">
+                                <property name="label" translatable="yes">test</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="right_attach">3</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="buttonLocalSSHKey">
+                                <property name="label" translatable="yes">create</property>
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">3</property>
+                                <property name="right_attach">4</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="labelServerConnection">
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="ypad">10</property>
+                                <property name="label" translatable="yes">test server connection</property>
+                              </widget>
+                              <packing>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
+                                <property name="y_options">GTK_FILL</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="testServerConnection">
+                                <property name="label" translatable="yes">test</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="right_attach">3</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="testRemoteRepository">
+                                <property name="label" translatable="yes">test</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="right_attach">3</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkButton" id="button1">
+                                <property name="label" translatable="yes">publish keys</property>
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="tooltip" translatable="yes">not yet implemented</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">3</property>
+                                <property name="right_attach">4</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
                                 <property name="y_options"></property>
                               </packing>
                             </child>

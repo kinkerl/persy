@@ -42,6 +42,7 @@ try:
 	from persy_config import PersyConfig
 	from persy_helper import PersyHelper
 	from persy_core import Core
+	from persy_ssh import PersySSH
 	import os
 	import time
 	import logging , logging.handlers
@@ -200,10 +201,42 @@ class PersyGtkMenu():
 		textGeneralName.set_text(config['remote']['path'])
 		textGeneralName.set_tooltip_text(_("the path to the git repository on the remote server"))
 
-
 		textGeneralName = self.wTree.get_widget('checkAutoshare')
 		textGeneralName.set_active(config['remote']['autoshare'])
 		textGeneralName.set_tooltip_text(_("if this is checked, all the computer in a sync will share the configuration file"))
+
+
+		#remote actions
+		thewidget = self.wTree.get_widget("testLocalSSHKey")
+		thewidget.connect("clicked", self.actionTestLocalSSHKey)
+		thewidget.set_label(_("test"))
+		thewidget.set_tooltip_text(_('show git log'))
+
+		thewidget = self.wTree.get_widget("testServerConnection")
+		thewidget.connect("clicked", self.actionTestSSHAuth)
+		thewidget.set_label(_("test"))
+		thewidget.set_tooltip_text(_('show git log'))
+
+
+		thewidget = self.wTree.get_widget("testRemoteRepository")
+		thewidget.connect("clicked", self.actionTestRemoteServer)
+		thewidget.set_label(_("test"))
+		thewidget.set_tooltip_text(_('show git log'))
+
+
+
+		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_IDLE'), 24, 24)
+		textGeneralName = self.wTree.get_widget('imageLocalSSHKey')
+		textGeneralName.set_from_pixbuf(pixbuf)
+
+		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_IDLE'), 24, 24)
+		textGeneralName = self.wTree.get_widget('imageServerConnection')
+		textGeneralName.set_from_pixbuf(pixbuf)
+
+		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_IDLE'), 24, 24)
+		textGeneralName = self.wTree.get_widget('imageRemoteRepository')
+		textGeneralName.set_from_pixbuf(pixbuf)
+
 
 
 		#devel
@@ -228,8 +261,8 @@ class PersyGtkMenu():
 		thewidget.set_label(_("show"))
 		thewidget.set_tooltip_text(_('show git log'))
 
-		textGeneralName = self.wTree.get_widget('labelInitRemote')
-		textGeneralName.set_label(_("initialize remote server (beware)"))
+		textGeneralName = self.wTree.get_widget('labelRemoteRepository')
+		textGeneralName.set_label(_("test remote repository (beware)"))
 		thewidget = self.wTree.get_widget("buttonInitRemote")
 		thewidget.connect("clicked", self.gtkcore.initRemote)
 		thewidget.set_label(_("initialize"))
@@ -363,8 +396,35 @@ class PersyGtkMenu():
 			
 
 
+	def actionTestRemoteServer(self, widget, data= None):
+		persyssh = PersySSH(self.config, self.log)
+		if persyssh.checkRemoteServer():
+			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
+		else:
+			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_ERROR'), 24, 24)
 
+		textGeneralName = self.wTree.get_widget('imageRemoteRepository')
+		textGeneralName.set_from_pixbuf(pixbuf)
 
+	def actionTestSSHAuth(self, widget, data= None):
+		persyssh = PersySSH(self.config, self.log)
+		if persyssh.checkSSHAuth():
+			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
+		else:
+			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_ERROR'), 24, 24)
+
+		textGeneralName = self.wTree.get_widget('imageServerConnection')
+		textGeneralName.set_from_pixbuf(pixbuf)
+
+	def actionTestLocalSSHKey(self, widget, data= None):
+		persyssh = PersySSH(self.config, self.log)
+		if persyssh.localSSHKeysExist():
+			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
+		else:
+			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_ERROR'), 24, 24)
+
+		textGeneralName = self.wTree.get_widget('imageLocalSSHKey')
+		textGeneralName.set_from_pixbuf(pixbuf)
 
 
 class PersyGtk():
