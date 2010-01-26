@@ -207,6 +207,14 @@ class PersyGtkMenu():
 
 
 		#remote actions
+                textGeneralName = self.wTree.get_widget('labelCategoryActions')
+                textGeneralName.set_label('<b>'+_("environment tests")+'</b>')
+
+                textGeneralName = self.wTree.get_widget('labelTestsExplanation')
+                textGeneralName.set_label(_("These are some tests to confirm if your settings are correct. If a problem occurs, the problem can maybe be corrected if you run the corresponding action."))
+
+
+
 		thewidget = self.wTree.get_widget("testLocalSSHKey")
 		thewidget.connect("clicked", self.actionTestLocalSSHKey)
 		thewidget.set_label(_("test"))

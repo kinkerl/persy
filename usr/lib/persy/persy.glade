@@ -636,12 +636,14 @@
                             <property name="n_rows">5</property>
                             <property name="n_columns">4</property>
                             <child>
-                              <widget class="GtkLabel" id="label2">
+                              <widget class="GtkLabel" id="labelTestsExplanation">
+                                <property name="width_request">470</property>
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="ypad">10</property>
-                                <property name="label" translatable="yes">please take a quick look in the documentation before running any of these actions</property>
+                                <property name="label" translatable="yes">test </property>
                                 <property name="wrap">True</property>
+                                <property name="angle">0.050000000000000003</property>
                               </widget>
                               <packing>
                                 <property name="right_attach">4</property>
@@ -888,7 +890,7 @@
                       </widget>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label1">
+                      <widget class="GtkLabel" id="labelCategoryActions">
                         <property name="visible">True</property>
                         <property name="ypad">10</property>
                         <property name="label" translatable="yes">&lt;b&gt;actions&lt;/b&gt;</property>

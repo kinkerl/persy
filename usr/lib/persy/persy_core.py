@@ -84,7 +84,7 @@ class _Core():
 		stdout = std #default stdout
 		stderr = std #default stderr
 		self.vcs = pug.PuG(self.config.getAttribute('USERHOME'), GIT_DIR=self.config.getAttribute('GIT_DIR'), stdin=stdin, stdout=stdout, stderr=stderr)
-		print self.isInSyncWithRemote()
+		#print self.isInSyncWithRemote()
 
 	def initLocal(self):
 		'''initialises the local repository'''
