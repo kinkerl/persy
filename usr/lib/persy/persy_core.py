@@ -163,13 +163,11 @@ class _Core():
 
 	def isInSyncWithRemote(self):
 		'''returns true if it is already in sync'''
-		std = open('/tmp/persytmp', 'w')
 		try:
-			self.vcs.command('git', params=['remote'], stdout=std, stderr=None, stdin=None)
+			self.vcs.command('git', params=['remote'])
 		except Exception as e:
 			self.log.critical(str(e))
-
-		std = file('/tmp/persytmp').read().strip("\n ")
+		std = self.vcs.getLastOutput().strip("\n ")
 		if std == 'origin':
 			return True
 		return False

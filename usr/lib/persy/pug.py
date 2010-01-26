@@ -48,8 +48,12 @@ GIT_WORK_TREE = the root git repostitory
 		self.GIT_WORK_TREE = GIT_WORK_TREE
 		self.stdin=stdin
 		self.stderr=stderr
-		self.stdout=stdout
+		self.stdout=subprocess2.PIPE
 		self.cwd = os.environ["HOME"]
+		self.lastoutput = ''
+
+	def getLastOutput(self):
+		return self.lastoutput
 
 	def __getEnv__(self):
 		'''Gets all the default environment variables and add some new'''
@@ -67,6 +71,8 @@ GIT_WORK_TREE = the root git repostitory
 		if not stderr:
 			stderr = self.stderr
 		p = subprocess2.Subprocess2(callcmd, stdout=stdout, stdin=stdin, stderr=stderr, close_fds=True, env=self.__getEnv__(), cwd=self.cwd )# ,timeout = 10)
+		if stdout == subprocess2.PIPE:
+			self.lastoutput = p.getOut()
 		return p.process.returncode
 
 	def gc(self, stdin=None, stdout=None, stderr=None, params = []):

@@ -3,6 +3,8 @@
 """
     subprocess with timeout
     ~~~~~~~~~~~~~~~~~~~~~~~
+    Author: Jens Diemer (www.jensdiemer.de)
+    Author: Dennis Schwertel 
 
     http://www.python-forum.de/topic-14301.html
     http://www.python-forum.de/post-23692.html#23692
@@ -32,6 +34,7 @@ else:
 DEFAULT_TIMEOUT = 0  
 DEFAULT_WAIT_TIME = 0.25
 
+PIPE = subprocess.PIPE
 
 
 class Subprocess2(object):
@@ -104,6 +107,9 @@ class Subprocess2(object):
             kill_signal = SECOND_SIGNAL
 
         os.kill(self.process.pid, kill_signal)
+
+    def getOut(self):
+        return self.process.communicate()[0]
 
 
 
