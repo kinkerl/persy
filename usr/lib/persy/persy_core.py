@@ -84,7 +84,7 @@ class _Core():
 		stdout = std #default stdout
 		stderr = std #default stderr
 		self.vcs = pug.PuG(self.config.getAttribute('USERHOME'), GIT_DIR=self.config.getAttribute('GIT_DIR'), stdin=stdin, stdout=stdout, stderr=stderr)
-
+		print self.isInSyncWithRemote()
 
 	def initLocal(self):
 		'''initialises the local repository'''
@@ -159,6 +159,20 @@ class _Core():
 		if not self.config['remote']['use_remote']:
 			self.config['remote']['use_remote'] = True
 			self.config.write()
+
+
+	def isInSyncWithRemote(self):
+		'''returns true if it is already in sync'''
+		std = open('/tmp/persytmp', 'w')
+		try:
+			self.vcs.command('git', params=['remote'], stdout=std, stderr=None, stdin=None)
+		except Exception as e:
+			self.log.critical(str(e))
+
+		std = file('/tmp/persytmp').read().strip("\n ")
+		if std == 'origin':
+			return True
+		return False
 
 
 	def vcsignore(self):

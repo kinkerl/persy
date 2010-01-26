@@ -224,6 +224,12 @@ class PersyGtkMenu():
 		thewidget.set_tooltip_text(_('show git log'))
 
 
+		thewidget = self.wTree.get_widget("buttonIsInSyncWithRemote")
+		thewidget.connect("clicked", self.isInSyncWithRemote)
+		thewidget.set_label(_("test"))
+		thewidget.set_tooltip_text(_('run a new initial synchronization with the remote host'))
+
+
 
 		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_IDLE'), 24, 24)
 		textGeneralName = self.wTree.get_widget('imageLocalSSHKey')
@@ -237,6 +243,9 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('imageRemoteRepository')
 		textGeneralName.set_from_pixbuf(pixbuf)
 
+		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_IDLE'), 24, 24)
+		textGeneralName = self.wTree.get_widget('imageIsInSyncWithRemote')
+		textGeneralName.set_from_pixbuf(pixbuf)
 
 
 		#devel
@@ -275,7 +284,8 @@ class PersyGtkMenu():
 		thewidget.set_label(_("synchronize"))
 		thewidget.set_tooltip_text(_('run a new initial synchronization with the remote host'))
 
-		
+
+
 		
 	def save(self, widget, data=None):
 		self.log.info("saving configuration")
@@ -425,6 +435,16 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('imageLocalSSHKey')
 		textGeneralName.set_from_pixbuf(pixbuf)
+
+	def isInSyncWithRemote(self, widget, data= None):
+		if self.gtkcore.isInSyncWithRemote(widget):
+			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
+		else:
+			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_ERROR'), 24, 24)
+
+		textGeneralName = self.wTree.get_widget('imageIsInSyncWithRemote')
+		textGeneralName.set_from_pixbuf(pixbuf)
+
 
 
 class PersyGtk():
@@ -638,6 +658,9 @@ class PersyGtk():
 
 	def initRemote(self, widget, data = None):
 		self.core.initRemote()
+
+	def isInSyncWithRemote(self, widget, data = None):
+		return self.core.isInSyncWithRemote()
 
 
 
