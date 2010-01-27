@@ -106,6 +106,10 @@ class PersyGtkMenu():
 		textGeneralName.set_label(_("administration"))
 
 		#general configuration
+
+		textGeneralName = self.wTree.get_widget('labelCategoryPersonal')
+		textGeneralName.set_label('<b>'+_("personal information")+'</b>')
+
 		textGeneralName = self.wTree.get_widget('labelGeneralName')
 		textGeneralName.set_label(_("name"))
 
@@ -120,6 +124,9 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('textGeneralMail')
 		textGeneralName.set_text(config['general']['mail'])
 		textGeneralName.set_tooltip_text(_("the mail used in git. the default should be fine"))
+
+		textGeneralName = self.wTree.get_widget('labelCategoryAdvanced')
+		textGeneralName.set_label('<b>'+_("advanced")+'</b>')
 
 		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
 		textGeneralName.set_active(config['general']['fortune'])
@@ -140,6 +147,18 @@ class PersyGtkMenu():
 		textGeneralName.set_tooltip_text(_("the prefered git browser for browsing the local persy repository"))
 
 		#local configuration
+		textGeneralName = self.wTree.get_widget('labelLocalWatched')
+		textGeneralName.set_label('<b>'+_("list of folders persy is watching")+'</b>')
+
+		for watched in config['local']['watched']:
+			self.addWatchedEntry(None, watched)
+
+		button = self.wTree.get_widget('buttonAddWatchedEntry')
+		button.connect("clicked", self.addWatchedEntry, '')
+
+		textGeneralName = self.wTree.get_widget('labelCategorySyncOptions')
+		textGeneralName.set_label('<b>'+_("backup options")+'</b>')
+
 		textGeneralName = self.wTree.get_widget('labelLocalSleep')
 		textGeneralName.set_label(_("time to wait after an action for a backup (in seconds)"))
 
@@ -148,15 +167,8 @@ class PersyGtkMenu():
 		textGeneralName.set_tooltip_text(_("time to wait after an action for a backup (in seconds)"))
 
 
-		textGeneralName = self.wTree.get_widget('labelLocalWatched')
-		textGeneralName.set_label('<b>'+_("list of folders persy is watching")+'</b>')
-
-
-		for watched in config['local']['watched']:
-			self.addWatchedEntry(None, watched)
-
-		button = self.wTree.get_widget('buttonAddWatchedEntry')
-		button.connect("clicked", self.addWatchedEntry, '')
+		textGeneralName = self.wTree.get_widget('labelCategoryExclude')
+		textGeneralName.set_label('<b>'+_("exclude options")+'</b>')
 
 		textGeneralName = self.wTree.get_widget('labelLocalFilesize')
 		textGeneralName.set_label(_("maximal allowed size of files (in bytes)"))
@@ -174,6 +186,8 @@ class PersyGtkMenu():
 		textGeneralName.set_tooltip_text(_("the expressions are seperated by a comma"))
 
 		#remote configuration
+		textGeneralName = self.wTree.get_widget('labelCategoryOptions')
+		textGeneralName.set_label('<b>'+_("options")+'</b>')
 
 		textGeneralName = self.wTree.get_widget('checkRemoteUse')
 		textGeneralName.set_active(config['remote']['use_remote'])
@@ -186,6 +200,12 @@ class PersyGtkMenu():
 		textGeneralName.set_value(int(config['remote']['sleep']))
 		textGeneralName.set_tooltip_text(_("interval in seconds in which a synchronization with the remote host occurs"))
 
+		textGeneralName = self.wTree.get_widget('checkAutoshare')
+		textGeneralName.set_active(config['remote']['autoshare'])
+		textGeneralName.set_tooltip_text(_("if this is checked, all the computer in a sync will share the configuration file"))
+
+		textGeneralName = self.wTree.get_widget('labelCategoryServerConf')
+		textGeneralName.set_label('<b>'+_("server configuration")+'</b>')
 
 		textGeneralName = self.wTree.get_widget('labelRemoteHostname')
 		textGeneralName.set_label(_("hostname"))
@@ -201,9 +221,6 @@ class PersyGtkMenu():
 		textGeneralName.set_text(config['remote']['path'])
 		textGeneralName.set_tooltip_text(_("the path to the git repository on the remote server"))
 
-		textGeneralName = self.wTree.get_widget('checkAutoshare')
-		textGeneralName.set_active(config['remote']['autoshare'])
-		textGeneralName.set_tooltip_text(_("if this is checked, all the computer in a sync will share the configuration file"))
 
 		#remote actions
 		textGeneralName = self.wTree.get_widget('labelCategoryActions')
@@ -271,6 +288,9 @@ class PersyGtkMenu():
 
 
 		#devel
+		textGeneralName = self.wTree.get_widget('labelCategoryMonitoring')
+		textGeneralName.set_label('<b>'+_("monitoring")+'</b>')
+
 		textGeneralName = self.wTree.get_widget('labelGitBrowser')
 		textGeneralName.set_label(_("start a git browser"))
 		thewidget = self.wTree.get_widget("buttonBrowse")
