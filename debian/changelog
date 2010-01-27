@@ -1,3 +1,10 @@
+persy (0.8) karmic; urgency=low
+
+  * rewrote the settings gui
+  * added environment tests
+
+ -- Dennis Schwertel <s@digitalkultur.net>  27 Jan 2010 22:10:00 +0100
+
 persy (0.7.2.1) karmic; urgency=low
 
   * moved the doc building code out of debian/rules and in its own script
