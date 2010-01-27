@@ -205,14 +205,12 @@ class PersyGtkMenu():
 		textGeneralName.set_active(config['remote']['autoshare'])
 		textGeneralName.set_tooltip_text(_("if this is checked, all the computer in a sync will share the configuration file"))
 
-
 		#remote actions
-                textGeneralName = self.wTree.get_widget('labelCategoryActions')
-                textGeneralName.set_label('<b>'+_("environment tests")+'</b>')
+		textGeneralName = self.wTree.get_widget('labelCategoryActions')
+		textGeneralName.set_label('<b>'+_("environment tests")+'</b>')
 
-                textGeneralName = self.wTree.get_widget('labelTestsExplanation')
-                textGeneralName.set_label(_("These are some tests to confirm if your settings are correct. If a problem occurs, the problem can maybe be corrected if you run the corresponding action."))
-
+		textGeneralName = self.wTree.get_widget('labelTestsExplanation')
+		textGeneralName.set_label(_("These are some tests to confirm if your settings are correct. If a problem occurs, the problem may be corrected if you run the corresponding action."))
 
 
 		thewidget = self.wTree.get_widget("testLocalSSHKey")
@@ -235,6 +233,22 @@ class PersyGtkMenu():
 		thewidget = self.wTree.get_widget("buttonIsInSyncWithRemote")
 		thewidget.connect("clicked", self.isInSyncWithRemote)
 		thewidget.set_label(_("test"))
+		thewidget.set_tooltip_text(_('run a new initial synchronization with the remote host'))
+
+		textGeneralName = self.wTree.get_widget('labelRemoteRepository')
+		textGeneralName.set_label(_("test status of remote repository"))
+
+		thewidget = self.wTree.get_widget("buttonInitRemote")
+		thewidget.connect("clicked", self.gtkcore.initRemote)
+		thewidget.set_label(_("initialize"))
+		thewidget.set_tooltip_text(_('run a initialization of the remote host'))
+
+		textGeneralName = self.wTree.get_widget('labelSyncRemote')
+		textGeneralName.set_label(_("is persy in a sync pack with remote host"))
+
+		thewidget = self.wTree.get_widget("buttonSyncRemote")
+		thewidget.connect("clicked", self.gtkcore.syncWithRemote)
+		thewidget.set_label(_("link"))
 		thewidget.set_tooltip_text(_('run a new initial synchronization with the remote host'))
 
 
@@ -273,28 +287,14 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('labelShowGitLog')
 		textGeneralName.set_label(_("show git log"))
+
 		thewidget = self.wTree.get_widget("buttonGitLog")
 		thewidget.connect("clicked", self.gtkcore.showgitlog)
 		thewidget.set_label(_("show"))
 		thewidget.set_tooltip_text(_('show git log'))
 
-		textGeneralName = self.wTree.get_widget('labelRemoteRepository')
-		textGeneralName.set_label(_("test remote repository (beware)"))
-		thewidget = self.wTree.get_widget("buttonInitRemote")
-		thewidget.connect("clicked", self.gtkcore.initRemote)
-		thewidget.set_label(_("initialize"))
-		thewidget.set_tooltip_text(_('run a initialization of the remote host'))
-
-		textGeneralName = self.wTree.get_widget('labelSyncRemote')
-		textGeneralName.set_label(_("new initial sync with remote (beware)"))
-		thewidget = self.wTree.get_widget("buttonSyncRemote")
-		thewidget.connect("clicked", self.gtkcore.syncWithRemote)
-		thewidget.set_label(_("synchronize"))
-		thewidget.set_tooltip_text(_('run a new initial synchronization with the remote host'))
 
 
-
-		
 	def save(self, widget, data=None):
 		self.log.info("saving configuration")
 		#general configuration
@@ -418,8 +418,12 @@ class PersyGtkMenu():
 		persyssh = PersySSH(self.config, self.log)
 		if persyssh.checkRemoteServer():
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
+			thewidget = self.wTree.get_widget('imageRemoteRepository')
+			thewidget.set_tooltip_text(_('all ok'))
 		else:
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_ERROR'), 24, 24)
+			thewidget = self.wTree.get_widget('imageRemoteRepository')
+			thewidget.set_tooltip_text(_('the remote repository is not ok. maybe the path on the server is incorrect or it is not initialized. run the "initialize" action to do so'))
 
 		textGeneralName = self.wTree.get_widget('imageRemoteRepository')
 		textGeneralName.set_from_pixbuf(pixbuf)
@@ -428,8 +432,12 @@ class PersyGtkMenu():
 		persyssh = PersySSH(self.config, self.log)
 		if persyssh.checkSSHAuth():
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
+			thewidget = self.wTree.get_widget('imageServerConnection')
+			thewidget.set_tooltip_text(_('all ok'))
 		else:
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_ERROR'), 24, 24)
+			thewidget = self.wTree.get_widget('imageServerConnection')
+			thewidget.set_tooltip_text(_('the connection to the server was not possible. please check your settings above and if you have published your ssh public key to the server. if not, you can run the "publish" action'))
 
 		textGeneralName = self.wTree.get_widget('imageServerConnection')
 		textGeneralName.set_from_pixbuf(pixbuf)
@@ -438,8 +446,12 @@ class PersyGtkMenu():
 		persyssh = PersySSH(self.config, self.log)
 		if persyssh.localSSHKeysExist():
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
+			thewidget = self.wTree.get_widget('imageLocalSSHKey')
+			thewidget.set_tooltip_text(_('all ok'))
 		else:
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_ERROR'), 24, 24)
+			thewidget = self.wTree.get_widget('imageLocalSSHKey')
+			thewidget.set_tooltip_text(_('no local ssh keys are present. these are important for a serverconnection. you may want to run the "create" action to create these'))
 
 		textGeneralName = self.wTree.get_widget('imageLocalSSHKey')
 		textGeneralName.set_from_pixbuf(pixbuf)
@@ -447,8 +459,12 @@ class PersyGtkMenu():
 	def isInSyncWithRemote(self, widget, data= None):
 		if self.gtkcore.isInSyncWithRemote(widget):
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
+			thewidget = self.wTree.get_widget('imageIsInSyncWithRemote')
+			thewidget.set_tooltip_text(_('all ok'))
 		else:
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_ERROR'), 24, 24)
+			thewidget = self.wTree.get_widget('imageIsInSyncWithRemote')
+			thewidget.set_tooltip_text(_('persy is not in sync with the remote server. you may want to run the "link" action to fix this'))
 
 		textGeneralName = self.wTree.get_widget('imageIsInSyncWithRemote')
 		textGeneralName.set_from_pixbuf(pixbuf)
