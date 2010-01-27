@@ -51,5 +51,5 @@ deb_package: language doc
 release: source_package
 	git tag -f $(VERSION)
 	git push origin master --tags
-	dput -f  ppa:tmassassin/ppa persy_$(VERSION)_source.changes
+	dput -f  ppa:tmassassin/ppa ../persy_$(VERSION)_source.changes
 
