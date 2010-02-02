@@ -35,7 +35,8 @@ except Exception as e:
 			return msg
 
 try:
-	import apt_pkg
+	import sys
+	import subprocess2
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -57,24 +58,27 @@ class _PersyHelper():
 	def __init__(self):
 		#aptCache is global for version retrieving
 		#this is set with the first call of getSoftwareVersion()
-		self.aptCache = None
-	
+		#self.aptCache = None
+		pass
+
 	def striplist(self, l):
 		'''helper function to strip lists'''
 		return ([x.strip() for x in l])
 
 	def getSoftwareVersion(self, name):
 		"""returns the version of a installed software as a String. Returns None if not installed"""
-		if not self.aptCache:
-			print _("using apt-cache to find out about installed apps and versions...")
-			apt_pkg.InitConfig()
-			apt_pkg.InitSystem()
-			print _("...done")
-			self.aptCache = apt_pkg.GetCache()
-		try:
-			return self.aptCache[name].CurrentVer.VerStr
-		except Exception as e:
-			return None
+		version = None
+		callcmd = []
+		callcmd.append('dpkg')
+		callcmd.append('-l')
+		callcmd.append(name)
+		p = subprocess2.Subprocess2(callcmd, stdout=subprocess2.PIPE, close_fds=True,)
+		lines = p.getOut()
+		for line in lines.splitlines():
+			if line.startswith('ii'):
+				version = line.split()[2]
+		return version
+
 
 
 #singleton hack
