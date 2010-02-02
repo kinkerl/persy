@@ -12,13 +12,13 @@
 
 
 
-CFLAGS = -Wall -g
-
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
-else
-	CFLAGS += -O2
-endif
+#CFLAGS = -Wall -g
+#
+#ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+#	CFLAGS += -O0
+#else
+#	CFLAGS += -O2
+#endif
 
 configure: configure-stamp
 configure-stamp:
@@ -57,9 +57,6 @@ install: build
 # Build architecture-independent files here.
 binary-indep: build install
 # We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs 
@@ -77,8 +74,8 @@ binary-arch: build install
 #	dh_installcron
 #	dh_installinfo
 	dh_installman
-	dh_link
-	dh_strip
+#	dh_link
+#	dh_strip
 	dh_compress
 	dh_fixperms
 #	dh_perl
@@ -88,6 +85,7 @@ binary-arch: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+binary-arch:
 
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+binary: binary-indep 
+.PHONY: build clean binary-indep binary install configure
