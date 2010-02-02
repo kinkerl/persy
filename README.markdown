@@ -66,6 +66,7 @@ just rightclick on the status icon and check the "start/stop persy" checkbox.
 Setup for a local usage (command line)
 ------------
 You can also do this configuration in the commandline. This is recommended for experienced users only and is not necessary if you configured persy with the settings menu.
+
 ~~~~~~~
      $ persy --config --uname=USERNAME      # username used
      $ persy --config --mail=MAIL           # useremail used
