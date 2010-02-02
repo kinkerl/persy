@@ -153,7 +153,7 @@ The statusicon will not change to any other state until this errorstate is reset
 		try:
 			pynotify.Notification(self.notifyid, msg, self.config.getAttribute('ICON_WARN')).show()
 		except Exception as e:
-			self.log.warn(str(e))
+			pass #self.log.warn(str(e))
 
 	def critical(self, msg, verbose=None):
 		''' logs a critical message, changes the status icon, fires a notification and sets the error state'''
@@ -166,7 +166,7 @@ The statusicon will not change to any other state until this errorstate is reset
 		try:
 			pynotify.Notification(self.notifyid, msg, self.config.getAttribute('ICON_ERROR')).show()
 		except Exception as e:
-			self.log.warn(str(e))
+			pass #self.log.warn(str(e))
 
 
 
