@@ -8,7 +8,7 @@ Homepage: https://launchpad.net/persy
 
 Package: persy
 Architecture: all
-Depends: git-core, git, python-pyinotify, python-paramiko, python-gtk2, python-glade2, python-notify, python (>= 2.6), python (<< 3), gitk | qgit, xterm
+Depends: git-core, git, python-pyinotify, python-paramiko, python-gtk2, python-glade2, python-notify, python (>= 2.6), python (<< 3), gitk | qgit, xterm, librsvg2-common
 Recommends: fortune
 Description: personal syncronization
  backup or synchronize your data with multiple machines. 
