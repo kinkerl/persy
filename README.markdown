@@ -66,7 +66,7 @@ just rightclick on the status icon and check the "start/stop persy" checkbox.
 Setup for a local usage (command line)
 ------------
 You can also do this configuration in the commandline. This is recommended for experienced users only and is not necessary if you configured persy with the settings menu.
-
+~~~~~~~
      $ persy --config --uname=USERNAME      # username used
      $ persy --config --mail=MAIL           # useremail used
      $ persy --config --add_dir=DIR         # DIR is the path to a directory in /home/user 
@@ -75,6 +75,8 @@ You can also do this configuration in the commandline. This is recommended for e
                                             # From now on, you can start persy or/and 
                                             # add it to your autostart:
      $ persy --start                        # starts persy
+~~~~~~~
+
 You can configure your desktop environment to execute persy at login.
 
 Setup for syncing and/or using a remote backup
@@ -88,16 +90,20 @@ The server just needs a ssh server with public key authentication and the git-co
 You only have to configure the client computer with persy installed!
 The normal workflow with a __blank remote Server__ and an __already initialized local repository is__:
 
+~~~~~~~
      $ persy --config --hostname=SERVER     # SERVER = location of the server
      $ persy --config --path=PATH           # PATH = absolute path of the gitrepository on 
                                             # the server (path will be created if it does not exist)
      $ persy --initRemote                   # created a bare git repository on the server in PATH
      $ persy --start                        # starts persy 
+~~~~~~~
+
 
 The normal workflow with a __already initialized remote Server__ and __no local repository__. 
 
 IMPORTANT: the synced directories should be empty before the sync. i had some problems with already existing files. you can start a sync and then add new files to the synced directory.
 
+~~~~~~~
      $ persy --config --uname=USERNAME      # username used for the commits
      $ persy --config --mail=MAIL           # useremail used for the commits
      $ persy --config --hostname=SERVER     # SERVER = identifier(ip) of the server
@@ -109,6 +115,7 @@ IMPORTANT: the synced directories should be empty before the sync. i had some pr
                                             # depending on the size of your existing repository
                                             # this can take a long(!) time
      $ persy --start                        # starts persy
+~~~~~~~
 
 Advanced Usage
 ==========
