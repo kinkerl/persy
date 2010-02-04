@@ -214,6 +214,13 @@ class PersyGtkMenu():
 		textGeneralName.set_text(config['remote']['hostname'])
 		textGeneralName.set_tooltip_text(_("the hostname of the remote server"))
 
+		textGeneralName = self.wTree.get_widget('labelRemoteUsername')
+		textGeneralName.set_label(_("username"))
+
+		textGeneralName = self.wTree.get_widget('textRemoteUsername')
+		textGeneralName.set_text(config['remote']['username'])
+		textGeneralName.set_tooltip_text(_("the username for the remote server"))
+
 		textGeneralName = self.wTree.get_widget('labelRemotePath')
 		textGeneralName.set_label(_("repository path on the server"))
 

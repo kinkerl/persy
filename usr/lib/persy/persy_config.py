@@ -38,6 +38,7 @@ try:
 	from configobj import ConfigObj
 	from persy_helper import PersyHelper
 	import os
+	import getpass
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -222,6 +223,10 @@ class PersyConfig():
 		#remote hostname
 		if not config['remote'].has_key('hostname') or not type(config['remote']['hostname']) is str:
 			config['remote']['hostname'] = self.attributes['DEFAULT_REMOTE_HOSTNAME']
+
+		#remote username
+		if not config['remote'].has_key('username') or not type(config['remote']['username']) is str:
+			config['remote']['username'] = getpass.getuser() #if not set, use the current
 
 		#remote path
 		if not config['remote'].has_key('path') or not type(config['remote']['path']) is str:

@@ -139,7 +139,7 @@ class _Core():
 				self.config['remote']['use_remote'] = True
 				self.config.write()
 
-			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s/%s"%(self.config['remote']['hostname'],self.config['remote']['path']))
+			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s@%s/%s"%(self.config['remote']['username'],self.config['remote']['hostname'],self.config['remote']['path']))
 		except Exception as e:
 			self.log.critical(str(e), verbose=True)
 		else:
@@ -151,7 +151,7 @@ class _Core():
 		# i dont use clone because of massive errors when using it
 		# the best way iś to add the remote server and pull from it
 		try:
-			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s/%s"%(self.config['remote']['hostname'],self.config['remote']['path']))
+			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s@%s/%s"%(self.config['remote']['username'],self.config['remote']['hostname'],self.config['remote']['path']))
 			self.vcs.pull(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
 		except Exception as e:
 			self.log.critical(str(e))
