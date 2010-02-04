@@ -143,7 +143,7 @@ def main(argv):
 
 
 
-	elif options.initremote:
+	if options.initremote:
 		core.initRemote()
 	elif options.syncwithremote:
 		core.syncWithRemote()
