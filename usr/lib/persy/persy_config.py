@@ -39,6 +39,7 @@ try:
 	from persy_helper import PersyHelper
 	import os
 	import getpass
+	import platform
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -60,6 +61,9 @@ class PersyConfig():
 
 		self.attributes = {}
 		self.p = PersyHelper()
+
+		#host stuff
+		self.attributes['DIST'] = platform.dist() # ('Ubuntu', '9.10', 'karmic')
 
 		# files and dirs used by persy
 		self.attributes['USERHOME'] = os.environ["HOME"]
