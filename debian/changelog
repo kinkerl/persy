@@ -4,7 +4,7 @@ persy (0.8.1) karmic; urgency=low
   * added username for serverauth
   * some bugfixes and cleanups
 
- -- Dennis Schwertel <s@digitalkultur.net>  27 Jan 2010 22:10:00 +0100
+ -- Dennis Schwertel <s@digitalkultur.net>  05 Feb 2010 10:21:00 +0100
 
 
 persy (0.8) karmic; urgency=low
