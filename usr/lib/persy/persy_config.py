@@ -86,7 +86,15 @@ class PersyConfig():
 		self.attributes['ICON_UNTRACKED'] = '/usr/lib/persy/assets/persy_untracked.svg'
 		self.attributes['ICON_WARN'] = '/usr/lib/persy/assets/persy_warn.svg'
 		self.attributes['ICON_ERROR'] = '/usr/lib/persy/assets/persy_error.svg'
-		self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
+
+
+		#logo depends on DIST!
+		if self.attributes['DIST'][0] == 'Ubuntu':
+			self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
+		elif self.attributes['DIST'][0] == 'LinuxMint':
+			self.attributes['LOGO'] = '/usr/lib/persy/assets/dist/persy_linuxmint.svg'
+		else:
+			self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
 
 		#path to the license file
 		self.attributes['LICENSE_FILE'] = '/usr/share/common-licenses/GPL-2'
