@@ -93,6 +93,8 @@ class PersyConfig():
 			self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
 		elif self.attributes['DIST'][0] == 'LinuxMint':
 			self.attributes['LOGO'] = '/usr/lib/persy/assets/dist/persy_linuxmint.svg'
+		elif self.attributes['DIST'][0] == 'fedora':
+			self.attributes['LOGO'] = '/usr/lib/persy/assets/dist/persy_fedora.svg'
 		else:
 			self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
 
