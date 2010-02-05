@@ -48,6 +48,9 @@ hostname = %s
 # same remote path for all clients
 path = %s
 
+# the username for the auth on the server
+username = 
+
 # autoshare the configfile under ~/.persy/config 
 # if this is set to True, all the computer in a sync
 # will share the configuration file

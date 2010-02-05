@@ -1,9 +1,12 @@
 
-License:
+Copyright: 2009 - 2010 by Dennis Schwertel <s@digitalkultur.net>
 
-   This package is free software; you can redistribute it and/or modify
+   This software is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License version 2 as published by
    the Free Software Foundation.
 
-The Debian packaging is (C) 2009, Dennis Schwertel <s@digitalkultur.net> and
+   On Debian systems, the complete text of the GNU General Public License, version 2, can be found in /usr/share/common-licenses/GPL-2.
+
+
+The Debian packaging is (C) 2009 - 2010, Dennis Schwertel <s@digitalkultur.net> and
 is licensed under the GPLv2, see above.

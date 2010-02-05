@@ -80,6 +80,7 @@ def main(argv):
 	parser.add_option("--config",action="store_true", default=False, help=_("needed flag to change configurations"))
 	parser.add_option("--uname", dest="uname", default="", help=_("username used in commit"))
 	parser.add_option("--mail", dest="mail", default="", help=_("useremail used in commit"))
+	parser.add_option("--headless",action="store_true", default=False, help=_("run in headless mode"))
 	parser.add_option("--path", dest="path", default="", help=_("path on the server"))
 	parser.add_option("--hostname", dest="hostname", default="", help=_("hostname of the remote server"))
 	parser.add_option("--add_dir", dest="add_dir", default="", help=_("add local wachted folders"))
@@ -142,7 +143,7 @@ def main(argv):
 
 
 
-	elif options.initremote:
+	if options.initremote:
 		core.initRemote()
 	elif options.syncwithremote:
 		core.syncWithRemote()
@@ -176,8 +177,11 @@ def main(argv):
 
 
 		#START!
-		pgtk = PersyGtk()
-		pgtk.init(core, config, log, options.start)
+		if options.headless:
+			core.persy_start()
+		else:
+			pgtk = PersyGtk()
+			pgtk.init(core, config, log, options.start)
 
 
 if __name__ == '__main__':

@@ -38,6 +38,8 @@ try:
 	from configobj import ConfigObj
 	from persy_helper import PersyHelper
 	import os
+	import getpass
+	import platform
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -60,6 +62,9 @@ class PersyConfig():
 		self.attributes = {}
 		self.p = PersyHelper()
 
+		#host stuff
+		self.attributes['DIST'] = platform.dist() # ('Ubuntu', '9.10', 'karmic')
+
 		# files and dirs used by persy
 		self.attributes['USERHOME'] = os.environ["HOME"]
 		self.attributes['LOCALSSHDIR']=os.path.join(self.attributes['USERHOME'],'.ssh')
@@ -72,6 +77,7 @@ class PersyConfig():
 		self.attributes['CONFIGFILE']=os.path.join(self.attributes['PERSY_DIR'],'config')
 		self.attributes['EXAMPLECONFIG']='/usr/lib/persy/example_config'
 		self.attributes['GLADEFILE']='/usr/lib/persy/persy.glade'
+		self.attributes['VERSIONFILE']='/usr/lib/persy/VERSION'
 		self.attributes['HTMLDOCFILE']='/usr/share/doc/persy/index.html'
 
 		#path to some files and icons
@@ -81,7 +87,17 @@ class PersyConfig():
 		self.attributes['ICON_UNTRACKED'] = '/usr/lib/persy/assets/persy_untracked.svg'
 		self.attributes['ICON_WARN'] = '/usr/lib/persy/assets/persy_warn.svg'
 		self.attributes['ICON_ERROR'] = '/usr/lib/persy/assets/persy_error.svg'
-		self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
+
+
+		#logo depends on DIST!
+		if self.attributes['DIST'][0] == 'Ubuntu':
+			self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
+		elif self.attributes['DIST'][0] == 'LinuxMint':
+			self.attributes['LOGO'] = '/usr/lib/persy/assets/dist/persy_linuxmint.svg'
+		elif self.attributes['DIST'][0] == 'fedora':
+			self.attributes['LOGO'] = '/usr/lib/persy/assets/dist/persy_fedora.svg'
+		else:
+			self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
 
 		#path to the license file
 		self.attributes['LICENSE_FILE'] = '/usr/share/common-licenses/GPL-2'
@@ -137,27 +153,23 @@ class PersyConfig():
 
 		#general gitgui
 		if not config['general'].has_key('prefgitbrowser'):
-			if self.p.getSoftwareVersion(self.attributes['GITGUI'][0]):
-				config['general']['prefgitbrowser'] = self.attributes['GITGUI'][0]
-			elif self.p.getSoftwareVersion(self.attributes['GITGUI'][1]):
-				config['general']['prefgitbrowser'] = self.attributes['GITGUI'][1]
-			else:
-				#log.critical(_("gitk and qgit is not installed, this should not happen!"))
-				config['general']['prefgitbrowser'] = ""
+			config['general']['prefgitbrowser'] = ""
+			for gitbrowser in self.attributes['GITGUI']:
+				if self.p.getSoftwareVersion(gitbrowser):
+					config['general']['prefgitbrowser'] = gitbrowser
+					break
 		if type(config['general']['prefgitbrowser']) is str:
 			if config['general']['prefgitbrowser'].lower() in self.attributes['GITGUI'] and self.p.getSoftwareVersion(config['general']['prefgitbrowser']):
 				config['general']['prefgitbrowser'] = config['general']['prefgitbrowser'].lower()
 			else:
-				if self.p.getSoftwareVersion(self.attributes['GITGUI'][0]):
-					config['general']['prefgitbrowser'] = self.attributes['GITGUI'][0]
-				elif self.p.getSoftwareVersion(self.attributes['GITGUI'][1]):
-					config['general']['prefgitbrowser'] = self.attributes['GITGUI'][1]
-				else:
-					#log.warn(_("gitk and qgit is not installed, this should not happen!"))
-					config['general']['prefgitbrowser'] = ""
+				config['general']['prefgitbrowser'] = ""
+				for gitbrowser in self.attributes['GITGUI']:
+					if self.p.getSoftwareVersion(gitbrowser):
+						config['general']['prefgitbrowser'] = gitbrowser
+						break
 		if not type(config['general']['prefgitbrowser']) is str:
-			#log.warn(_("the config for the prefered git browser is broken?"))
-			config['general']['prefgitbrowser'] = ""
+			#config is strange?! set it to the first possible prowser
+			config['general']['prefgitbrowser'] = self.attributes['GITGUI'][0]
 
 
 		#local sleep
@@ -222,6 +234,10 @@ class PersyConfig():
 		#remote hostname
 		if not config['remote'].has_key('hostname') or not type(config['remote']['hostname']) is str:
 			config['remote']['hostname'] = self.attributes['DEFAULT_REMOTE_HOSTNAME']
+
+		#remote username
+		if not config['remote'].has_key('username') or not type(config['remote']['username']) is str:
+			config['remote']['username'] = getpass.getuser() #if not set, use the current
 
 		#remote path
 		if not config['remote'].has_key('path') or not type(config['remote']['path']) is str:
