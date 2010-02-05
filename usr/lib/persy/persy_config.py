@@ -77,6 +77,7 @@ class PersyConfig():
 		self.attributes['CONFIGFILE']=os.path.join(self.attributes['PERSY_DIR'],'config')
 		self.attributes['EXAMPLECONFIG']='/usr/lib/persy/example_config'
 		self.attributes['GLADEFILE']='/usr/lib/persy/persy.glade'
+		self.attributes['VERSIONFILE']='/usr/lib/persy/VERSION'
 		self.attributes['HTMLDOCFILE']='/usr/share/doc/persy/index.html'
 
 		#path to some files and icons

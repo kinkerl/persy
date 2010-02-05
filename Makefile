@@ -42,10 +42,13 @@ language:
 	#create the languagefiles
 	xgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot 
 
-source_package: language doc
+genversion:
+	echo $(VERSION) > usr/lib/persy/VERSION
+
+source_package: genversion language doc
 	debuild -S -sa -k$(GPGKEY) -i.git -I.git
 
-deb_package: language doc
+deb_package: genversion language doc
 	debuild -i.git -I.git
 
 release: source_package

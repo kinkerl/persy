@@ -84,8 +84,15 @@ class _PersyHelper():
 	def getSoftwareVersion(self, name):
 		"""returns the version of a installed software as a String. Returns None if not installed"""
 		version = None
+		if name.lower() == 'persy':
+			filename = '/usr/lib/persy/VERSION'
+			if os.path.exists(filename):
+				try:
+					version = file(filename).read().strip()
+				except:
+					pass
 		
-		if self.which('dpkg'): #on a debian system
+		if not version and self.which('dpkg'): #on a debian system
 			callcmd = []
 			callcmd.append(self.which('dpkg'))
 			callcmd.append('-l')
