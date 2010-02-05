@@ -35,6 +35,7 @@ except Exception as e:
 			return msg
 
 try:
+	import os
 	import sys
 	import subprocess2
 except ImportError as e:
@@ -61,6 +62,21 @@ class _PersyHelper():
 		#self.aptCache = None
 		pass
 
+	def which(self, program):
+		'''take from http://stackoverflow.com/questions/377017'''
+		def is_exe(fpath):
+			return os.path.exists(fpath) and os.access(fpath, os.X_OK)
+		fpath, fname = os.path.split(program)
+		if fpath:
+			if is_exe(program):
+				return program
+		else:
+			for path in os.environ["PATH"].split(os.pathsep):
+				exe_file = os.path.join(path, program)
+				if is_exe(exe_file):
+					return exe_file
+		return None
+
 	def striplist(self, l):
 		'''helper function to strip lists'''
 		return ([x.strip() for x in l])
@@ -68,15 +84,30 @@ class _PersyHelper():
 	def getSoftwareVersion(self, name):
 		"""returns the version of a installed software as a String. Returns None if not installed"""
 		version = None
-		callcmd = []
-		callcmd.append('dpkg')
-		callcmd.append('-l')
-		callcmd.append(name)
-		p = subprocess2.Subprocess2(callcmd, stdout=subprocess2.PIPE, close_fds=True,)
-		lines = p.getOut()
-		for line in lines.splitlines():
-			if line.startswith('ii'):
-				version = line.split()[2]
+		
+		if self.which('dpkg'): #on a debian system
+			callcmd = []
+			callcmd.append(self.which('dpkg'))
+			callcmd.append('-l')
+			callcmd.append(name)
+			p = subprocess2.Subprocess2(callcmd, stdout=subprocess2.PIPE, close_fds=True,)
+			lines = p.getOut()
+			for line in lines.splitlines():
+				if line.startswith('ii'):
+					version = line.split()[2]
+		
+		#if version not found in dpkg, maybe rpm is installed
+		if not version and self.which('rpm'): #rpm system
+			callcmd = []
+			callcmd.append(self.which('rpm'))
+			callcmd.append('--info')
+			callcmd.append('-q')
+			callcmd.append(name)
+			p = subprocess2.Subprocess2(callcmd, stdout=subprocess2.PIPE, close_fds=True,)
+			lines = p.getOut()
+			for line in lines.splitlines():
+				if line.startswith('Version'):
+					version = line.split()[2]
 		return version
 
 
