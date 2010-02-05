@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-05 10:20+0100\n"
+"POT-Creation-Date: 2010-02-05 11:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,14 +16,14 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: usr/lib/persy/persy.py:45 usr/lib/persy/persy_config.py:43
+#: usr/lib/persy/persy.py:45 usr/lib/persy/persy_config.py:44
 #: usr/lib/persy/persy_core.py:50 usr/lib/persy/persy_gtk.py:59
 #: usr/lib/persy/persy_helper.py:41 usr/lib/persy/persy_ssh.py:41
 #: usr/lib/persy/persy_syncer.py:48 usr/lib/persy/persy_talker.py:43
 msgid "You do not have all the dependencies:"
 msgstr ""
 
-#: usr/lib/persy/persy.py:49 usr/lib/persy/persy_config.py:47
+#: usr/lib/persy/persy.py:49 usr/lib/persy/persy_config.py:48
 #: usr/lib/persy/persy_core.py:54 usr/lib/persy/persy_gtk.py:63
 #: usr/lib/persy/persy_helper.py:45 usr/lib/persy/persy_ssh.py:45
 #: usr/lib/persy/persy_syncer.py:52 usr/lib/persy/persy_talker.py:47

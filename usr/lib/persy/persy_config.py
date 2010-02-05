@@ -150,27 +150,23 @@ class PersyConfig():
 
 		#general gitgui
 		if not config['general'].has_key('prefgitbrowser'):
-			if self.p.getSoftwareVersion(self.attributes['GITGUI'][0]):
-				config['general']['prefgitbrowser'] = self.attributes['GITGUI'][0]
-			elif self.p.getSoftwareVersion(self.attributes['GITGUI'][1]):
-				config['general']['prefgitbrowser'] = self.attributes['GITGUI'][1]
-			else:
-				#log.critical(_("gitk and qgit is not installed, this should not happen!"))
-				config['general']['prefgitbrowser'] = ""
+			config['general']['prefgitbrowser'] = ""
+			for gitbrowser in self.attributes['GITGUI']:
+				if self.p.getSoftwareVersion(gitbrowser):
+					config['general']['prefgitbrowser'] = gitbrowser
+					break
 		if type(config['general']['prefgitbrowser']) is str:
 			if config['general']['prefgitbrowser'].lower() in self.attributes['GITGUI'] and self.p.getSoftwareVersion(config['general']['prefgitbrowser']):
 				config['general']['prefgitbrowser'] = config['general']['prefgitbrowser'].lower()
 			else:
-				if self.p.getSoftwareVersion(self.attributes['GITGUI'][0]):
-					config['general']['prefgitbrowser'] = self.attributes['GITGUI'][0]
-				elif self.p.getSoftwareVersion(self.attributes['GITGUI'][1]):
-					config['general']['prefgitbrowser'] = self.attributes['GITGUI'][1]
-				else:
-					#log.warn(_("gitk and qgit is not installed, this should not happen!"))
-					config['general']['prefgitbrowser'] = ""
+				config['general']['prefgitbrowser'] = ""
+				for gitbrowser in self.attributes['GITGUI']:
+					if self.p.getSoftwareVersion(gitbrowser):
+						config['general']['prefgitbrowser'] = gitbrowser
+						break
 		if not type(config['general']['prefgitbrowser']) is str:
-			#log.warn(_("the config for the prefered git browser is broken?"))
-			config['general']['prefgitbrowser'] = ""
+			#config is strange?! set it to the first possible prowser
+			config['general']['prefgitbrowser'] = self.attributes['GITGUI'][0]
 
 
 		#local sleep
