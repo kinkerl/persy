@@ -78,7 +78,6 @@ The statusicon will not change to any other state until this errorstate is reset
 			self.log.warn(str(e))
 
 		self.resetError()
-		print "AS"
 
 	def notify(self, text, icon):
 		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(icon, 64, 64)
