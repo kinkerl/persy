@@ -50,7 +50,7 @@ Setup for a local usage (settings menu)
 For a quick start, just run persy
 
      $ persy                               
-Now you have to add directories to persy. You can do this in the settings menu into the "backup" tab (take a look at the screenshot).
+Now you have to add some directories or files to persy. You can do this in the settings menu into the "local" tab (take a look at the screenshot).
 
 ![see illustration](http://cloud.github.com/downloads/kinkerl/persy/persy_settings_quickstart.png)
 

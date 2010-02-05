@@ -72,11 +72,9 @@ class PersySSH():
 
 	def localSSHKeysExist(self):
 		'''checks if local ssh keys are generated'''
-		if os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_rsa')) and os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_rsa.pub')):
-			return True
-		if os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_dsa')) and os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_dsa.pub')):
-			return True
-		return False
+		if not os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_rsa')) and not os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_rsa.pub')):
+			return False
+		return True
 
 
 	def createLocalSSHKeys(self, password):
