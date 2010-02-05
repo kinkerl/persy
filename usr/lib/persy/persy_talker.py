@@ -38,6 +38,7 @@ try:
 	import sys
 	import os
 	import pynotify
+	import gtk
 	import logging , logging.handlers
 except ImportError as e:
 	print _("You do not have all the dependencies:")
@@ -77,7 +78,13 @@ The statusicon will not change to any other state until this errorstate is reset
 			self.log.warn(str(e))
 
 		self.resetError()
-		
+		print "AS"
+
+	def notify(self, text, icon):
+		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(icon, 64, 64)
+		n = pynotify.Notification(self.notifyid, text)
+		n.set_icon_from_pixbuf(pixbuf)
+		n.show()
 
 	def setStatusIcon(self, icon):
 		'''sets the status icon'''
@@ -88,7 +95,7 @@ The statusicon will not change to any other state until this errorstate is reset
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))#from_stock(gtk.STOCK_HOME)
 		try:
-			n = pynotify.Notification(self.notifyid, _('starting Persy'), self.config.getAttribute('ICON_OK')).show()
+			self.notify(_('starting Persy'), self.config.getAttribute('ICON_OK'))
 		except Exception as e:
 			self.log.warn(str(e))
 
@@ -97,8 +104,7 @@ The statusicon will not change to any other state until this errorstate is reset
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_IDLE'))#from_stock(gtk.STOCK_HOME)
 		try:
-			print "notify"
-			pynotify.Notification(self.notifyid, _('stopping Persy'), self.config.getAttribute('ICON_IDLE')).show()
+			self.notify(_('stopping Persy'), self.config.getAttribute('ICON_IDLE'))
 		except Exception as e:
 			self.log.warn(str(e))
 
@@ -151,7 +157,7 @@ The statusicon will not change to any other state until this errorstate is reset
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_WARN'))#from_stock(gtk.STOCK_HOME)
 		try:
-			pynotify.Notification(self.notifyid, msg, self.config.getAttribute('ICON_WARN')).show()
+			self.notify(msg, self.config.getAttribute('ICON_WARN'))
 		except Exception as e:
 			pass #self.log.warn(str(e))
 
@@ -164,7 +170,7 @@ The statusicon will not change to any other state until this errorstate is reset
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_ERROR'))#from_stock(gtk.STOCK_HOME)
 		try:
-			pynotify.Notification(self.notifyid, msg, self.config.getAttribute('ICON_ERROR')).show()
+			self.notify(msg, self.config.getAttribute('ICON_ERROR'))
 		except Exception as e:
 			pass #self.log.warn(str(e))
 
