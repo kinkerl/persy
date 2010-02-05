@@ -22,6 +22,9 @@
 
 GPGKEY=AF005C40
 
+PREFIX=/usr
+DEST=$(DESTDIR)$(PREFIX)
+
 clean: 
 	git clean -f
 
@@ -55,4 +58,41 @@ release: source_package
 	git tag -f $(VERSION)
 	git push origin master --tags
 	dput -f  ppa:tmassassin/ppa ../persy_$(VERSION)_source.changes
+
+# install: language genversion doc
+install: language genversion
+	# install application
+	install -d $(DEST)/bin
+	install usr/bin/persy $(DEST)/bin
+
+	# install lib
+	install -d $(DEST)/lib/persy
+	install -d $(DEST)/lib/persy/assets
+	install -d $(DEST)/lib/persy/assets/dist
+	install --mode=644 usr/lib/persy/*.py $(DEST)/lib/persy
+	install --mode=644 usr/lib/persy/assets/*.svg $(DEST)/lib/persy/assets
+	install --mode=644 usr/lib/persy/assets/dist/*.svg $(DEST)/lib/persy/assets/dist
+	install --mode=644 usr/lib/persy/VERSION $(DEST)/lib/persy
+	chmod 755 $(DEST)/lib/persy/persy.py
+
+	# install example config
+	install --mode=644 usr/lib/persy/example_config $(DEST)/lib/persy
+
+	# install language
+	install -d $(DEST)/lib/persy/locale
+	install --mode=644 usr/lib/persy/locale/messages.pot $(DEST)/lib/persy/locale/messages.pot
+
+	# install manpage/doc
+
+	# install desktop starter
+	install -d $(DEST)/share/applications
+	install --mode=644 usr/share/applications/persy.desktop $(DEST)/share/applications
+
+	# install desktop icon
+	install -d $(DEST)/share/icons
+	install --mode=644 usr/share/icons/persy.svg $(DEST)/share/icons
+
+	# install bash-completion
+	install -d /etc/bash_completion.d
+	install --mode=644 etc/bash_completion.d/persy /etc/bash_completion.d
 
