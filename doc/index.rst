@@ -5,8 +5,7 @@
 
 Welcome to persy's documentation!
 =================================
-this is just a test page, more will follow!!
-this is a test
+this is a small test to demonstrate the beauty of auto-publishing
 
 
 Contents:
