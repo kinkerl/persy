@@ -38,6 +38,15 @@ VERSION=`head -n 1 debian/changelog |  sed  's/(/ /' |  sed  's/)/ /' | awk '{pr
 clean: 
 	git clean -f
 
+doc-publish: doc-html
+	mkdir -p /tmp/_build/html
+	cp -r usr/share/doc/persy/* /tmp/_build/html
+	git checkout gh-pages
+	mv /tmp/_build/html/* .
+	git commit -am "autoupdated apidocs"
+	git push origin gh-pages
+	git checkout master
+
 doc-html: genversion
 	#build developer documentation and place it in usr/share/doc
 	mkdir -p usr/share/doc
@@ -65,6 +74,7 @@ doc-man: genversion
 language:
 	#create the languagefiles
 	xgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot 
+	git commit -am "autoupdated languagefiles"
 
 genversion:
 	echo $(VERSION) > usr/lib/persy/VERSION
