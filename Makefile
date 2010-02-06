@@ -55,7 +55,7 @@ doc-publish: doc-html
 	git push origin gh-pages
 	
 	#switch back to master
-	git checkout master#
+	git checkout master
 	mkdir -p  usr/share/doc/persy/ 
 	mv /tmp/_build/html/* usr/share/doc/persy/ 
 	
