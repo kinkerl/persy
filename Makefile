@@ -25,13 +25,14 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 
-# Internal variables.
+# Internal variables used in sphinx
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
 GPGKEY=AF005C40
 
+# get the version out of the debian changelog
 VERSION=`head -n 1 debian/changelog |  sed  's/(/ /' |  sed  's/)/ /' | awk '{print $$2}'`
 
 
@@ -44,21 +45,22 @@ doc-publish: doc-html
 	mkdir -p /tmp/_build/html
 	mv usr/share/doc/persy/* /tmp/_build/html/
 	
-	#prepare gh-pages
+	#prepare gh-pages and remove existing stuff
 	git checkout gh-pages
 	rm -rf *
 	
 	#make the changes
 	cp -r /tmp/_build/html/* .
 	git add .
-	git commit -am "autoupdated apidocs"
+	git commit -am "autoupdated documentation"
 	git push origin gh-pages
 	
 	#switch back to master
 	git checkout master
 	mkdir -p  usr/share/doc/persy/ 
 	mv /tmp/_build/html/* usr/share/doc/persy/ 
-	
+	@echo
+	@echo "Documentation publishing finished. The HTML pages are at http://kinkerl.github.com/persy/"
 
 doc-html: genversion
 	#build developer documentation and place it in usr/share/doc
@@ -78,6 +80,8 @@ doc-man: genversion
 	# builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p usr/share/man/man1
 	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
+	@echo
+	@echo "Build finished; the manpage is in usr/share/man/man1/persy.1.gz."
 
 language:
 	#create the languagefiles
@@ -86,17 +90,21 @@ language:
 	git commit -am "autoupdated languagefiles"
 
 genversion:
+	@echo "placing VERSION taken from debian/changelog in usr/lib/persy/VERSION"
 	echo $(VERSION) > usr/lib/persy/VERSION
+
 
 source-package: genversion language doc-man doc-html
 	debuild -S -sa -k$(GPGKEY) -i.git -I.git
+	@echo
+	@echo "Build finished; Get the debian package at ../persy_$(VERSION).tar.gz"
 
 deb-package: genversion language doc-man doc-html
 	debuild -i.git -I.git
-	git clean -f
-	rm -rf debian/persy
-
-release: source_package
+	@echo
+	@echo "Build finished; Get the debian package at ../persy_$(VERSION)_all.deb"
+	
+release: source_package doc-publish
 	git tag -f $(VERSION)
 	git push origin master --tags
 	dput -f  ppa:tmassassin/ppa ../persy_$(VERSION)_source.changes
