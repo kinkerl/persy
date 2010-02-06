@@ -71,6 +71,8 @@ doc-man: genversion
 	mkdir -p usr/share/man/man1
 	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
 
+doc-images:
+	#this is unused at the moment
 	# grab the images from the markdown file
 	mkdir -p usr/share/doc/persy/images/
 	rm -f usr/share/doc/persy/images/*.png 
