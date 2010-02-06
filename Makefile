@@ -39,7 +39,7 @@ clean:
 	git clean -f
 
 doc-publish: doc-html
-	rm -f /tmp/_build/html
+	rm -fr /tmp/_build/html
 	mkdir -p /tmp/_build/html
 	mv usr/share/doc/persy/* /tmp/_build/html/
 	git clean -f
