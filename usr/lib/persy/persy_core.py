@@ -40,7 +40,6 @@ try:
 	from subprocess import Popen
 	from threading import Thread
 	from persy_config import PersyConfig
-	from persy_helper import PersyHelper
 	from persy_syncer import TheSyncer, FileChangeHandler
 	import os
 	import paramiko

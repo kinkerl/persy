@@ -19,13 +19,40 @@
 # You should have received a copy of the GNU General Public License
 # along with persy; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You can set these variables from the command line.
+
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
+PAPER         =
+
+# Internal variables.
+PAPEROPT_a4     = -D latex_paper_size=a4
+PAPEROPT_letter = -D latex_paper_size=letter
+ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
 GPGKEY=AF005C40
+
+VERSION=`head -n 1 debian/changelog |  sed  's/(/ /' |  sed  's/)/ /' | awk '{print $$2}'`
+
 
 clean: 
 	git clean -f
 
-doc:
+doc-html: genversion
+	#build developer documentation and place it in usr/share/doc
+	mkdir -p usr/share/doc
+	cd doc && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ../usr/share/doc
+	@echo
+	@echo "Build finished. The HTML pages are in doc/_build/html."
+
+doc-latex: genversion
+	cd doc && $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
+	@echo
+	@echo "Build finished; the LaTeX files are in doc/_build/latex."
+	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
+	      "run these through (pdf)latex."
+
+doc: genversion
 	# builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p usr/share/man/man1
 	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
