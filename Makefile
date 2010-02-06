@@ -43,6 +43,7 @@ doc-publish: doc-html
 	cp -r usr/share/doc/persy/* /tmp/_build/html
 	git checkout gh-pages
 	mv /tmp/_build/html/* .
+	git add .
 	git commit -am "autoupdated apidocs"
 	git push origin gh-pages
 	git checkout master
