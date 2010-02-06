@@ -39,17 +39,24 @@ clean:
 	git clean -f
 
 doc-publish: doc-html
+	#preparing temp
 	rm -fr /tmp/_build/html
 	mkdir -p /tmp/_build/html
 	mv usr/share/doc/persy/* /tmp/_build/html/
-	git clean -f
+	
+	#prepare gh-pages
 	git checkout gh-pages
 	rm -rf *
+	
+	#make the changes
 	cp -r /tmp/_build/html/* .
 	git add .
 	git commit -am "autoupdated apidocs"
 	git push origin gh-pages
-	git checkout master
+	
+	#switch back to master
+	git checkout master#
+	mkdir -p  usr/share/doc/persy/ 
 	mv /tmp/_build/html/* usr/share/doc/persy/ 
 	
 
@@ -74,6 +81,7 @@ doc-man: genversion
 
 language:
 	#create the languagefiles
+	git commit -am "autocommit uncommited changes"
 	xgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot 
 	git commit -am "autoupdated languagefiles"
 
