@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-05 17:15+0100\n"
+"POT-Creation-Date: 2010-02-06 16:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,134 +16,138 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: usr/lib/persy/persy.py:45 usr/lib/persy/persy_config.py:44
-#: usr/lib/persy/persy_core.py:50 usr/lib/persy/persy_gtk.py:59
+#: usr/lib/persy/persy.py:46 usr/lib/persy/persy_config.py:44
+#: usr/lib/persy/persy_core.py:49 usr/lib/persy/persy_gtk.py:59
 #: usr/lib/persy/persy_helper.py:42 usr/lib/persy/persy_ssh.py:41
 #: usr/lib/persy/persy_syncer.py:48 usr/lib/persy/persy_talker.py:44
 msgid "You do not have all the dependencies:"
 msgstr ""
 
-#: usr/lib/persy/persy.py:49 usr/lib/persy/persy_config.py:48
-#: usr/lib/persy/persy_core.py:54 usr/lib/persy/persy_gtk.py:63
+#: usr/lib/persy/persy.py:50 usr/lib/persy/persy_config.py:48
+#: usr/lib/persy/persy_core.py:53 usr/lib/persy/persy_gtk.py:63
 #: usr/lib/persy/persy_helper.py:46 usr/lib/persy/persy_ssh.py:45
 #: usr/lib/persy/persy_syncer.py:52 usr/lib/persy/persy_talker.py:48
 msgid "An error occured when initialising one of the dependencies!"
 msgstr ""
 
-#: usr/lib/persy/persy.py:69
+#: usr/lib/persy/persy.py:70
 msgid "use --start to start the daemon"
 msgstr ""
 
-#: usr/lib/persy/persy.py:70
+#: usr/lib/persy/persy.py:71
 msgid "starts persy"
 msgstr ""
 
-#: usr/lib/persy/persy.py:71
+#: usr/lib/persy/persy.py:72
 msgid "initializes the remote repository"
 msgstr ""
 
-#: usr/lib/persy/persy.py:72
+#: usr/lib/persy/persy.py:73
 msgid "syncs with a remote repository"
 msgstr ""
 
-#: usr/lib/persy/persy.py:73 usr/lib/persy/persy_gtk.py:302
+#: usr/lib/persy/persy.py:74 usr/lib/persy/persy_gtk.py:302
 msgid "start a git browser"
 msgstr ""
 
-#: usr/lib/persy/persy.py:74
+#: usr/lib/persy/persy.py:75
 msgid "prints git log"
 msgstr ""
 
-#: usr/lib/persy/persy.py:75
+#: usr/lib/persy/persy.py:76
 msgid "prints git status"
 msgstr ""
 
-#: usr/lib/persy/persy.py:76
+#: usr/lib/persy/persy.py:77
 msgid "recreates list of all ignored files"
 msgstr ""
 
-#: usr/lib/persy/persy.py:77
+#: usr/lib/persy/persy.py:78
 msgid "print git output to stdout and set loglevel to DEBUG"
 msgstr ""
 
-#: usr/lib/persy/persy.py:78
+#: usr/lib/persy/persy.py:79
 msgid "computer-readable actions in persy"
 msgstr ""
 
-#: usr/lib/persy/persy.py:79
+#: usr/lib/persy/persy.py:80
 msgid "optimizes the stored files. saves space and improves performance"
 msgstr ""
 
-#: usr/lib/persy/persy.py:80
+#: usr/lib/persy/persy.py:81
 msgid "needed flag to change configurations"
 msgstr ""
 
-#: usr/lib/persy/persy.py:81
-msgid "username used in commit"
-msgstr ""
-
 #: usr/lib/persy/persy.py:82
-msgid "useremail used in commit"
+msgid "prints the version"
 msgstr ""
 
 #: usr/lib/persy/persy.py:83
-msgid "run in headless mode"
+msgid "username used in commit"
 msgstr ""
 
 #: usr/lib/persy/persy.py:84
-msgid "path on the server"
+msgid "useremail used in commit"
 msgstr ""
 
 #: usr/lib/persy/persy.py:85
-msgid "hostname of the remote server"
+msgid "run in headless mode"
 msgstr ""
 
 #: usr/lib/persy/persy.py:86
+msgid "path on the server"
+msgstr ""
+
+#: usr/lib/persy/persy.py:87
+msgid "hostname of the remote server"
+msgstr ""
+
+#: usr/lib/persy/persy.py:88
 msgid "add local wachted folders"
 msgstr ""
 
-#: usr/lib/persy/persy.py:123
+#: usr/lib/persy/persy.py:125
 msgid "nothing changed, maybe wrong attribute names?"
 msgstr ""
 
-#: usr/lib/persy/persy.py:175
+#: usr/lib/persy/persy.py:178
 #, python-format
 msgid "%s file is missing!"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:78
+#: usr/lib/persy/persy_core.py:77
 msgid "removed git lock file"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:92
+#: usr/lib/persy/persy_core.py:91
 msgid ""
 "username not set, cannot create git repository. use \"persy --config --"
 "name=NAME\" to set one"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:95
+#: usr/lib/persy/persy_core.py:94
 msgid ""
 "mail not set, cannot create git repository. use \"persy --config --mail=MAIL"
 "\" to set one"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:98
+#: usr/lib/persy/persy_core.py:97
 msgid "initialising local repository..."
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:108 usr/lib/persy/persy_core.py:146
+#: usr/lib/persy/persy_core.py:107 usr/lib/persy/persy_core.py:145
 msgid "done"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:123
+#: usr/lib/persy/persy_core.py:122
 msgid "initialising and adding remote repository..."
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:134
+#: usr/lib/persy/persy_core.py:133
 msgid "error creating dir, maybe it exists already?"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:136
+#: usr/lib/persy/persy_core.py:135
 msgid "error on remote git init"
 msgstr ""
 

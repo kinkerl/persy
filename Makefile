@@ -41,9 +41,9 @@ clean:
 doc-html: genversion
 	#build developer documentation and place it in usr/share/doc
 	mkdir -p usr/share/doc
-	cd doc && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ../usr/share/doc
+	cd doc && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
 	@echo
-	@echo "Build finished. The HTML pages are in doc/_build/html."
+	@echo "Build finished. The HTML pages are in usr/share/doc"
 
 doc-latex: genversion
 	cd doc && $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
@@ -52,17 +52,14 @@ doc-latex: genversion
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
 	      "run these through (pdf)latex."
 
-doc: genversion
+doc-man: genversion
 	# builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p usr/share/man/man1
 	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
 
-	# creates a html doc (replaces the github urls for the images)
-	mkdir -p usr/share/doc/persy
-	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/file:\/\/\/usr\/share\/doc\/persy\/images/g' | pandoc --toc -c default.css -o usr/share/doc/persy/index.html
-
 	# grab the images from the markdown file
-	rm usr/share/doc/persy/images/*.png 
+	mkdir -p usr/share/doc/persy/images/
+	rm -f usr/share/doc/persy/images/*.png 
 	sed -n -e 's/\(^.*http\)\([^)]*png\)\()\)/http\2/gp' README.markdown | xargs wget -nc --quiet --directory-prefix=usr/share/doc/persy/images 
 
 language:
@@ -72,10 +69,10 @@ language:
 genversion:
 	echo $(VERSION) > usr/lib/persy/VERSION
 
-source_package: genversion language doc
+source-package: genversion language doc-man doc-html
 	debuild -S -sa -k$(GPGKEY) -i.git -I.git
 
-deb_package: genversion language doc
+deb-package: genversion language doc-man doc-html
 	debuild -i.git -I.git
 
 release: source_package
