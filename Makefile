@@ -91,6 +91,8 @@ source-package: genversion language doc-man doc-html
 
 deb-package: genversion language doc-man doc-html
 	debuild -i.git -I.git
+	git clean -f
+	rm -rf debian/persy
 
 release: source_package
 	git tag -f $(VERSION)
