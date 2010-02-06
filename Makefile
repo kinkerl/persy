@@ -40,14 +40,16 @@ clean:
 
 doc-publish: doc-html
 	mkdir -p /tmp/_build/html
-	cp -r usr/share/doc/persy/* /tmp/_build/html
+	mv usr/share/doc/persy/* /tmp/_build/html/
 	git clean -f
 	git checkout gh-pages
-	mv /tmp/_build/html/* .
+	cp -r /tmp/_build/html/* .
 	git add .
 	git commit -am "autoupdated apidocs"
 	git push origin gh-pages
 	git checkout master
+	mv /tmp/_build/html/* usr/share/doc/persy/ 
+	
 
 doc-html: genversion
 	#build developer documentation and place it in usr/share/doc
