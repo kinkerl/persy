@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Core &mdash; persy v0.8.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.8.1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="persy v0.8.1 documentation" href="index.html" />
+    <link rel="prev" title="GTK" href="persy_gtk.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="persy_gtk.html" title="GTK"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">persy v0.8.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-persy_core">
+<h1>Core<a class="headerlink" href="#module-persy_core" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="persy_core._Core">
+<em class="property">
+class </em><tt class="descclassname">persy_core.</tt><tt class="descname">_Core</tt><a class="headerlink" href="#persy_core._Core" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="persy_core._Core.browse">
+<tt class="descname">browse</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.browse" title="Permalink to this definition">¶</a></dt>
+<dd>starts the default git browser</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.initLocal">
+<tt class="descname">initLocal</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.initLocal" title="Permalink to this definition">¶</a></dt>
+<dd>initialises the local repository</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.initRemote">
+<tt class="descname">initRemote</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.initRemote" title="Permalink to this definition">¶</a></dt>
+<dd>initialises the remote repository and adds it to the synchronization pack</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.isInSyncWithRemote">
+<tt class="descname">isInSyncWithRemote</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.isInSyncWithRemote" title="Permalink to this definition">¶</a></dt>
+<dd>returns true if it is already in sync</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.isLocalInitialized">
+<tt class="descname">isLocalInitialized</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.isLocalInitialized" title="Permalink to this definition">¶</a></dt>
+<dd>returns true if the local GIT_DIR exists</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.optimize">
+<tt class="descname">optimize</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.optimize" title="Permalink to this definition">¶</a></dt>
+<dd>executes git-gc</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.persy_start">
+<tt class="descname">persy_start</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.persy_start" title="Permalink to this definition">¶</a></dt>
+<dd>Starts Persy</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.persy_stop">
+<tt class="descname">persy_stop</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.persy_stop" title="Permalink to this definition">¶</a></dt>
+<dd>Stops Persy</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.setonetimesync">
+<tt class="descname">setonetimesync</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.setonetimesync" title="Permalink to this definition">¶</a></dt>
+<dd>if the worker is running, execute the setonetimesync function of the worker</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.syncWithRemote">
+<tt class="descname">syncWithRemote</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.syncWithRemote" title="Permalink to this definition">¶</a></dt>
+<dd>Syncs with a remote server</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.vcsignore">
+<tt class="descname">vcsignore</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.vcsignore" title="Permalink to this definition">¶</a></dt>
+<dd>creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with &#8220;git clean&#8221;)</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.vcslog">
+<tt class="descname">vcslog</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.vcslog" title="Permalink to this definition">¶</a></dt>
+<dd>executes the git-log command</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.vcsstatus">
+<tt class="descname">vcsstatus</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.vcsstatus" title="Permalink to this definition">¶</a></dt>
+<dd>executes the git-status command</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="persy_gtk.html"
+                                  title="previous chapter">GTK</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/persy_core.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="persy_gtk.html" title="GTK"
+             >previous</a> |</li>
+        <li><a href="index.html">persy v0.8.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, Dennis Schwertel.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div>
+  </body>
+</html>
