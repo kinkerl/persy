@@ -41,6 +41,7 @@ clean:
 doc-publish: doc-html
 	mkdir -p /tmp/_build/html
 	cp -r usr/share/doc/persy/* /tmp/_build/html
+	git clean -f
 	git checkout gh-pages
 	mv /tmp/_build/html/* .
 	git add .
