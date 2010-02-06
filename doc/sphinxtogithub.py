@@ -213,8 +213,8 @@ class LayoutFactory(object):
                     for d in directories
                 ]
 
-        if not underscore_directories:
-            raise NoDirectoriesError()
+        #if not underscore_directories:
+        #    raise NoDirectoriesError()
 
         # Build list of files that are in those directories
         replacers = []
