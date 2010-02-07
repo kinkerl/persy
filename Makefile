@@ -65,6 +65,10 @@ doc-publish: doc-html
 doc-html: genversion
 	#build developer documentation and place it in usr/share/doc
 	mkdir -p usr/share/doc
+	
+	#copy the changelog in docs
+	cp debian/changelog usr/share/doc/persy/changelog.txt
+
 	cd doc && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
