@@ -24,8 +24,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
    
-   persy_gtk
-   persy_core
+   installation
+   usage
+   api
    changelog
 
 Indices and tables
