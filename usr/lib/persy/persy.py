@@ -39,6 +39,7 @@ try:
 	from persy_config import PersyConfig
 	from persy_core import Core
 	from persy_gtk import PersyGtk
+	from persy_helper import PersyHelper
 	from persy_talker import Talker
 	import os
 except ImportError as e:
@@ -78,6 +79,7 @@ def main(argv):
 	parser.add_option("--actions",action="store_true", default=False, help=_("computer-readable actions in persy"))
 	parser.add_option("--optimize",action="store_true", default=False, help=_("optimizes the stored files. saves space and improves performance"))
 	parser.add_option("--config",action="store_true", default=False, help=_("needed flag to change configurations"))
+	parser.add_option("--version",action="store_true", default=False, help=_("prints the version"))
 	parser.add_option("--uname", dest="uname", default="", help=_("username used in commit"))
 	parser.add_option("--mail", dest="mail", default="", help=_("useremail used in commit"))
 	parser.add_option("--headless",action="store_true", default=False, help=_("run in headless mode"))
@@ -141,10 +143,11 @@ def main(argv):
 	if not core.isLocalInitialized():
 		core.initLocal()
 
-
-
 	if options.initremote:
 		core.initRemote()
+	elif options.version:
+		p = PersyHelper()
+		print p.getSoftwareVersion('persy')
 	elif options.syncwithremote:
 		core.syncWithRemote()
 	elif options.browse:

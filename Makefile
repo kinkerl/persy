@@ -19,29 +19,72 @@
 # You should have received a copy of the GNU General Public License
 # along with persy; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-GPGKEY=AF005C40
+# You can set these variables from the command line.
 
 PREFIX=/usr
 DEST=$(DESTDIR)$(PREFIX)
 
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
+PAPER         =
+
+# Internal variables used in sphinx
+PAPEROPT_a4     = -D latex_paper_size=a4
+PAPEROPT_letter = -D latex_paper_size=letter
+ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+
+GPGKEY=AF005C40
+
+# get the version out of the debian changelog
+VERSION=`head -n 1 debian/changelog |  sed  's/(/ /' |  sed  's/)/ /' | awk '{print $$2}'`
+
 all: build
 
-build: translate doc genversion
+build: genversion language doc 
 
 clean: 
 	git clean -f
+	
+doc: doc-html doc-man doc-latex
+
+doc-publish: doc-html
+	#preparing temp
+	rm -fr /tmp/_build/html
+	mkdir -p /tmp/_build/html
+	mv usr/share/doc/persy/* /tmp/_build/html/
+	
+	#prepare gh-pages and remove existing stuff
+	git checkout gh-pages
+	rm -rf *
+	
+	#make the changes
+	cp -r /tmp/_build/html/* .
+	git add .
+	git commit -am "autoupdated documentation"
+	git push origin gh-pages
+	
+	#switch back to master
+	git checkout master
+	mkdir -p  usr/share/doc/persy/ 
+	mv /tmp/_build/html/* usr/share/doc/persy/ 
+	@echo
+	@echo "Documentation publishing finished. The HTML pages are at http://kinkerl.github.com/persy/"
 
 genversion:
+	@echo "placing VERSION taken from debian/changelog in usr/lib/persy/VERSION"
 	echo $(VERSION) > usr/lib/persy/VERSION
 
-source_package: genversion language doc
+source-package: genversion language doc-man doc-html
 	debuild -S -sa -k$(GPGKEY) -i.git -I.git
+	@echo
+	@echo "Build finished; Get the debian package at ../persy_$(VERSION).tar.gz"
 
-deb_package: genversion language doc
+deb-package: genversion language doc-man doc-html
 	debuild -i.git -I.git
-
-release: source_package
+	@echo
+	@echo "Build finished; Get the debian package at ../persy_$(VERSION)_all.deb"
+	
+release: source_package doc-publish
 	git tag -f $(VERSION)
 	git push origin master --tags
 	dput -f  ppa:tmassassin/ppa ../persy_$(VERSION)_source.changes
@@ -77,28 +120,38 @@ install: language install_translation install_doc
 	install -d /etc/bash_completion.d
 	install --mode=644 etc/bash_completion.d/persy /etc/bash_completion.d
 
-translate:
+language:
 	#create the languagefiles
+	git commit -am "autocommit uncommited changes"
 	xgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot 
+	git commit -am "autoupdated languagefiles"
 	
-install_translations: translate
+install_languages:
 	install -d $(DEST)/lib/persy/locale
     install --mode=644 usr/lib/persy/locale/messages.pot $(DEST)/lib/persy/locale/messages.pot
 	install -d $(DEST)/lib/persy/locale/de/LC_MESSAGES
 	install --mode=644 usr/lib/persy/locale/de/LC_MESSAGES/messages.mo $(DEST)/lib/persy/locale/de/LC_MESSAGES/messages.mo
 	
-doc:
+doc-html:
+	#build developer documentation and place it in usr/share/doc
+	mkdir -p usr/share/doc
+	cd doc && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
+	@echo
+	@echo "Build finished. The HTML pages are in usr/share/doc"
+
+doc-latex: genversion
+	cd doc && $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
+	@echo
+	@echo "Build finished; the LaTeX files are in doc/_build/latex."
+	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
+	      "run these through (pdf)latex."
+
+doc-man: genversion
 	# builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p usr/share/man/man1
 	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
-
-	# creates a html doc (replaces the github urls for the images)
-	mkdir -p usr/share/doc/persy
-	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/file:\/\/\/usr\/share\/doc\/persy\/images/g' | pandoc --toc -c default.css -o usr/share/doc/persy/index.html
-
-	# grab the images from the markdown file
-	rm usr/share/doc/persy/images/*.png 
-	sed -n -e 's/\(^.*http\)\([^)]*png\)\()\)/http\2/gp' README.markdown | xargs wget -nc --quiet --directory-prefix=usr/share/doc/persy/images
+	@echo
+	@echo "Build finished; the manpage is in usr/share/man/man1/persy.1.gz."	
 	
 install_doc:
-    
+
