@@ -39,7 +39,7 @@ PersySSH
 .. autoclass:: PersySSH
    :members:
 
-PersySynchronization
+Synchronization Classes
 ------------------
 
 .. automodule:: persy_syncer
@@ -57,7 +57,7 @@ PersyTalker
    :members:
 
 
-PersyTalker
+PersyVCS
 ------------------
 
 .. automodule:: persy_vcs
@@ -65,7 +65,7 @@ PersyTalker
    :members:
 
 
-Pug - the git binding
+PuG - the git binding
 ------------------
 
 .. automodule:: pug
