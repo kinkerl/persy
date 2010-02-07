@@ -1,4 +1,4 @@
-API Documentation
+Developer Documentation
 =================================
 
 Core

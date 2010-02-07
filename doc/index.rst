@@ -26,7 +26,7 @@ Contents:
    
    installation
    usage
-   api
+   developer
    changelog
 
 Indices and tables
