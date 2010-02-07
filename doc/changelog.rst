@@ -1,6 +1,6 @@
 Changelog
 =================================
 
-.. include:: changelog
+.. include:: ../usr/share/doc/persy/changelog.txt
 
 
