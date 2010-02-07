@@ -36,7 +36,7 @@ ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 GPGKEY=AF005C40
 
 # get the version out of the debian changelog
-VERSION=`head -n 1 debian/changelog |  sed  's/(/ /' |  sed  's/)/ /' | awk '{print $$2}'`
+VERSION=`head -n 1 debian/changelog | sed 's/[\(\)]//g' | awk '{print $$2}'`
 
 
 clean: 
