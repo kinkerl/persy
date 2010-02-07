@@ -5,6 +5,9 @@
 
 Welcome to persy's documentation!
 =================================
+.. image:: static/persy.png
+   :align: right
+
 persy is an automated incremental backup tool for your personal files.
 it is comparable to dropbox and ubuntuone but with one major difference: 
 you dont need a fancy user account in some cloud in the internet. persy manages the synchronization in a personal way: 
