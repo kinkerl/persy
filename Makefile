@@ -70,9 +70,10 @@ install: language genversion
 	install -d $(DEST)/lib/persy/assets
 	install -d $(DEST)/lib/persy/assets/dist
 	install --mode=644 usr/lib/persy/*.py $(DEST)/lib/persy
+	install --mode=644 usr/lib/persy/persy.glade $(DEST)/lib/persy
+	install --mode=644 usr/lib/persy/VERSION $(DEST)/lib/persy
 	install --mode=644 usr/lib/persy/assets/*.svg $(DEST)/lib/persy/assets
 	install --mode=644 usr/lib/persy/assets/dist/*.svg $(DEST)/lib/persy/assets/dist
-	install --mode=644 usr/lib/persy/VERSION $(DEST)/lib/persy
 	chmod 755 $(DEST)/lib/persy/persy.py
 
 	# install example config
