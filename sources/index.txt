@@ -26,6 +26,7 @@ Contents:
    
    persy_gtk
    persy_core
+   changelog
 
 Indices and tables
 ==================
