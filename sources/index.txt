@@ -7,8 +7,6 @@ Welcome to persy's documentation!
 =================================
 .. image:: images/persy.png
    :align: right
-   :alt: persy logo
-   :figclass: padding10
 
 
 persy is an automated incremental backup tool for your personal files.
