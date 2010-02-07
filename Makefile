@@ -67,7 +67,7 @@ doc-publish: doc-html
 
 doc-html: genversion
 	#build developer documentation and place it in usr/share/doc
-	mkdir -p usr/share/doc
+	mkdir -p usr/share/doc/persy
 	
 	#copy the changelog in docs
 	cp debian/changelog usr/share/doc/persy/changelog.txt
