@@ -25,25 +25,12 @@ GPGKEY=AF005C40
 PREFIX=/usr
 DEST=$(DESTDIR)$(PREFIX)
 
+all: build
+
+build: translate doc genversion
+
 clean: 
 	git clean -f
-
-doc:
-	# builds(compresses) the manpage(replaces the github urls for the images)
-	mkdir -p usr/share/man/man1
-	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
-
-	# creates a html doc (replaces the github urls for the images)
-	mkdir -p usr/share/doc/persy
-	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/file:\/\/\/usr\/share\/doc\/persy\/images/g' | pandoc --toc -c default.css -o usr/share/doc/persy/index.html
-
-	# grab the images from the markdown file
-	rm usr/share/doc/persy/images/*.png 
-	sed -n -e 's/\(^.*http\)\([^)]*png\)\()\)/http\2/gp' README.markdown | xargs wget -nc --quiet --directory-prefix=usr/share/doc/persy/images 
-
-language:
-	#create the languagefiles
-	xgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot 
 
 genversion:
 	echo $(VERSION) > usr/lib/persy/VERSION
@@ -59,8 +46,7 @@ release: source_package
 	git push origin master --tags
 	dput -f  ppa:tmassassin/ppa ../persy_$(VERSION)_source.changes
 
-# install: language genversion doc
-install: language genversion
+install: language install_translation install_doc
 	# install application
 	install -d $(DEST)/bin
 	install usr/bin/persy $(DEST)/bin
@@ -79,12 +65,6 @@ install: language genversion
 	# install example config
 	install --mode=644 usr/lib/persy/example_config $(DEST)/lib/persy
 
-	# install language
-	install -d $(DEST)/lib/persy/locale
-	install --mode=644 usr/lib/persy/locale/messages.pot $(DEST)/lib/persy/locale/messages.pot
-
-	# install manpage/doc
-
 	# install desktop starter
 	install -d $(DEST)/share/applications
 	install --mode=644 usr/share/applications/persy.desktop $(DEST)/share/applications
@@ -97,3 +77,28 @@ install: language genversion
 	install -d /etc/bash_completion.d
 	install --mode=644 etc/bash_completion.d/persy /etc/bash_completion.d
 
+translate:
+	#create the languagefiles
+	xgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot 
+	
+install_translations: translate
+	install -d $(DEST)/lib/persy/locale
+    install --mode=644 usr/lib/persy/locale/messages.pot $(DEST)/lib/persy/locale/messages.pot
+	install -d $(DEST)/lib/persy/locale/de/LC_MESSAGES
+	install --mode=644 usr/lib/persy/locale/de/LC_MESSAGES/messages.mo $(DEST)/lib/persy/locale/de/LC_MESSAGES/messages.mo
+	
+doc:
+	# builds(compresses) the manpage(replaces the github urls for the images)
+	mkdir -p usr/share/man/man1
+	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
+
+	# creates a html doc (replaces the github urls for the images)
+	mkdir -p usr/share/doc/persy
+	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/file:\/\/\/usr\/share\/doc\/persy\/images/g' | pandoc --toc -c default.css -o usr/share/doc/persy/index.html
+
+	# grab the images from the markdown file
+	rm usr/share/doc/persy/images/*.png 
+	sed -n -e 's/\(^.*http\)\([^)]*png\)\()\)/http\2/gp' README.markdown | xargs wget -nc --quiet --directory-prefix=usr/share/doc/persy/images
+	
+install_doc:
+    
