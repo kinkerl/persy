@@ -4,7 +4,7 @@
 persy_gtk mod persy_gtk.html
 persy_core mod persy_core.html
 persy_core._Core.vcslog method persy_core.html
-persy_gtk.PersyGtk.quit_cb method persy_gtk.html
+persy_core._Core.initLocal method persy_core.html
 persy_core._Core.isLocalInitialized method persy_core.html
 persy_core._Core.vcsignore method persy_core.html
 persy_gtk.PersyGtk.persy_sync_toggle method persy_gtk.html
@@ -13,12 +13,12 @@ persy_core._Core.initRemote method persy_core.html
 persy_core._Core.isInSyncWithRemote method persy_core.html
 persy_core._Core class persy_core.html
 persy_core._Core.persy_start method persy_core.html
-persy_core._Core.initLocal method persy_core.html
-persy_core._Core.browse method persy_core.html
+persy_gtk.PersyGtk.quit_cb method persy_gtk.html
+persy_core._Core.setonetimesync method persy_core.html
 persy_gtk.PersyGtk class persy_gtk.html
 persy_gtk.PersyGtk.about method persy_gtk.html
 persy_core._Core.vcsstatus method persy_core.html
-persy_core._Core.setonetimesync method persy_core.html
+persy_core._Core.browse method persy_core.html
 persy_core._Core.persy_stop method persy_core.html
 persy_core._Core.optimize method persy_core.html
 persy_core._Core.syncWithRemote method persy_core.html
