@@ -2,21 +2,21 @@ API Documentation
 =================================
 
 Core
-------------------
+---------------------------------
 
 .. automodule:: persy_core
 .. autoclass:: _Core
    :members:
 
 PersyConfig
-------------------
+---------------------------------
 
 .. automodule:: persy_config
 .. autoclass:: PersyConfig
    :members:
 
 PersyGtk
-------------------
+---------------------------------
 
 .. automodule:: persy_gtk
 .. autoclass:: PersyGtkMenu
@@ -26,21 +26,21 @@ PersyGtk
    :members:
 
 PersyHelper
-------------------
+---------------------------------
 
 .. automodule:: persy_helper
 .. autoclass:: _PersyHelper
    :members:
 
 PersySSH
-------------------
+---------------------------------
 
 .. automodule:: persy_ssh
 .. autoclass:: PersySSH
    :members:
 
 Synchronization Classes
-------------------
+---------------------------------
 
 .. automodule:: persy_syncer
 .. autoclass:: FileChangeHandler
@@ -50,7 +50,7 @@ Synchronization Classes
    :members:
 
 PersyTalker
-------------------
+---------------------------------
 
 .. automodule:: persy_talker
 .. autoclass:: Talker
@@ -58,7 +58,7 @@ PersyTalker
 
 
 PersyVCS
-------------------
+---------------------------------
 
 .. automodule:: persy_vcs
 .. autoclass:: VCS
@@ -66,7 +66,7 @@ PersyVCS
 
 
 PuG - the git binding
-------------------
+---------------------------------
 
 .. automodule:: pug
 .. autoclass:: PuG
