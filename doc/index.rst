@@ -5,8 +5,11 @@
 
 Welcome to persy's documentation!
 =================================
-.. image:: static/persy.png
+.. image:: images/persy.png
    :align: right
+   :alt: persy logo
+   :figclass: padding10
+
 
 persy is an automated incremental backup tool for your personal files.
 it is comparable to dropbox and ubuntuone but with one major difference: 
