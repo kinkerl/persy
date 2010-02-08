@@ -21,16 +21,6 @@ if you want to enable a remote backup or even a syncronization, persy can syncro
 
 If you are not looking at the online version of the documentation, you can find the most recent version at:[http://kinkerl.github.com/persy/](http://kinkerl.github.com/persy/)  
 
-Dependencies
-============
-persy needs the following software at run-time:
-
- *    git-core
- *    python-pyinotify - to get efficient information about filesystem changes
- *    python-paramiko - ssh library to initialize a remote server
- *    gitk or qgit as a graphical git browser
-
-
 See also
 ===========
 You can report BUGS, ask QUESTIONS and DOWNLOAD persy on [launchpad](https://launchpad.net/persy)
