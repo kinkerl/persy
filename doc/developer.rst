@@ -13,6 +13,8 @@ If you want to contribute in anyway, please go to github (http://github.com/kink
 Dependencies
 --------------------------------
 
+At runtime you need the following packages:
+
  *   git-core
  *   gitk or qgit - graphical git browser
  *   xterm
@@ -23,10 +25,10 @@ Dependencies
  *   python-pyinotify - to get efficient information about filesystem changes
  *   python-paramiko - ssh library to initialize a remote server
 
-For some actions in the Makefile you also need
+For some actions in the Makefile you also need:
 
- *   python-sphinx
- *   pandoc
+ *   python-sphinx - build the documentation
+ *   pandoc - build the manpage
 
 Code Documentation
 ---------------------------------
