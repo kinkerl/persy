@@ -36,6 +36,8 @@ ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 GPGKEY=AF005C40
 
 # get the version out of the debian changelog
+# the $$ in awk is important when used inside of a makefile.
+# you can replace the $$ with a single $ when used in normal shell code
 VERSION=`head -n 1 debian/changelog | sed 's/[\(\)]//g' | awk '{print $$2}'`
 
 
