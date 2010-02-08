@@ -19,7 +19,7 @@ one server to keep files and folder in sync between them.
 persy tracks changes of local files (you can choose which ones) an stores the changes in a local git repository. 
 if you want to enable a remote backup or even a syncronization, persy can syncronize and merge the changes with the server over a secure ssh connection. 
 
-If you are not looking at the online version of the documentation, you can find the most recent version at: http://kinkerl.github.com/persy/
+If you are not looking at the online version of the documentation, you can find the most recent version at:[http://kinkerl.github.com/persy/](http://kinkerl.github.com/persy/)  
 
 Dependencies
 ============
@@ -34,6 +34,7 @@ persy needs the following software at run-time:
 See also
 ===========
 You can report BUGS, ask QUESTIONS and DOWNLOAD persy on [launchpad](https://launchpad.net/persy)
+
 You can view the SOURCE and DEVELOPMENT on [github](http://wiki.github.com/kinkerl/persy)
 
 Author
