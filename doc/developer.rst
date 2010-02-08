@@ -12,12 +12,21 @@ If you want to contribute in anyway, please go to github (http://github.com/kink
 
 Dependencies
 --------------------------------
+
  *   git-core
+ *   gitk or qgit - graphical git browser
+ *   xterm
+ *   librsvg2-common
+ *   python-gtk2
+ *   python-glade2
+ *   python-notify
  *   python-pyinotify - to get efficient information about filesystem changes
  *   python-paramiko - ssh library to initialize a remote server
- *   gitk or qgit as a graphical git browser
 
+For some actions in the Makefile you also need
 
+ *   python-sphinx
+ *   pandoc
 
 Code Documentation
 ---------------------------------
