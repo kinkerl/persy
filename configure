@@ -2,7 +2,7 @@
 
 if [ -e Makefile ]; then
     echo -e "Remove old Makefile"
-	rm Makefile;
+    rm Makefile;
 fi
 
 #build default
