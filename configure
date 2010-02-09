@@ -10,6 +10,21 @@ build="genversion"
 #docs
 docs="man html latex"
 
+#python modules
+pymods="gettext getpass platform paramiko subprocess pynotify pyinotify gtk gtk.glade pygtk"
+
+for pymod in $pymods; do
+    echo -n "Testing python module $pymod: "
+    python -c "import $pymod" 2> /dev/null
+    retval=$?
+    if [ "$retval" == "0" ]; then
+        echo "ok."
+    else
+        echo "fail."
+        exit 1
+    fi
+done
+
 #translations
 mos=""
 langs=""
