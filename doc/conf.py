@@ -206,3 +206,34 @@ latex_documents = [
 sys.path.append(os.path.abspath('../usr/lib/persy'))
 
 sys.path.append(os.path.abspath('.'))
+
+
+# debian changelog beautifier
+# parses the changelog and creates reStructuredText output for inclusion. 
+# the improved changelog is unter _tmp/changelog and can be deleted after build is complete
+
+#the header markup
+subline='______________________________________________________________________'
+
+#read the changelog and prepare the temp file
+f = file('../debian/changelog').read()
+if not os.path.exists('_tmp'):
+	os.mkdir('_tmp')
+out = file('_tmp/changelog', 'w')
+
+head = ''
+changes = ''
+date = ''
+for line in f.splitlines():
+	if line.startswith('  * '): # get the changes
+		changes += (' *   ' + line[4:]+ "\n")
+	elif line.startswith(' -- '): # end of a release block
+		date = line[43:-20]
+		out.write(head + " -" + date +"\n")
+		out.write(subline +"\n\n")
+		out.write(changes+"\n")
+		changes = ''
+	else:
+		if line.startswith('persy'):
+			head =line[line.find('(')+1:line.find(')')]
+
