@@ -9,7 +9,16 @@ You can find the latest version in the following ppa:
 
    ppa:tmassassin/ppa
 
-You can, however, get the source package and install it without a package. Just use 'make install' and you should be fine. You may want the first check the developer documentation for the dependencies. 
+You can, however, get the source package and install it without a package. 
+
+.. code-block:: bash
+  :linenos:
+
+   ./configure
+   make
+   make install
+
+You may want the first check the developer documentation for the dependencies. 
 
 After the installaton you will have to do some configuraton depending on your environment, needs and whishes
 
