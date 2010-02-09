@@ -53,20 +53,39 @@
 <p>This is an overview what you might want to know if you want to hack and contribute to persy.</p>
 <div class="section" id="cli">
 <h2>CLI<a class="headerlink" href="#cli" title="Permalink to this headline">¶</a></h2>
-<p>A development Option is &#8211;setenv. This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository. Take a look at the help message when using this option.</p>
+<p>A development Option is &#8211;setenv.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre> . persy --setenv
+</pre></div>
+</td></tr></table></div>
+<p>This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository.
+Take a look at the help message when using this option.</p>
+<p>This is useful if you want to start your own git viewer or want to mess with your data.</p>
 </div>
 <div class="section" id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
-<p>If you want to contribute in anyway, please go to github (<a class="reference external" href="http://github.com/kinkerl/persy">http://github.com/kinkerl/persy</a>) or launchpad (<a class="reference external" href="http://github.com/kinkerl/persy">http://github.com/kinkerl/persy</a>).</p>
+<p>If you want to contribute in anyway, please go to [github](<a class="reference external" href="http://github.com/kinkerl/persy">http://github.com/kinkerl/persy</a>) or [launchpad](<a class="reference external" href="http://github.com/kinkerl/persy">http://github.com/kinkerl/persy</a>).</p>
 </div>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>At runtime you need the following packages (these names are taken from ubuntu and might differ on other distributions):</p>
 <blockquote>
 <ul class="simple">
-<li>git-core</li>
+<li>git-core - git!</li>
+<li>gitk or qgit - graphical git browser</li>
+<li>xterm - used for log</li>
+<li>librsvg2-common - important for svg graphics</li>
+<li>python-gtk2 - the gui framework</li>
+<li>python-glade2 - creates the gui</li>
+<li>python-notify - notifications</li>
 <li>python-pyinotify - to get efficient information about filesystem changes</li>
 <li>python-paramiko - ssh library to initialize a remote server</li>
-<li>gitk or qgit as a graphical git browser</li>
+</ul>
+</blockquote>
+<p>For some actions in the Makefile you also need:</p>
+<blockquote>
+<ul class="simple">
+<li>python-sphinx - build the documentation</li>
+<li>pandoc - build the manpage</li>
 </ul>
 </blockquote>
 </div>

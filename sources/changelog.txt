@@ -1,6 +1,7 @@
 Changelog
 =================================
+all hail the changelog!
 
-.. include:: ../usr/share/doc/persy/changelog.txt
+.. include:: ../debian/changelog
 
 

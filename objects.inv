@@ -66,11 +66,11 @@ pug.PuG.execute method developer.html
 persy_core._Core.vcsignore method developer.html
 persy_talker.Talker.resetError method developer.html
 persy_vcs.VCS class developer.html
-persy_talker.Talker.critical method developer.html
+pug.PuG.pull method developer.html
 pug.PuG.log method developer.html
 persy_helper._PersyHelper class developer.html
 persy_ssh.PersySSH.localSSHKeysExist method developer.html
-pug.PuG.pull method developer.html
+persy_talker.Talker.critical method developer.html
 pug.PuG.command method developer.html
 persy_helper._PersyHelper.which method developer.html
 persy_talker.Talker.setStatusIcon method developer.html

@@ -115,6 +115,47 @@
 <h2>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h2>
 <p>You can use persy without a centralized server to which every clients connects and performes the synchronization (like in the illustration image above). You can also run persy without a second computer at all and synchronize with other parts(repositories) on the filesystem. Right now, this is not the intended use and i will not cover this in the cli or the upcomming gui. You can however configure this in the git configuration for persy ~/.persy/git/config and i try to take care of the internal implementation. If you have questions regarding esoteric setups, feel free to mail me.</p>
 </div>
+<div class="section" id="persy-s-states">
+<h2>Persy&#8217;s states<a class="headerlink" href="#persy-s-states" title="Permalink to this headline">¶</a></h2>
+<p>These are the states.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">icon</th>
+<th class="head">state</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><object data="images/persy_idle.svg" type="image/svg+xml"><embed src="images/persy_idle.svg" type="image/svg+xml" /></object>
+</td>
+<td>idle, not running</td>
+</tr>
+<tr><td><object data="images/persy_untracked.svg" type="image/svg+xml"><embed src="images/persy_untracked.svg" type="image/svg+xml" /></object>
+</td>
+<td>untracked changes local</td>
+</tr>
+<tr><td><object data="images/persy_unsynced.svg" type="image/svg+xml"><embed src="images/persy_unsynced.svg" type="image/svg+xml" /></object>
+</td>
+<td>all local changes are backupped</td>
+</tr>
+<tr><td><object data="images/persy_ok.svg" type="image/svg+xml"><embed src="images/persy_ok.svg" type="image/svg+xml" /></object>
+</td>
+<td>persy is in sync with the server</td>
+</tr>
+<tr><td><object data="images/persy_warn.svg" type="image/svg+xml"><embed src="images/persy_warn.svg" type="image/svg+xml" /></object>
+</td>
+<td>warning!</td>
+</tr>
+<tr><td><object data="images/persy_error.svg" type="image/svg+xml"><embed src="images/persy_error.svg" type="image/svg+xml" /></object>
+</td>
+<td>error!</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -133,6 +174,7 @@
 <li><a class="reference external" href="#commandline">Commandline</a></li>
 <li><a class="reference external" href="#setup-for-syncing-and-or-using-a-remote-backup">Setup for syncing and/or using a remote backup</a></li>
 <li><a class="reference external" href="#advanced-usage">Advanced Usage</a></li>
+<li><a class="reference external" href="#persy-s-states">Persy&#8217;s states</a></li>
 </ul>
 </li>
 </ul>

@@ -5,18 +5,15 @@
 
 Welcome to persy's documentation!
 =================================
-persy is an automated incremental backup tool for your personal files.
-it is comparable to dropbox and ubuntuone but with one major difference: 
-you dont need a fancy user account in some cloud in the internet. persy manages the synchronization in a personal way: 
-all you need is a server with ssh and git (in your local network or remote in the internet doesnt matter). 
-i have a old pc here in my local network for example. 
+persy is an automated incremental backup tool for your personal files and folders.
+It also has the ability to synchronize your folders over multiple machines.
+So, it is comparable to [dropbox](https://www.dropbox.com) and [ubuntuone](https://one.ubuntu.com/) but with one major difference: 
+you dont need a user account in a cloud in the internet where you dont really know where your stuff is and who may have access to it. 
 
-persy is designed to run by its own on a computer as a revision based
-backup application or in an environment with multiple computers and at least
-one server to keep files and folder in sync between them.
-
-persy tracks changes of local files (you can choose which ones) an stores the changes in a local git repository. 
-if you want to enable a remote backup or even a syncronization, persy can syncronize and merge the changes with the server over a secure ssh connection. 
+with persy, you control every step and station in the process but persy tries to keep most of the annoying things out of the way.
+if you just want to backup your files and save nearly every step you do, run percy and add your folders to persy in the "backup" settings tab. 
+if you want to sychronize your files, all you need is a server with ssh and git (in your local network or remote in the internet doesnt matter). 
+i have a old pc here in my local network for example. give persy the server it needs, follow the configuration, enable remote synchronization and there you go!
 
 If you are not looking at the online version of the documentation, you can find the most recent version at: http://kinkerl.github.com/persy/
 
