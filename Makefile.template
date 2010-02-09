@@ -28,6 +28,13 @@ doc-html:
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
 
+doc-latex:
+	cd doc && $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
+	@echo
+	@echo "Build finished; the LaTeX files are in doc/_build/latex."
+	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
+	      "run these through (pdf)latex."
+
 doc-man:
 	# builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p usr/share/man/man1

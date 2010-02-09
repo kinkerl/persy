@@ -7,6 +7,7 @@ version="`cat usr/lib/persy/VERSION`"
 echo -e "Running configure and make"
 ./configure && make
 
+
 echo -e ""
 echo -n "Continue releasing persy-${version} ? (y/n): "
 read answer
@@ -14,9 +15,6 @@ if [ "$answer" != "y" ]; then
     echo "Exit."
     exit 0
 fi
-
-exit 0
-
 
 # debian .tar.gz
 echo -e "Building debian source package..."

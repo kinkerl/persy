@@ -8,12 +8,12 @@ fi
 build="genversion"
 
 #docs
-docs="man html"
+docs="man html latex"
 
 #translations
 mos=""
 langs=""
-echo -n "Translations: "
+echo -n "Translations........: "
 for langdir in `ls -d usr/lib/persy/locale/*/`; do
 	lang=`echo $langdir | cut -d/ -f5`
 	langs="$lang $langs"
@@ -43,17 +43,40 @@ for doc in $docs; do
     rmdocs=""
     case $doc in
         "man")
-            if [ -z `which pandoc 2&>1 > /dev/null` ]; then
-                echo -e "no pandoc found. can't build and install man file"
+            echo -n "Make man file.......: "
+            if [ -z `which pandoc 2> /dev/null` ]; then
+                echo -e "No. (pandoc not installed)"
             else
                 echo -e "\tinstall --mode=644 usr/share/man/man1/persy.1.gz \$(DEST)/share/man/man1/persy.1.gz" >> Makefile
-                build="$build doc-man"  
-                rmdocs="$rmdoc $doc"          
+                echo "Yes."
+                build="$build doc-$doc"  
+                rmdocs="$rmdocs $doc"          
             fi
             ;;
-         #TODO: html, latex
+        "html")
+            echo -n "Make doc html.......: "
+            if [ -z `which sphinx-build 2> /dev/null` ]; then
+                echo -e "No. (python-sphinx not installed)"
+            else
+                #TODO: install
+                echo "Yes."
+                build="$build doc-$doc"
+                rmdocs="$rmdocs $doc"
+            fi
+            ;;
+        "latex")
+            echo -n "Make doc latex......: "
+            if [ -z `which sphinx-build 2> /dev/null` ]; then
+                echo -e "No. (python-sphinx not installed)"
+            else
+                #TODO: install
+                echo "Yes."
+                build="$build doc-$doc"
+                rmdocs="$rmdocs $doc"
+            fi
+            ;;        
         *)
-            echo -e "Found no build an installation instructions for doc-$doc. skip."
+            echo -e "Found no build and installation instructions for doc-$doc. skip."
             ;;
     esac
 done
@@ -70,13 +93,15 @@ done
 echo -e "" >> Makefile
 
 #rebuild languagefile
-if [ -n `which xgettext` ]; then
+echo -n "Rebuild languagefile: "
+if [ -z `which xgettext 2> /dev/null` ]; then
+    echo -e "No. (xgettext not installed)" 
+else
     echo -e "languagefile:" >> Makefile
 	echo -e "\txgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot" >> Makefile
 	echo -e "" >> Makefile
-	build="$build languagefile"
-else
-    echo -e "No xgettext found. can't rebuild the languagefile." 
+	echo -e "Yes."
+	build="$build languagefile"    
 fi
 
 # add clean
