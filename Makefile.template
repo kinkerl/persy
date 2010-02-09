@@ -3,7 +3,7 @@ DEST=$(DESTDIR)$(PREFIX)
 
 GPGKEY=AF005C40
 
-#Get Version
+#Get the version out of the debian changelog
 VERSION=`head -n 1 debian/changelog | sed 's/[()]//g' | awk '{print $$2}'`
 
 SPHINXOPTS    =
@@ -35,7 +35,7 @@ doc-man:
 	@echo
 	@echo "Build finished; the manpage is in usr/share/man/man1/persy.1.gz."
 
-install: install_translations install_doc
+install: install_translations install_docs
 	# install persy
 	install -d $(DEST)/bin
 	install --mode=755 usr/bin/persy $(DEST)/bin/persy
@@ -67,11 +67,12 @@ install: install_translations install_doc
 	
 	# install bash-completion
 	install -d /etc/bash_completion.d
-	install --mode=644 etc/bash_completion.d/persy /etc/bash_completion.d
+	install --mode=644 etc/bash_completion.d/persy /etc/bash_completion.d/persy
 
 remove: remove_docs
 	rm $(DEST)/bin/persy
 	rm -rf $(DEST)/lib/persy
 	rm $(DEST)/share/applications/persy.desktop
 	rm $(DEST)/share/icons/persy.svg
+	rm /etc/bash_completion.d/persy
 
