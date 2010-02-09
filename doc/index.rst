@@ -11,7 +11,7 @@ So, it is comparable to dropbox_ and ubuntuone_ but with one major difference:
 you dont need a user account in a cloud in the internet where you dont really know where your stuff is and who may have access to it. 
 
 with persy, you control every step and station in the process but persy tries to keep most of the annoying things out of the way.
-if you just want to backup your files and save nearly every step you do, run percy and add your folders to persy in the "backup" settings tab. 
+if you just want to backup your files and save nearly every step you do, run persy and add your folders to persy in the "backup" settings tab. 
 if you want to sychronize your files, all you need is a server with ssh and git (in your local network or remote in the internet doesnt matter). 
 i have a old pc here in my local network for example. give persy the server it needs, follow the configuration, enable remote synchronization and there you go!
 
