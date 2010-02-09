@@ -106,6 +106,7 @@ fi
 
 # add clean
 echo -e "clean:" >> Makefile
+echo -e "\trm usr/lib/persy/VERSION" >> Makefile
 echo -e "\trm -rf usr/share/man/man1" >> Makefile
 case $doc in
     "man") rm usr/share/man/man1/persy.1.gz;;
