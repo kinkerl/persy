@@ -8,7 +8,7 @@ fi
 build="genversion"
 
 #docs
-docs="man html latex"
+docs="man html"
 
 #python modules
 pymods="gettext getpass platform paramiko subprocess pynotify pyinotify gtk gtk.glade pygtk"
@@ -73,7 +73,16 @@ for doc in $docs; do
             if [ -z `which sphinx-build 2> /dev/null` ]; then
                 echo -e "No. (python-sphinx not installed)"
             else
-                #TODO: install
+                echo -e "\tinstall -d \$(DEST)/share/doc/persy" >> Makefile
+                echo -e "\tinstall -d \$(DEST)/share/doc/persy/images" >> Makefile
+                echo -e "\tinstall -d \$(DEST)/share/doc/persy/sources" >> Makefile
+                echo -e "\tinstall -d \$(DEST)/share/doc/persy/static" >> Makefile
+                echo -e "\tinstall --mode=644 usr/share/doc/persy/*.html \$(DEST)/share/doc/persy" >> Makefile
+                echo -e "\tinstall --mode=644 usr/share/doc/persy/objects.inv \$(DEST)/share/doc/persy/objects.inv" >> Makefile
+                echo -e "\tinstall --mode=644 usr/share/doc/persy/searchindex.js \$(DEST)/share/doc/persy/searchindex.js" >> Makefile
+                echo -e "\tinstall --mode=644 usr/share/doc/persy/images/*.png \$(DEST)/share/doc/persy/images" >> Makefile
+                echo -e "\tinstall --mode=644 usr/share/doc/persy/sources/*.txt \$(DEST)/share/doc/persy/sources" >> Makefile
+                echo -e "\tinstall --mode=644 usr/share/doc/persy/static/* \$(DEST)/share/doc/persy/static" >> Makefile
                 echo "Yes."
                 build="$build doc-$doc"
                 rmdocs="$rmdocs $doc"
@@ -101,8 +110,9 @@ echo -e "\t" >> Makefile
 echo -e "remove_docs:" >> Makefile
 for doc in $rmdocs; do
     case $doc in
-        "man") echo -e "\trm \$(DEST)/share/man/man1/persy.1.gz";;
-        #TODO: html, latex
+        "man") echo -e "\trm \$(DEST)/share/man/man1/persy.1.gz" >> Makefile;;
+        "html") echo -e "\trm -rf \$(DEST)/share/doc/persy" >> Makefile;;
+        #TODO: latex
     esac
 done
 echo -e "" >> Makefile
@@ -123,7 +133,6 @@ fi
 echo -e "clean:" >> Makefile
 echo -e "\trm usr/lib/persy/VERSION" >> Makefile
 #echo -e "\trm usr/lib/persy/*.pyc" >> Makefile
-echo "rmdocs: $rmdocs"
 for doc in $rmdocs; do
     case $doc in
         "man") echo -e "\trm usr/share/man/man1" >> Makefile
@@ -131,6 +140,8 @@ for doc in $rmdocs; do
         "html") 
                 echo -e "\trm -rf usr/share/doc" >> Makefile
                 echo -e "\trm doc/sphinxtogithub.pyc" >> Makefile
+                ;;
+        "latex")
                 echo -e "\trm -rf doc/_build/" >> Makefile
                 ;;
     esac

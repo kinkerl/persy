@@ -25,9 +25,6 @@ doc-html:
 	#build developer documentation and place it in usr/share/doc
 	mkdir -p usr/share/doc/persy
 	
-	#copy the changelog in docs
-	cp debian/changelog usr/share/doc/persy/changelog.txt
-	
 	cd doc && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
@@ -58,6 +55,7 @@ install: install_translations install_docs
 	install --mode=644 usr/lib/persy/*.py $(DEST)/lib/persy
 	install --mode=644 usr/lib/persy/persy.glade $(DEST)/lib/persy
 	install --mode=644 usr/lib/persy/VERSION $(DEST)/lib/persy/VERSION
+	install --mode=644 usr/lib/persy/assets/GPL-2 $(DEST)/lib/persy/assets/GPL-2
 	install --mode=644 usr/lib/persy/assets/*.svg $(DEST)/lib/persy/assets
 	install --mode=644 usr/lib/persy/assets/dist/*.svg $(DEST)/lib/persy/assets/dist
 	chmod 755 $(DEST)/lib/persy/persy.py
