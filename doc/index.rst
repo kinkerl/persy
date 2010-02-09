@@ -7,7 +7,7 @@ Welcome to persy's documentation!
 =================================
 persy is an automated incremental backup tool for your personal files and folders.
 It also has the ability to synchronize your folders over multiple machines.
-So, it is comparable to [dropbox](https://www.dropbox.com) and [ubuntuone](https://one.ubuntu.com/) but with one major difference: 
+So, it is comparable to dropbox_ and ubuntuone_ but with one major difference: 
 you dont need a user account in a cloud in the internet where you dont really know where your stuff is and who may have access to it. 
 
 with persy, you control every step and station in the process but persy tries to keep most of the annoying things out of the way.
@@ -33,3 +33,7 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+.. _dropbox: https://www.dropbox.com
+.. _ubuntuone: https://one.ubuntu.com/
