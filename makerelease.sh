@@ -1,12 +1,11 @@
-#!/bin/sh
-
-gpgkey="AF005C40"
-version="`cat usr/lib/persy/VERSION`"
+#!/bin/bash
 
 # build it
 echo -e "Running configure and make"
 ./configure && make
 
+gpgkey="AF005C40"
+version="`cat usr/lib/persy/VERSION`"
 
 echo -e ""
 echo -n "Continue releasing persy-${version} ? (y/n): "
