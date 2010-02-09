@@ -19,6 +19,10 @@ continue_release()
         echo "Exit."
         exit 0
     fi
+
+    # git tag & push
+    git tag -f $version
+    git push origin master --tags
 }
 
 publish_doc()
@@ -45,9 +49,6 @@ publish_doc()
     mv /tmp/_build/html/* usr/share/doc/persy/ 
     echo "Documentation publishing finished. The HTML pages are at http://kinkerl.github.com/persy/"
 
-    # git tag & push
-    git tag -f $version
-    git push origin master --tags
 }
 
 build_src_package()
