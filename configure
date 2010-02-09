@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [ -e Makefile ]; then
+    echo -e "Remove old Makefile"
 	rm Makefile;
 fi
 
@@ -12,18 +13,24 @@ docs="man html"
 
 #python modules
 pymods="gettext getpass platform paramiko subprocess pynotify pyinotify gtk gtk.glade pygtk"
-
+failedpymods=""
 for pymod in $pymods; do
     echo -n "Testing python module $pymod: "
     python -c "import $pymod" 2> /dev/null
     retval=$?
     if [ "$retval" -eq "0" ]; then
-        echo "ok."
+        echo "Ok"
     else
-        echo "fail."
-        exit 1
+        echo "Fail"
+        failedpymods="$failedpymods $pymod"
     fi
 done
+
+if [ "$failedpymods" != "" ]; then
+    echo -e "\nMissing python modules:$failedpymods"
+    echo "Exit."
+    exit 1
+fi
 
 #translations
 mos=""
@@ -60,10 +67,10 @@ for doc in $docs; do
         "man")
             echo -n "Make man file.......: "
             if [ -z `which pandoc 2> /dev/null` ]; then
-                echo -e "No. (pandoc not installed)"
+                echo -e "Skip (pandoc not installed)"
             else
                 echo -e "\tinstall --mode=644 usr/share/man/man1/persy.1.gz \$(DEST)/share/man/man1/persy.1.gz" >> Makefile
-                echo "Yes."
+                echo "Yes"
                 build="$build doc-$doc"  
                 rmdocs="$rmdocs man"          
             fi
@@ -71,7 +78,7 @@ for doc in $docs; do
         "html")
             echo -n "Make doc html.......: "
             if [ -z `which sphinx-build 2> /dev/null` ]; then
-                echo -e "No. (python-sphinx not installed)"
+                echo -e "Skip (python-sphinx not installed)"
             else
                 echo -e "\tinstall -d \$(DEST)/share/doc/persy" >> Makefile
                 echo -e "\tinstall -d \$(DEST)/share/doc/persy/images" >> Makefile
@@ -83,7 +90,7 @@ for doc in $docs; do
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/images/*.png \$(DEST)/share/doc/persy/images" >> Makefile
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/sources/*.txt \$(DEST)/share/doc/persy/sources" >> Makefile
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/static/* \$(DEST)/share/doc/persy/static" >> Makefile
-                echo "Yes."
+                echo "Yes"
                 build="$build doc-$doc"
                 rmdocs="$rmdocs $doc"
             fi
@@ -91,10 +98,10 @@ for doc in $docs; do
         "latex")
             echo -n "Make doc latex......: "
             if [ -z `which sphinx-build 2> /dev/null` ]; then
-                echo -e "No. (python-sphinx not installed)"
+                echo -e "Skip (python-sphinx not installed)"
             else
                 #TODO: install
-                echo "Yes."
+                echo "Yes"
                 build="$build doc-$doc"
                 rmdocs="$rmdocs $doc"
             fi
@@ -120,12 +127,12 @@ echo -e "" >> Makefile
 #rebuild languagefile
 echo -n "Rebuild languagefile: "
 if [ -z `which xgettext 2> /dev/null` ]; then
-    echo -e "No. (xgettext not installed)" 
+    echo -e "Skip (xgettext not installed)" 
 else
     echo -e "languagefile:" >> Makefile
 	echo -e "\txgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot" >> Makefile
 	echo -e "" >> Makefile
-	echo -e "Yes."
+	echo -e "Yes"
 	build="$build languagefile"    
 fi
 
