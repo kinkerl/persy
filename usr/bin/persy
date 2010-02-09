@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#starter script for persy
+#author: Dennis Schwertel
+
+#License
+#=======
+#persy is free software: you can redistribute it and/or modify it
+#under the terms of the GNU General Public License as published by the Free
+#Software Foundation, either version 2 of the License, or (at your option) any
+#later version.
+
+#persy is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with persy; if not, write to the Free Software
+#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+if [ "$1" = "--setenv" ]
+	then
+		echo "yay! you are using the secret hidden method to set environment variables in the parent shell."
+		echo "you have to SOURCE this script. this means, call it this way (the DOT is imporant!):"
+		echo ""
+		echo ". persy --setenv"
+		echo ""
+		echo "the following environment variables were set (if called correct):"
+		echo "GIT_DIR=$HOME/.persy/git"
+		echo "GIT_WORK_TREE=$HOME"
+		export "GIT_DIR"=$HOME/.persy/git
+		export "GIT_WORK_TREE"=$HOME
+		
+	else 
+		/usr/lib/persy/persy.py $@
+fi
+
+
+

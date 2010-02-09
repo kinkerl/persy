@@ -1,0 +1,16 @@
+Source: persy
+Section: admin
+Priority: optional
+Maintainer: Dennis Schwertel <s@digitalkultur.net>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.8.3
+Homepage: https://launchpad.net/persy
+
+Package: persy
+Architecture: all
+Depends: git-core, git, python-pyinotify, python-paramiko, python-gtk2, python-glade2, python-notify, python (>= 2.6), python (<< 3), gitk | qgit, xterm, librsvg2-common
+Recommends: fortune
+Description: personal syncronization
+ backup or synchronize your data with multiple machines. 
+ persy is designed to run by its own on the computer or in an environment with 
+ at least one server in reach of every computer with synced files.
