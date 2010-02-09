@@ -86,15 +86,37 @@ You can use persy without a centralized server to which every clients connects a
 Persy's states
 --------------------------------------------
 
-The states
+These are the states.
 
-.. image:: ../usr/lib/persy/assets/persy_untracked.svg
+.. csv-table:: 
+  :header: "icon", "state"
+  :widths: 150, 400
+
+
+  |persy_idle.svg|, "idle, not running"
+  |persy_untracked.svg|, "untracked changes local"
+  |persy_unsynced.svg|, "all local changes are backupped"
+  |persy_ok.svg|, "persy is in sync with the server"
+  |persy_warn.svg|, "warning!"
+  |persy_error.svg|, "error!"
+
+
+.. |persy_idle.svg| image:: ../usr/lib/persy/assets/persy_idle.svg
    :width: 64px
 
-.. image:: ../usr/lib/persy/assets/persy_unsynced.svg
+.. |persy_untracked.svg| image:: ../usr/lib/persy/assets/persy_untracked.svg
    :width: 64px
 
-.. image:: ../usr/lib/persy/assets/persy_ok.svg
+.. |persy_unsynced.svg| image:: ../usr/lib/persy/assets/persy_unsynced.svg
+   :width: 64px
+
+.. |persy_ok.svg| image:: ../usr/lib/persy/assets/persy_ok.svg
+   :width: 64px
+
+.. |persy_warn.svg| image:: ../usr/lib/persy/assets/persy_warn.svg
+   :width: 64px
+
+.. |persy_error.svg| image:: ../usr/lib/persy/assets/persy_error.svg
    :width: 64px
 
 
