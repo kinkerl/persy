@@ -18,7 +18,7 @@ This is useful if you want to start your own git viewer or want to mess with you
 
 Contributing
 ---------------------------------
-If you want to contribute in anyway, please go to [github](http://github.com/kinkerl/persy) or [launchpad](http://github.com/kinkerl/persy).
+If you want to contribute in anyway, please go to github_ or launchpad_.
 
 Dependencies
 --------------------------------
@@ -118,3 +118,5 @@ _________________________________
 
 
 
+.. _github: http://github.com/kinkerl/persy
+.. _launchpad: https://launchpad.net/persy
