@@ -1,71 +1,99 @@
 #!/bin/bash
 
-# build it
-echo -e "Running configure and make"
-./configure && make
-
 gpgkey="AF005C40"
-version="`cat usr/lib/persy/VERSION`"
+version=""
 
-echo -e ""
-echo -n "Continue releasing persy-${version} ? (y/n): "
-read answer
-if [ "$answer" -ne "y" ]; then
-    echo "Exit."
-    exit 0
-fi
+make_build()
+{
+    echo "Running configure and make"
+    ./configure && make
+    version="`cat usr/lib/persy/VERSION`"
+}
 
-# debian .tar.gz
-echo -e "Building debian source package..."
-debuild -S -sa -k${gpgkey} -i.git -I.git
-echo -e "Build finished; Get the debian package at ../persy_${version}.tar.gz"
+continue_release()
+{
+    echo ""
+    echo -n "Continue releasing persy-${version} ? (y/n): "
+    read answer
+    if [ "$answer" -ne "y" ]; then
+        echo "Exit."
+        exit 0
+    fi
+}
 
-# publish doc
-echo -e "Begin publishing documentation..."
-#preparing temp
-rm -fr /tmp/_build/html
-mkdir -p /tmp/_build/html
-mv usr/share/doc/persy/* /tmp/_build/html/
+publish_doc()
+{
+    echo "Begin publishing documentation..."
+    #preparing temp
+    rm -fr /tmp/_build/html
+    mkdir -p /tmp/_build/html
+    mv usr/share/doc/persy/* /tmp/_build/html/
 	
-#prepare gh-pages and remove existing stuff
-git checkout gh-pages
-rm -rf *
+    #prepare gh-pages and remove existing stuff
+    git checkout gh-pages
+    rm -rf *
 	
-#make the changes
-cp -r /tmp/_build/html/* .
-git add .
-git commit -am "autoupdated documentation"
-git push origin gh-pages
+    #make the changes
+    cp -r /tmp/_build/html/* .
+    git add .
+    git commit -am "autoupdated documentation"
+    git push origin gh-pages
 	
-#switch back to master
-git checkout master
-mkdir -p  usr/share/doc/persy/ 
-mv /tmp/_build/html/* usr/share/doc/persy/ 
-echo -e "Documentation publishing finished. The HTML pages are at http://kinkerl.github.com/persy/"
+    #switch back to master
+    git checkout master
+    mkdir -p  usr/share/doc/persy/ 
+    mv /tmp/_build/html/* usr/share/doc/persy/ 
+    echo "Documentation publishing finished. The HTML pages are at http://kinkerl.github.com/persy/"
 
-# git tag & push
-git tag -f $version
-git push origin master --tags
+    # git tag & push
+    git tag -f $version
+    git push origin master --tags
+}
 
-# upload source changes
-echo -e "Uploading source changes to ppa"
-dput -f  ppa:tmassassin/ppa ../persy_${version}_source.changes
+build_src_package()
+{
+    echo "Building debian source package..."
+    debuild -S -sa -k${gpgkey} -i.git -I.git
+    echo "Build finished; Get the debian package at ../persy_${version}.tar.gz"
+}
 
-#Released
-echo -n "Finaly released persy-$version."
-
-# debian .deb
-echo -e ""
-echo -n "Building the debian package? (y/n): "
-read answer
-if [ "$answer" -ne "y" ]; then
-    echo "Exit."
-    exit 0
-else
-    echo -e "Start building debian package..."
+build_deb_package()
+{
+    echo "Start building debian package..."
     debuild -i.git -I.git
-    echo -e "Build finished; Get the debian package at ../persy_${version}_all.deb"
-fi
+    echo "Build finished; Get the debian package at ../persy_${version}_all.deb"
+}
 
-echo -e "Done."
+upload_source_changes()
+{
+    echo "Uploading source changes to ppa"
+    dput -f  ppa:tmassassin/ppa ../persy_${version}_source.changes
+}
+
+#run
+opt=$1
+case $opt in
+    "release")
+            make_build
+            continue_release
+            publish_doc
+            build_src_package
+            upload_source_changes
+            echo -n "Finaly released persy-$version."
+            ;;
+    "public-doc")
+            make_build
+            publish_doc
+            ;;
+    "makedeb")  
+            make_build
+            build_deb_package
+            ;;
+    *)
+        echo "Usage: `pwd`/$0 {release|makedeb|public-doc}"
+        exit 1
+        ;;
+esac
+
+echo "Done."
 exit 0
