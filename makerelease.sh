@@ -15,6 +15,9 @@ if [ "$answer" -ne "y" ]; then
     exit 0
 fi
 
+exit 0
+
+
 # debian .tar.gz
 echo -e "Building debian source package..."
 debuild -S -sa -k${gpgkey} -i.git -I.git

@@ -67,7 +67,7 @@ doc-publish: doc-html
 	@echo
 	@echo "Documentation publishing finished. The HTML pages are at http://kinkerl.github.com/persy/"
 
-doc-html: genversion
+doc-html: generate-version
 	#build developer documentation and place it in usr/share/doc
 	mkdir -p usr/share/doc/persy
 	
@@ -78,37 +78,37 @@ doc-html: genversion
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
 
-doc-latex: genversion
+doc-latex: generate-version
 	cd doc && $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in doc/_build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
 	      "run these through (pdf)latex."
 
-doc-man: genversion
+doc-man: generate-version
 	# builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p usr/share/man/man1
 	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
 	@echo
 	@echo "Build finished; the manpage is in usr/share/man/man1/persy.1.gz."
 
-language:
+generate-languagefiles:
 	#create the languagefiles
 	git commit -am "autocommit uncommited changes"
 	xgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot 
 	git commit -am "autoupdated languagefiles"
-	
-genversion:
+
+generate-version:
 	@echo "placing VERSION taken from debian/changelog in usr/lib/persy/VERSION"
 	echo $(VERSION) > usr/lib/persy/VERSION
 
 
-source-package: genversion language doc-man doc-html
+source-package: generate-languagefiles doc-man doc-html
 	debuild -S -sa -k$(GPGKEY) -i.git -I.git
 	@echo
 	@echo "Build finished; Get the debian package at ../persy_$(VERSION).tar.gz"
 
-deb-package: genversion language doc-man doc-html
+deb-package: generate-languagefiles doc-man doc-html
 	debuild -i.git -I.git
 	@echo
 	@echo "Build finished; Get the debian package at ../persy_$(VERSION)_all.deb"
