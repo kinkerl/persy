@@ -18,17 +18,20 @@ one server to keep files and folder in sync between them.
 persy tracks changes of local files (you can choose which ones) an stores the changes in a local git repository. 
 if you want to enable a remote backup or even a syncronization, persy can syncronize and merge the changes with the server over a secure ssh connection. 
 
+If you are not looking at the online version of the documentation, you can find the most recent version at: http://kinkerl.github.com/persy/
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
    
-   persy_gtk
-   persy_core
+   installation
+   usage
+   developer
+   changelog
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`

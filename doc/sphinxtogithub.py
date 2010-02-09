@@ -1,4 +1,7 @@
 #! /usr/bin/env python
+
+
+#taken from http://github.com/michaeljones/sphinx-to-github
  
 from optparse import OptionParser
 import os

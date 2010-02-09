@@ -21,8 +21,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 # You can set these variables from the command line.
 
-PREFIX=/usr
-DEST=$(DESTDIR)$(PREFIX)
+
+# need the following packages: python-sphinx, pandoc, git-core
 
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
@@ -36,17 +36,14 @@ ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 GPGKEY=AF005C40
 
 # get the version out of the debian changelog
-VERSION=`head -n 1 debian/changelog | sed 's/[()]//g' | awk '{print $2}'`
+# the $$ in awk is important when used inside of a makefile.
+# you can replace the $$ with a single $ when used in normal shell code
+VERSION=`head -n 1 debian/changelog | sed 's/[\(\)]//g' | awk '{print $$2}'`
 
-all: build
-
-build: genversion doc
 
 clean: 
 	git clean -f
 	
-doc: doc-man
-
 doc-publish: doc-html
 	#preparing temp
 	rm -fr /tmp/_build/html
@@ -70,74 +67,13 @@ doc-publish: doc-html
 	@echo
 	@echo "Documentation publishing finished. The HTML pages are at http://kinkerl.github.com/persy/"
 
-language:
-	#create the languagefiles
-	git commit -am "autocommit uncommited changes"
-	xgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot 
-	git commit -am "autoupdated languagefiles"
-	
-genversion:
-	@echo "placing VERSION taken from debian/changelog in usr/lib/persy/VERSION"
-	echo $(VERSION) > usr/lib/persy/VERSION
-
-source-package: genversion language doc-man doc-html
-	debuild -S -sa -k$(GPGKEY) -i.git -I.git
-	@echo
-	@echo "Build finished; Get the debian package at ../persy_$(VERSION).tar.gz"
-
-deb-package: genversion language doc-man doc-html
-	debuild -i.git -I.git
-	@echo
-	@echo "Build finished; Get the debian package at ../persy_$(VERSION)_all.deb"
-	
-release: source_package doc-publish
-	git tag -f $(VERSION)
-	git push origin master --tags
-	dput -f  ppa:tmassassin/ppa ../persy_$(VERSION)_source.changes
-
-install: install_translation install_doc
-	# install application
-	install -d $(DEST)/bin
-	install --mode=755 usr/bin/persy $(DEST)/bin
-    
-	# install lib
-	install -d $(DEST)/lib/persy
-	install -d $(DEST)/lib/persy/assets
-	install -d $(DEST)/lib/persy/assets/dist
-	install --mode=644 usr/lib/persy/*.py $(DEST)/lib/persy
-	install --mode=644 usr/lib/persy/persy.glade $(DEST)/lib/persy
-	install --mode=644 usr/lib/persy/VERSION $(DEST)/lib/persy
-	install --mode=644 usr/lib/persy/assets/*.svg $(DEST)/lib/persy/assets
-	install --mode=644 usr/lib/persy/assets/dist/*.svg $(DEST)/lib/persy/assets/dist
-	chmod 755 $(DEST)/lib/persy/persy.py
-
-    # install language:
-	install -d $(DEST)/lib/persy/locale
-    install --mode=644 usr/lib/persy/locale/messages.pot $(DEST)/lib/persy/locale/messages.pot
-
-	# install example config
-	install --mode=644 usr/lib/persy/example_config $(DEST)/lib/persy
-
-	# install desktop starter
-	install -d $(DEST)/share/applications
-	install --mode=644 usr/share/applications/persy.desktop $(DEST)/share/applications
-
-	# install desktop icon
-	install -d $(DEST)/share/icons
-	install --mode=644 usr/share/icons/persy.svg $(DEST)/share/icons
-
-	# install bash-completion
-	install -d /etc/bash_completion.d
-	install --mode=644 etc/bash_completion.d/persy /etc/bash_completion.d
-
-install_translations:
-    # de
-	install -d $(DEST)/lib/persy/locale/de/LC_MESSAGES
-	install --mode=644 usr/lib/persy/locale/de/LC_MESSAGES/messages.mo $(DEST)/lib/persy/locale/de/LC_MESSAGES/messages.mo
-	
-doc-html:
+doc-html: genversion
 	#build developer documentation and place it in usr/share/doc
-	mkdir -p usr/share/doc
+	mkdir -p usr/share/doc/persy
+	
+	#copy the changelog in docs
+	cp debian/changelog usr/share/doc/persy/changelog.txt
+
 	cd doc && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
@@ -154,7 +90,32 @@ doc-man: genversion
 	mkdir -p usr/share/man/man1
 	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
 	@echo
-	@echo "Build finished; the manpage is in usr/share/man/man1/persy.1.gz."	
+	@echo "Build finished; the manpage is in usr/share/man/man1/persy.1.gz."
+
+language:
+	#create the languagefiles
+	git commit -am "autocommit uncommited changes"
+	xgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot 
+	git commit -am "autoupdated languagefiles"
 	
-install_doc:
+genversion:
+	@echo "placing VERSION taken from debian/changelog in usr/lib/persy/VERSION"
+	echo $(VERSION) > usr/lib/persy/VERSION
+
+
+source-package: genversion language doc-man doc-html
+	debuild -S -sa -k$(GPGKEY) -i.git -I.git
+	@echo
+	@echo "Build finished; Get the debian package at ../persy_$(VERSION).tar.gz"
+
+deb-package: genversion language doc-man doc-html
+	debuild -i.git -I.git
+	@echo
+	@echo "Build finished; Get the debian package at ../persy_$(VERSION)_all.deb"
+	
+release: source_package doc-publish
+	git tag -f $(VERSION)
+	git push origin master --tags
+	dput -f  ppa:tmassassin/ppa ../persy_$(VERSION)_source.changes
+
 
