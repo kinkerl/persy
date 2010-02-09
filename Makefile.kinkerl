@@ -43,7 +43,7 @@ VERSION=`head -n 1 debian/changelog | sed 's/[\(\)]//g' | awk '{print $$2}'`
 
 clean: 
 	git clean -f
-
+	
 doc-publish: doc-html
 	#preparing temp
 	rm -fr /tmp/_build/html
@@ -117,4 +117,5 @@ release: source_package doc-publish
 	git tag -f $(VERSION)
 	git push origin master --tags
 	dput -f  ppa:tmassassin/ppa ../persy_$(VERSION)_source.changes
+
 

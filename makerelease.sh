@@ -7,6 +7,7 @@ version="`cat usr/lib/persy/VERSION`"
 echo -e "Running configure and make"
 ./configure && make
 
+
 echo -e ""
 echo -n "Continue releasing persy-${version} ? (y/n): "
 read answer
