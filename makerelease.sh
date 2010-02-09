@@ -28,6 +28,7 @@ continue_release()
 publish_doc()
 {
     echo "Begin publishing documentation..."
+    git commit -am "autocommit uncommited changes"
     #preparing temp
     rm -fr /tmp/_build/html
     mkdir -p /tmp/_build/html
