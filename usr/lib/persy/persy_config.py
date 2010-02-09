@@ -100,7 +100,7 @@ class PersyConfig():
 			self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
 
 		#path to the license file
-		self.attributes['LICENSE_FILE'] = '/usr/share/common-licenses/GPL-2'
+		self.attributes['LICENSE_FILE'] = '/usr/lib/persy/assets/GPL-2'
 
 		#git variables used by persy
 		self.attributes['SERVER_NICK']='origin'
