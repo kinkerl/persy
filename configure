@@ -17,7 +17,7 @@ for pymod in $pymods; do
     echo -n "Testing python module $pymod: "
     python -c "import $pymod" 2> /dev/null
     retval=$?
-    if [ "$retval" == "0" ]; then
+    if [ "$retval" -eq "0" ]; then
         echo "ok."
     else
         echo "fail."
@@ -30,9 +30,9 @@ mos=""
 langs=""
 echo -n "Translations........: "
 for langdir in `ls -d usr/lib/persy/locale/*/`; do
-	lang=`echo $langdir | cut -d/ -f5`
-	langs="$lang $langs"
-	echo -n "$lang"
+    lang=`echo $langdir | cut -d/ -f5`
+    langs="$lang $langs"
+    echo -n "$lang"
 done
 echo -e ""
 
@@ -47,8 +47,8 @@ cat Makefile.template >> Makefile
 #add translation install
 echo -e "install_translations:" >> Makefile
 for lang in $langs; do
-	echo -e "\tinstall -d \$(DEST)/lib/persy/locale/$lang/LC_MESSAGES" >> Makefile
-	echo -e "\tinstall --mode=644 usr/lib/persy/locale/$lang/LC_MESSAGES/messages.mo \$(DEST)/lib/persy/locale/$lang/LC_MESSAGES/messages.mo" >> Makefile
+    echo -e "\tinstall -d \$(DEST)/lib/persy/locale/$lang/LC_MESSAGES" >> Makefile
+    echo -e "\tinstall --mode=644 usr/lib/persy/locale/$lang/LC_MESSAGES/messages.mo \$(DEST)/lib/persy/locale/$lang/LC_MESSAGES/messages.mo" >> Makefile
 done
 echo -e "" >> Makefile
 
