@@ -53,9 +53,9 @@ done
 echo -e "" >> Makefile
 
 #test build and install docs
+rmdocs=""
 echo -e "install_docs:" >> Makefile
 for doc in $docs; do
-    rmdocs=""
     case $doc in
         "man")
             echo -n "Make man file.......: "
@@ -65,7 +65,7 @@ for doc in $docs; do
                 echo -e "\tinstall --mode=644 usr/share/man/man1/persy.1.gz \$(DEST)/share/man/man1/persy.1.gz" >> Makefile
                 echo "Yes."
                 build="$build doc-$doc"  
-                rmdocs="$rmdocs $doc"          
+                rmdocs="$rmdocs man"          
             fi
             ;;
         "html")
@@ -122,10 +122,20 @@ fi
 # add clean
 echo -e "clean:" >> Makefile
 echo -e "\trm usr/lib/persy/VERSION" >> Makefile
-echo -e "\trm -rf usr/share/man/man1" >> Makefile
-case $doc in
-    "man") rm usr/share/man/man1/persy.1.gz;;
-esac
+#echo -e "\trm usr/lib/persy/*.pyc" >> Makefile
+echo "rmdocs: $rmdocs"
+for doc in $rmdocs; do
+    case $doc in
+        "man") echo -e "\trm usr/share/man/man1" >> Makefile
+                ;;
+        "html") 
+                echo -e "\trm -rf usr/share/doc" >> Makefile
+                echo -e "\trm doc/sphinxtogithub.pyc" >> Makefile
+                echo -e "\trm -rf doc/_build/" >> Makefile
+                ;;
+    esac
+done
+echo -e "" >> Makefile
 
 #add build
 echo -e "build: $build" >> Makefile

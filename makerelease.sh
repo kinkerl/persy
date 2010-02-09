@@ -10,7 +10,7 @@ version="`cat usr/lib/persy/VERSION`"
 echo -e ""
 echo -n "Continue releasing persy-${version} ? (y/n): "
 read answer
-if [ "$answer" != "y" ]; then
+if [ "$answer" -ne "y" ]; then
     echo "Exit."
     exit 0
 fi
@@ -58,7 +58,7 @@ echo -n "Finaly released persy-$version."
 echo -e ""
 echo -n "Building the debian package? (y/n): "
 read answer
-if [ "$answer" != "y" ]; then
+if [ "$answer" -ne "y" ]; then
     echo "Exit."
     exit 0
 else
