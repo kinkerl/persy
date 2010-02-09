@@ -130,10 +130,10 @@ if [ -z `which xgettext 2> /dev/null` ]; then
     echo -e "Skip (xgettext not installed)" 
 else
     echo -e "languagefile:" >> Makefile
-	echo -e "\txgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot" >> Makefile
-	echo -e "" >> Makefile
-	echo -e "Yes"
-	build="$build languagefile"    
+    echo -e "\txgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot" >> Makefile
+    echo -e "" >> Makefile
+    echo -e "Yes"
+    build="$build languagefile"    
 fi
 
 # add clean
