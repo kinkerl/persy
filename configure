@@ -1,0 +1,95 @@
+#!/bin/sh
+
+if [ -e Makefile ]; then
+	rm Makefile;
+fi
+
+#build default
+build="genversion"
+
+#docs
+docs="man html"
+
+#translations
+mos=""
+langs=""
+echo -n "Translations: "
+for langdir in `ls -d usr/lib/persy/locale/*/`; do
+	lang=`echo $langdir | cut -d/ -f5`
+	langs="$lang $langs"
+	echo -n "$lang"
+done
+echo -e ""
+
+#Start Makefile
+echo -e "LANGS=$langs" >> Makefile
+echo -e "SHELL=`which sh`" >> Makefile
+echo -e "" >> Makefile
+
+#add template
+cat Makefile.template >> Makefile
+
+#add translation install
+echo -e "install_translations:" >> Makefile
+for lang in $langs; do
+	echo -e "\tinstall -d \$(DEST)/lib/persy/locale/$lang/LC_MESSAGES" >> Makefile
+	echo -e "\tinstall --mode=644 usr/lib/persy/locale/$lang/LC_MESSAGES/messages.mo \$(DEST)/lib/persy/locale/$lang/LC_MESSAGES/messages.mo" >> Makefile
+done
+echo -e "" >> Makefile
+
+#test build and install docs
+echo -e "install_docs:" >> Makefile
+for doc in $docs; do
+    rmdocs=""
+    case $doc in
+        "man")
+            if [ -z `which pandoc 2&>1 > /dev/null` ]; then
+                echo -e "no pandoc found. can't build and install man file"
+            else
+                echo -e "\tinstall --mode=644 usr/share/man/man1/persy.1.gz \$(DEST)/share/man/man1/persy.1.gz" >> Makefile
+                build="$build doc-man"  
+                rmdocs="$rmdoc $doc"          
+            fi
+            ;;
+         #TODO: html, latex
+        *)
+            echo -e "Found no build an installation instructions for doc-$doc. skip."
+            ;;
+    esac
+done
+echo -e "\t" >> Makefile
+
+#add doc remove
+echo -e "remove_docs:" >> Makefile
+for doc in $rmdocs; do
+    case $doc in
+        "man") echo -e "\trm \$(DEST)/share/man/man1/persy.1.gz";;
+        #TODO: html, latex
+    esac
+done
+echo -e "" >> Makefile
+
+#rebuild languagefile
+if [ -n `which xgettext` ]; then
+    echo -e "languagefile:" >> Makefile
+	echo -e "\txgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot" >> Makefile
+	echo -e "" >> Makefile
+	build="$build languagefile"
+else
+    echo -e "No xgettext found. can't rebuild the languagefile." 
+fi
+
+# add clean
+echo -e "clean:" >> Makefile
+echo -e "\trm -rf usr/share/man/man1" >> Makefile
+case $doc in
+    "man") rm usr/share/man/man1/persy.1.gz;;
+esac
+
+#add build
+echo -e "build: $build" >> Makefile
+
+echo -e "" >> Makefile
+echo "All OK. Now run:"
+echo "    make"
+echo "    sudo make install"

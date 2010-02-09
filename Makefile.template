@@ -1,0 +1,77 @@
+PREFIX=/usr
+DEST=$(DESTDIR)$(PREFIX)
+
+GPGKEY=AF005C40
+
+#Get Version
+VERSION=`head -n 1 debian/changelog | sed 's/[()]//g' | awk '{print $$2}'`
+
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
+PAPER         =
+
+# Internal variables used in sphinx
+PAPEROPT_a4     = -D latex_paper_size=a4
+PAPEROPT_letter = -D latex_paper_size=letter
+ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+
+all: build
+
+genversion:
+	@echo "placing VERSION taken from debian/changelog in usr/lib/persy/VERSION"
+	@echo $(VERSION) > usr/lib/persy/VERSION
+
+doc-html:
+	#build developer documentation and place it in usr/share/doc
+	mkdir -p usr/share/doc
+	cd doc && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
+	@echo
+	@echo "Build finished. The HTML pages are in usr/share/doc"
+
+doc-man:
+	# builds(compresses) the manpage(replaces the github urls for the images)
+	mkdir -p usr/share/man/man1
+	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
+	@echo
+	@echo "Build finished; the manpage is in usr/share/man/man1/persy.1.gz."
+
+install: install_translations install_doc
+	# install persy
+	install -d $(DEST)/bin
+	install --mode=755 usr/bin/persy $(DEST)/bin/persy
+    
+	# install libs
+	install -d $(DEST)/lib/persy
+	install -d $(DEST)/lib/persy/assets
+	install -d $(DEST)/lib/persy/assets/dist
+	install --mode=644 usr/lib/persy/*.py $(DEST)/lib/persy
+	install --mode=644 usr/lib/persy/persy.glade $(DEST)/lib/persy
+	install --mode=644 usr/lib/persy/VERSION $(DEST)/lib/persy/VERSION
+	install --mode=644 usr/lib/persy/assets/*.svg $(DEST)/lib/persy/assets
+	install --mode=644 usr/lib/persy/assets/dist/*.svg $(DEST)/lib/persy/assets/dist
+	chmod 755 $(DEST)/lib/persy/persy.py
+	
+	# install language:
+	install -d $(DEST)/lib/persy/locale
+	install --mode=644 usr/lib/persy/locale/messages.pot $(DEST)/lib/persy/locale/messages.pot
+	
+	# install example config
+	install --mode=644 usr/lib/persy/example_config $(DEST)/lib/persy
+	
+	# install desktop starter
+	install --mode=644 usr/share/applications/persy.desktop $(DEST)/share/applications/persy.desktop
+	
+	# install desktop icon
+	install -d $(DEST)/share/icons
+	install --mode=644 usr/share/icons/persy.svg $(DEST)/share/icons/persy.svg
+	
+	# install bash-completion
+	install -d /etc/bash_completion.d
+	install --mode=644 etc/bash_completion.d/persy /etc/bash_completion.d
+
+remove: remove_docs
+	rm $(DEST)/bin/persy
+	rm -rf $(DEST)/lib/persy
+	rm $(DEST)/share/applications/persy.desktop
+	rm $(DEST)/share/icons/persy.svg
+
