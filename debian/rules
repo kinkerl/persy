@@ -52,6 +52,14 @@ install: build
 	cp -r $(CURDIR)/usr $(CURDIR)/debian/persy/
 	cp -r $(CURDIR)/etc $(CURDIR)/debian/persy/
 
+	#cleaning pyc files
+	rm -f $(CURDIR)/debian/persy/usr/lib/persy/*.pyc
+
+	#removing the jquery.js file and replacing it with a symlink
+	rm -f $(CURDIR)/debian/persy/usr/share/doc/persy/static/jquery.js
+	ln -s ../../../javascript/jquery/jquery.js $(CURDIR)/debian/persy/usr/share/doc/persy/static/jquery.js
+
+
 
 
 # Build architecture-independent files here.
@@ -73,15 +81,15 @@ binary-indep: build install
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
-	dh_installman
+#	dh_installman
 #	dh_link
 #	dh_strip
-	dh_compress
+	dh_compress -X.js
 	dh_fixperms
 #	dh_perl
 #	dh_makeshlibs
 	dh_installdeb
-	dh_shlibdeps
+#	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

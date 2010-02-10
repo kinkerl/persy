@@ -13,6 +13,7 @@ For a quick start, just run persy
 
    persy
 
+persy can also be started from the the normal startup menu in the "accessory" category.
 Now you have to add directories to persy. You can do this in the settings menu into the "backup" tab (take a look at the screenshot).
 
 .. image:: images/persy_settings_quickstart.png
