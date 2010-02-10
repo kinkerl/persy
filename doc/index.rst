@@ -25,6 +25,7 @@ Contents:
    installation
    usage
    developer
+   trivia
    changelog
 
 Indices and tables
