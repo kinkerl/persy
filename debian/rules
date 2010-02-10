@@ -52,6 +52,8 @@ install: build
 	cp -r $(CURDIR)/usr $(CURDIR)/debian/persy/
 	cp -r $(CURDIR)/etc $(CURDIR)/debian/persy/
 
+	#cleaning pyc files
+	rm -f $(CURDIR)/debian/persy/usr/lib/persy/*.pyc
 
 
 # Build architecture-independent files here.
