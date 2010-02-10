@@ -4,7 +4,7 @@ Installation
 If you can, install the deb package. It will take care of "all" problems. 
 You can find the latest version in the following ppa:
 
-.. code-block:: 
+.. code-block:: bash
   :linenos:
 
    ppa:tmassassin/ppa
