@@ -228,7 +228,7 @@ for line in f.splitlines():
 	if line.startswith('  * '): # get the changes
 		changes += (' *   ' + line[4:]+ "\n")
 	elif line.startswith(' -- '): # end of a release block
-		date = line[43:-20]
+		date = line[line.find('>'):-20]
 		out.write(head + " -" + date +"\n")
 		out.write(subline +"\n\n")
 		out.write(changes+"\n")
