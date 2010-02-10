@@ -55,6 +55,12 @@ install: build
 	#cleaning pyc files
 	rm -f $(CURDIR)/debian/persy/usr/lib/persy/*.pyc
 
+	#removing the jquery.js file and replacing it with a symlink
+	rm -f $(CURDIR)/debian/persy/usr/share/doc/persy/static/jquery.js
+	ln -s ../../../javascript/jquery/jquery.js $(CURDIR)/debian/persy/usr/share/doc/persy/static/jquery.js
+
+
+
 
 # Build architecture-independent files here.
 binary-indep: build install
