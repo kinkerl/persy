@@ -36,6 +36,7 @@ publish_doc()
 	
     #prepare gh-pages and remove existing stuff
     git checkout gh-pages
+    git pull origin gh-pages
     rm -rf *
 	
     #make the changes
