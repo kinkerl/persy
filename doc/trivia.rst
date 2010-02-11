@@ -4,8 +4,8 @@ Trivia
 These are some alternative logos for persy used on the corresponding distributions.
 
 .. csv-table:: 
-  :header: "logo", "state"
-  :widths: 150, 400
+  :header: "logo", "distribution"
+  :widths: 64, 400
 
   |persy_linuxmint.svg|, "linux mint"
   |persy_fedora.svg|, "fedora"
