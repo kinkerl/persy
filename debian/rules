@@ -87,7 +87,8 @@ binary-indep: build install
 #	dh_installman
 #	dh_link
 #	dh_strip
-	dh_compress -X.js -X.txt
+	# i want a working documentation... so dont gzip js,txt and html files
+	dh_compress -X.js -X.txt -X.html
 	dh_fixperms
 #	dh_perl
 #	dh_makeshlibs
