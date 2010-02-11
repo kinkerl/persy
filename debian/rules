@@ -84,7 +84,7 @@ binary-indep: build install
 #	dh_installman
 #	dh_link
 #	dh_strip
-	dh_compress -X.js
+	dh_compress -X.js -X.txt
 	dh_fixperms
 #	dh_perl
 #	dh_makeshlibs

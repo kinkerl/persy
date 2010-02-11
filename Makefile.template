@@ -25,12 +25,12 @@ doc-html:
 	#build developer documentation and place it in usr/share/doc
 	mkdir -p usr/share/doc/persy
 	
-	cd doc && $(SPHINXBUILD) -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
+	cd doc && $(SPHINXBUILD) -a -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
 
 doc-latex:
-	cd doc && $(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
+	cd doc && $(SPHINXBUILD) -a -b latex $(ALLSPHINXOPTS) _build/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in doc/_build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
