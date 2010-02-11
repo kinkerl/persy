@@ -17,7 +17,8 @@ I have a old pc here in my local network for example. Give persy the server data
 
 If you are not looking at the online version of the documentation, you can find the most recent version at: http://kinkerl.github.com/persy/
 
-Contents:
+Contents
+------------------
 
 .. toctree::
    :maxdepth: 2
