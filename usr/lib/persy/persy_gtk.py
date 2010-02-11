@@ -774,21 +774,35 @@ class PersyGtk():
 
 	def help(self, widget, data = None):
 		"""
-		
+		opens the system-webbrowser witht the persy documentation
+		 *   windows = ie
+		 *   *nix = firefox (most of the time)
+		 *   mac = safari
 		"""
-		
 		webbrowser.open(self.config.getAttribute('HTMLDOCFILE'))
 
 	def syncWithRemote(self, widget, data = None):
+		"""
+		calls the syncWithRemote function in core
+		"""
 		self.core.syncWithRemote()
 
 	def initLocal(self, widget, data = None):
+		"""
+		calls the initLocal function in core
+		"""
 		self.core.initLocal()
 
 	def initRemote(self, widget, data = None):
+		"""
+		calls the initRemote function in core
+		"""
 		self.core.initRemote()
 
 	def isInSyncWithRemote(self, widget, data = None):
+		"""
+		returns the result of isInSyncWithRemote from core
+		"""
 		return self.core.isInSyncWithRemote()
 
 

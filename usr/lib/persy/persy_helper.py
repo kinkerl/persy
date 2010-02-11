@@ -53,8 +53,10 @@ __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 
 class _PersyHelper():
-	'''Functions that might be helpful in some places
-	Uses singleton pattern (see bottom)'''
+	"""
+	Functions that might be helpful in some places.
+	Singleton
+	"""
 
 	def __init__(self):
 		#aptCache is global for version retrieving
@@ -63,7 +65,10 @@ class _PersyHelper():
 		pass
 
 	def which(self, program):
-		'''take from http://stackoverflow.com/questions/377017'''
+		"""
+		this function is like the unix command which
+		take from http://stackoverflow.com/questions/377017
+		"""
 		def is_exe(fpath):
 			return os.path.exists(fpath) and os.access(fpath, os.X_OK)
 		fpath, fname = os.path.split(program)
@@ -78,11 +83,15 @@ class _PersyHelper():
 		return None
 
 	def striplist(self, l):
-		'''helper function to strip lists'''
+		"""
+		helper function to strip lists
+		"""
 		return ([x.strip() for x in l])
 
 	def getSoftwareVersion(self, name):
-		"""returns the version of a installed software as a String. Returns None if not installed"""
+		"""
+		returns the version of a installed software as a String. Returns None if not installed
+		"""
 		version = None
 		if name.lower() == 'persy':
 			filename = '/usr/lib/persy/VERSION'
