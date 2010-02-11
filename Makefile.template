@@ -53,7 +53,7 @@ install: install_translations install_docs
 	install -d $(DEST)/lib/persy/assets
 	install -d $(DEST)/lib/persy/assets/dist
 	install --mode=644 usr/lib/persy/*.py $(DEST)/lib/persy
-	install --mode=644 usr/lib/persy/persy.glade $(DEST)/lib/persy
+	install --mode=644 usr/lib/persy/persy.glade $(DEST)/lib/persy/persy.glade
 	install --mode=644 usr/lib/persy/VERSION $(DEST)/lib/persy/VERSION
 	install --mode=644 usr/lib/persy/assets/GPL-2 $(DEST)/lib/persy/assets/GPL-2
 	install --mode=644 usr/lib/persy/assets/*.svg $(DEST)/lib/persy/assets
