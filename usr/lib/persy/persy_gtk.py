@@ -54,6 +54,7 @@ try:
 	import gtk
 	import gtk.glade
 	import pygtk
+	import webbrowser
 	pygtk.require("2.0")
 except ImportError as e:
 	print _("You do not have all the dependencies:")
@@ -731,7 +732,11 @@ class PersyGtk():
 		self.core.setonetimesync()
 
 	def persy_sync_toggle(self, widget, data = None):
-		'''toggles the sync state (use_remote) of persy (True/False) '''
+		"""
+		toggles the sync state in the config (use_remote) of persy (True/False) 
+
+		if the widget is active, use_remote will be true
+		"""
 		if widget.active:
 			self.config['remote']['use_remote'] = True
 		else:
@@ -739,35 +744,66 @@ class PersyGtk():
 		self.config.write()
 
 	def optimize(self, widget, data = None):
-		'''calls the optimize function'''
+		"""
+		calls the optimize function in core
+		"""
 		self.core.optimize()
 
 	def browse(self, widget, data = None):
+		"""
+		calls the browse function in core
+		"""
 		self.core.browse()
 
 	def persy_start(self):
+		"""
+		calls the persy_start function in core
+		"""
 		self.core.persy_start()
 
 	def persy_stop(self):
+		"""
+		calls the persy_stop function in core
+		"""
 		self.core.persy_stop()
 
 	def open_menu(self, widget, data = None):
+		"""
+		creates a new PersyGtkMenu instance
+		"""
 		menu = PersyGtkMenu(self.config, self.log, self)
 
 	def help(self, widget, data = None):
-		import webbrowser
+		"""
+		opens the system-webbrowser witht the persy documentation
+		 *   windows = ie
+		 *   *nix = firefox (most of the time)
+		 *   mac = safari
+		"""
 		webbrowser.open(self.config.getAttribute('HTMLDOCFILE'))
 
 	def syncWithRemote(self, widget, data = None):
+		"""
+		calls the syncWithRemote function in core
+		"""
 		self.core.syncWithRemote()
 
 	def initLocal(self, widget, data = None):
+		"""
+		calls the initLocal function in core
+		"""
 		self.core.initLocal()
 
 	def initRemote(self, widget, data = None):
+		"""
+		calls the initRemote function in core
+		"""
 		self.core.initRemote()
 
 	def isInSyncWithRemote(self, widget, data = None):
+		"""
+		returns the result of isInSyncWithRemote from core
+		"""
 		return self.core.isInSyncWithRemote()
 
 

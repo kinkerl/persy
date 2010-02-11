@@ -21,22 +21,22 @@ genversion:
 	@echo "placing VERSION taken from debian/changelog in usr/lib/persy/VERSION"
 	@echo $(VERSION) > usr/lib/persy/VERSION
 
-doc-html:
-	#build developer documentation and place it in usr/share/doc
+doc-html: genversion
+	#build developer documentation and place it in usr/share/doc/persy
 	mkdir -p usr/share/doc/persy
 	
 	cd doc && $(SPHINXBUILD) -a -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
 
-doc-latex:
+doc-latex: genversion
 	cd doc && $(SPHINXBUILD) -a -b latex $(ALLSPHINXOPTS) _build/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in doc/_build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
 	      "run these through (pdf)latex."
 
-doc-man:
+doc-man: genversion
 	# builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p usr/share/man/man1
 	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
