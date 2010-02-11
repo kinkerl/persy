@@ -53,12 +53,19 @@ __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 
-class PersyConfig():
-	'''Handles the configuration for Persy'''
 
+class PersyConfig():
+	"""
+	Configuration class for Persy
+
+	This class handels all the configuration and environment attributes.
+	It depends on the configobj class.
+	"""
 
 	def __init__(self):
-
+		"""
+		the the static attributes and parses the configuration file
+		"""
 		self.attributes = {}
 		self.p = PersyHelper()
 
@@ -255,21 +262,35 @@ class PersyConfig():
 
 
 	def write(self):
+		"""
+		uses confobj to write the configuration
+		"""
 		self.config.write()
 
 
 	def getAttribute(self, key):
+		"""
+		key -- the name of the attribute
+		
+		returns the value to a key
+		"""
 		return self.attributes[key]
 
 
-	def getConfig(self):
-		return self.config
-
-
 	def has_key(self, item):
+		"""
+		item -- name of item in the config
+		
+		check if this config object has the key
+		"""
 		return self.config.has_key(item)
 
 
 	def __getitem__(self, item):
+		"""
+		item -- name of the item in the config
+		
+		allows compartibility with configobj for config[item] like querys
+		"""
 		return self.config[item]
 

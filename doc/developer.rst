@@ -49,15 +49,14 @@ Core
 _________________________________
 
 .. automodule:: persy_core
-.. autoclass:: _Core
-   :members:
+   :members: Core, _Core 
 
 PersyConfig
 _________________________________
 
 .. automodule:: persy_config
-.. autoclass:: PersyConfig
    :members:
+
 
 PersyGtk
 _________________________________

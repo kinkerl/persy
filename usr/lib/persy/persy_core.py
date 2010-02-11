@@ -59,7 +59,14 @@ __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 
 class _Core():
+	"""
+	the core functionaliy for persy
+	"""
+
 	def init(self, config, log):
+		"""
+		initializes the git binding
+		"""
 		self.config = config
 		self.log = log
 		self.worker = None
@@ -86,7 +93,9 @@ class _Core():
 		#print self.isInSyncWithRemote()
 
 	def initLocal(self):
-		'''initialises the local repository'''
+		"""
+		initialises the local repository
+		"""
 		if not self.config.has_key('general') or not self.config['general'].has_key('name') or not self.config['general']['name'] :
 			self.log.critical(_('username not set, cannot create git repository. use "persy --config --name=NAME" to set one'), verbose=True)
 			sys.exit(-1)
@@ -108,17 +117,25 @@ class _Core():
 
 
 	def vcslog(self):
-		'''executes the git-log command'''
+		"""
+		runs the vcs(git)-log command and writs the output to stdout
+		"""
 		self.vcs.log(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
 
 	def vcsstatus(self):
-		'''executes the git-status command'''
+		"""
+		runs the vcs(git)-status command
+		"""
 		self.vcs.status(stdout=sys.stdout, stdin=sys.stdin, stderr=sys.stderr)
 
 
 	def initRemote(self):
-		'''initialises the remote repository and adds it to the synchronization pack'''
+		"""
+		initialises the remote repository and adds it to the synchronization pack
+		
+		tries to connect to the remote server and creates the destination folder and initializes the remote git repository
+		"""
 		self.log.info(_("initialising and adding remote repository..."), verbose=True)
 		try:	
 			client = paramiko.SSHClient()
@@ -146,7 +163,11 @@ class _Core():
 
 
 	def syncWithRemote(self):
-		'''Syncs with a remote server'''
+		"""
+		Syncs with a remote server
+		
+		adds a new remote repository with the information from config to the local git repository and performs a pull
+		"""
 		# i dont use clone because of massive errors when using it
 		# the best way iś to add the remote server and pull from it
 		try:
@@ -161,7 +182,11 @@ class _Core():
 
 
 	def isInSyncWithRemote(self):
-		'''returns true if it is already in sync'''
+		"""
+		returns true if it is already in sync
+		
+		"in sync" means: git remote returns an entry for an "origin" repository.
+		"""
 		try:
 			self.vcs.command('git', params=['remote'])
 		except Exception as e:
@@ -173,9 +198,12 @@ class _Core():
 
 
 	def vcsignore(self):
-		'''creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with "git clean")'''
-		#list every file in /home/USER
-		#add every file and folder (if not already done) to .vcsignore if they are not part WATCHED
+		"""
+		creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with "git clean")
+		
+		list every file in /home/USER. 
+		add every file and folder (if not already done) to .vcsignore if they are not part WATCHED
+		"""
 		current = os.listdir(self.config.getAttribute('USERHOME'))
 		for f in self.config['local']['watched']:
 			#if not f.startswith(USERHOME):
@@ -218,7 +246,10 @@ class _Core():
 
 
 	def optimize(self):
-		'''executes git-gc'''
+		"""
+		tries to optimize the local repository.
+		executes the git-gc command. 
+		"""
 		self.log.info('starting optimization', verbose=True)
 		class Starter(Thread):
 			def __init__(self,vcs, log):
@@ -239,7 +270,9 @@ class _Core():
 
 
 	def browse(self):
-		'''starts the default git browser'''
+		"""
+		starts the default git browser
+		"""
 		class Starter(Thread):
 			def __init__(self,vcs, config):
 				Thread.__init__(self)
@@ -251,7 +284,9 @@ class _Core():
 
 
 	def persy_stop(self):
-		'''Stops Persy'''
+		"""
+		Stops persys working thread and the notifier.
+		"""
 		self.log.info("stop working")
 		self.log.setStop()
 
@@ -273,7 +308,9 @@ class _Core():
 
 
 	def persy_start(self):
-		''' Starts Persy'''
+		"""
+		initializes the worker thread and notifier
+		"""
 		self.log.info("start working")
 		self.log.setStart()
 		FLAGS=EventsCodes.ALL_FLAGS
@@ -302,7 +339,9 @@ class _Core():
 
 
 	def setonetimesync(self):
-		'''if the worker is running, execute the setonetimesync function of the worker'''
+		"""
+		if the worker is running, execute the setonetimesync function of the worker
+		"""
 		if self.worker:
 			try:
 				self.worker.setonetimesync()
@@ -311,23 +350,41 @@ class _Core():
 
 
 	def isLocalInitialized(self):
-		'''returns true if the local GIT_DIR exists'''
+		"""
+		returns true if the local GIT_DIR exists
+		"""
 		return os.path.exists(self.config.getAttribute('GIT_DIR'))
 
 
 	def git_add(self, item):
+		"""
+		adds an item to git
+		"""
 		self.vcs.add(item)
 
-	def git_commit(self, item):
-		self.vcs.commit(item)
+	def git_commit(self, message):
+		"""
+		executes a commit with "message" as the commit message
+		"""
+		self.vcs.commit(message)
 
-	def git_pull(self, item, item2):
-		self.vcs.pull(item, item2)
+	def git_pull(self, nickname, branch):
+		"""
+		executes a pull from "branch" on "nickname"
+		"""
+		self.vcs.pull(nickname, branch)
 
-	def git_push(self, item, item2):
-		self.vcs.push(item,item2)
+	def git_push(self, nickname, branch):
+		"""
+		executes a push to "branch" on "nickname"
+		"""
+		self.vcs.push(nickname,branch)
 
 #singleton hack
 _singleton = _Core()
-def Core(): return _singleton
+def Core(): 
+	"""
+	this sould generate a singleton from Core
+	"""
+	return _singleton
 
