@@ -96,6 +96,8 @@ def main(argv):
 		os.makedirs(config.getAttribute('PERSY_DIR'))
 
 
+	log = Talker(config, options.verbose) #verbose = print ALL output to stdout
+	log.setLevel(options.verbose) #true = debug, false = info set verbosity to show all messages of severity >= DEBUG
 
 
 	if options.config:
@@ -135,9 +137,6 @@ def main(argv):
 		config['remote']['use_remote'] = True
 		config.write()
 
-
-	log = Talker(config, options.verbose) #verbose = print ALL output to stdout
-	log.setLevel(options.verbose) #true = debug, false = info set verbosity to show all messages of severity >= DEBUG
 
 	core = Core()
 	core.init(config, log)
