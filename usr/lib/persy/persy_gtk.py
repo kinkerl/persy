@@ -74,7 +74,17 @@ __copyright__ = "Copyright (C) 2010 Dennis Schwertel"
 
 
 class PersyGtkMenu():
+	"""
+	This class creates the settings menu.
+	It uses glade to create the interface with the corresponding persy.glade file.
+	"""
 	def __init__(self, config, log, gtkcore):
+	
+		"""
+		 *   builds the settings menu
+		 *   does the localization of the gui
+		 *   connects all buttons to the used actions
+		"""
 
 		#used do distinguish hboxes for watched entries
 		self.hboxcounter = 0;
@@ -323,6 +333,9 @@ class PersyGtkMenu():
 
 
 	def save(self, widget, data=None):
+		"""
+		converts the values from the gui to PersyConfig values and executes the save function on the config object
+		"""
 		self.log.info("saving configuration")
 		#general configuration
 		textGeneralName = self.wTree.get_widget('textGeneralName')
@@ -380,6 +393,9 @@ class PersyGtkMenu():
 		self.config.write()
 
 	def addWatchedEntry(self, widget, watched):
+		"""
+		code for adding a new entry for a watched directory to the gui
+		"""
 		root = self.wTree.get_widget('vbox4')
 
 		hbox = gtk.HBox()
@@ -413,6 +429,10 @@ class PersyGtkMenu():
 
 
 	def removeWatchedEntry(self, widget, data = None):
+		"""
+		removing a watched directory entry from the widget. 
+		the name of the directory is stored in data
+		"""
 		for child in widget.get_parent().get_parent().get_children():
 			if child.get_name() == "hbox_%i"%data:
 				child.destroy()
@@ -422,6 +442,9 @@ class PersyGtkMenu():
 
 
 	def launchFileChooser(self, widget, data = None):
+		"""
+		launchdes a filechooser dialog for a folder
+		"""
 		filechooser =  gtk.FileChooserDialog(title=None	,action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, buttons=(gtk.STOCK_CANCEL,gtk.RESPONSE_CANCEL,gtk.STOCK_OPEN,gtk.RESPONSE_OK))
 		response = filechooser.run()
 		try:
@@ -442,6 +465,10 @@ class PersyGtkMenu():
 
 
 	def actionTestRemoteServer(self, widget, data= None):
+		"""
+		persy environment test action.
+		uses PersySSH to check the remote Server
+		"""
 		persyssh = PersySSH(self.config, self.log)
 		if persyssh.checkRemoteServer():
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
@@ -456,6 +483,10 @@ class PersyGtkMenu():
 		textGeneralName.set_from_pixbuf(pixbuf)
 
 	def actionTestSSHAuth(self, widget, data= None):
+		"""
+		persy environment test action.
+		uses PersySSH to check the server authentification
+		"""
 		persyssh = PersySSH(self.config, self.log)
 		if persyssh.checkSSHAuth():
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
@@ -470,6 +501,10 @@ class PersyGtkMenu():
 		textGeneralName.set_from_pixbuf(pixbuf)
 
 	def actionTestLocalSSHKey(self, widget, data= None):
+		"""
+		persy environment test action.
+		uses PersySSH to check if local ssh keys do exist
+		"""
 		persyssh = PersySSH(self.config, self.log)
 		if persyssh.localSSHKeysExist():
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
@@ -484,6 +519,10 @@ class PersyGtkMenu():
 		textGeneralName.set_from_pixbuf(pixbuf)
 
 	def isInSyncWithRemote(self, widget, data= None):
+		"""
+		persy environment test action.
+		uses gtkcore to test if persy is in sync with remote (has an git-remote entry for origin)
+		"""
 		if self.gtkcore.isInSyncWithRemote(widget):
 			pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('ICON_OK'), 24, 24)
 			thewidget = self.wTree.get_widget('imageIsInSyncWithRemote')
@@ -499,7 +538,9 @@ class PersyGtkMenu():
 
 
 class PersyGtk():
-	'''the gtk main loop and the status icon'''
+	"""
+	the gtk main loop and the status icon
+	"""
 
 	def __init__(self):
 		self.statusIcon = None
@@ -507,6 +548,10 @@ class PersyGtk():
 
 
 	def init(self, core, config, log, start=False):
+		"""
+		creates the satus icon and appends all actions to it.
+		initializes the rest of the gtk stuff and runs persy if start is True
+		"""
 		self.core = core
 		self.config = config
 		self.log = log
@@ -574,7 +619,9 @@ class PersyGtk():
 			self.log.critical(str(e), verbose=True)
 
 	def quit_cb(self, widget, data = None):
-		'''stopts persy'''
+		"""
+		start a last remote sync and then stops persy (with the use of pery_core)
+		"""
 		self.core.setonetimesync()
 		self.core.persy_stop()
 		if data:
@@ -583,14 +630,18 @@ class PersyGtk():
 		sys.exit(0)
 
 	def popup_menu_cb(self, widget, button, time, data = None):
-		'''show the rightclick menu'''
+		"""
+		show the rightclick menu of the status icon
+		"""
 		if data:
 			data.show_all()
 			data.popup(None, None, None, 3, time)
 
 
 	def about(self, widget, data = None):
-		'''show the about dialog'''
+		"""
+		create and show the about dialog
+		"""
 		dlg = gtk.AboutDialog()
 		dlg.set_title(_("About Persy"))
 
@@ -624,12 +675,15 @@ class PersyGtk():
 		dlg.show()
 
 	def showgitlog(self, widget, data = None):
-		'''displays the git log'''
+		"""
+		displays the git log
+		"""
 		self.showlog(widget, data, self.config.getAttribute('LOGFILE_GIT'))
 
 	def showlog(self, widget, data = None, filename=None):
-		'''displays the default.log'''
-		'''executes git-gc'''
+		"""
+		displays the default.log. uses xterm for display
+		"""
 		self.log.debug('show log')
 		class Starter(Thread):
 			def __init__(self, log, config):
@@ -663,7 +717,9 @@ class PersyGtk():
 
 
 	def persy_toggle(self, widget, data = None):
-		'''toggles the state of persy (start/stop)'''
+		"""
+		toggles the state of persy (start/stop)
+		"""
 		if widget.active:
 			self.persy_start()
 		else:

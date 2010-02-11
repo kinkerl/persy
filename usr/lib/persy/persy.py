@@ -58,7 +58,9 @@ __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 
 def main(argv):
-	'''the main function. the command line arguments are processed here and the next actions are started here too'''
+	"""
+	the main function. the command line arguments are processed here and the next actions are started here too
+	"""
 	args = argv[1:]
 
 	config =  PersyConfig()
@@ -195,4 +197,4 @@ if __name__ == '__main__':
 		print 'Unexpected error: ' + str(e)
 		raise
 
-
+s
