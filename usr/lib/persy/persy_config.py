@@ -126,8 +126,12 @@ class PersyConfig():
 
 		#xterm terminal
 		self.attributes['XTERM'] = "xterm"
+		
 		#fortune	
 		self.attributes['FORTUNE'] = "fortune"
+
+		#autoshare
+		self.attributes['AUTOSHARE'] = "autoshare"
 
 		#the default gui git browser
 		self.attributes['GITGUI']=["gitk", "qgit"] #possible browsers
@@ -157,6 +161,14 @@ class PersyConfig():
 			config['general']['fortune'] = True
 		if not type(config['general']['fortune']) is bool:
 			config['general']['fortune'] = False
+			
+	    #general autoshare
+		if not config['general'].has_key('autoshare'):
+			config['general']['autoshare'] = False
+		if type(config['general']['autoshare']) is str and config['general']['autoshare'].lower()  == 'true':
+			config['general']['autoshare'] = True
+		if not type(config['general']['autoshare']) is bool:
+			config['general']['autoshare'] = False
 
 		#general gitgui
 		if not config['general'].has_key('prefgitbrowser'):
@@ -249,14 +261,6 @@ class PersyConfig():
 		#remote path
 		if not config['remote'].has_key('path') or not type(config['remote']['path']) is str:
 			config['remote']['path'] = self.attributes['DEFAULT_REMOTE_PATH']
-
-		#remote autoshare
-		if not config['remote'].has_key('autoshare'):
-			config['remote']['autoshare'] = False
-		if type(config['remote']['autoshare']) is str and config['remote']['autoshare'].lower()  == 'true':
-			config['remote']['autoshare'] = True
-		if not type(config['remote']['autoshare']) is bool:
-			config['remote']['autoshare'] = False
 
 		self.config = config
 

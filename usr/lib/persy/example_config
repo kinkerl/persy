@@ -15,6 +15,11 @@ prefgitbrowser=gitk
 # use small fortune lines in the git commit description (True/False)
 fortune=False
 
+# autoshare the configfile under ~/.persy/config 
+# if this is set to True, all the computer in a sync
+# will share the configuration file
+autoshare=True
+
 
 # configurations for the local backup
 [local]
@@ -50,9 +55,4 @@ path = %s
 
 # the username for the auth on the server
 username = 
-
-# autoshare the configfile under ~/.persy/config 
-# if this is set to True, all the computer in a sync
-# will share the configuration file
-autoshare = True
 
