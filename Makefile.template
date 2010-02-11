@@ -22,7 +22,7 @@ genversion:
 	@echo $(VERSION) > usr/lib/persy/VERSION
 
 doc-html:
-	#build developer documentation and place it in usr/share/doc
+	#build developer documentation and place it in usr/share/doc/persy
 	mkdir -p usr/share/doc/persy
 	
 	cd doc && $(SPHINXBUILD) -a -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy

@@ -12,7 +12,7 @@ build="genversion"
 docs="man html"
 
 #python modules
-pymods="gettext getpass platform paramiko subprocess pynotify pyinotify gtk gtk.glade pygtk"
+pymods="gettext getpass platform paramiko subprocess pynotify pyinotify gtk gtk.glade pygtk webbrowser"
 failedpymods=""
 for pymod in $pymods; do
     echo -n "Testing python module $pymod: "
