@@ -113,7 +113,6 @@
                 </child>
                 <child>
                   <widget class="GtkFrame" id="frame4">
-                    <property name="visible">True</property>
                     <property name="border_width">10</property>
                     <property name="label_xalign">0</property>
                     <property name="label_yalign">0</property>
@@ -125,22 +124,7 @@
                         <child>
                           <widget class="GtkTable" id="table9">
                             <property name="visible">True</property>
-                            <property name="n_rows">2</property>
                             <property name="n_columns">2</property>
-                            <child>
-                              <widget class="GtkLabel" id="labelGeneralGitBrowser">
-                                <property name="width_request">300</property>
-                                <property name="visible">True</property>
-                                <property name="xalign">0</property>
-                                <property name="ypad">10</property>
-                                <property name="label" translatable="yes">default git browser</property>
-                              </widget>
-                              <packing>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                                <property name="y_options">GTK_FILL</property>
-                              </packing>
-                            </child>
                             <child>
                               <widget class="GtkCheckButton" id="checkGeneralFortune">
                                 <property name="label" translatable="yes">use fortune messages in the git commit</property>
@@ -153,19 +137,6 @@
                                 <property name="right_attach">2</property>
                                 <property name="y_options">GTK_FILL</property>
                                 <property name="y_padding">10</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="GtkComboBox" id="comboboxGeneralGitBrowser">
-                                <property name="visible">True</property>
-                                <property name="items" translatable="yes"></property>
-                              </widget>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                                <property name="y_options"></property>
                               </packing>
                             </child>
                           </widget>
@@ -450,7 +421,7 @@
                         <child>
                           <widget class="GtkTable" id="table7">
                             <property name="visible">True</property>
-                            <property name="n_rows">3</property>
+                            <property name="n_rows">2</property>
                             <property name="n_columns">2</property>
                             <child>
                               <widget class="GtkCheckButton" id="checkRemoteUse">
@@ -467,22 +438,6 @@
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkCheckButton" id="checkAutoshare">
-                                <property name="label" translatable="yes">share the configurationfile</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="draw_indicator">True</property>
-                              </widget>
-                              <packing>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                                <property name="y_options">GTK_FILL</property>
-                                <property name="y_padding">10</property>
-                              </packing>
-                            </child>
-                            <child>
                               <widget class="GtkSpinButton" id="spinRemoteSleep">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -494,8 +449,8 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
                                 <property name="y_options">GTK_FILL</property>
                               </packing>
                             </child>
@@ -508,8 +463,8 @@
                                 <property name="wrap">True</property>
                               </widget>
                               <packing>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
                                 <property name="y_options">GTK_FILL</property>
                                 <property name="y_padding">10</property>
                               </packing>
@@ -968,7 +923,7 @@
                         <child>
                           <widget class="GtkTable" id="table8">
                             <property name="visible">True</property>
-                            <property name="n_rows">3</property>
+                            <property name="n_rows">4</property>
                             <property name="n_columns">2</property>
                             <child>
                               <widget class="GtkLabel" id="labelGitBrowser">
@@ -979,7 +934,8 @@
                                 <property name="label" translatable="yes">start git browser</property>
                               </widget>
                               <packing>
-                                <property name="x_options"></property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
                                 <property name="y_options"></property>
                               </packing>
                             </child>
@@ -991,8 +947,8 @@
                                 <property name="label" translatable="yes">show log</property>
                               </widget>
                               <packing>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
                                 <property name="x_options">GTK_FILL</property>
                                 <property name="y_options"></property>
                               </packing>
@@ -1005,8 +961,8 @@
                                 <property name="label" translatable="yes">show git log</property>
                               </widget>
                               <packing>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
                                 <property name="x_options">GTK_FILL</property>
                                 <property name="y_options">GTK_FILL</property>
                               </packing>
@@ -1021,6 +977,8 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
                                 <property name="y_options"></property>
                               </packing>
                             </child>
@@ -1034,8 +992,8 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
                                 <property name="y_options"></property>
                               </packing>
                             </child>
@@ -1049,8 +1007,31 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
+                                <property name="y_options"></property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="labelGeneralGitBrowser">
+                                <property name="width_request">300</property>
+                                <property name="visible">True</property>
+                                <property name="xalign">0</property>
+                                <property name="ypad">10</property>
+                                <property name="label" translatable="yes">default git browser</property>
+                              </widget>
+                              <packing>
+                                <property name="y_options">GTK_FILL</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkComboBox" id="comboboxGeneralGitBrowser">
+                                <property name="visible">True</property>
+                                <property name="items" translatable="yes"></property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
                                 <property name="y_options"></property>
                               </packing>
                             </child>

@@ -200,9 +200,9 @@ class PersyGtkMenu():
 		textGeneralName.set_value(int(config['remote']['sleep']))
 		textGeneralName.set_tooltip_text(_("interval in seconds in which a synchronization with the remote host occurs"))
 
-		textGeneralName = self.wTree.get_widget('checkAutoshare')
-		textGeneralName.set_active(config['remote']['autoshare'])
-		textGeneralName.set_tooltip_text(_("if this is checked, all the computer in a sync will share the configuration file"))
+		#textGeneralName = self.wTree.get_widget('checkAutoshare')
+		#textGeneralName.set_active(config['remote']['autoshare'])
+		#textGeneralName.set_tooltip_text(_("if this is checked, all the computer in a sync will share the configuration file"))
 
 		textGeneralName = self.wTree.get_widget('labelCategoryServerConf')
 		textGeneralName.set_label('<b>'+_("server configuration")+'</b>')
