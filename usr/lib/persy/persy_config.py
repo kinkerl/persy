@@ -117,10 +117,11 @@ class PersyConfig():
 		self.attributes['DEFAULT_LOCAL_SLEEP'] = 5
 		self.attributes['DEFAULT_REMOTE_SLEEP'] = 300
 		self.attributes['DEFAULT_REMOTE_HOSTNAME'] = ''
+		self.attributes['DEFAULT_REMOTE_PORT'] = 22
 		self.attributes['DEFAULT_REMOTE_PATH'] = ''
 
 		try:
-			self.attributes['DEFAULT_CONFIG']= open(self.attributes['EXAMPLECONFIG']).read()%(self.attributes['DEFAULT_LOCAL_SLEEP'], self.attributes['DEFAULT_REMOTE_SLEEP'], self.attributes['DEFAULT_REMOTE_HOSTNAME'], self.attributes['DEFAULT_REMOTE_PATH'])
+			self.attributes['DEFAULT_CONFIG']= open(self.attributes['EXAMPLECONFIG']).read()%(self.attributes['DEFAULT_LOCAL_SLEEP'], self.attributes['DEFAULT_REMOTE_SLEEP'], self.attributes['DEFAULT_REMOTE_HOSTNAME'], self.attributes['DEFAULT_REMOTE_PORT'], self.attributes['DEFAULT_REMOTE_PATH'])
 		except IOError as e:
 			print str(e)
 
@@ -253,6 +254,10 @@ class PersyConfig():
 		#remote hostname
 		if not config['remote'].has_key('hostname') or not type(config['remote']['hostname']) is str:
 			config['remote']['hostname'] = self.attributes['DEFAULT_REMOTE_HOSTNAME']
+			
+		#remote port
+		if not config['remote'].has_key('port') or not config['remote']['port']:
+			config['remote']['port'] = self.attributes['DEFAULT_REMOTE_PORT']
 
 		#remote username
 		if not config['remote'].has_key('username') or not type(config['remote']['username']) is str:

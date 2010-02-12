@@ -58,15 +58,17 @@ class PersySSH():
 		self.log = log
 
 	def checkSSHAuth(self):
-		username=None
-		port=22
 		client = paramiko.SSHClient()
 		client.load_system_host_keys()
 		try:
-			client.connect(self.config['remote']['hostname'], username=username, port=port)
+			client.connect(self.config['remote']['hostname'],
+							username=self.config['remote']['username'],
+							port=int(self.config['remote']['port']))
 		except paramiko.PasswordRequiredException as e:
+			self.log.critical(str(e))
 			return False
 		except Exception as e:
+			self.log.critical(str(e))
 			return False
 		return True
 
@@ -101,7 +103,9 @@ class PersySSH():
 		client = paramiko.SSHClient()
 		client.load_system_host_keys()
 		try:
-			client.connect(self.config['remote']['hostname'])
+			client.connect(self.config['remote']['hostname'],
+							username=self.config['remote']['username'],
+							port=int(self.config['remote']['port']))
 			stdin1, stdout1, stderr1 = client.exec_command("cd %s && git show" % self.config['remote']['path'])
 			stdin1.close()
 			client.close()
