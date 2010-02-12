@@ -158,7 +158,7 @@ class TheSyncer(Thread):
 		if self.config['general']['fortune']:
 			try:
 				callcmd = []
-				callcmd.append(self.config['general']['fortune'])
+				callcmd.append(self.config.getAttribute('FORTUNE'))
 				callcmd.append('-n')
 				callcmd.append('80')
 				callcmd.append('-s')
