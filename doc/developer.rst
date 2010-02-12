@@ -45,6 +45,10 @@ Styleguide
 This is not really a guide, just some guidelines and these are far from complete.
 I will add new stuff when needed. 
 
+Bye the way, a good guide is writte by google: http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
+
+docstrings
+_________________________________
 
 If you write code (module, class or function), please document it with docstrings. 
 persy uses Sphinx to convert the docstrings into a complete code documentation (like this one).
@@ -54,11 +58,58 @@ Here is an example for a docstring:
 .. code-block:: python
   :linenos:
 
-   def awesome():
-   	"""
-   	this is a reST formated docstring to describe this function.
-   	"""
-   	return "awesome"
+   def public_fn_with_googley_docstring(name, state=None):
+       """This function does something.
+
+       Args:
+          name (str):  The name to use.
+
+       Kwargs:
+          state (bool): Current state to be in.
+
+       Returns:
+          int.  The return code::
+
+             0 -- Success!
+             1 -- No good.
+             2 -- Try again.
+
+       Raises:
+          AttributeError, KeyError
+
+       A really great idea.  A way you might use me is
+
+       >>> print public_fn_with_googley_docstring(name='foo', state=None)
+       0
+
+       BTW, this always returns 0.  **NEVER** use with :class:`MyPublicClass`.
+
+       """
+       return 0
+
+
+
+publishing
+__________________________________
+
+Before publishing anything, make a quick check if everything is ok:
+ *   run persy
+ *   run the tests, you need the persy-dev package for this
+
+    .. code-block:: bash
+      :linenos:
+
+      ./makerelease.sh test
+
+ *   create a debian package, you also need the persy-dev package for this
+ 
+    .. code-block:: bash
+      :linenos:
+
+      ./makerelease.sh makedeb
+
+
+
 
 Code Documentation
 ---------------------------------
