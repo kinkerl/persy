@@ -633,7 +633,7 @@ class PersyGtk():
 		except Exception as e:
 			self.log.critical(str(e), verbose=True)
 
-	def quit_cb(self, widget, data = None):
+	def quit_cb(self, unused_widget, data = None):
 		"""
 		start a last remote sync and then stops persy (with the use of pery_core)
 		"""
@@ -644,7 +644,7 @@ class PersyGtk():
 		gtk.main_quit()
 		sys.exit(0)
 
-	def popup_menu_cb(self, widget, button, time, data = None):
+	def popup_menu_cb(self, unused_widget, unused_button, time, data = None):
 		"""
 		show the rightclick menu of the status icon
 		"""
@@ -653,7 +653,7 @@ class PersyGtk():
 			data.popup(None, None, None, 3, time)
 
 
-	def about(self, widget, data = None):
+	def about(self, unused_widget, unused_data = None):
 		"""
 		create and show the about dialog
 		"""
@@ -695,7 +695,7 @@ class PersyGtk():
 		"""
 		self.showlog(widget, data, self.config.getAttribute('LOGFILE_GIT'))
 
-	def showlog(self, widget, data = None, filename=None):
+	def showlog(self, unused_widget, unused_data = None, filename=None):
 		"""
 		displays the default.log. uses xterm for display
 		"""
@@ -731,7 +731,7 @@ class PersyGtk():
 
 
 
-	def persy_toggle(self, widget, data = None):
+	def persy_toggle(self, widget, unused_data = None):
 		"""
 		toggles the state of persy (start/stop)
 		"""
@@ -740,11 +740,11 @@ class PersyGtk():
 		else:
 			self.persy_stop()
 
-	def persy_sync_remote(self, widget, data = None):
+	def persy_sync_remote(self, unused_widget, unused_data = None):
 		self.log.info("onetimesync")
 		self.core.setonetimesync()
 
-	def persy_sync_toggle(self, widget, data = None):
+	def persy_sync_toggle(self, widget, unused_data = None):
 		"""
 		toggles the sync state in the config (use_remote) of persy (True/False) 
 
@@ -756,13 +756,13 @@ class PersyGtk():
 			self.config['remote']['use_remote'] = False
 		self.config.write()
 
-	def optimize(self, widget, data = None):
+	def optimize(self, unused_widget, unused_data = None):
 		"""
 		calls the optimize function in core
 		"""
 		self.core.optimize()
 
-	def browse(self, widget, data = None):
+	def browse(self, unused_widget, unused_data = None):
 		"""
 		calls the browse function in core
 		"""
@@ -780,13 +780,13 @@ class PersyGtk():
 		"""
 		self.core.persy_stop()
 
-	def open_menu(self, widget, data = None):
+	def open_menu(self, unused_widget, unused_data = None):
 		"""
 		creates a new PersyGtkMenu instance
 		"""
-		menu = PersyGtkMenu(self.config, self.log, self)
+		PersyGtkMenu(self.config, self.log, self)
 
-	def help(self, widget, data = None):
+	def help(self, unused_widget, unused_data = None):
 		"""
 		opens the system-webbrowser witht the persy documentation
 		 *   windows = ie
@@ -795,25 +795,25 @@ class PersyGtk():
 		"""
 		webbrowser.open(self.config.getAttribute('HTMLDOCFILE'))
 
-	def syncWithRemote(self, widget, data = None):
+	def syncWithRemote(self, unused_widget, unused_data = None):
 		"""
 		calls the syncWithRemote function in core
 		"""
 		self.core.syncWithRemote()
 
-	def initLocal(self, widget, data = None):
+	def initLocal(self, unused_widget, unused_data = None):
 		"""
 		calls the initLocal function in core
 		"""
 		self.core.initLocal()
 
-	def initRemote(self, widget, data = None):
+	def initRemote(self, unused_widget, unused_data = None):
 		"""
 		calls the initRemote function in core
 		"""
 		self.core.initRemote()
 
-	def isInSyncWithRemote(self, widget, data = None):
+	def isInSyncWithRemote(self, unused_widget, unused_data = None):
 		"""
 		returns the result of isInSyncWithRemote from core
 		"""

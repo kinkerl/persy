@@ -162,7 +162,7 @@ class Talker:
 		logs a debug message
 		"""
 		self.log.debug(msg)
-		if verbose == True or (verbose == None and self.verbose):
+		if verbose or (verbose == None and self.verbose):
 			print msg
 
 	def info(self, msg, verbose=None):
@@ -170,7 +170,7 @@ class Talker:
 		logs a info message
 		"""
 		self.log.info(msg)
-		if verbose == True or (verbose == None and self.verbose):
+		if verbose or (verbose == None and self.verbose):
 			print msg
 
 	def warn(self, msg, verbose=None):
@@ -179,13 +179,13 @@ class Talker:
 		"""
 		self.error = True
 		self.log.warn(msg)
-		if verbose == True or (verbose == None and self.verbose):
+		if verbose or (verbose == None and self.verbose):
 			print msg
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_WARN'))#from_stock(gtk.STOCK_HOME)
 		try:
 			self.notify(msg, self.config.getAttribute('ICON_WARN'))
-		except Exception as e:
+		except Exception:
 			pass #self.log.warn(str(e))
 
 	def critical(self, msg, verbose=None):
@@ -194,13 +194,13 @@ class Talker:
 		"""
 		self.error = True
 		self.log.critical(msg)
-		if verbose == True or (verbose == None and self.verbose):
+		if verbose or (verbose == None and self.verbose):
 			print msg
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_ERROR'))#from_stock(gtk.STOCK_HOME)
 		try:
 			self.notify(msg, self.config.getAttribute('ICON_ERROR'))
-		except Exception as e:
+		except Exception:
 			pass #self.log.warn(str(e))
 
 
