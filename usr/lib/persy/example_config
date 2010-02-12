@@ -25,7 +25,7 @@ autoshare=True
 [local]
 # the local sleep delay time in secounds. a backup is only done after this time
 # after the last file action
-sleep = %i
+sleep = %(DEFAULT_LOCAL_SLEEP)i
 
 # a coma seperated list of the files and directories persy is syncing
 watched =
@@ -43,18 +43,18 @@ exclude =
 use_remote = False
 
 # the interval in which a sync happens in seconds
-sleep = %if
+sleep = %(DEFAULT_REMOTE_SLEEP)i
 
 # the host adress of the remote server as ip or name
-hostname = %s
+hostname = %(DEFAULT_REMOTE_HOSTNAME)s
 
 # the ssh port of the remote server
-port = %d
+port = %(DEFAULT_REMOTE_PORT)d
 
 # the absolute path on the remote server to the git repository.
 # if you want to sync other clients with this some, choose the 
 # same remote path for all clients
-path = %s
+path = %(DEFAULT_REMOTE_PATH)s
 
 # the username for the auth on the server
 username = 

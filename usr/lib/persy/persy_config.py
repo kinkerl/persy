@@ -121,7 +121,10 @@ class PersyConfig():
 		self.attributes['DEFAULT_REMOTE_PATH'] = ''
 
 		try:
-			self.attributes['DEFAULT_CONFIG']= open(self.attributes['EXAMPLECONFIG']).read()%(self.attributes['DEFAULT_LOCAL_SLEEP'], self.attributes['DEFAULT_REMOTE_SLEEP'], self.attributes['DEFAULT_REMOTE_HOSTNAME'], self.attributes['DEFAULT_REMOTE_PORT'], self.attributes['DEFAULT_REMOTE_PATH'])
+			#read the configuration
+			self.attributes['DEFAULT_CONFIG']= open(self.attributes['EXAMPLECONFIG']).read()
+			#replace the placeholder with the configuration values
+			self.attributes['DEFAULT_CONFIG'] = self.attributes['DEFAULT_CONFIG'] % self.attributes
 		except IOError as e:
 			print str(e)
 
