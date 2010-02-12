@@ -152,7 +152,7 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('checkGeneralAutoshare')
 		textGeneralName.set_active(config['general']['autoshare'])
 		textGeneralName.set_tooltip_text(_("if this is checked, all the computers in a sync will share the configuration file"))
-		textGeneralName.set_label(_("share the configuration file"))
+		textGeneralName.set_label(_("share the configuration file") + _('(experimental)'))
 		textGeneralName.set_sensitive(config['remote']['use_remote'])
 
 		textGeneralName = self.wTree.get_widget('labelGeneralGitBrowser')
