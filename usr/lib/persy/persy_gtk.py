@@ -144,7 +144,7 @@ class PersyGtkMenu():
 		textGeneralName.set_tooltip_text(_("use fortune messages in the git commit message. disabled is fine."))
 		textGeneralName.set_label(_("use fortune messages in the git commit"))
 		
-		if self.helper.which(self.config.getAttribute('FORTUNE')):
+		if self.helper.which(config.getAttribute('FORTUNE')):
 			textGeneralName.set_sensitive(True)
 		else:
 			textGeneralName.set_sensitive(False)
