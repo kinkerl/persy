@@ -2,20 +2,6 @@ Developer Documentation
 =================================
 This is an overview what you might want to know if you want to hack and contribute to persy.
 
-CLI
---------------------------------
-A development Option is --setenv. 
-
-.. code-block:: bash
-  :linenos:
-
-   . persy --setenv
-
-This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository. 
-Take a look at the help message when using this option.
-
-This is useful if you want to start your own git viewer or want to mess with your data.
-
 Contributing
 ---------------------------------
 If you want to contribute in anyway, please go to github_ or launchpad_.
@@ -40,9 +26,38 @@ For some actions in the Makefile you also need:
  *   python-sphinx - build the documentation
  *   pandoc - build the manpage
 
+persy-dev Package
+--------------------------------
+If you want to Test your code or release it, you might want to take a look at the persy-dev package.
+It can be found at github (http://github.com/kinkerl/persy-dev) and stores all the files which are not a direct part of the persy application.
+
+
+Debugging persy
+--------------------------------
+A development/debugging Option is --setenv (notice the dot in the beginning). 
+
+.. code-block:: bash
+  :linenos:
+
+   . persy --setenv
+
+This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository. 
+Take a look at the help message when using this option.
+This is useful if you want to start your own git viewer or want to mess with your data.
+
+If you just want a more detailed output of the stuff persy does, you can try the --verbose command line argument.
+
+.. code-block:: bash
+  :linenos:
+
+   persy --verbose
+
+
+
+
 Styleguide
 ---------------------------------
-This is not really a guide, just some guidelines and these are far from complete.
+This is not really a guide, just some random guidelines and these are far from complete.
 I will add new stuff when needed. 
 
 Bye the way, a good guide is writte by google: http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
