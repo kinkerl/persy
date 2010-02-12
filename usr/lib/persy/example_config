@@ -49,7 +49,7 @@ sleep = %(DEFAULT_REMOTE_SLEEP)i
 hostname = %(DEFAULT_REMOTE_HOSTNAME)s
 
 # the ssh port of the remote server
-port = %(DEFAULT_REMOTE_PORT)d
+port = %(DEFAULT_REMOTE_PORT)i
 
 # the absolute path on the remote server to the git repository.
 # if you want to sync other clients with this some, choose the 
