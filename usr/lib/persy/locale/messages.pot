@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-12 10:24+0100\n"
+"POT-Creation-Date: 2010-02-12 15:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -215,6 +215,10 @@ msgstr ""
 
 #: usr/lib/persy/persy_gtk.py:155
 msgid "share the configuration file"
+msgstr ""
+
+#: usr/lib/persy/persy_gtk.py:155
+msgid "(experimental)"
 msgstr ""
 
 #: usr/lib/persy/persy_gtk.py:159
@@ -460,19 +464,19 @@ msgstr ""
 msgid "Sorry, i have a problem finding/reading the licence"
 msgstr ""
 
-#: usr/lib/persy/persy_syncer.py:96
+#: usr/lib/persy/persy_syncer.py:103
 #, python-format
 msgid "error with %s event. maybe problem with path?"
 msgstr ""
 
-#: usr/lib/persy/persy_syncer.py:214
+#: usr/lib/persy/persy_syncer.py:233
 msgid "watching no directories"
 msgstr ""
 
-#: usr/lib/persy/persy_talker.py:97
+#: usr/lib/persy/persy_talker.py:109
 msgid "starting Persy"
 msgstr ""
 
-#: usr/lib/persy/persy_talker.py:106
+#: usr/lib/persy/persy_talker.py:120
 msgid "stopping Persy"
 msgstr ""
