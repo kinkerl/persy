@@ -58,8 +58,10 @@ __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 
 class FileChangeHandler(ProcessEvent):
-	'''Callback for the pyinotify library. 
-Accepts events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True'''
+	"""
+	Callback for the pyinotify library. 
+	Accepts events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True
+	"""
 
 	def __init__(self, log, eventfunc):
 		self.log = log
@@ -90,6 +92,11 @@ Accepts events from the library if a file changes and sets the lastevent time an
 		self.check(event, "IN_MOVED_FROM")
 
 	def check(self, event, typ="undefined"):
+		"""
+		this function is executed on every file event.
+		then the eventfunc is called with the information from the event.
+		the eventfunc is passed to FileChangeHandler on __init__
+		"""
 		try:
 			self.log.debug("%s: %s"% (typ, event.path))
 		except Exception as e:
@@ -103,9 +110,10 @@ Accepts events from the library if a file changes and sets the lastevent time an
 
 
 class TheSyncer(Thread):
-	'''The syncing logic.
-executing the local commits, the remote pulls/pushs and the updating of the ignore file after self.ignore_time minutes.
-'''
+	"""
+	The syncing logic.
+	executing the local commits, the remote pulls/pushs and the updating of the ignore file after self.ignore_time minutes.
+	"""
 
 	def __init__(self, core, config, log, sleep_remote, sleep_local):
 		Thread.__init__(self)
@@ -128,6 +136,10 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.changedFiles  =[]
 
 	def newEvent(self, time, filename):
+		"""
+		used to register a filechange event.
+		this function is passed to FileChangeHandler in PersyCore when creating a new instance of the class
+		"""
 		self.lastevent = time
 		self.changedFiles.append(filename)
 		
@@ -138,12 +150,15 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.onetimecommit = True
 
 	def generateCommitMessage(self):
-		'''generates a nice commit message'''
+		"""
+		generates a nice commit message. 
+		uses fortune if possible
+		"""
 		commitDesc = 'Backup by me'
 		if self.config['general']['fortune']:
 			try:
 				callcmd = []
-				callcmd.append(FORTUNE)
+				callcmd.append(self.config.getAttribute('FORTUNE'))
 				callcmd.append('-n')
 				callcmd.append('80')
 				callcmd.append('-s')
@@ -157,6 +172,10 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 		self.running = False
 
 	def run(self):
+		"""
+		startes the thread and checks for file change events.
+		does the pull, push and commits
+		"""
 		self.running = True
 
 		while self.running:

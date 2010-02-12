@@ -1,6 +1,13 @@
 Trivia
 ===========================
 
+You can allways use the use_fortune configuration option find in "settings" -> "general".
+Every change you do when this option is activeated(True) gets a nice fortune text as a commit message! Yay!
+
+
+New Logos
+---------------------------
+
 These are some alternative logos for persy used on the corresponding distributions.
 
 .. csv-table:: 

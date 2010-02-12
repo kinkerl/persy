@@ -2,20 +2,6 @@ Developer Documentation
 =================================
 This is an overview what you might want to know if you want to hack and contribute to persy.
 
-CLI
---------------------------------
-A development Option is --setenv. 
-
-.. code-block:: bash
-  :linenos:
-
-   . persy --setenv
-
-This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository. 
-Take a look at the help message when using this option.
-
-This is useful if you want to start your own git viewer or want to mess with your data.
-
 Contributing
 ---------------------------------
 If you want to contribute in anyway, please go to github_ or launchpad_.
@@ -40,11 +26,44 @@ For some actions in the Makefile you also need:
  *   python-sphinx - build the documentation
  *   pandoc - build the manpage
 
+persy-dev Package
+--------------------------------
+If you want to Test your code or release it, you might want to take a look at the persy-dev package.
+It can be found at github (http://github.com/kinkerl/persy-dev) and stores all the files which are not a direct part of the persy application.
+
+
+Debugging persy
+--------------------------------
+A development/debugging Option is --setenv (notice the dot in the beginning). 
+
+.. code-block:: bash
+  :linenos:
+
+   . persy --setenv
+
+This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository. 
+Take a look at the help message when using this option.
+This is useful if you want to start your own git viewer or want to mess with your data.
+
+If you just want a more detailed output of the stuff persy does, you can try the --verbose command line argument.
+
+.. code-block:: bash
+  :linenos:
+
+   persy --verbose
+
+
+
+
 Styleguide
 ---------------------------------
-This is not really a guide, just some guidelines and these are far from complete.
+This is not really a guide, just some random guidelines and these are far from complete.
 I will add new stuff when needed. 
 
+Bye the way, a good guide is writte by google: http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
+
+docstrings
+_________________________________
 
 If you write code (module, class or function), please document it with docstrings. 
 persy uses Sphinx to convert the docstrings into a complete code documentation (like this one).
@@ -54,11 +73,58 @@ Here is an example for a docstring:
 .. code-block:: python
   :linenos:
 
-   def awesome():
-   	"""
-   	this is a reST formated docstring to describe this function.
-   	"""
-   	return "awesome"
+   def public_fn_with_googley_docstring(name, state=None):
+       """This function does something.
+
+       Args:
+          name (str):  The name to use.
+
+       Kwargs:
+          state (bool): Current state to be in.
+
+       Returns:
+          int.  The return code::
+
+             0 -- Success!
+             1 -- No good.
+             2 -- Try again.
+
+       Raises:
+          AttributeError, KeyError
+
+       A really great idea.  A way you might use me is
+
+       >>> print public_fn_with_googley_docstring(name='foo', state=None)
+       0
+
+       BTW, this always returns 0.  **NEVER** use with :class:`MyPublicClass`.
+
+       """
+       return 0
+
+
+
+publishing
+__________________________________
+
+Before publishing anything, make a quick check if everything is ok:
+ *   run persy
+ *   run the tests, you need the persy-dev package for this
+
+    .. code-block:: bash
+      :linenos:
+
+      ./makerelease.sh test
+
+ *   create a debian package, you also need the persy-dev package for this
+ 
+    .. code-block:: bash
+      :linenos:
+
+      ./makerelease.sh makedeb
+
+
+
 
 Code Documentation
 ---------------------------------
@@ -82,10 +148,6 @@ PersyGtk
 _________________________________
 
 .. automodule:: persy_gtk
-.. autoclass:: PersyGtkMenu
-   :members:
-
-.. autoclass:: PersyGtk
    :members:
 
 PersyHelper
@@ -106,10 +168,6 @@ Synchronization Classes
 _________________________________
 
 .. automodule:: persy_syncer
-.. autoclass:: FileChangeHandler
-   :members:
-
-.. autoclass:: TheSyncer
    :members:
 
 PersyTalker
