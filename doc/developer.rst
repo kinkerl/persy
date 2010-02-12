@@ -82,10 +82,6 @@ PersyGtk
 _________________________________
 
 .. automodule:: persy_gtk
-.. autoclass:: PersyGtkMenu
-   :members:
-
-.. autoclass:: PersyGtk
    :members:
 
 PersyHelper
@@ -106,10 +102,6 @@ Synchronization Classes
 _________________________________
 
 .. automodule:: persy_syncer
-.. autoclass:: FileChangeHandler
-   :members:
-
-.. autoclass:: TheSyncer
    :members:
 
 PersyTalker
