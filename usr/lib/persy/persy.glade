@@ -146,7 +146,6 @@
                                 <property name="label" translatable="yes">share the configuration file with all synced computers</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="can_default">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="draw_indicator">True</property>
                               </widget>

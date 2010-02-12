@@ -144,10 +144,16 @@ class PersyGtkMenu():
 		textGeneralName.set_tooltip_text(_("use fortune messages in the git commit message. disabled is fine."))
 		textGeneralName.set_label(_("use fortune messages in the git commit"))
 		
+		if self.helper.which(config.attributes['FORTUNE']):
+			textGeneralName.set_sensitive(True)
+		else:
+			textGeneralName.set_sensitive(False)
+		
 		textGeneralName = self.wTree.get_widget('checkGeneralAutoshare')
 		textGeneralName.set_active(config['general']['autoshare'])
 		textGeneralName.set_tooltip_text(_("if this is checked, all the computers in a sync will share the configuration file"))
 		textGeneralName.set_label(_("share the configuration file"))
+		textGeneralName.set_sensitive(config['remote']['use_remote'])
 
 		textGeneralName = self.wTree.get_widget('labelGeneralGitBrowser')
 		textGeneralName.set_label(_("default git browser"))
@@ -208,6 +214,7 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('checkRemoteUse')
 		textGeneralName.set_active(config['remote']['use_remote'])
 		textGeneralName.set_tooltip_text(_("synchronize to the remote server"))
+		textGeneralName.connect("clicked", self.toggle_sensitive, "checkGeneralAutoshare")
 
 		textGeneralName = self.wTree.get_widget('labelRemoteSleep')
 		textGeneralName.set_label(_("time to wait for a synchronization (in seconds)"))
@@ -331,7 +338,6 @@ class PersyGtkMenu():
 		thewidget.connect("clicked", self.gtkcore.showgitlog)
 		thewidget.set_label(_("show"))
 		thewidget.set_tooltip_text(_('show git log'))
-
 
 
 	def save(self, widget, data=None):
@@ -536,6 +542,13 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('imageIsInSyncWithRemote')
 		textGeneralName.set_from_pixbuf(pixbuf)
+		
+	
+	def toggle_sensitive(self, widget, data=None):
+		"""
+		changes sensitive from widgets
+		"""
+		self.wTree.get_widget(data).set_sensitive(widget.get_active())
 
 
 
