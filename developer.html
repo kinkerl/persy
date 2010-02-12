@@ -51,16 +51,6 @@
   <div class="section" id="developer-documentation">
 <h1>Developer Documentation<a class="headerlink" href="#developer-documentation" title="Permalink to this headline">¶</a></h1>
 <p>This is an overview what you might want to know if you want to hack and contribute to persy.</p>
-<div class="section" id="cli">
-<h2>CLI<a class="headerlink" href="#cli" title="Permalink to this headline">¶</a></h2>
-<p>A development Option is &#8211;setenv.</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre> . persy --setenv
-</pre></div>
-</td></tr></table></div>
-<p>This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository.
-Take a look at the help message when using this option.</p>
-<p>This is useful if you want to start your own git viewer or want to mess with your data.</p>
-</div>
 <div class="section" id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
 <p>If you want to contribute in anyway, please go to <a class="reference external" href="http://github.com/kinkerl/persy">github</a> or <a class="reference external" href="https://launchpad.net/persy">launchpad</a>.</p>
@@ -89,20 +79,163 @@ Take a look at the help message when using this option.</p>
 </ul>
 </blockquote>
 </div>
+<div class="section" id="persy-dev-package">
+<h2>persy-dev Package<a class="headerlink" href="#persy-dev-package" title="Permalink to this headline">¶</a></h2>
+<p>If you want to Test your code or release it, you might want to take a look at the persy-dev package.
+It can be found at github (<a class="reference external" href="http://github.com/kinkerl/persy-dev">http://github.com/kinkerl/persy-dev</a>) and stores all the files which are not a direct part of the persy application.</p>
+</div>
+<div class="section" id="debugging-persy">
+<h2>Debugging persy<a class="headerlink" href="#debugging-persy" title="Permalink to this headline">¶</a></h2>
+<p>A development/debugging Option is &#8211;setenv (notice the dot in the beginning).</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre> . persy --setenv
+</pre></div>
+</td></tr></table></div>
+<p>This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository.
+Take a look at the help message when using this option.
+This is useful if you want to start your own git viewer or want to mess with your data.</p>
+<p>If you just want a more detailed output of the stuff persy does, you can try the &#8211;verbose command line argument.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre> persy --verbose
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="styleguide">
+<h2>Styleguide<a class="headerlink" href="#styleguide" title="Permalink to this headline">¶</a></h2>
+<p>This is not really a guide, just some random guidelines and these are far from complete.
+I will add new stuff when needed.</p>
+<p>Bye the way, a good guide is writte by google: <a class="reference external" href="http://google-styleguide.googlecode.com/svn/trunk/pyguide.html">http://google-styleguide.googlecode.com/svn/trunk/pyguide.html</a></p>
+<div class="section" id="docstrings">
+<h3>docstrings<a class="headerlink" href="#docstrings" title="Permalink to this headline">¶</a></h3>
+<p>If you write code (module, class or function), please document it with docstrings.
+persy uses Sphinx to convert the docstrings into a complete code documentation (like this one).</p>
+<p>Here is an example for a docstring:</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></td><td class="code"><div class="highlight"><pre> <span class="k">def</span> <span class="nf">public_fn_with_googley_docstring</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+     <span class="sd">&quot;&quot;&quot;This function does something.</span>
+
+<span class="sd">     Args:</span>
+<span class="sd">        name (str):  The name to use.</span>
+
+<span class="sd">     Kwargs:</span>
+<span class="sd">        state (bool): Current state to be in.</span>
+
+<span class="sd">     Returns:</span>
+<span class="sd">        int.  The return code::</span>
+
+<span class="sd">           0 -- Success!</span>
+<span class="sd">           1 -- No good.</span>
+<span class="sd">           2 -- Try again.</span>
+
+<span class="sd">     Raises:</span>
+<span class="sd">        AttributeError, KeyError</span>
+
+<span class="sd">     A really great idea.  A way you might use me is</span>
+
+<span class="sd">     &gt;&gt;&gt; print public_fn_with_googley_docstring(name=&#39;foo&#39;, state=None)</span>
+<span class="sd">     0</span>
+
+<span class="sd">     BTW, this always returns 0.  **NEVER** use with :class:`MyPublicClass`.</span>
+
+<span class="sd">     &quot;&quot;&quot;</span>
+     <span class="k">return</span> <span class="mf">0</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="publishing">
+<h3>publishing<a class="headerlink" href="#publishing" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Before publishing anything, make a quick check if everything is ok:</dt>
+<dd><ul class="first simple">
+<li>run persy</li>
+<li>run the tests, you need the persy-dev package for this</li>
+</ul>
+<blockquote>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre>./makerelease.sh <span class="nb">test</span>
+</pre></div>
+</td></tr></table></div>
+</blockquote>
+<ul class="simple">
+<li>create a debian package, you also need the persy-dev package for this</li>
+</ul>
+<blockquote class="last">
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre>./makerelease.sh makedeb
+</pre></div>
+</td></tr></table></div>
+</blockquote>
+</dd>
+</dl>
+</div>
+</div>
 <div class="section" id="code-documentation">
 <h2>Code Documentation<a class="headerlink" href="#code-documentation" title="Permalink to this headline">¶</a></h2>
 <p>Right now, this is just the autogenerated source code documentation.
 This will improve in the future but is not the first task on the todo list.</p>
 <div class="section" id="module-persy_core">
 <h3>Core<a class="headerlink" href="#module-persy_core" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="persy_core.Core">
+<tt class="descclassname">persy_core.</tt><tt class="descname">Core</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core.Core" title="Permalink to this definition">¶</a></dt>
+<dd>this sould generate a singleton from Core</dd></dl>
+
 <dl class="class">
 <dt id="persy_core._Core">
 <em class="property">
 class </em><tt class="descclassname">persy_core.</tt><tt class="descname">_Core</tt><a class="headerlink" href="#persy_core._Core" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>the core functionaliy for persy</p>
+<dl class="method">
 <dt id="persy_core._Core.browse">
 <tt class="descname">browse</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.browse" title="Permalink to this definition">¶</a></dt>
 <dd>starts the default git browser</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.git_add">
+<tt class="descname">git_add</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#persy_core._Core.git_add" title="Permalink to this definition">¶</a></dt>
+<dd>adds an item to git</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.git_commit">
+<tt class="descname">git_commit</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#persy_core._Core.git_commit" title="Permalink to this definition">¶</a></dt>
+<dd>executes a commit with &#8220;message&#8221; as the commit message</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.git_pull">
+<tt class="descname">git_pull</tt><big>(</big><em>nickname</em>, <em>branch</em><big>)</big><a class="headerlink" href="#persy_core._Core.git_pull" title="Permalink to this definition">¶</a></dt>
+<dd>executes a pull from &#8220;branch&#8221; on &#8220;nickname&#8221;</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.git_push">
+<tt class="descname">git_push</tt><big>(</big><em>nickname</em>, <em>branch</em><big>)</big><a class="headerlink" href="#persy_core._Core.git_push" title="Permalink to this definition">¶</a></dt>
+<dd>executes a push to &#8220;branch&#8221; on &#8220;nickname&#8221;</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.init">
+<tt class="descname">init</tt><big>(</big><em>config</em>, <em>log</em><big>)</big><a class="headerlink" href="#persy_core._Core.init" title="Permalink to this definition">¶</a></dt>
+<dd>initializes the git binding</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.initLocal">
@@ -112,12 +245,16 @@ class </em><tt class="descclassname">persy_core.</tt><tt class="descname">_Core<
 <dl class="method">
 <dt id="persy_core._Core.initRemote">
 <tt class="descname">initRemote</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.initRemote" title="Permalink to this definition">¶</a></dt>
-<dd>initialises the remote repository and adds it to the synchronization pack</dd></dl>
+<dd><p>initialises the remote repository and adds it to the synchronization pack</p>
+<p>tries to connect to the remote server and creates the destination folder and initializes the remote git repository</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.isInSyncWithRemote">
 <tt class="descname">isInSyncWithRemote</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.isInSyncWithRemote" title="Permalink to this definition">¶</a></dt>
-<dd>returns true if it is already in sync</dd></dl>
+<dd><p>returns true if it is already in sync</p>
+<p>&#8220;in sync&#8221; means: git remote returns an entry for an &#8220;origin&#8221; repository.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.isLocalInitialized">
@@ -127,17 +264,18 @@ class </em><tt class="descclassname">persy_core.</tt><tt class="descname">_Core<
 <dl class="method">
 <dt id="persy_core._Core.optimize">
 <tt class="descname">optimize</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.optimize" title="Permalink to this definition">¶</a></dt>
-<dd>executes git-gc</dd></dl>
+<dd>tries to optimize the local repository.
+executes the git-gc command.</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.persy_start">
 <tt class="descname">persy_start</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.persy_start" title="Permalink to this definition">¶</a></dt>
-<dd>Starts Persy</dd></dl>
+<dd>initializes the worker thread and notifier</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.persy_stop">
 <tt class="descname">persy_stop</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.persy_stop" title="Permalink to this definition">¶</a></dt>
-<dd>Stops Persy</dd></dl>
+<dd>Stops persys working thread and the notifier.</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.setonetimesync">
@@ -147,22 +285,27 @@ class </em><tt class="descclassname">persy_core.</tt><tt class="descname">_Core<
 <dl class="method">
 <dt id="persy_core._Core.syncWithRemote">
 <tt class="descname">syncWithRemote</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.syncWithRemote" title="Permalink to this definition">¶</a></dt>
-<dd>Syncs with a remote server</dd></dl>
+<dd><p>Syncs with a remote server</p>
+<p>adds a new remote repository with the information from config to the local git repository and performs a pull</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.vcsignore">
 <tt class="descname">vcsignore</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.vcsignore" title="Permalink to this definition">¶</a></dt>
-<dd>creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with &#8220;git clean&#8221;)</dd></dl>
+<dd><p>creates a file for ignoring unwatched directories so they dont appear in the status (and cant be removed exidently with &#8220;git clean&#8221;)</p>
+<p>list every file in /home/USER. 
+add every file and folder (if not already done) to .vcsignore if they are not part WATCHED</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.vcslog">
 <tt class="descname">vcslog</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.vcslog" title="Permalink to this definition">¶</a></dt>
-<dd>executes the git-log command</dd></dl>
+<dd>runs the vcs(git)-log command and writs the output to stdout</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.vcsstatus">
 <tt class="descname">vcsstatus</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.vcsstatus" title="Permalink to this definition">¶</a></dt>
-<dd>executes the git-status command</dd></dl>
+<dd>runs the vcs(git)-status command</dd></dl>
 
 </dd></dl>
 
@@ -173,17 +316,33 @@ class </em><tt class="descclassname">persy_core.</tt><tt class="descname">_Core<
 <dt id="persy_config.PersyConfig">
 <em class="property">
 class </em><tt class="descclassname">persy_config.</tt><tt class="descname">PersyConfig</tt><a class="headerlink" href="#persy_config.PersyConfig" title="Permalink to this definition">¶</a></dt>
-<dd>Handles the configuration for Persy</dd></dl>
+<dd><p>Configuration class for Persy</p>
+<p>This class handels all the configuration and environment attributes.
+It depends on the configobj class.</p>
+<dl class="method">
+<dt id="persy_config.PersyConfig.getAttribute">
+<tt class="descname">getAttribute</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#persy_config.PersyConfig.getAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>key &#8211; the name of the attribute</p>
+<p>returns the value to a key</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="persy_config.PersyConfig.has_key">
+<tt class="descname">has_key</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#persy_config.PersyConfig.has_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>item &#8211; name of item in the config</p>
+<p>check if this config object has the key</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="persy_config.PersyConfig.write">
+<tt class="descname">write</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_config.PersyConfig.write" title="Permalink to this definition">¶</a></dt>
+<dd>uses confobj to write the configuration</dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-persy_gtk">
 <h3>PersyGtk<a class="headerlink" href="#module-persy_gtk" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
-<dt id="persy_gtk.PersyGtkMenu">
-<em class="property">
-class </em><tt class="descclassname">persy_gtk.</tt><tt class="descname">PersyGtkMenu</tt><big>(</big><em>config</em>, <em>log</em>, <em>gtkcore</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="class">
 <dt id="persy_gtk.PersyGtk">
 <em class="property">
@@ -191,33 +350,90 @@ class </em><tt class="descclassname">persy_gtk.</tt><tt class="descname">PersyGt
 <dd><p>the gtk main loop and the status icon</p>
 <dl class="method">
 <dt id="persy_gtk.PersyGtk.about">
-<tt class="descname">about</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.about" title="Permalink to this definition">¶</a></dt>
-<dd>show the about dialog</dd></dl>
+<tt class="descname">about</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.about" title="Permalink to this definition">¶</a></dt>
+<dd>create and show the about dialog</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.browse">
+<tt class="descname">browse</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.browse" title="Permalink to this definition">¶</a></dt>
+<dd>calls the browse function in core</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.help">
+<tt class="descname">help</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.help" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>opens the system-webbrowser witht the persy documentation</dt>
+<dd><ul class="first last simple">
+<li>windows = ie</li>
+<li>linux/unix = firefox (most of the time)</li>
+<li>mac = safari</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.init">
+<tt class="descname">init</tt><big>(</big><em>core</em>, <em>config</em>, <em>log</em>, <em>start=False</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.init" title="Permalink to this definition">¶</a></dt>
+<dd>creates the satus icon and appends all actions to it.
+initializes the rest of the gtk stuff and runs persy if start is True</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.initLocal">
+<tt class="descname">initLocal</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.initLocal" title="Permalink to this definition">¶</a></dt>
+<dd>calls the initLocal function in core</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.initRemote">
+<tt class="descname">initRemote</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.initRemote" title="Permalink to this definition">¶</a></dt>
+<dd>calls the initRemote function in core</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.isInSyncWithRemote">
+<tt class="descname">isInSyncWithRemote</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.isInSyncWithRemote" title="Permalink to this definition">¶</a></dt>
+<dd>returns the result of isInSyncWithRemote from core</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.open_menu">
+<tt class="descname">open_menu</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.open_menu" title="Permalink to this definition">¶</a></dt>
+<dd>creates a new PersyGtkMenu instance</dd></dl>
 
 <dl class="method">
 <dt id="persy_gtk.PersyGtk.optimize">
-<tt class="descname">optimize</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.optimize" title="Permalink to this definition">¶</a></dt>
-<dd>calls the optimize function</dd></dl>
+<tt class="descname">optimize</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.optimize" title="Permalink to this definition">¶</a></dt>
+<dd>calls the optimize function in core</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.persy_start">
+<tt class="descname">persy_start</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.persy_start" title="Permalink to this definition">¶</a></dt>
+<dd>calls the persy_start function in core</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.persy_stop">
+<tt class="descname">persy_stop</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.persy_stop" title="Permalink to this definition">¶</a></dt>
+<dd>calls the persy_stop function in core</dd></dl>
 
 <dl class="method">
 <dt id="persy_gtk.PersyGtk.persy_sync_toggle">
-<tt class="descname">persy_sync_toggle</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.persy_sync_toggle" title="Permalink to this definition">¶</a></dt>
-<dd>toggles the sync state (use_remote) of persy (True/False)</dd></dl>
+<tt class="descname">persy_sync_toggle</tt><big>(</big><em>widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.persy_sync_toggle" title="Permalink to this definition">¶</a></dt>
+<dd><p>toggles the sync state in the config (use_remote) of persy (True/False)</p>
+<p>if the widget is active, use_remote will be true</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="persy_gtk.PersyGtk.persy_toggle">
-<tt class="descname">persy_toggle</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.persy_toggle" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">persy_toggle</tt><big>(</big><em>widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.persy_toggle" title="Permalink to this definition">¶</a></dt>
 <dd>toggles the state of persy (start/stop)</dd></dl>
 
 <dl class="method">
 <dt id="persy_gtk.PersyGtk.popup_menu_cb">
-<tt class="descname">popup_menu_cb</tt><big>(</big><em>widget</em>, <em>button</em>, <em>time</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.popup_menu_cb" title="Permalink to this definition">¶</a></dt>
-<dd>show the rightclick menu</dd></dl>
+<tt class="descname">popup_menu_cb</tt><big>(</big><em>unused_widget</em>, <em>unused_button</em>, <em>time</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.popup_menu_cb" title="Permalink to this definition">¶</a></dt>
+<dd>show the rightclick menu of the status icon</dd></dl>
 
 <dl class="method">
 <dt id="persy_gtk.PersyGtk.quit_cb">
-<tt class="descname">quit_cb</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.quit_cb" title="Permalink to this definition">¶</a></dt>
-<dd>stopts persy</dd></dl>
+<tt class="descname">quit_cb</tt><big>(</big><em>unused_widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.quit_cb" title="Permalink to this definition">¶</a></dt>
+<dd>start a last remote sync and then stops persy (with the use of pery_core)</dd></dl>
 
 <dl class="method">
 <dt id="persy_gtk.PersyGtk.showgitlog">
@@ -226,8 +442,71 @@ class </em><tt class="descclassname">persy_gtk.</tt><tt class="descname">PersyGt
 
 <dl class="method">
 <dt id="persy_gtk.PersyGtk.showlog">
-<tt class="descname">showlog</tt><big>(</big><em>widget</em>, <em>data=None</em>, <em>filename=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.showlog" title="Permalink to this definition">¶</a></dt>
-<dd>displays the default.log</dd></dl>
+<tt class="descname">showlog</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em>, <em>filename=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.showlog" title="Permalink to this definition">¶</a></dt>
+<dd>displays the default.log. uses xterm for display</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.syncWithRemote">
+<tt class="descname">syncWithRemote</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.syncWithRemote" title="Permalink to this definition">¶</a></dt>
+<dd>calls the syncWithRemote function in core</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="persy_gtk.PersyGtkMenu">
+<em class="property">
+class </em><tt class="descclassname">persy_gtk.</tt><tt class="descname">PersyGtkMenu</tt><big>(</big><em>config</em>, <em>log</em>, <em>gtkcore</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class creates the settings menu.
+It uses glade to create the interface with the corresponding persy.glade file.</p>
+<dl class="method">
+<dt id="persy_gtk.PersyGtkMenu.actionTestLocalSSHKey">
+<tt class="descname">actionTestLocalSSHKey</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu.actionTestLocalSSHKey" title="Permalink to this definition">¶</a></dt>
+<dd>persy environment test action.
+uses PersySSH to check if local ssh keys do exist</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtkMenu.actionTestRemoteServer">
+<tt class="descname">actionTestRemoteServer</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu.actionTestRemoteServer" title="Permalink to this definition">¶</a></dt>
+<dd>persy environment test action.
+uses PersySSH to check the remote Server</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtkMenu.actionTestSSHAuth">
+<tt class="descname">actionTestSSHAuth</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu.actionTestSSHAuth" title="Permalink to this definition">¶</a></dt>
+<dd>persy environment test action.
+uses PersySSH to check the server authentification</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtkMenu.addWatchedEntry">
+<tt class="descname">addWatchedEntry</tt><big>(</big><em>widget</em>, <em>watched</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu.addWatchedEntry" title="Permalink to this definition">¶</a></dt>
+<dd>code for adding a new entry for a watched directory to the gui</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtkMenu.isInSyncWithRemote">
+<tt class="descname">isInSyncWithRemote</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu.isInSyncWithRemote" title="Permalink to this definition">¶</a></dt>
+<dd>persy environment test action.
+uses gtkcore to test if persy is in sync with remote (has an git-remote entry for origin)</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtkMenu.launchFileChooser">
+<tt class="descname">launchFileChooser</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu.launchFileChooser" title="Permalink to this definition">¶</a></dt>
+<dd>launchdes a filechooser dialog for a folder</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtkMenu.removeWatchedEntry">
+<tt class="descname">removeWatchedEntry</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu.removeWatchedEntry" title="Permalink to this definition">¶</a></dt>
+<dd>removing a watched directory entry from the widget. 
+the name of the directory is stored in data</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtkMenu.save">
+<tt class="descname">save</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu.save" title="Permalink to this definition">¶</a></dt>
+<dd>converts the values from the gui to PersyConfig values and executes the save function on the config object</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtkMenu.toggle_sensitive">
+<tt class="descname">toggle_sensitive</tt><big>(</big><em>widget</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtkMenu.toggle_sensitive" title="Permalink to this definition">¶</a></dt>
+<dd>changes sensitive from widgets</dd></dl>
 
 </dd></dl>
 
@@ -238,8 +517,8 @@ class </em><tt class="descclassname">persy_gtk.</tt><tt class="descname">PersyGt
 <dt id="persy_helper._PersyHelper">
 <em class="property">
 class </em><tt class="descclassname">persy_helper.</tt><tt class="descname">_PersyHelper</tt><a class="headerlink" href="#persy_helper._PersyHelper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Functions that might be helpful in some places
-Uses singleton pattern (see bottom)</p>
+<dd><p>Functions that might be helpful in some places.
+Singleton</p>
 <dl class="method">
 <dt id="persy_helper._PersyHelper.getSoftwareVersion">
 <tt class="descname">getSoftwareVersion</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#persy_helper._PersyHelper.getSoftwareVersion" title="Permalink to this definition">¶</a></dt>
@@ -253,7 +532,8 @@ Uses singleton pattern (see bottom)</p>
 <dl class="method">
 <dt id="persy_helper._PersyHelper.which">
 <tt class="descname">which</tt><big>(</big><em>program</em><big>)</big><a class="headerlink" href="#persy_helper._PersyHelper.which" title="Permalink to this definition">¶</a></dt>
-<dd>take from <a class="reference external" href="http://stackoverflow.com/questions/377017">http://stackoverflow.com/questions/377017</a></dd></dl>
+<dd>this function is like the unix command which
+take from <a class="reference external" href="http://stackoverflow.com/questions/377017">http://stackoverflow.com/questions/377017</a></dd></dl>
 
 </dd></dl>
 
@@ -266,14 +546,34 @@ Uses singleton pattern (see bottom)</p>
 class </em><tt class="descclassname">persy_ssh.</tt><tt class="descname">PersySSH</tt><big>(</big><em>config</em>, <em>log</em><big>)</big><a class="headerlink" href="#persy_ssh.PersySSH" title="Permalink to this definition">¶</a></dt>
 <dd><p>Functions that might be helpful for ssh stuff</p>
 <dl class="method">
+<dt id="persy_ssh.PersySSH.checkRemoteServer">
+<tt class="descname">checkRemoteServer</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_ssh.PersySSH.checkRemoteServer" title="Permalink to this definition">¶</a></dt>
+<dd>connects to the server and is trying to execue &#8216;git show&#8217; on the server. 
+returns true if everything worked.</dd></dl>
+
+<dl class="method">
+<dt id="persy_ssh.PersySSH.checkSSHAuth">
+<tt class="descname">checkSSHAuth</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_ssh.PersySSH.checkSSHAuth" title="Permalink to this definition">¶</a></dt>
+<dd>check ifs an connection to the server is possible.
+this function uses the configuration data from the PersyConfig object.</dd></dl>
+
+<dl class="method">
 <dt id="persy_ssh.PersySSH.createLocalSSHKeys">
 <tt class="descname">createLocalSSHKeys</tt><big>(</big><em>password</em><big>)</big><a class="headerlink" href="#persy_ssh.PersySSH.createLocalSSHKeys" title="Permalink to this definition">¶</a></dt>
-<dd>create the local keys</dd></dl>
+<dd>create the local keys.
+this function is not used at the moment and its not testet. 
+a button in the settings gui exists for this function.</dd></dl>
 
 <dl class="method">
 <dt id="persy_ssh.PersySSH.localSSHKeysExist">
 <tt class="descname">localSSHKeysExist</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_ssh.PersySSH.localSSHKeysExist" title="Permalink to this definition">¶</a></dt>
-<dd>checks if local ssh keys are generated</dd></dl>
+<dd>checks if local ssh keys are generated.
+its is looking for the ..ssh/id_*sa files</dd></dl>
+
+<dl class="method">
+<dt id="persy_ssh.PersySSH.publishLocalSSHKeys">
+<tt class="descname">publishLocalSSHKeys</tt><big>(</big><em>username</em>, <em>password</em>, <em>hostname</em><big>)</big><a class="headerlink" href="#persy_ssh.PersySSH.publishLocalSSHKeys" title="Permalink to this definition">¶</a></dt>
+<dd>this function is not used (and not implemented yet)</dd></dl>
 
 </dd></dl>
 
@@ -284,8 +584,16 @@ class </em><tt class="descclassname">persy_ssh.</tt><tt class="descname">PersySS
 <dt id="persy_syncer.FileChangeHandler">
 <em class="property">
 class </em><tt class="descclassname">persy_syncer.</tt><tt class="descname">FileChangeHandler</tt><big>(</big><em>log</em>, <em>eventfunc</em><big>)</big><a class="headerlink" href="#persy_syncer.FileChangeHandler" title="Permalink to this definition">¶</a></dt>
-<dd>Callback for the pyinotify library. 
-Accepts events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True</dd></dl>
+<dd><p>Callback for the pyinotify library. 
+Accepts events from the library if a file changes and sets the lastevent time and sets the untracked_changes flag to True</p>
+<dl class="method">
+<dt id="persy_syncer.FileChangeHandler.check">
+<tt class="descname">check</tt><big>(</big><em>event</em>, <em>typ='undefined'</em><big>)</big><a class="headerlink" href="#persy_syncer.FileChangeHandler.check" title="Permalink to this definition">¶</a></dt>
+<dd>this function is executed on every file event.
+then the eventfunc is called with the information from the event.
+the eventfunc is passed to FileChangeHandler on __init__</dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="persy_syncer.TheSyncer">
@@ -296,7 +604,20 @@ executing the local commits, the remote pulls/pushs and the updating of the igno
 <dl class="method">
 <dt id="persy_syncer.TheSyncer.generateCommitMessage">
 <tt class="descname">generateCommitMessage</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_syncer.TheSyncer.generateCommitMessage" title="Permalink to this definition">¶</a></dt>
-<dd>generates a nice commit message</dd></dl>
+<dd>generates a nice commit message. 
+uses fortune if possible</dd></dl>
+
+<dl class="method">
+<dt id="persy_syncer.TheSyncer.newEvent">
+<tt class="descname">newEvent</tt><big>(</big><em>time</em>, <em>filename</em><big>)</big><a class="headerlink" href="#persy_syncer.TheSyncer.newEvent" title="Permalink to this definition">¶</a></dt>
+<dd>used to register a filechange event.
+this function is passed to FileChangeHandler in PersyCore when creating a new instance of the class</dd></dl>
+
+<dl class="method">
+<dt id="persy_syncer.TheSyncer.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_syncer.TheSyncer.run" title="Permalink to this definition">¶</a></dt>
+<dd>startes the thread and checks for file change events.
+does the pull, push and commits</dd></dl>
 
 </dd></dl>
 
@@ -324,6 +645,11 @@ The statusicon will not change to any other state until this errorstate is reset
 <dt id="persy_talker.Talker.info">
 <tt class="descname">info</tt><big>(</big><em>msg</em>, <em>verbose=None</em><big>)</big><a class="headerlink" href="#persy_talker.Talker.info" title="Permalink to this definition">¶</a></dt>
 <dd>logs a info message</dd></dl>
+
+<dl class="method">
+<dt id="persy_talker.Talker.notify">
+<tt class="descname">notify</tt><big>(</big><em>text</em>, <em>icon</em><big>)</big><a class="headerlink" href="#persy_talker.Talker.notify" title="Permalink to this definition">¶</a></dt>
+<dd>displays a notification</dd></dl>
 
 <dl class="method">
 <dt id="persy_talker.Talker.resetError">
@@ -439,7 +765,8 @@ class </em><tt class="descclassname">persy_vcs.</tt><tt class="descname">VCS</tt
 <dt id="pug.PuG">
 <em class="property">
 class </em><tt class="descclassname">pug.</tt><tt class="descname">PuG</tt><big>(</big><em>GIT_WORK_TREE</em>, <em>GIT_DIR='.git'</em>, <em>stdin=None</em>, <em>stderr=None</em>, <em>stdout=None</em><big>)</big><a class="headerlink" href="#pug.PuG" title="Permalink to this definition">¶</a></dt>
-<dd><p>Persy`s uncomplicated Git</p>
+<dd><p>persy`s uncomplicated Git.
+can execute pushs, pulls, adds, commits and so on.</p>
 <dl class="method">
 <dt id="pug.PuG.add">
 <tt class="descname">add</tt><big>(</big><em>files</em>, <em>stdin=None</em>, <em>stdout=None</em>, <em>stderr=None</em>, <em>params=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pug.PuG.add" title="Permalink to this definition">¶</a></dt>
@@ -518,9 +845,15 @@ class </em><tt class="descclassname">pug.</tt><tt class="descname">PuG</tt><big>
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference external" href="">Developer Documentation</a><ul>
-<li><a class="reference external" href="#cli">CLI</a></li>
 <li><a class="reference external" href="#contributing">Contributing</a></li>
 <li><a class="reference external" href="#dependencies">Dependencies</a></li>
+<li><a class="reference external" href="#persy-dev-package">persy-dev Package</a></li>
+<li><a class="reference external" href="#debugging-persy">Debugging persy</a></li>
+<li><a class="reference external" href="#styleguide">Styleguide</a><ul>
+<li><a class="reference external" href="#docstrings">docstrings</a></li>
+<li><a class="reference external" href="#publishing">publishing</a></li>
+</ul>
+</li>
 <li><a class="reference external" href="#code-documentation">Code Documentation</a><ul>
 <li><a class="reference external" href="#module-persy_core">Core</a></li>
 <li><a class="reference external" href="#module-persy_config">PersyConfig</a></li>

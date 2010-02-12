@@ -43,7 +43,7 @@
 
    <h1 id="index">Index</h1>
 
-   <a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> 
+   <a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#W"><strong>W</strong></a> 
 
    <hr />
 
@@ -61,23 +61,33 @@
 <dl>
 
 <dt><a href="developer.html#persy_gtk.PersyGtk.about">about() (persy_gtk.PersyGtk method)</a></dt>
+<dt><a href="developer.html#persy_gtk.PersyGtkMenu.actionTestLocalSSHKey">actionTestLocalSSHKey() (persy_gtk.PersyGtkMenu method)</a></dt>
+<dt><a href="developer.html#persy_gtk.PersyGtkMenu.actionTestRemoteServer">actionTestRemoteServer() (persy_gtk.PersyGtkMenu method)</a></dt>
+<dt><a href="developer.html#persy_gtk.PersyGtkMenu.actionTestSSHAuth">actionTestSSHAuth() (persy_gtk.PersyGtkMenu method)</a></dt></dl></td><td width="33%" valign="top"><dl>
 <dt><a href="developer.html#persy_vcs.VCS.add">add() (persy_vcs.VCS method)</a></dt>
   <dd><dl>
     <dt><a href="developer.html#pug.PuG.add">(pug.PuG method)</a></dt>
-  </dl></dd></dl></td><td width="33%" valign="top"><dl>
+  </dl></dd>
+<dt><a href="developer.html#persy_gtk.PersyGtkMenu.addWatchedEntry">addWatchedEntry() (persy_gtk.PersyGtkMenu method)</a></dt>
 </dl></td></tr></table>
 
 <h2 id="B">B</h2>
 <table width="100%" class="indextable"><tr><td width="33%" valign="top">
 <dl>
 
-<dt><a href="developer.html#persy_core._Core.browse">browse() (persy_core._Core method)</a></dt></dl></td><td width="33%" valign="top"><dl>
+<dt><a href="developer.html#persy_core._Core.browse">browse() (persy_core._Core method)</a></dt>
+  <dd><dl>
+    <dt><a href="developer.html#persy_gtk.PersyGtk.browse">(persy_gtk.PersyGtk method)</a></dt>
+  </dl></dd></dl></td><td width="33%" valign="top"><dl>
 </dl></td></tr></table>
 
 <h2 id="C">C</h2>
 <table width="100%" class="indextable"><tr><td width="33%" valign="top">
 <dl>
 
+<dt><a href="developer.html#persy_syncer.FileChangeHandler.check">check() (persy_syncer.FileChangeHandler method)</a></dt>
+<dt><a href="developer.html#persy_ssh.PersySSH.checkRemoteServer">checkRemoteServer() (persy_ssh.PersySSH method)</a></dt>
+<dt><a href="developer.html#persy_ssh.PersySSH.checkSSHAuth">checkSSHAuth() (persy_ssh.PersySSH method)</a></dt>
 <dt><a href="developer.html#persy_vcs.VCS.command">command() (persy_vcs.VCS method)</a></dt>
   <dd><dl>
     <dt><a href="developer.html#pug.PuG.command">(pug.PuG method)</a></dt>
@@ -85,11 +95,12 @@
 <dt><a href="developer.html#persy_vcs.VCS.commit">commit() (persy_vcs.VCS method)</a></dt>
   <dd><dl>
     <dt><a href="developer.html#pug.PuG.commit">(pug.PuG method)</a></dt>
-  </dl></dd>
+  </dl></dd></dl></td><td width="33%" valign="top"><dl>
 <dt><a href="developer.html#persy_vcs.VCS.config">config() (persy_vcs.VCS method)</a></dt>
   <dd><dl>
     <dt><a href="developer.html#pug.PuG.config">(pug.PuG method)</a></dt>
-  </dl></dd></dl></td><td width="33%" valign="top"><dl>
+  </dl></dd>
+<dt><a href="developer.html#persy_core.Core">Core() (in module persy_core)</a></dt>
 <dt><a href="developer.html#persy_ssh.PersySSH.createLocalSSHKeys">createLocalSSHKeys() (persy_ssh.PersySSH method)</a></dt>
 <dt><a href="developer.html#persy_talker.Talker.critical">critical() (persy_talker.Talker method)</a></dt>
 </dl></td></tr></table>
@@ -123,8 +134,21 @@
   <dd><dl>
     <dt><a href="developer.html#pug.PuG.gc">(pug.PuG method)</a></dt>
   </dl></dd>
-<dt><a href="developer.html#persy_syncer.TheSyncer.generateCommitMessage">generateCommitMessage() (persy_syncer.TheSyncer method)</a></dt></dl></td><td width="33%" valign="top"><dl>
-<dt><a href="developer.html#persy_helper._PersyHelper.getSoftwareVersion">getSoftwareVersion() (persy_helper._PersyHelper method)</a></dt>
+<dt><a href="developer.html#persy_syncer.TheSyncer.generateCommitMessage">generateCommitMessage() (persy_syncer.TheSyncer method)</a></dt>
+<dt><a href="developer.html#persy_config.PersyConfig.getAttribute">getAttribute() (persy_config.PersyConfig method)</a></dt>
+<dt><a href="developer.html#persy_helper._PersyHelper.getSoftwareVersion">getSoftwareVersion() (persy_helper._PersyHelper method)</a></dt></dl></td><td width="33%" valign="top"><dl>
+<dt><a href="developer.html#persy_core._Core.git_add">git_add() (persy_core._Core method)</a></dt>
+<dt><a href="developer.html#persy_core._Core.git_commit">git_commit() (persy_core._Core method)</a></dt>
+<dt><a href="developer.html#persy_core._Core.git_pull">git_pull() (persy_core._Core method)</a></dt>
+<dt><a href="developer.html#persy_core._Core.git_push">git_push() (persy_core._Core method)</a></dt>
+</dl></td></tr></table>
+
+<h2 id="H">H</h2>
+<table width="100%" class="indextable"><tr><td width="33%" valign="top">
+<dl>
+
+<dt><a href="developer.html#persy_config.PersyConfig.has_key">has_key() (persy_config.PersyConfig method)</a></dt>
+<dt><a href="developer.html#persy_gtk.PersyGtk.help">help() (persy_gtk.PersyGtk method)</a></dt></dl></td><td width="33%" valign="top"><dl>
 </dl></td></tr></table>
 
 <h2 id="I">I</h2>
@@ -132,13 +156,25 @@
 <dl>
 
 <dt><a href="developer.html#persy_talker.Talker.info">info() (persy_talker.Talker method)</a></dt>
-<dt><a href="developer.html#persy_vcs.VCS.init">init() (persy_vcs.VCS method)</a></dt>
+<dt><a href="developer.html#persy_core._Core.init">init() (persy_core._Core method)</a></dt>
   <dd><dl>
+    <dt><a href="developer.html#persy_gtk.PersyGtk.init">(persy_gtk.PersyGtk method)</a></dt>
+    <dt><a href="developer.html#persy_vcs.VCS.init">(persy_vcs.VCS method)</a></dt>
     <dt><a href="developer.html#pug.PuG.init">(pug.PuG method)</a></dt>
   </dl></dd>
-<dt><a href="developer.html#persy_core._Core.initLocal">initLocal() (persy_core._Core method)</a></dt></dl></td><td width="33%" valign="top"><dl>
+<dt><a href="developer.html#persy_core._Core.initLocal">initLocal() (persy_core._Core method)</a></dt>
+  <dd><dl>
+    <dt><a href="developer.html#persy_gtk.PersyGtk.initLocal">(persy_gtk.PersyGtk method)</a></dt>
+  </dl></dd></dl></td><td width="33%" valign="top"><dl>
 <dt><a href="developer.html#persy_core._Core.initRemote">initRemote() (persy_core._Core method)</a></dt>
+  <dd><dl>
+    <dt><a href="developer.html#persy_gtk.PersyGtk.initRemote">(persy_gtk.PersyGtk method)</a></dt>
+  </dl></dd>
 <dt><a href="developer.html#persy_core._Core.isInSyncWithRemote">isInSyncWithRemote() (persy_core._Core method)</a></dt>
+  <dd><dl>
+    <dt><a href="developer.html#persy_gtk.PersyGtk.isInSyncWithRemote">(persy_gtk.PersyGtk method)</a></dt>
+    <dt><a href="developer.html#persy_gtk.PersyGtkMenu.isInSyncWithRemote">(persy_gtk.PersyGtkMenu method)</a></dt>
+  </dl></dd>
 <dt><a href="developer.html#persy_core._Core.isLocalInitialized">isLocalInitialized() (persy_core._Core method)</a></dt>
 </dl></td></tr></table>
 
@@ -146,6 +182,7 @@
 <table width="100%" class="indextable"><tr><td width="33%" valign="top">
 <dl>
 
+<dt><a href="developer.html#persy_gtk.PersyGtkMenu.launchFileChooser">launchFileChooser() (persy_gtk.PersyGtkMenu method)</a></dt>
 <dt><a href="developer.html#persy_ssh.PersySSH.localSSHKeysExist">localSSHKeysExist() (persy_ssh.PersySSH method)</a></dt>
 <dt><a href="developer.html#persy_vcs.VCS.log">log() (persy_vcs.VCS method)</a></dt>
   <dd><dl>
@@ -153,10 +190,19 @@
   </dl></dd></dl></td><td width="33%" valign="top"><dl>
 </dl></td></tr></table>
 
+<h2 id="N">N</h2>
+<table width="100%" class="indextable"><tr><td width="33%" valign="top">
+<dl>
+
+<dt><a href="developer.html#persy_syncer.TheSyncer.newEvent">newEvent() (persy_syncer.TheSyncer method)</a></dt>
+<dt><a href="developer.html#persy_talker.Talker.notify">notify() (persy_talker.Talker method)</a></dt></dl></td><td width="33%" valign="top"><dl>
+</dl></td></tr></table>
+
 <h2 id="O">O</h2>
 <table width="100%" class="indextable"><tr><td width="33%" valign="top">
 <dl>
 
+<dt><a href="developer.html#persy_gtk.PersyGtk.open_menu">open_menu() (persy_gtk.PersyGtk method)</a></dt>
 <dt><a href="developer.html#persy_core._Core.optimize">optimize() (persy_core._Core method)</a></dt>
   <dd><dl>
     <dt><a href="developer.html#persy_gtk.PersyGtk.optimize">(persy_gtk.PersyGtk method)</a></dt>
@@ -173,7 +219,13 @@
 <dt><a href="developer.html#module-persy_helper">persy_helper (module)</a></dt>
 <dt><a href="developer.html#module-persy_ssh">persy_ssh (module)</a></dt>
 <dt><a href="developer.html#persy_core._Core.persy_start">persy_start() (persy_core._Core method)</a></dt>
+  <dd><dl>
+    <dt><a href="developer.html#persy_gtk.PersyGtk.persy_start">(persy_gtk.PersyGtk method)</a></dt>
+  </dl></dd>
 <dt><a href="developer.html#persy_core._Core.persy_stop">persy_stop() (persy_core._Core method)</a></dt>
+  <dd><dl>
+    <dt><a href="developer.html#persy_gtk.PersyGtk.persy_stop">(persy_gtk.PersyGtk method)</a></dt>
+  </dl></dd>
 <dt><a href="developer.html#persy_gtk.PersyGtk.persy_sync_toggle">persy_sync_toggle() (persy_gtk.PersyGtk method)</a></dt>
 <dt><a href="developer.html#module-persy_syncer">persy_syncer (module)</a></dt>
 <dt><a href="developer.html#module-persy_talker">persy_talker (module)</a></dt>
@@ -184,6 +236,7 @@
 <dt><a href="developer.html#persy_gtk.PersyGtkMenu">PersyGtkMenu (class in persy_gtk)</a></dt>
 <dt><a href="developer.html#persy_ssh.PersySSH">PersySSH (class in persy_ssh)</a></dt>
 <dt><a href="developer.html#persy_gtk.PersyGtk.popup_menu_cb">popup_menu_cb() (persy_gtk.PersyGtk method)</a></dt>
+<dt><a href="developer.html#persy_ssh.PersySSH.publishLocalSSHKeys">publishLocalSSHKeys() (persy_ssh.PersySSH method)</a></dt>
 <dt><a href="developer.html#pug.PuG">PuG (class in pug)</a></dt>
 <dt><a href="developer.html#module-pug">pug (module)</a></dt>
 <dt><a href="developer.html#persy_vcs.VCS.pull">pull() (persy_vcs.VCS method)</a></dt>
@@ -210,14 +263,17 @@
 <dt><a href="developer.html#persy_vcs.VCS.remoteAdd">remoteAdd() (persy_vcs.VCS method)</a></dt>
   <dd><dl>
     <dt><a href="developer.html#pug.PuG.remoteAdd">(pug.PuG method)</a></dt>
-  </dl></dd></dl></td><td width="33%" valign="top"><dl>
+  </dl></dd>
+<dt><a href="developer.html#persy_gtk.PersyGtkMenu.removeWatchedEntry">removeWatchedEntry() (persy_gtk.PersyGtkMenu method)</a></dt></dl></td><td width="33%" valign="top"><dl>
 <dt><a href="developer.html#persy_talker.Talker.resetError">resetError() (persy_talker.Talker method)</a></dt>
+<dt><a href="developer.html#persy_syncer.TheSyncer.run">run() (persy_syncer.TheSyncer method)</a></dt>
 </dl></td></tr></table>
 
 <h2 id="S">S</h2>
 <table width="100%" class="indextable"><tr><td width="33%" valign="top">
 <dl>
 
+<dt><a href="developer.html#persy_gtk.PersyGtkMenu.save">save() (persy_gtk.PersyGtkMenu method)</a></dt>
 <dt><a href="developer.html#persy_talker.Talker.setLevel">setLevel() (persy_talker.Talker method)</a></dt>
 <dt><a href="developer.html#persy_core._Core.setonetimesync">setonetimesync() (persy_core._Core method)</a></dt>
 <dt><a href="developer.html#persy_talker.Talker.setStart">setStart() (persy_talker.Talker method)</a></dt>
@@ -231,6 +287,9 @@
   </dl></dd>
 <dt><a href="developer.html#persy_helper._PersyHelper.striplist">striplist() (persy_helper._PersyHelper method)</a></dt>
 <dt><a href="developer.html#persy_core._Core.syncWithRemote">syncWithRemote() (persy_core._Core method)</a></dt>
+  <dd><dl>
+    <dt><a href="developer.html#persy_gtk.PersyGtk.syncWithRemote">(persy_gtk.PersyGtk method)</a></dt>
+  </dl></dd>
 </dl></td></tr></table>
 
 <h2 id="T">T</h2>
@@ -239,6 +298,7 @@
 
 <dt><a href="developer.html#persy_talker.Talker">Talker (class in persy_talker)</a></dt>
 <dt><a href="developer.html#persy_syncer.TheSyncer">TheSyncer (class in persy_syncer)</a></dt></dl></td><td width="33%" valign="top"><dl>
+<dt><a href="developer.html#persy_gtk.PersyGtkMenu.toggle_sensitive">toggle_sensitive() (persy_gtk.PersyGtkMenu method)</a></dt>
 </dl></td></tr></table>
 
 <h2 id="U">U</h2>
@@ -265,6 +325,7 @@
 
 <dt><a href="developer.html#persy_talker.Talker.warn">warn() (persy_talker.Talker method)</a></dt>
 <dt><a href="developer.html#persy_helper._PersyHelper.which">which() (persy_helper._PersyHelper method)</a></dt></dl></td><td width="33%" valign="top"><dl>
+<dt><a href="developer.html#persy_config.PersyConfig.write">write() (persy_config.PersyConfig method)</a></dt>
 </dl></td></tr></table>
 
 

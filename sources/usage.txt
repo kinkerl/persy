@@ -27,7 +27,7 @@ After you added the directories (and maybe lookt at the other configuration opti
 Thats it, persy should be running by now and backup your files.
 
 
-Commandline
+Quickstart on the commandline
 ---------------------------------
 
 You can also do this configuration in the commandline. This is recommended for experienced users only and is not necessary if you configured persy with the settings menu.
@@ -52,7 +52,7 @@ If you want to sync or backup your files on a remote server, you have to enable 
 
 The server just needs a ssh server with public key authentication and the git-core package.
 
-You only have to configure the client computer with persy installed! The normal workflow with a blank remote Server and an already initialized local repository is:
+You only have to configure the client computer with persy installed! The normal workflow with a **blank remote Server** and an **already initialized local repository** is:
 
 .. code-block:: bash
   :linenos:
@@ -62,9 +62,11 @@ You only have to configure the client computer with persy installed! The normal 
    persy --initRemote
    persy --start
 
-The normal workflow with a already initialized remote Server and no local repository.
+The normal workflow with a **already initialized remote Server** and **no local repository**.
 
-IMPORTANT: the synced directories should be empty before the sync. i had some problems with already existing files. you can start a sync and then add new files to the synced directory.
+.. warning::
+
+   the synced directories should be empty before the sync. i had some problems with already existing files. you can start a sync and then add new files to the synced directory.
 
 .. code-block:: bash
   :linenos:
