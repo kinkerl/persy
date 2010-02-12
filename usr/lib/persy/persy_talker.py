@@ -54,11 +54,15 @@ __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 
 class Talker:
-	'''logging, notifications and communications with the outside!
-if the critical or warning function is called, the Talker goes into an "error occured" mode:
-The statusicon will not change to any other state until this errorstate is reseted.
-'''
+	"""
+	logging, notifications and communications with the outside!
+	if the critical or warning function is called, the Talker goes into an "error occured" mode:
+	The statusicon will not change to any other state until this errorstate is reseted.
+	"""
 	def __init__(self, config, verbose=False):
+		"""
+		initialized the logging and notification
+		"""
 		self.statusIcon = None
 		self.config = config
 		#init logging 
@@ -80,17 +84,25 @@ The statusicon will not change to any other state until this errorstate is reset
 		self.resetError()
 
 	def notify(self, text, icon):
+		"""
+		displays a notification
+		"""
+		#this pixbuf thing is important to ensure the image size is only 64x64
 		pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(icon, 64, 64)
 		n = pynotify.Notification(self.notifyid, text)
 		n.set_icon_from_pixbuf(pixbuf)
 		n.show()
 
 	def setStatusIcon(self, icon):
-		'''sets the status icon'''
+		"""
+		sets the status icon
+		"""
 		self.statusIcon = icon
 
 	def setStart(self):
-		'''can be called to tell "everybody" when persy is started'''
+		"""
+		can be called to tell "everybody" when persy is started
+		"""
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))#from_stock(gtk.STOCK_HOME)
 		try:
@@ -99,7 +111,9 @@ The statusicon will not change to any other state until this errorstate is reset
 			self.log.warn(str(e))
 
 	def setStop(self):
-		'''can be called to tell "everybody" when persy is stopped'''
+		"""
+		can be called to tell "everybody" when persy is stopped
+		"""
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_IDLE'))#from_stock(gtk.STOCK_HOME)
 		try:
@@ -108,11 +122,15 @@ The statusicon will not change to any other state until this errorstate is reset
 			self.log.warn(str(e))
 
 	def resetError(self):
-		'''resets the error state'''
+		"""
+		resets the error state
+		"""
 		self.error = False
 
 	def untracked_changes(self, uc):
-		'''sets or unsets the untracked_changes status -> sets the status icon'''
+		"""
+		sets or unsets the untracked_changes status -> sets the status icon
+		"""
 		if not self.error:
 			if uc:
 				if self.statusIcon:
@@ -122,7 +140,9 @@ The statusicon will not change to any other state until this errorstate is reset
 					self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))
 
 	def unsynced_changes(self, uc):
-		'''sets or unsets the unsynced_changes status -> sets the status icon'''
+		"""
+		sets or unsets the unsynced_changes status -> sets the status icon
+		"""
 		if not self.error:
 			if uc:
 				if self.statusIcon:
@@ -132,23 +152,31 @@ The statusicon will not change to any other state until this errorstate is reset
 					self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))
 
 	def setLevel(self, lvl):
-		'''set the logging level. see logging.INFO = false,logging.DEBUG = true... for more information'''
+		"""
+		set the logging level. see logging.INFO = false,logging.DEBUG = true... for more information
+		"""
 		self.log.setLevel((logging.INFO,logging.DEBUG)[lvl])
 
 	def debug(self, msg, verbose=None):
-		'''logs a debug message'''
+		"""
+		logs a debug message
+		"""
 		self.log.debug(msg)
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
 
 	def info(self, msg, verbose=None):
-		'''logs a info message'''
+		"""
+		logs a info message
+		"""
 		self.log.info(msg)
 		if verbose == True or (verbose == None and self.verbose):
 			print msg
 
 	def warn(self, msg, verbose=None):
-		''' logs a warning message, changes the status icon, fires a notification and sets the error state'''
+		"""
+		logs a warning message, changes the status icon, fires a notification and sets the error state
+		"""
 		self.error = True
 		self.log.warn(msg)
 		if verbose == True or (verbose == None and self.verbose):
@@ -161,7 +189,9 @@ The statusicon will not change to any other state until this errorstate is reset
 			pass #self.log.warn(str(e))
 
 	def critical(self, msg, verbose=None):
-		''' logs a critical message, changes the status icon, fires a notification and sets the error state'''
+		"""
+		logs a critical message, changes the status icon, fires a notification and sets the error state
+		"""
 		self.error = True
 		self.log.critical(msg)
 		if verbose == True or (verbose == None and self.verbose):

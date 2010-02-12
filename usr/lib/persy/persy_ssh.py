@@ -52,12 +52,19 @@ __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 
 class PersySSH():
-	'''Functions that might be helpful for ssh stuff'''
+	"""
+	Functions that might be helpful for ssh stuff
+	"""
+	
 	def __init__(self, config, log):
 		self.config = config
 		self.log = log
 
 	def checkSSHAuth(self):
+		"""
+		check ifs an connection to the server is possible.
+		this function uses the configuration data from the PersyConfig object.
+		"""
 		username=None
 		port=22
 		client = paramiko.SSHClient()
@@ -71,7 +78,10 @@ class PersySSH():
 		return True
 
 	def localSSHKeysExist(self):
-		'''checks if local ssh keys are generated'''
+		"""
+		checks if local ssh keys are generated.
+		its is looking for the ..ssh/id_*sa files
+		"""
 		if os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_rsa')) and os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_rsa.pub')):
 			return True
 		if os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_dsa')) and os.path.exists(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_dsa.pub')):
@@ -80,7 +90,11 @@ class PersySSH():
 
 
 	def createLocalSSHKeys(self, password):
-		''' create the local keys '''
+		"""
+		create the local keys.
+		this function is not used at the moment and its not testet. 
+		a button in the settings gui exists for this function.
+		"""
 		#create public and private keys
 		if not os.path.exists(self.config.getAttribute('LOCALSSHDIR')):
 			os.makedirs(self.config.getAttribute('LOCALSSHDIR'))
@@ -98,6 +112,10 @@ class PersySSH():
 			os.chmod(os.path.join(self.config.getAttribute('LOCALSSHDIR'), 'id_rsa.pub'), 700)
 
 	def checkRemoteServer(self):
+		"""
+		connects to the server and is trying to execue 'git show' on the server. 
+		returns true if everything worked.
+		"""
 		client = paramiko.SSHClient()
 		client.load_system_host_keys()
 		try:
@@ -120,6 +138,9 @@ class PersySSH():
 		return True
 
 	def publishLocalSSHKeys(username, password, hostname):
+		"""
+		this function is not used (and not implemented yet)
+		"""
 		pass
 		#auf server connecten checken ob das geht mit password! und dann file hinzufügen
 

@@ -37,7 +37,10 @@ __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 GIT = '/usr/bin/git'
 
 class PuG(VCS):
-	'''Persy`s uncomplicated Git '''
+	"""
+	persy`s uncomplicated Git.
+	can execute pushs, pulls, adds, commits and so on. 
+	"""
 
 	def __init__(self, GIT_WORK_TREE, GIT_DIR='.git', stdin=None, stderr=None, stdout=None):
 		'''
