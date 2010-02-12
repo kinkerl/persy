@@ -522,7 +522,7 @@
                           <widget class="GtkTable" id="table10">
                             <property name="visible">True</property>
                             <property name="n_rows">3</property>
-                            <property name="n_columns">2</property>
+                            <property name="n_columns">4</property>
                             <child>
                               <widget class="GtkLabel" id="labelRemoteHostname">
                                 <property name="width_request">300</property>
@@ -569,7 +569,7 @@
                               </widget>
                               <packing>
                                 <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
+                                <property name="right_attach">4</property>
                                 <property name="top_attach">2</property>
                                 <property name="bottom_attach">3</property>
                                 <property name="y_options">GTK_FILL</property>
@@ -596,9 +596,34 @@
                               </widget>
                               <packing>
                                 <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
+                                <property name="right_attach">4</property>
                                 <property name="top_attach">1</property>
                                 <property name="bottom_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="labelRemotePort">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">:</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="right_attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkSpinButton" id="spinRemotePort">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="max_length">5</property>
+                                <property name="invisible_char">&#x25CF;</property>
+                                <property name="adjustment">0 0 65535 1 10 0</property>
+                                <property name="climb_rate">1</property>
+                                <property name="numeric">True</property>
+                              </widget>
+                              <packing>
+                                <property name="left_attach">3</property>
+                                <property name="right_attach">4</property>
                               </packing>
                             </child>
                           </widget>

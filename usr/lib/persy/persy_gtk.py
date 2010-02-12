@@ -144,7 +144,7 @@ class PersyGtkMenu():
 		textGeneralName.set_tooltip_text(_("use fortune messages in the git commit message. disabled is fine."))
 		textGeneralName.set_label(_("use fortune messages in the git commit"))
 		
-		if self.helper.which(config.attributes['FORTUNE']):
+		if self.helper.which(self.config['general']['fortune']):
 			textGeneralName.set_sensitive(True)
 		else:
 			textGeneralName.set_sensitive(False)
@@ -232,9 +232,14 @@ class PersyGtkMenu():
 		textGeneralName = self.wTree.get_widget('textRemoteHostname')
 		textGeneralName.set_text(config['remote']['hostname'])
 		textGeneralName.set_tooltip_text(_("the hostname of the remote server"))
+		
+		textGeneralName = self.wTree.get_widget('spinRemotePort')
+		textGeneralName.set_value(int(config['remote']['port']))
+		textGeneralName.set_tooltip_text(_("the port of the remote server"))
 
 		textGeneralName = self.wTree.get_widget('labelRemoteUsername')
 		textGeneralName.set_label(_("username"))
+		textGeneralName.set_tooltip_text(_("the username for the remote server"))
 
 		textGeneralName = self.wTree.get_widget('textRemoteUsername')
 		textGeneralName.set_text(config['remote']['username'])
@@ -390,9 +395,15 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('textRemoteHostname')
 		self.config['remote']['hostname'] = textGeneralName.get_text()
+		
+		textGeneralName = self.wTree.get_widget('spinRemotePort')
+		self.config['remote']['port'] = int(textGeneralName.get_value())		
 
 		textGeneralName = self.wTree.get_widget('textRemotePath')
 		self.config['remote']['path'] = textGeneralName.get_text()
+
+		textGeneralName = self.wTree.get_widget('textRemoteUsername')
+		self.config['remote']['username'] = textGeneralName.get_text()
 
 		textGeneralName = self.wTree.get_widget('checkGeneralAutoshare')
 		self.config['general']['autoshare'] = textGeneralName.get_active()

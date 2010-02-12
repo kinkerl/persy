@@ -48,6 +48,9 @@ sleep = %if
 # the host adress of the remote server as ip or name
 hostname = %s
 
+# the ssh port of the remote server
+port = %d
+
 # the absolute path on the remote server to the git repository.
 # if you want to sync other clients with this some, choose the 
 # same remote path for all clients

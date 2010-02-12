@@ -140,7 +140,9 @@ class _Core():
 		try:	
 			client = paramiko.SSHClient()
 			client.load_system_host_keys()
-			client.connect(self.config['remote']['hostname'] )
+			client.connect(self.config['remote']['hostname'],
+							username=self.config['remote']['username'],
+							port=int(self.config['remote']['port']))
 			# the follow commands are executet on a remote host. we can not know the path to git,
 			# mkdir and cd so we will not replace them with a absolute path
 			stdin1, stdout1, stderr1 = client.exec_command("mkdir -m 700 %s"%self.config['remote']['path'])
