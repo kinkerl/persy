@@ -790,7 +790,7 @@ class PersyGtk():
 		"""
 		opens the system-webbrowser witht the persy documentation
 		 *   windows = ie
-		 *   *nix = firefox (most of the time)
+		 *   linux/unix = firefox (most of the time)
 		 *   mac = safari
 		"""
 		webbrowser.open(self.config.getAttribute('HTMLDOCFILE'))
