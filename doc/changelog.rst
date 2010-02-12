@@ -1,6 +1,5 @@
 Changelog
 =================================
-all hail the changelog!
 You can find the latest commit history a github_.
 
 the raw beauty
