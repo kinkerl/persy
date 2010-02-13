@@ -90,7 +90,6 @@ class _Core():
 		stdout = std #default stdout
 		stderr = std #default stderr
 		self.vcs = pug.PuG(self.config.getAttribute('USERHOME'), GIT_DIR=self.config.getAttribute('GIT_DIR'), stdin=stdin, stdout=stdout, stderr=stderr)
-		#print self.isInSyncWithRemote()
 
 	def initLocal(self):
 		"""
@@ -381,6 +380,12 @@ class _Core():
 		executes a push to "branch" on "nickname"
 		"""
 		self.vcs.push(nickname,branch)
+
+	def git_get_submodules(self):
+		"""
+		returns all submodules in watched directories
+		"""
+		return self.vcs.get_submodules(include_dir = self.config['local']['watched'])
 
 #singleton hack
 _singleton = _Core()

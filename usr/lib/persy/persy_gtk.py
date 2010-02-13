@@ -207,6 +207,20 @@ class PersyGtkMenu():
 		textGeneralName.set_text(", ".join(config['local']['exclude']))
 		textGeneralName.set_tooltip_text(_("the expressions are seperated by a comma"))
 
+		textGeneralName = self.wTree.get_widget('labelCategoryExclude1')
+		textGeneralName.set_label('<b>'+_("excluded submodules / directories")+'</b>')
+
+		textGeneralName = self.wTree.get_widget('label1')
+		textGeneralName.set_text("these directories are submodules and can not be tracked with persy:")
+
+
+		textGeneralName = self.wTree.get_widget('label2')
+		submodules = self.gtkcore.get_submodules()
+		if submodules:
+			textGeneralName.set_text("\n".join(submodules))
+		else:
+			textGeneralName.set_text("none!")
+
 		#remote configuration
 		textGeneralName = self.wTree.get_widget('labelCategoryOptions')
 		textGeneralName.set_label('<b>'+_("options")+'</b>')
@@ -823,6 +837,12 @@ class PersyGtk():
 		calls the initRemote function in core
 		"""
 		self.core.initRemote()
+
+	def get_submodules(self):
+		"""
+		returns the result of get_submodules from core
+		"""
+		return self.core.git_get_submodules()
 
 	def isInSyncWithRemote(self, unused_widget, unused_data = None):
 		"""

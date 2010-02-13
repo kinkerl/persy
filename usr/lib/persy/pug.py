@@ -66,7 +66,7 @@ GIT_WORK_TREE = the root git repostitory
 		return ret
 
 	def execute(self, callcmd, stdin=None, stdout=None, stderr=None):
-		'''executes any command with pug. uses the persy environment variables. returns the returncode of the process'''
+		'''executes any command with pug. uses the persy environment variables. returns the returncode of the process. if you want to get the output with getlastoutput, stdout must be subprocess.PIPE'''
 		if not stdin:
 			stdin = self.stdin
 		if not stdout:
@@ -221,3 +221,24 @@ GIT_WORK_TREE = the root git repostitory
 		rc = self.execute(callcmd, stdin, stdout, stderr)
 		if not rc  == 0:
 			raise Exception("log: %i"%rc)
+
+
+	def get_submodules(self, stdin=None, stdout=None, stderr=None, include_dir = None):
+		submodules = []
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('submodule')
+		callcmd.append('foreach')
+		callcmd.append('cd .')
+		rc = self.execute(callcmd, subprocess2.PIPE, subprocess2.PIPE, stderr)
+		if not rc  == 0:
+			raise Exception("log: %i"%rc)
+		stdoutdata = self.getLastOutput()
+		for entry in stdoutdata.split("\n"):
+			possible_module = entry[entry.find("'")+1:entry.rfind("'")]
+			if possible_module and os.path.exists(possible_module):
+				if include_dir:
+					for inc in include_dir:
+						if os.path.abspath(possible_module).startswith(os.path.abspath(inc)):
+							submodules.append(possible_module)
+		return submodules
