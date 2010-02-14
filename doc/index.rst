@@ -17,6 +17,13 @@ I have a old pc here in my local network for example. Give persy the server data
 
 If you are not looking at the online version of the documentation, you can find the most recent version at: http://kinkerl.github.com/persy/
 
+Get persy
+-----------------
+
+If you want to get the latest version of persy, take a look at the :ref:`installation`-section!
+There you will find links to the ppa for Ubunu, the source package and maybe more!
+
+
 Contents
 ------------------
 
@@ -28,13 +35,6 @@ Contents
    developer
    trivia
    changes
-
-Get persy!
------------------
-
-If you want to get persy, take a look at the "installation"-section above!
-There you will find links to the ppa for Ubunu, the source package and maybe more!
-
 
 Indices and tables
 ------------------
