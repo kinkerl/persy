@@ -141,7 +141,6 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
 		textGeneralName.set_active(config['general']['fortune'])
-		textGeneralName.set_tooltip_text(_("use fortune messages in the git commit message. disabled is fine."))
 		textGeneralName.set_label(_("use fortune messages in the git commit"))
 		
 		if self.helper.which(self.config.getAttribute('FORTUNE')):
