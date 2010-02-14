@@ -1,0 +1,10 @@
+installation of persy
+=========================
+
+You can get fresh debian packages on launchpad but if you want to install from source, you can use the usual:
+
+ ./configure
+ make
+
+# as root:
+ make install
