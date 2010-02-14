@@ -27,7 +27,7 @@ Contents
    usage
    developer
    trivia
-   changelog
+   changes
 
 Indices and tables
 ------------------

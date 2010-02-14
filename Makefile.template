@@ -23,7 +23,10 @@ genversion:
 
 doc-html: genversion
 	#build developer documentation and place it in usr/share/doc/persy
+	
+	#create the folder for the documentation and clean it
 	mkdir -p usr/share/doc/persy
+	rm -rf usr/share/doc/persy/*
 	
 	cd doc && $(SPHINXBUILD) -a -b html $(ALLSPHINXOPTS) ../usr/share/doc/persy
 	@echo
