@@ -3,13 +3,22 @@
 Installation
 =================================
 
-If you can, install the deb package. It will take care of "all" problems. 
-You can find the latest version in the following ppa:
+If you can, install the debian package. It will take care of "all" problems. 
+You can find the latest version of persy in a ppa repository on launchpad.
+To add this repository to your Ubuntu installation, just run the following commad (or you can use the software sources userinterface):
 
 .. code-block:: bash
   :linenos:
 
-   ppa:tmassassin/ppa
+   sudo add-apt-repository ppa:tmassassin/ppa
+
+After you added the repository, you can install persy if you click on this `apt link (apt://persy) <apt://persy>`_, over the software center or with the command line:
+
+
+.. code-block:: bash
+  :linenos:
+
+   sudo aptitude install persy
 
 If you are not running Ubuntu or want to direct download the debian or the source package, please go to https://launchpad.net/~tmassassin/+archive/ppa/+packages
 
