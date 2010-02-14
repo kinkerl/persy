@@ -89,7 +89,7 @@ You can use persy without a centralized server to which every clients connects a
 persy's states
 --------------------------------------------
 
-When running persy, its possible to run in the following states. most of them are explanatory.
+When running persy, its possible to run in the following states. most of them are selfexplanatory.
 
 
 .. csv-table:: 
