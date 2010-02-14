@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Developer Documentation &mdash; persy v0.8.1 documentation</title>
+    <title>Developer Documentation &mdash; persy v0.9 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.8.1',
+        VERSION:     '0.9',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="persy v0.8.1 documentation" href="index.html" />
+    <link rel="top" title="persy v0.9 documentation" href="index.html" />
     <link rel="next" title="Trivia" href="trivia.html" />
     <link rel="prev" title="Usage" href="usage.html" /> 
   </head>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="usage.html" title="Usage"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">persy v0.8.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">persy v0.9 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,6 +54,11 @@
 <div class="section" id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
 <p>If you want to contribute in anyway, please go to <a class="reference external" href="http://github.com/kinkerl/persy">github</a> or <a class="reference external" href="https://launchpad.net/persy">launchpad</a>.</p>
+<div class="section" id="persy-dev-package">
+<h3>persy-dev Package<a class="headerlink" href="#persy-dev-package" title="Permalink to this headline">¶</a></h3>
+<p>If you want to Test your code or release it, you might want to take a look at the persy-dev package.
+It can be found at github (<a class="reference external" href="http://github.com/kinkerl/persy-dev">http://github.com/kinkerl/persy-dev</a>) and stores all the files which are not a direct part of the persy application (this includes artwork).</p>
+</div>
 </div>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
@@ -79,21 +84,16 @@
 </ul>
 </blockquote>
 </div>
-<div class="section" id="persy-dev-package">
-<h2>persy-dev Package<a class="headerlink" href="#persy-dev-package" title="Permalink to this headline">¶</a></h2>
-<p>If you want to Test your code or release it, you might want to take a look at the persy-dev package.
-It can be found at github (<a class="reference external" href="http://github.com/kinkerl/persy-dev">http://github.com/kinkerl/persy-dev</a>) and stores all the files which are not a direct part of the persy application.</p>
-</div>
 <div class="section" id="debugging-persy">
 <h2>Debugging persy<a class="headerlink" href="#debugging-persy" title="Permalink to this headline">¶</a></h2>
-<p>A development/debugging Option is &#8211;setenv (notice the dot in the beginning).</p>
+<p>A development/debugging Option is <tt class="docutils literal"><span class="pre">--setenv</span></tt> (notice the dot in the beginning).</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre> . persy --setenv
 </pre></div>
 </td></tr></table></div>
-<p>This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository.
+<p>This sets the environment variables (<tt class="docutils literal"><span class="pre">GIT_DIR</span></tt>, <tt class="docutils literal"><span class="pre">GIT_WORK_TREE</span></tt>) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository.
 Take a look at the help message when using this option.
 This is useful if you want to start your own git viewer or want to mess with your data.</p>
-<p>If you just want a more detailed output of the stuff persy does, you can try the &#8211;verbose command line argument.</p>
+<p>If you just want a more detailed output of the stuff persy does, you can try the <tt class="docutils literal"><span class="pre">--verbose</span></tt> command line argument.</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre> persy --verbose
 </pre></div>
 </td></tr></table></div>
@@ -170,18 +170,14 @@ persy uses Sphinx to convert the docstrings into a complete code documentation (
 <h3>publishing<a class="headerlink" href="#publishing" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
 <dt>Before publishing anything, make a quick check if everything is ok:</dt>
-<dd><ul class="first simple">
-<li>run persy</li>
-<li>run the tests, you need the persy-dev package for this</li>
-</ul>
+<dd><p class="first">1   run persy</p>
+<p>2   run the tests, you need the persy-dev package for this</p>
 <blockquote>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre>./makerelease.sh <span class="nb">test</span>
 </pre></div>
 </td></tr></table></div>
 </blockquote>
-<ul class="simple">
-<li>create a debian package, you also need the persy-dev package for this</li>
-</ul>
+<p>3   create a debian package, you also need the persy-dev package for this</p>
 <blockquote class="last">
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre>./makerelease.sh makedeb
 </pre></div>
@@ -189,6 +185,15 @@ persy uses Sphinx to convert the docstrings into a complete code documentation (
 </blockquote>
 </dd>
 </dl>
+</div>
+<div class="section" id="naming">
+<h3>naming<a class="headerlink" href="#naming" title="Permalink to this headline">¶</a></h3>
+<p>How you should name your functions and stuff. This is taken from the google styleguide above:</p>
+<p>module_name, package_name, ClassName, method_name, ExceptionName, function_name, GLOBAL_VAR_NAME, instance_var_name, function_parameter_name, local_var_name.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">i know not every function in persy confirms to this guideline... this should change!</p>
+</div>
 </div>
 </div>
 <div class="section" id="code-documentation">
@@ -221,6 +226,11 @@ class </em><tt class="descclassname">persy_core.</tt><tt class="descname">_Core<
 <dt id="persy_core._Core.git_commit">
 <tt class="descname">git_commit</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#persy_core._Core.git_commit" title="Permalink to this definition">¶</a></dt>
 <dd>executes a commit with &#8220;message&#8221; as the commit message</dd></dl>
+
+<dl class="method">
+<dt id="persy_core._Core.git_get_submodules">
+<tt class="descname">git_get_submodules</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_core._Core.git_get_submodules" title="Permalink to this definition">¶</a></dt>
+<dd>returns all submodules in watched directories</dd></dl>
 
 <dl class="method">
 <dt id="persy_core._Core.git_pull">
@@ -357,6 +367,11 @@ class </em><tt class="descclassname">persy_gtk.</tt><tt class="descname">PersyGt
 <dt id="persy_gtk.PersyGtk.browse">
 <tt class="descname">browse</tt><big>(</big><em>unused_widget</em>, <em>unused_data=None</em><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.browse" title="Permalink to this definition">¶</a></dt>
 <dd>calls the browse function in core</dd></dl>
+
+<dl class="method">
+<dt id="persy_gtk.PersyGtk.get_submodules">
+<tt class="descname">get_submodules</tt><big>(</big><big>)</big><a class="headerlink" href="#persy_gtk.PersyGtk.get_submodules" title="Permalink to this definition">¶</a></dt>
+<dd>returns the result of get_submodules from core</dd></dl>
 
 <dl class="method">
 <dt id="persy_gtk.PersyGtk.help">
@@ -790,7 +805,7 @@ can execute pushs, pulls, adds, commits and so on.</p>
 <dl class="method">
 <dt id="pug.PuG.execute">
 <tt class="descname">execute</tt><big>(</big><em>callcmd</em>, <em>stdin=None</em>, <em>stdout=None</em>, <em>stderr=None</em><big>)</big><a class="headerlink" href="#pug.PuG.execute" title="Permalink to this definition">¶</a></dt>
-<dd>executes any command with pug. uses the persy environment variables. returns the returncode of the process</dd></dl>
+<dd>executes any command with pug. uses the persy environment variables. returns the returncode of the process. if you want to get the output with getlastoutput, stdout must be subprocess.PIPE</dd></dl>
 
 <dl class="method">
 <dt id="pug.PuG.gc">
@@ -845,13 +860,16 @@ can execute pushs, pulls, adds, commits and so on.</p>
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference external" href="">Developer Documentation</a><ul>
-<li><a class="reference external" href="#contributing">Contributing</a></li>
-<li><a class="reference external" href="#dependencies">Dependencies</a></li>
+<li><a class="reference external" href="#contributing">Contributing</a><ul>
 <li><a class="reference external" href="#persy-dev-package">persy-dev Package</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#dependencies">Dependencies</a></li>
 <li><a class="reference external" href="#debugging-persy">Debugging persy</a></li>
 <li><a class="reference external" href="#styleguide">Styleguide</a><ul>
 <li><a class="reference external" href="#docstrings">docstrings</a></li>
 <li><a class="reference external" href="#publishing">publishing</a></li>
+<li><a class="reference external" href="#naming">naming</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#code-documentation">Code Documentation</a><ul>
@@ -908,7 +926,7 @@ can execute pushs, pulls, adds, commits and so on.</p>
         <li class="right" >
           <a href="usage.html" title="Usage"
              >previous</a> |</li>
-        <li><a href="index.html">persy v0.8.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">persy v0.9 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
