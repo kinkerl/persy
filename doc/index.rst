@@ -29,6 +29,13 @@ Contents
    trivia
    changes
 
+Get persy!
+-----------------
+
+If you want to get persy, take a look at the "installation"-section above!
+There you will find links to the ppa for Ubunu, the source package and maybe more!
+
+
 Indices and tables
 ------------------
 

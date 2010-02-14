@@ -9,7 +9,14 @@ You can find the latest version in the following ppa:
 
    ppa:tmassassin/ppa
 
-You can, however, get the source package and install it without a package. 
+If you are not running Ubuntu or want to direct download the debian or the source package, please go to https://launchpad.net/~tmassassin/+archive/ppa/+packages
+
+Extract the latest source package into your favorite location.
+Inside of the extracted package, run the following commands to install persy.
+
+.. note::
+
+   You may want the first check the developer documentation for the required dependencies. If you dont, configure hopefully will tell you whats missing.
 
 .. code-block:: bash
   :linenos:
@@ -18,7 +25,6 @@ You can, however, get the source package and install it without a package.
    make
    make install
 
-You may want the first check the developer documentation for the dependencies. 
 
-After the installaton you will have to do some configuraton depending on your environment, needs and whishes
+After the installaton you will have to do some configuraton in the persy settings menu depending on your environment, needs and whishes
 

@@ -1,7 +1,7 @@
 installation of persy
 =========================
 
-You can get fresh debian packages on launchpad but if you want to install from source, you can use the usual:
+You can get fresh debian packages on persy.digitalkultur.net but if you want to install from source, you can use the usual:
 
  ./configure
  make
