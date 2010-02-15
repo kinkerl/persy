@@ -1,3 +1,18 @@
+persy (0.9) karmic; urgency=low
+
+  * new and improved documentation
+  * new build and installation system
+  * new logos for linux mint and fedora
+  * added support for different remote server ports 
+  * added list of submodules (files in submodules are not tracked in persy)
+  * possibility to install persy on every linux distribution (make install!)
+  * language updates
+  * settings gui updates
+  * some bugfixes and cleanups
+
+ -- Dennis Schwertel <s@digitalkultur.net>  05 Feb 2010 10:21:00 +0100
+
+
 persy (0.8.1) karmic; urgency=low
 
   * added headless mode

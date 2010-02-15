@@ -15,7 +15,14 @@ If you just want to backup your files and save nearly every step you do, run per
 If you want to sychronize your files, all you need is a server with ssh and git (in your local network or remote in the internet doesnt matter). 
 I have a old pc here in my local network for example. Give persy the server data it needs, follow the configuration, enable remote synchronization and there you go!
 
-If you are not looking at the online version of the documentation, you can find the most recent version at: http://kinkerl.github.com/persy/
+If you are not looking at the online version of the documentation, you can find the most recent version at: http://persy.digitalkultur.net
+
+Get persy
+-----------------
+
+If you want to get the latest version of persy, take a look at the :ref:`installation`-section!
+There you will find links to the ppa for Ubunu, the source package and maybe more!
+
 
 Contents
 ------------------
@@ -27,7 +34,7 @@ Contents
    usage
    developer
    trivia
-   changelog
+   changes
 
 Indices and tables
 ------------------

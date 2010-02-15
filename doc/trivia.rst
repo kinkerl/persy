@@ -1,9 +1,10 @@
 Trivia
 ===========================
 
-You can allways use the use_fortune configuration option find in "settings" -> "general".
-Every change you do when this option is activeated(True) gets a nice fortune text as a commit message! Yay!
+You can always use the use_fortune configuration option found in "settings" -> "general".
+Every change you do when this option is activated(True) gets a nice fortune text as a commit message! Yay!
 
+.. literalinclude:: _tmp/fortune
 
 New Logos
 ---------------------------

@@ -4,17 +4,31 @@
 
 import os
 
+# here you can modify the output for each changelog entry to your needs. 
+entry = '''
+%(head)s - %(date)s
+________________________________________________________________________________
+
+%(changes)s
+'''
+
 def convert(infile, outfile):
-	"""
+	"""parses a debian changelog and converts it to reStructredText 
+
+	Args:
+	   infile (str): path to the debian changelog
+	   outfile (str): path to the target output file
+
+	Raises:
+	   IOError
 	"""
 	if not os.path.exists(infile):
-		print "infile does not exist, aborting"
-		return False
+		raise IOError('infile does not exist')
 
 	#read the changelog and prepare the temp file
 	f = file(infile).read()
-	if not os.path.exists('_tmp'):
-		os.mkdir('_tmp')
+	if not os.path.exists(os.path.dirname(outfile)):
+		os.mkdir(os.path.dirname(outfile))
 	out = file(outfile, 'w')
 
 
@@ -23,12 +37,6 @@ def convert(infile, outfile):
 	data['changes'] = ''
 	data['date'] = ''
 
-	entry = '''
-%(head)s - %(date)s
-________________________________________________________________________________
-
-%(changes)s
-'''
 
 	for line in f.splitlines():
 		if line.startswith('  * '): # get the changes
@@ -40,4 +48,3 @@ ________________________________________________________________________________
 		else:
 			if line.startswith('persy'):
 				data['head'] =line[line.find('(')+1:line.find(')')].strip()
-

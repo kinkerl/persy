@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-12 17:00+0100\n"
+"POT-Creation-Date: 2010-02-14 19:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "syncs with a remote repository"
 msgstr ""
 
-#: usr/lib/persy/persy.py:77 usr/lib/persy/persy_gtk.py:326
+#: usr/lib/persy/persy.py:77 usr/lib/persy/persy_gtk.py:339
 msgid "start a git browser"
 msgstr ""
 
@@ -119,35 +119,35 @@ msgstr ""
 msgid "removed git lock file"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:100
+#: usr/lib/persy/persy_core.py:99
 msgid ""
 "username not set, cannot create git repository. use \"persy --config --"
 "name=NAME\" to set one"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:103
+#: usr/lib/persy/persy_core.py:102
 msgid ""
 "mail not set, cannot create git repository. use \"persy --config --mail=MAIL"
 "\" to set one"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:106
+#: usr/lib/persy/persy_core.py:105
 msgid "initialising local repository..."
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:116 usr/lib/persy/persy_core.py:164
+#: usr/lib/persy/persy_core.py:115 usr/lib/persy/persy_core.py:163
 msgid "done"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:139
+#: usr/lib/persy/persy_core.py:138
 msgid "initialising and adding remote repository..."
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:152
+#: usr/lib/persy/persy_core.py:151
 msgid "error creating dir, maybe it exists already?"
 msgstr ""
 
-#: usr/lib/persy/persy_core.py:154
+#: usr/lib/persy/persy_core.py:153
 msgid "error on remote git init"
 msgstr ""
 
@@ -200,271 +200,271 @@ msgid "advanced"
 msgstr ""
 
 #: usr/lib/persy/persy_gtk.py:144
-msgid "use fortune messages in the git commit message. disabled is fine."
-msgstr ""
-
-#: usr/lib/persy/persy_gtk.py:145
 msgid "use fortune messages in the git commit"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:154
+#: usr/lib/persy/persy_gtk.py:153
 msgid ""
 "if this is checked, all the computers in a sync will share the configuration "
 "file"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:155
+#: usr/lib/persy/persy_gtk.py:154
 msgid "share the configuration file"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:155
+#: usr/lib/persy/persy_gtk.py:154
 msgid "(experimental)"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:159
+#: usr/lib/persy/persy_gtk.py:158
 msgid "default git browser"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:169
+#: usr/lib/persy/persy_gtk.py:168
 msgid "the prefered git browser for browsing the local persy repository"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:173
+#: usr/lib/persy/persy_gtk.py:172
 msgid "list of folders persy is watching"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:182
+#: usr/lib/persy/persy_gtk.py:181
 msgid "backup options"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:185 usr/lib/persy/persy_gtk.py:189
+#: usr/lib/persy/persy_gtk.py:184 usr/lib/persy/persy_gtk.py:188
 msgid "time to wait after an action for a backup (in seconds)"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:193
+#: usr/lib/persy/persy_gtk.py:192
 msgid "exclude options"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:196
+#: usr/lib/persy/persy_gtk.py:195
 msgid "maximal allowed size of files (in bytes)"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:200
+#: usr/lib/persy/persy_gtk.py:199
 msgid "all files larger than this value will be ignored"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:204
+#: usr/lib/persy/persy_gtk.py:203
 msgid "exclude all files matching these regular expressions"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:208
+#: usr/lib/persy/persy_gtk.py:207
 msgid "the expressions are seperated by a comma"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:212
+#: usr/lib/persy/persy_gtk.py:210
+msgid "excluded submodules / directories"
+msgstr ""
+
+#: usr/lib/persy/persy_gtk.py:225
 msgid "options"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:216
+#: usr/lib/persy/persy_gtk.py:229
 msgid "synchronize to the remote server"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:220
+#: usr/lib/persy/persy_gtk.py:233
 msgid "time to wait for a synchronization (in seconds)"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:224
+#: usr/lib/persy/persy_gtk.py:237
 msgid ""
 "interval in seconds in which a synchronization with the remote host occurs"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:227
+#: usr/lib/persy/persy_gtk.py:240
 msgid "server configuration"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:230
+#: usr/lib/persy/persy_gtk.py:243
 msgid "hostname"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:234
+#: usr/lib/persy/persy_gtk.py:247
 msgid "the hostname of the remote server"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:238
+#: usr/lib/persy/persy_gtk.py:251
 msgid "the port of the remote server"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:241
+#: usr/lib/persy/persy_gtk.py:254
 msgid "username"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:242 usr/lib/persy/persy_gtk.py:246
+#: usr/lib/persy/persy_gtk.py:255 usr/lib/persy/persy_gtk.py:259
 msgid "the username for the remote server"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:249
+#: usr/lib/persy/persy_gtk.py:262
 msgid "repository path on the server"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:253
+#: usr/lib/persy/persy_gtk.py:266
 msgid "the path to the git repository on the remote server"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:258
+#: usr/lib/persy/persy_gtk.py:271
 msgid "environment tests"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:261
+#: usr/lib/persy/persy_gtk.py:274
 msgid ""
 "These are some tests to confirm if your settings are correct. If a problem "
 "occurs, the problem may be corrected if you run the corresponding action."
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:266 usr/lib/persy/persy_gtk.py:271
-#: usr/lib/persy/persy_gtk.py:277 usr/lib/persy/persy_gtk.py:283
+#: usr/lib/persy/persy_gtk.py:279 usr/lib/persy/persy_gtk.py:284
+#: usr/lib/persy/persy_gtk.py:290 usr/lib/persy/persy_gtk.py:296
 msgid "test"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:267 usr/lib/persy/persy_gtk.py:272
-#: usr/lib/persy/persy_gtk.py:278 usr/lib/persy/persy_gtk.py:340
-#: usr/lib/persy/persy_gtk.py:345
+#: usr/lib/persy/persy_gtk.py:280 usr/lib/persy/persy_gtk.py:285
+#: usr/lib/persy/persy_gtk.py:291 usr/lib/persy/persy_gtk.py:353
+#: usr/lib/persy/persy_gtk.py:358
 msgid "show git log"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:284 usr/lib/persy/persy_gtk.py:300
+#: usr/lib/persy/persy_gtk.py:297 usr/lib/persy/persy_gtk.py:313
 msgid "run a new initial synchronization with the remote host"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:287
+#: usr/lib/persy/persy_gtk.py:300
 msgid "test status of remote repository"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:291
+#: usr/lib/persy/persy_gtk.py:304
 msgid "initialize"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:292
+#: usr/lib/persy/persy_gtk.py:305
 msgid "run a initialization of the remote host"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:295
+#: usr/lib/persy/persy_gtk.py:308
 msgid "is persy in a sync pack with remote host"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:299
+#: usr/lib/persy/persy_gtk.py:312
 msgid "link"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:323
+#: usr/lib/persy/persy_gtk.py:336
 msgid "monitoring"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:329
+#: usr/lib/persy/persy_gtk.py:342
 msgid "start"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:330
+#: usr/lib/persy/persy_gtk.py:343
 #, python-format
 msgid "starts %s"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:333 usr/lib/persy/persy_gtk.py:337
+#: usr/lib/persy/persy_gtk.py:346 usr/lib/persy/persy_gtk.py:350
 msgid "show log"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:336 usr/lib/persy/persy_gtk.py:344
+#: usr/lib/persy/persy_gtk.py:349 usr/lib/persy/persy_gtk.py:357
 msgid "show"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:432
+#: usr/lib/persy/persy_gtk.py:445
 msgid "choose"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:440
+#: usr/lib/persy/persy_gtk.py:453
 msgid " - "
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:495 usr/lib/persy/persy_gtk.py:513
-#: usr/lib/persy/persy_gtk.py:531 usr/lib/persy/persy_gtk.py:548
+#: usr/lib/persy/persy_gtk.py:508 usr/lib/persy/persy_gtk.py:526
+#: usr/lib/persy/persy_gtk.py:544 usr/lib/persy/persy_gtk.py:561
 msgid "all ok"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:499
+#: usr/lib/persy/persy_gtk.py:512
 msgid ""
 "the remote repository is not ok. maybe the path on the server is incorrect "
 "or it is not initialized. run the \"initialize\" action to do so"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:517
+#: usr/lib/persy/persy_gtk.py:530
 msgid ""
 "the connection to the server was not possible. please check your settings "
 "above and if you have published your ssh public key to the server. if not, "
 "you can run the \"publish\" action"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:535
+#: usr/lib/persy/persy_gtk.py:548
 msgid ""
 "no local ssh keys are present. these are important for a serverconnection. "
 "you may want to run the \"create\" action to create these"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:552
+#: usr/lib/persy/persy_gtk.py:565
 msgid ""
 "persy is not in sync with the remote server. you may want to run the \"link"
 "\" action to fix this"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:591
+#: usr/lib/persy/persy_gtk.py:604
 msgid "start/stop Persy"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:592
+#: usr/lib/persy/persy_gtk.py:605
 msgid "sync Remote"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:593
+#: usr/lib/persy/persy_gtk.py:606
 msgid "auto sync Remote"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:600
+#: usr/lib/persy/persy_gtk.py:613
 msgid "settings"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:601
+#: usr/lib/persy/persy_gtk.py:614
 msgid "help"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:602
+#: usr/lib/persy/persy_gtk.py:615
 msgid "about"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:603
+#: usr/lib/persy/persy_gtk.py:616
 msgid "quit"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:622
+#: usr/lib/persy/persy_gtk.py:635
 msgid "watching over:"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:628
+#: usr/lib/persy/persy_gtk.py:641
 msgid ""
 "watching no directories or files! You should add some in the settings menu "
 "(local -> watched)"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:672
+#: usr/lib/persy/persy_gtk.py:685
 msgid "About Persy"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:675 usr/lib/persy/persy_gtk.py:680
+#: usr/lib/persy/persy_gtk.py:688 usr/lib/persy/persy_gtk.py:693
 msgid "undefined"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:685
+#: usr/lib/persy/persy_gtk.py:698
 msgid "personal sync"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:689
+#: usr/lib/persy/persy_gtk.py:702
 msgid "Sorry, i have a problem finding/reading the licence"
 msgstr ""
 
