@@ -208,6 +208,24 @@ sys.path.append(os.path.abspath('../usr/lib/persy'))
 sys.path.append(os.path.abspath('.'))
 
 
+#generate a fortune message
+import subprocess
+try:
+	callcmd = []
+	callcmd.append('fortune')
+	callcmd.append('-n')
+	callcmd.append('80')
+	callcmd.append('-s')
+	(stdoutdata, stderrdata) = subprocess.Popen(callcmd, stdout=subprocess.PIPE).communicate()
+except:
+	print "WARNING: fortune is not installed"
+	stdoutdata = "no fortune example, sorry"
+	
+out = file('_tmp/fortune', 'w')
+out.write(stdoutdata)
+
+
+
 #converts the changelog
 import debchangelog2rst
 debchangelog2rst.convert('../debian/changelog', '_tmp/changelog')

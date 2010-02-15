@@ -108,16 +108,15 @@ publishing
 __________________________________
 
 Before publishing anything, make a quick check if everything is ok:
- 1   run persy
- 
- 2   run the tests, you need the persy-dev package for this
+ 1)   run persy
+ 2)   run the tests, you need the persy-dev package for this
 
     .. code-block:: bash
       :linenos:
 
       ./makerelease.sh test
 
- 3   create a debian package, you also need the persy-dev package for this
+ 3)   create a debian package, you also need the persy-dev package for this
  
     .. code-block:: bash
       :linenos:

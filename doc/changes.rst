@@ -1,6 +1,6 @@
 Changelog
 =================================
-You can find the latest commit history a github_.
+You can find the latest commit history on github_.
 
 the raw beauty
 ---------------------------------
