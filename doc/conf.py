@@ -221,6 +221,8 @@ except:
 	print "WARNING: fortune is not installed"
 	stdoutdata = "no fortune example, sorry"
 	
+if not os.path.exists('_tmp'):
+	os.mkdir('_tmp')
 out = file('_tmp/fortune', 'w')
 out.write(stdoutdata)
 
