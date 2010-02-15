@@ -32,6 +32,16 @@ if [ "$failedpymods" != "" ]; then
     exit 1
 fi
 
+#check if xterm is installed (using xterm for log display)
+echo -n "Testing application xterm: "
+if [ -z `which xterm 2> /dev/null` ]; then
+    echo -e "Fail"
+    echo -e "xterm is not installed"
+    exit 1
+else
+    echo -e "Ok"
+fi
+
 #translations
 mos=""
 langs=""
