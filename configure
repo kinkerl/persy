@@ -42,6 +42,20 @@ else
     echo -e "Ok"
 fi
 
+#check if gitk or qgit is installed
+echo -n "Searching application qgit or gitk: "
+if [ -z `which qgit 2> /dev/null` ]; then
+    if [ -z `which gitk 2> /dev/null` ]; then
+        echo -e "Fail"
+        echo -e "neither qgit nor gitk is installed"
+        exit 1
+    else
+        echo -e "Ok"
+    fi
+else
+    echo -e "Ok"
+fi
+
 #translations
 mos=""
 langs=""
