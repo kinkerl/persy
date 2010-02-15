@@ -87,7 +87,7 @@ for doc in $docs; do
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/*.html \$(DEST)/share/doc/persy" >> Makefile
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/objects.inv \$(DEST)/share/doc/persy/objects.inv" >> Makefile
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/searchindex.js \$(DEST)/share/doc/persy/searchindex.js" >> Makefile
-                echo -e "\tinstall --mode=644 usr/share/doc/persy/images/*.png \$(DEST)/share/doc/persy/images" >> Makefile
+                echo -e "\tinstall --mode=644 usr/share/doc/persy/images/* \$(DEST)/share/doc/persy/images" >> Makefile
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/sources/*.txt \$(DEST)/share/doc/persy/sources" >> Makefile
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/static/* \$(DEST)/share/doc/persy/static" >> Makefile
                 echo "Yes"

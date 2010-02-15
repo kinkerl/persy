@@ -102,7 +102,10 @@ class FileChangeHandler(ProcessEvent):
 		except Exception as e:
 			self.log.warn(_("error with %s event. maybe problem with path?")%typ)
 			self.log.warn(str(e))
-		self.eventfunc(time.time(), event.path)
+		if event.pathname:
+			self.eventfunc(time.time(), event.pathname)
+		else: #backup incase the pathname does not exist
+			self.eventfunc(time.time(), event.path)
 		self.log.untracked_changes(True)
 
 
