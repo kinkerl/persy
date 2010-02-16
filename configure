@@ -15,7 +15,7 @@ docs="man html"
 pymods="gettext getpass platform paramiko subprocess pynotify pyinotify gtk gtk.glade pygtk webbrowser"
 failedpymods=""
 for pymod in $pymods; do
-    echo -n "Testing python module $pymod: "
+    echo -n "Checking for python module $pymod... "
     python -c "import $pymod" 2> /dev/null
     retval=$?
     if [ "$retval" -eq "0" ]; then
@@ -125,14 +125,14 @@ done
 echo -e "" >> Makefile
 
 #rebuild languagefile
-echo -n "Rebuild languagefile: "
+echo -n "Checking for xgettext... "
 if [ -z `which xgettext 2> /dev/null` ]; then
-    echo -e "Skip (xgettext not installed)" 
+    echo -e "no (xgettext not installed)" 
 else
     echo -e "languagefile:" >> Makefile
     echo -e "\txgettext usr/lib/persy/*.py -o usr/lib/persy/locale/messages.pot" >> Makefile
     echo -e "" >> Makefile
-    echo -e "Yes"
+    echo -e "yes"
     build="$build languagefile"    
 fi
 
