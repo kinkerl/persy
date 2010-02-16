@@ -384,7 +384,7 @@ class PersyGtkMenu():
 		autostart = textGeneralName.get_active()
 		a = autorun()
 		if autostart and not a.exists('persy'):
-			a.add('persy', self.config.getAttribute('PERSY_BIN'))
+			a.add('persy', self.config.getAttribute('PERSY_BIN') + ' --start')
 		if not autostart and a.exists('persy'):
 			a.remove('persy')
 
