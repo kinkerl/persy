@@ -22,12 +22,14 @@ After you added the repository, you can install persy if you click on this `apt 
 
 If you are not running Ubuntu or want to direct download the debian or the source package, please go to https://launchpad.net/~tmassassin/+archive/ppa/+packages
 
-Extract the latest source package into your favorite location.
-Inside of the extracted package, run the following commands to install persy.
-
 .. note::
 
-   You may want the first check the developer documentation for the required dependencies. If you dont, configure hopefully will tell you whats missing.
+   You can get the lastet version from github. These may not work at all but are bleeding edge and contain the newest features: ``git clone git://github.com/kinkerl/persy.git`` 
+
+
+Extract the latest source package into your favorite location.
+You may want to the developer documentation for the required dependencies. If you dont, configure hopefully will tell you whats missing.
+Inside of the extracted package, run the following commands to install persy.
 
 .. code-block:: bash
   :linenos:
