@@ -57,6 +57,8 @@ class autorun:
 	i am doing the autostart
 
 	#autorun.add("myapp", os.path.abspath(__file__))
+
+	base on http://29a.ch/2009/3/17/autostart-autorun-with-python
 	"""
 	if sys.platform == 'win32':
 		import _winreg
