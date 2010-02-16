@@ -63,11 +63,6 @@ def main(argv):
 	"""
 	args = argv[1:]
 
-	config =  PersyConfig()
-
-	#change in the userhome for all actions
-	os.chdir(config.getAttribute('USERHOME'))
-
 	#cli options
 	from optparse import OptionParser
 	parser = OptionParser(usage = _("use --start to start the daemon"))
@@ -81,6 +76,7 @@ def main(argv):
 	parser.add_option("--verbose",action="store_true", default=False, help=_("print git output to stdout and set loglevel to DEBUG"))
 	parser.add_option("--actions",action="store_true", default=False, help=_("computer-readable actions in persy"))
 	parser.add_option("--optimize",action="store_true", default=False, help=_("optimizes the stored files. saves space and improves performance"))
+	parser.add_option("--configfile", dest="configfile", default=None, help=_("use a non-default config file"))
 	parser.add_option("--config",action="store_true", default=False, help=_("needed flag to change configurations"))
 	parser.add_option("--version",action="store_true", default=False, help=_("prints the version"))
 	parser.add_option("--uname", dest="uname", default="", help=_("username used in commit"))
@@ -91,14 +87,18 @@ def main(argv):
 	parser.add_option("--add_dir", dest="add_dir", default="", help=_("add local wachted folders"))
 	(options, args) = parser.parse_args(args)
 
+	#creat the configuration
+	config =  PersyConfig(options.configfile)
+
+	#change in the userhome for all actions
+	os.chdir(config.getAttribute('USERHOME'))
+
 	#create programdirectory and a default config file
 	if not os.path.exists(config.getAttribute('PERSY_DIR')):
 		os.makedirs(config.getAttribute('PERSY_DIR'))
 
-
 	log = Talker(config, options.verbose) #verbose = print ALL output to stdout
 	log.setLevel(options.verbose) #true = debug, false = info set verbosity to show all messages of severity >= DEBUG
-
 
 	if options.config:
 		changed = False

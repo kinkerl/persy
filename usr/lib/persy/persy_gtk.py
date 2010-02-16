@@ -141,7 +141,6 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
 		textGeneralName.set_active(config['general']['fortune'])
-		textGeneralName.set_tooltip_text(_("use fortune messages in the git commit message. disabled is fine."))
 		textGeneralName.set_label(_("use fortune messages in the git commit"))
 		
 		if self.helper.which(config.getAttribute('FORTUNE')):
@@ -301,7 +300,7 @@ class PersyGtkMenu():
 		textGeneralName.set_label(_("test status of remote repository"))
 
 		thewidget = self.wTree.get_widget("buttonInitRemote")
-		thewidget.connect("clicked", self.gtkcore.initRemote)
+		thewidget.connect("clicked", self.init_remote)
 		thewidget.set_label(_("initialize"))
 		thewidget.set_tooltip_text(_('run a initialization of the remote host'))
 
@@ -309,7 +308,7 @@ class PersyGtkMenu():
 		textGeneralName.set_label(_("is persy in a sync pack with remote host"))
 
 		thewidget = self.wTree.get_widget("buttonSyncRemote")
-		thewidget.connect("clicked", self.gtkcore.syncWithRemote)
+		thewidget.connect("clicked", self.sync_with_remote)
 		thewidget.set_label(_("link"))
 		thewidget.set_tooltip_text(_('run a new initial synchronization with the remote host'))
 
@@ -575,6 +574,33 @@ class PersyGtkMenu():
 		"""
 		self.wTree.get_widget(data).set_sensitive(widget.get_active())
 
+	def sync_with_remote(self, widget, data=None):
+		dia = gtk.Dialog(_('Question!'),
+				 widget.get_toplevel(),  #the toplevel wgt of your app
+				 gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,  #binary flags or'ed together
+				 (_("synchronize now"), 77, gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
+		label = gtk.Label(_('Do you want to synchronize now? This should only be done once at the beginning.'))
+		label.show()
+		dia.vbox.pack_start(label)
+		dia.show()
+		result = dia.run()
+		if result == 77:
+			gtkcore.syncWithRemote
+		dia.destroy()
+
+	def init_remote(self, widget, data=None):
+		dia = gtk.Dialog(_('Question!'),
+				 widget.get_toplevel(),  #the toplevel wgt of your app
+				 gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,  #binary flags or'ed together
+				 (_("initialize now"), 77, gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
+		label = gtk.Label(_('Do you want to initialize now? This should only be done once at the beginning.'))
+		label.show()
+		dia.vbox.pack_start(label)
+		dia.show()
+		result = dia.run()
+		if result == 77:
+			self.gtkcore.initRemote(widget, data)
+		dia.destroy()
 
 
 class PersyGtk():
@@ -695,8 +721,8 @@ class PersyGtk():
 		except Exception as e:
 			pass
 		dlg.set_version(VERSION)
-		dlg.set_program_name("Persy")
-		dlg.set_comments(_("personal sync"))
+		dlg.set_program_name("persy")
+		dlg.set_comments(_("personal synchronization"))
 		try:
 			dlg.set_license(open(self.config.getAttribute('LICENSE_FILE')).read())
 		except Exception as e:
@@ -704,7 +730,8 @@ class PersyGtk():
 			self.log.warn(str(e))
 
 		dlg.set_authors([
-			"Dennis Schwertel <s@digitalkultur.net>"
+			"Dennis Schwertel <s@digitalkultur.net>",
+			"Rafael Römhild <rafael@roemhild.de>"
 		])
 		dlg.set_icon_from_file(self.config.getAttribute('LOGO'))
 		dlg.set_logo(gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('LOGO'), 128, 128))

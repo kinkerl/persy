@@ -6,6 +6,12 @@ Contributing
 ---------------------------------
 If you want to contribute in anyway, please go to github_ or launchpad_.
 
+persy-dev Package
+________________________________
+If you want to Test your code or release it, you might want to take a look at the persy-dev package.
+It can be found at github (http://github.com/kinkerl/persy-dev) and stores all the files which are not a direct part of the persy application (this includes artwork).
+
+
 Dependencies
 --------------------------------
 
@@ -26,26 +32,20 @@ For some actions in the Makefile you also need:
  *   python-sphinx - build the documentation
  *   pandoc - build the manpage
 
-persy-dev Package
---------------------------------
-If you want to Test your code or release it, you might want to take a look at the persy-dev package.
-It can be found at github (http://github.com/kinkerl/persy-dev) and stores all the files which are not a direct part of the persy application.
-
-
 Debugging persy
 --------------------------------
-A development/debugging Option is --setenv (notice the dot in the beginning). 
+A development/debugging Option is ``--setenv`` (notice the dot in the beginning). 
 
 .. code-block:: bash
   :linenos:
 
    . persy --setenv
 
-This sets the environment variables (GIT_DIR, GIT_WORK_TREE) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository. 
+This sets the environment variables (``GIT_DIR``, ``GIT_WORK_TREE``) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository. 
 Take a look at the help message when using this option.
 This is useful if you want to start your own git viewer or want to mess with your data.
 
-If you just want a more detailed output of the stuff persy does, you can try the --verbose command line argument.
+If you just want a more detailed output of the stuff persy does, you can try the ``--verbose`` command line argument.
 
 .. code-block:: bash
   :linenos:
@@ -108,15 +108,15 @@ publishing
 __________________________________
 
 Before publishing anything, make a quick check if everything is ok:
- *   run persy
- *   run the tests, you need the persy-dev package for this
+ 1)   run persy
+ 2)   run the tests, you need the persy-dev package for this
 
     .. code-block:: bash
       :linenos:
 
       ./makerelease.sh test
 
- *   create a debian package, you also need the persy-dev package for this
+ 3)   create a debian package, you also need the persy-dev package for this
  
     .. code-block:: bash
       :linenos:
@@ -124,7 +124,15 @@ Before publishing anything, make a quick check if everything is ok:
       ./makerelease.sh makedeb
 
 
+naming
+________________________________
+How you should name your functions and stuff. This is taken from the google styleguide above:
 
+module_name, package_name, ClassName, method_name, ExceptionName, function_name, GLOBAL_VAR_NAME, instance_var_name, function_parameter_name, local_var_name.  
+
+.. note::
+
+   i know not every function in persy confirms to this guideline... this should change!
 
 Code Documentation
 ---------------------------------

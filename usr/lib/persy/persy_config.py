@@ -62,10 +62,11 @@ class PersyConfig():
 	It depends on the configobj class.
 	"""
 
-	def __init__(self):
+	def __init__(self, configfile = None):
 		"""
 		the the static attributes and parses the configuration file
 		"""
+		print "config"
 		self.attributes = {}
 		self.p = PersyHelper()
 
@@ -81,11 +82,16 @@ class PersyConfig():
 		self.attributes['LOGFILE']=os.path.join(self.attributes['PERSY_DIR'],'default.log')
 		self.attributes['LOGFILE_GIT']=os.path.join(self.attributes['PERSY_DIR'],'git.log')
 		self.attributes['GITIGNOREFILE']=os.path.join(self.attributes['GIT_DIR'], 'info','exclude')
-		self.attributes['CONFIGFILE']=os.path.join(self.attributes['PERSY_DIR'],'config')
 		self.attributes['EXAMPLECONFIG']='/usr/lib/persy/example_config'
 		self.attributes['GLADEFILE']='/usr/lib/persy/persy.glade'
 		self.attributes['VERSIONFILE']='/usr/lib/persy/VERSION'
 		self.attributes['HTMLDOCFILE']='/usr/share/doc/persy/index.html'
+
+		#set the config file to default or a new one
+		if configfile:
+			self.attributes['CONFIGFILE']=configfile
+		else:
+			self.attributes['CONFIGFILE']=os.path.join(self.attributes['PERSY_DIR'],'config')
 
 		#path to some files and icons
 		self.attributes['ICON_IDLE'] = '/usr/lib/persy/assets/persy.svg'

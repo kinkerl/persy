@@ -32,6 +32,40 @@ if [ "$failedpymods" != "" ]; then
     exit 1
 fi
 
+#check if xterm is installed (using xterm for log display)
+echo -n "Testing application xterm: "
+if [ -z `which xterm 2> /dev/null` ]; then
+    echo -e "Fail"
+    echo -e "xterm is not installed"
+    exit 1
+else
+    echo -e "Ok"
+fi
+
+#check if git is installed
+echo -n "Checking for git: "
+if [ -z `which git 2> /dev/null` ]; then
+    echo -e "no"
+    echo -e "git is not installed"
+    exit 1
+else
+    echo -e "yes"
+fi
+
+#check if gitk or qgit is installed
+echo -n "Searching application qgit or gitk: "
+if [ -z `which qgit 2> /dev/null` ]; then
+    if [ -z `which gitk 2> /dev/null` ]; then
+        echo -e "Fail"
+        echo -e "neither qgit nor gitk is installed"
+        exit 1
+    else
+        echo -e "Ok"
+    fi
+else
+    echo -e "Ok"
+fi
+
 #translations
 mos=""
 langs=""
