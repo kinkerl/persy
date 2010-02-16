@@ -42,6 +42,16 @@ else
     echo -e "Ok"
 fi
 
+#check if git is installed
+echo -n "Checking for git: "
+if [ -z `which git 2> /dev/null` ]; then
+    echo -e "no"
+    echo -e "git is not installed"
+    exit 1
+else
+    echo -e "yes"
+fi
+
 #check if gitk or qgit is installed
 echo -n "Searching application qgit or gitk: "
 if [ -z `which qgit 2> /dev/null` ]; then
