@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 16:59+0100\n"
+"POT-Creation-Date: 2010-02-16 01:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -414,57 +414,81 @@ msgid ""
 "\" action to fix this"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:604
+#: usr/lib/persy/persy_gtk.py:578 usr/lib/persy/persy_gtk.py:592
+msgid "Question!"
+msgstr ""
+
+#: usr/lib/persy/persy_gtk.py:581
+msgid "synchronize now"
+msgstr ""
+
+#: usr/lib/persy/persy_gtk.py:582
+msgid ""
+"Do you want to synchronize now? This should only be done once at the "
+"beginning."
+msgstr ""
+
+#: usr/lib/persy/persy_gtk.py:595
+msgid "initialize now"
+msgstr ""
+
+#: usr/lib/persy/persy_gtk.py:596
+msgid ""
+"Do you want to initialize now? This should only be done once at the "
+"beginning."
+msgstr ""
+
+#: usr/lib/persy/persy_gtk.py:631
 msgid "start/stop Persy"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:605
+#: usr/lib/persy/persy_gtk.py:632
 msgid "sync Remote"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:606
+#: usr/lib/persy/persy_gtk.py:633
 msgid "auto sync Remote"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:613
+#: usr/lib/persy/persy_gtk.py:640
 msgid "settings"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:614
+#: usr/lib/persy/persy_gtk.py:641
 msgid "help"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:615
+#: usr/lib/persy/persy_gtk.py:642
 msgid "about"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:616
+#: usr/lib/persy/persy_gtk.py:643
 msgid "quit"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:635
+#: usr/lib/persy/persy_gtk.py:662
 msgid "watching over:"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:641
+#: usr/lib/persy/persy_gtk.py:668
 msgid ""
 "watching no directories or files! You should add some in the settings menu "
 "(local -> watched)"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:685
+#: usr/lib/persy/persy_gtk.py:712
 msgid "About Persy"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:688 usr/lib/persy/persy_gtk.py:693
+#: usr/lib/persy/persy_gtk.py:715 usr/lib/persy/persy_gtk.py:720
 msgid "undefined"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:698
+#: usr/lib/persy/persy_gtk.py:725
 msgid "personal sync"
 msgstr ""
 
-#: usr/lib/persy/persy_gtk.py:702
+#: usr/lib/persy/persy_gtk.py:729
 msgid "Sorry, i have a problem finding/reading the licence"
 msgstr ""
 
