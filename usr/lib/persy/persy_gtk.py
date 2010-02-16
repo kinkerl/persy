@@ -721,8 +721,8 @@ class PersyGtk():
 		except Exception as e:
 			pass
 		dlg.set_version(VERSION)
-		dlg.set_program_name("Persy")
-		dlg.set_comments(_("personal sync"))
+		dlg.set_program_name("persy")
+		dlg.set_comments(_("personal synchronization"))
 		try:
 			dlg.set_license(open(self.config.getAttribute('LICENSE_FILE')).read())
 		except Exception as e:
@@ -730,7 +730,8 @@ class PersyGtk():
 			self.log.warn(str(e))
 
 		dlg.set_authors([
-			"Dennis Schwertel <s@digitalkultur.net>"
+			"Dennis Schwertel <s@digitalkultur.net>",
+			"Rafael Römhild <rafael@roemhild.de>"
 		])
 		dlg.set_icon_from_file(self.config.getAttribute('LOGO'))
 		dlg.set_logo(gtk.gdk.pixbuf_new_from_file_at_size(self.config.getAttribute('LOGO'), 128, 128))
