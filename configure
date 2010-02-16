@@ -11,7 +11,30 @@ build="genversion"
 #docs
 docs="man html"
 
-#python modules
+#translations
+mos=""
+langs=""
+echo -n "Translations... "
+for langdir in `ls -d usr/lib/persy/locale/*/`; do
+    lang=`echo $langdir | cut -d/ -f5`
+    langs="$lang $langs"
+    echo -n "$lang"
+done
+echo -e ""
+
+#app tests
+apps="python git xterm"
+for app in $apps; do
+    echo -n "Checking for $app... "
+    if [ -z `which $app 2> /dev/null` ]; then
+        echo -e "no"
+        exit 1
+    else
+        echo -e "yes"
+    fi
+done
+
+#python module tests
 pymods="gettext getpass platform paramiko subprocess pynotify pyinotify gtk gtk.glade pygtk webbrowser"
 failedpymods=""
 for pymod in $pymods; do
@@ -19,9 +42,9 @@ for pymod in $pymods; do
     python -c "import $pymod" 2> /dev/null
     retval=$?
     if [ "$retval" -eq "0" ]; then
-        echo "Ok"
+        echo "yes"
     else
-        echo "Fail"
+        echo "no"
         failedpymods="$failedpymods $pymod"
     fi
 done
@@ -32,50 +55,22 @@ if [ "$failedpymods" != "" ]; then
     exit 1
 fi
 
-#check if xterm is installed (using xterm for log display)
-echo -n "Testing application xterm: "
-if [ -z `which xterm 2> /dev/null` ]; then
-    echo -e "Fail"
-    echo -e "xterm is not installed"
-    exit 1
-else
-    echo -e "Ok"
-fi
-
-#check if git is installed
-echo -n "Checking for git: "
-if [ -z `which git 2> /dev/null` ]; then
-    echo -e "no"
-    echo -e "git is not installed"
-    exit 1
-else
-    echo -e "yes"
-fi
-
 #check if gitk or qgit is installed
-echo -n "Searching application qgit or gitk: "
-if [ -z `which qgit 2> /dev/null` ]; then
-    if [ -z `which gitk 2> /dev/null` ]; then
-        echo -e "Fail"
-        echo -e "neither qgit nor gitk is installed"
-        exit 1
+guis="qgit gitk"
+for gui in $guis; do
+    echo -n "Checking for $gui... "
+    if [ -z `which $gui 2> /dev/null` ]; then
+        echo -e "no"
+        failedguis="$failedguis $gui"
     else
-        echo -e "Ok"
+        echo -e "yes"
     fi
-else
-    echo -e "Ok"
-fi
-
-#translations
-mos=""
-langs=""
-echo -n "Translations........: "
-for langdir in `ls -d usr/lib/persy/locale/*/`; do
-    lang=`echo $langdir | cut -d/ -f5`
-    langs="$lang $langs"
-    echo -n "$lang"
 done
-echo -e ""
+
+if [ "$failedguis" = "$guis" ]; then
+    echo -e "neither qgit nor gitk is installed"
+    exit 1
+fi
 
 #Start Makefile
 echo -e "LANGS=$langs" >> Makefile
@@ -99,20 +94,20 @@ echo -e "install_docs:" >> Makefile
 for doc in $docs; do
     case $doc in
         "man")
-            echo -n "Make man file.......: "
+            echo -n "Make man file... "
             if [ -z `which pandoc 2> /dev/null` ]; then
-                echo -e "Skip (pandoc not installed)"
+                echo -e "skip (pandoc not installed)"
             else
                 echo -e "\tinstall --mode=644 usr/share/man/man1/persy.1.gz \$(DEST)/share/man/man1/persy.1.gz" >> Makefile
-                echo "Yes"
+                echo "yes"
                 build="$build doc-$doc"  
                 rmdocs="$rmdocs man"          
             fi
             ;;
         "html")
-            echo -n "Make doc html.......: "
+            echo -n "Make doc html... "
             if [ -z `which sphinx-build 2> /dev/null` ]; then
-                echo -e "Skip (python-sphinx not installed)"
+                echo -e "skip (python-sphinx not installed)"
             else
                 echo -e "\tinstall -d \$(DEST)/share/doc/persy" >> Makefile
                 echo -e "\tinstall -d \$(DEST)/share/doc/persy/images" >> Makefile
@@ -124,18 +119,18 @@ for doc in $docs; do
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/images/* \$(DEST)/share/doc/persy/images" >> Makefile
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/sources/*.txt \$(DEST)/share/doc/persy/sources" >> Makefile
                 echo -e "\tinstall --mode=644 usr/share/doc/persy/static/* \$(DEST)/share/doc/persy/static" >> Makefile
-                echo "Yes"
+                echo "yes"
                 build="$build doc-$doc"
                 rmdocs="$rmdocs $doc"
             fi
             ;;
         "latex")
-            echo -n "Make doc latex......: "
+            echo -n "Make doc latex... "
             if [ -z `which sphinx-build 2> /dev/null` ]; then
-                echo -e "Skip (python-sphinx not installed)"
+                echo -e "skip (python-sphinx not installed)"
             else
                 #TODO: install
-                echo "Yes"
+                echo "yes"
                 build="$build doc-$doc"
                 rmdocs="$rmdocs $doc"
             fi
@@ -159,7 +154,7 @@ done
 echo -e "" >> Makefile
 
 #rebuild languagefile
-echo -n "Checking for xgettext... "
+echo -n "Rebuild languagefile... "
 if [ -z `which xgettext 2> /dev/null` ]; then
     echo -e "no (xgettext not installed)" 
 else
