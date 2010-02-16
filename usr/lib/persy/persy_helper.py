@@ -50,7 +50,78 @@ except Exception as e:
 __author__ = "Dennis Schwertel"
 __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
+#from __future__ import with_statement
 
+class autorun:
+	"""
+	i am doing the autostart
+
+	#autorun.add("myapp", os.path.abspath(__file__))
+	"""
+	if sys.platform == 'win32':
+		import _winreg
+		def __init__(self):
+			self._registry = _winreg.ConnectRegistry(None, _winreg.HKEY_CURRENT_USER)
+
+		def get_runonce(self):
+			return _winreg.OpenKey(self._registry,r"Software\Microsoft\Windows\CurrentVersion\Run", 0,_winreg.KEY_ALL_ACCESS)
+
+		def add(self, name, application):
+			"""add a new autostart entry"""
+			key = self.get_runonce()
+			_winreg.SetValueEx(key, name, 0, _winreg.REG_SZ, application)
+			_winreg.CloseKey(key)
+
+		def exists(self, name):
+			"""check if an autostart entry exists"""
+			key = self.get_runonce()
+			exists = True
+			try:
+				_winreg.QueryValueEx(key, name)
+			except WindowsError:
+				exists = False
+			_winreg.CloseKey(key)
+			return exists
+
+		def remove(self, name):
+			"""delete an autostart entry"""
+			key = self.get_runonce()
+			_winreg.DeleteValue(key, name)
+			_winreg.CloseKey(key)
+	else:
+		def __init__(self):
+			self._xdg_config_home = os.environ.get("XDG_CONFIG_HOME", "~/.config")
+			self._xdg_user_autostart = os.path.join(os.path.expanduser(self._xdg_config_home),"autostart")
+
+		def getfilename(self, name):
+			"""get the filename of an autostart (.desktop) file"""
+			return os.path.join(self._xdg_user_autostart, name + ".desktop")
+
+		def add(self, name, application):
+			"""add a new autostart entry"""
+			desktop_entry = "[Desktop Entry]\n"\
+				"Name=%s\n"\
+				"Exec=%s\n"\
+				"Type=Application\n"\
+				"Terminal=false\n" % (name, application)
+			with open(self.getfilename(name), "w") as f:
+				f.write(desktop_entry)
+
+		def exists(self, name):
+			"""check if an autostart entry exists"""
+			return os.path.exists(self.getfilename(name))
+
+		def remove(self, name):
+			"""delete an autostart entry"""
+			os.unlink(self.getfilename(name))
+	def test(self):
+		assert not self.exists("test_xxx")
+		try:
+			self.add("test_xxx", "test")
+			assert self.exists("test_xxx")
+		finally:
+			self.remove("test_xxx")
+		assert not self.exists("test_xxx")
 
 class _PersyHelper():
 	"""

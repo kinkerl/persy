@@ -41,6 +41,7 @@ try:
 	from threading import Thread
 	from persy_config import PersyConfig
 	from persy_helper import PersyHelper
+	from persy_helper import autorun
 	from persy_core import Core
 	from persy_ssh import PersySSH
 	import os
@@ -138,6 +139,12 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('labelCategoryAdvanced')
 		textGeneralName.set_label('<b>'+_("advanced")+'</b>')
+
+		a = autorun()
+		textGeneralName = self.wTree.get_widget('checkGeneralAutostart')
+		textGeneralName.set_active(a.exists('persy'))
+		textGeneralName.set_label(_("start persy on login"))
+
 
 		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
 		textGeneralName.set_active(config['general']['fortune'])
@@ -372,6 +379,15 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('checkGeneralFortune')
 		self.config['general']['fortune'] = textGeneralName.get_active()
+
+		textGeneralName = self.wTree.get_widget('checkGeneralAutostart')
+		autostart = textGeneralName.get_active()
+		a = autorun()
+		if autostart and not a.exists('persy'):
+			a.add('persy', self.config.getAttribute('PERSY_BIN'))
+		if not autostart and a.exists('persy'):
+			a.remove('persy')
+
 
 		textGeneralName = self.wTree.get_widget('comboboxGeneralGitBrowser')
 		self.config['general']['prefgitbrowser'] = textGeneralName.get_active_text()

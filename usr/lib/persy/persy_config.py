@@ -66,7 +66,6 @@ class PersyConfig():
 		"""
 		the the static attributes and parses the configuration file
 		"""
-		print "config"
 		self.attributes = {}
 		self.p = PersyHelper()
 
@@ -86,6 +85,7 @@ class PersyConfig():
 		self.attributes['GLADEFILE']='/usr/lib/persy/persy.glade'
 		self.attributes['VERSIONFILE']='/usr/lib/persy/VERSION'
 		self.attributes['HTMLDOCFILE']='/usr/share/doc/persy/index.html'
+		self.attributes['PERSY_BIN']='/usr/bin/persy'
 
 		#set the config file to default or a new one
 		if configfile:
