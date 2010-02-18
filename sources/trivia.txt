@@ -19,7 +19,7 @@ These are some alternative logos for persy used on the corresponding distributio
   |persy_fedora.svg|, "fedora"
 
 .. |persy_linuxmint.svg| image:: ../usr/lib/persy/assets/dist/persy_linuxmint.svg
-   :width: 64px
+   :width: 128px
 
 .. |persy_fedora.svg| image:: ../usr/lib/persy/assets/dist/persy_fedora.svg
-   :width: 64px
+   :width: 128px
