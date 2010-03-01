@@ -13,7 +13,7 @@ These are some alternative logos for persy used on the corresponding distributio
 
 .. csv-table:: 
   :header: "logo", "distribution"
-  :widths: 64, 400
+  :widths: 128, 400
 
   |persy_linuxmint.svg|, "linux mint"
   |persy_fedora.svg|, "fedora"
@@ -23,3 +23,30 @@ These are some alternative logos for persy used on the corresponding distributio
 
 .. |persy_fedora.svg| image:: ../usr/lib/persy/assets/dist/persy_fedora.svg
    :width: 128px
+
+Screenshots
+---------------------------
+Most of the magic happens in the background but i will give you some screenshots of the settings menu.
+
+.. csv-table:: 
+  :header: "screen", "distribution"
+  :widths: 128, 400
+
+  |screen-settings-1.png|, "settings"
+  |screen-settings-2.png|, "settings"
+  |screen-settings-3.png|, "settings"
+  |screen-settings-4.png|, "settings"
+
+.. |screen-settings-1.png| image:: images/screen-settings-1.png
+   :width: 128px
+
+.. |screen-settings-2.png| image:: images/screen-settings-2.png
+   :width: 128px
+
+.. |screen-settings-3.png| image:: images/screen-settings-3.png
+   :width: 128px
+
+.. |screen-settings-4.png| image:: images/screen-settings-4.png
+   :width: 128px
+
+
