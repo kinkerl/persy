@@ -227,7 +227,8 @@ class TheSyncer(Thread):
 						self.core.git_commit(self.generateCommitMessage())
 					except Exception as e:
 						#self.errorlocalcounter += 1
-						#if self.errorlocalcounter > 1:						
+						#if self.errorlocalcounter > 1:
+						self.core.persy_stop()
 						self.log.critical(str(e))
 					else: 
 						self.errorlocalcounter = 0					
@@ -246,6 +247,7 @@ class TheSyncer(Thread):
 					except Exception as e:
 						self.errorremotecounter += 1
 						if self.errorremotecounter > 2:
+							self.core.persy_stop()
 							self.log.critical(str(e))
 					else:
 						okcounter += 1
@@ -255,7 +257,8 @@ class TheSyncer(Thread):
 						self.core.git_push(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
 					except Exception as e:
 						self.errorremotecounter += 1
-						if self.errorremotecounter > 2:					
+						if self.errorremotecounter > 2:		
+							self.core.persy_stop()
 							self.log.critical(str(e))
 					else:
 						okcounter += 1
