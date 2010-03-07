@@ -38,6 +38,7 @@ try:
 	import sys
 	import paramiko
 	import os
+	import subprocess2
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
