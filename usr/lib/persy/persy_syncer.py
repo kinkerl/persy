@@ -36,13 +36,9 @@ except Exception as e:
 
 try:
 	import sys
-	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
-	from subprocess import Popen
+	from pyinotify import ProcessEvent
 	from threading import Thread
-	from persy_config import PersyConfig
-	from persy_helper import PersyHelper
 	import time
-	import paramiko
 	import subprocess
 except ImportError as e:
 	print _("You do not have all the dependencies:")

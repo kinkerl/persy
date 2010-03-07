@@ -36,21 +36,10 @@ except Exception as e:
 
 try:
 	import sys
-	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
-	from subprocess import Popen
 	from threading import Thread
-	from persy_config import PersyConfig
 	from persy_helper import PersyHelper
 	from persy_helper import autorun
-	from persy_core import Core
 	from persy_ssh import PersySSH
-	import os
-	import time
-	import logging , logging.handlers
-	import time, signal, operator
-	import paramiko
-	import pug
-	import pynotify
 	import subprocess
 	import gtk
 	import gtk.glade
