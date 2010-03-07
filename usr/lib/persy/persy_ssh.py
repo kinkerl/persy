@@ -143,7 +143,7 @@ class PersySSH():
 			return False
 		return True
 
-	def publishLocalSSHKeys(username, password, hostname):
+	def publishLocalSSHKeys(self, username, password, hostname):
 		"""
 		this function is not used (and not implemented yet)
 		"""
