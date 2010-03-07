@@ -857,11 +857,11 @@ class PersyGtk():
 		"""
 		self.core.syncWithRemote()
 
-	def initLocal(self, unused_widget, unused_data = None):
+	def init_local(self, unused_widget, unused_data = None):
 		"""
-		calls the initLocal function in core
+		calls the init_local function in core
 		"""
-		self.core.initLocal()
+		self.core.init_local()
 
 	def initRemote(self, unused_widget, unused_data = None):
 		"""

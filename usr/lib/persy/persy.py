@@ -20,17 +20,19 @@
 try:
 	import gettext
 	#localizations
-	LOCALEDIR='/usr/lib/persy/locale'
+	LOCALEDIR = '/usr/lib/persy/locale'
 	#init the localisation
 	gettext.install("messages", LOCALEDIR)
 except Exception as e:
-	print "I have problems initializing the translations (gettext). Will use plain english instead"
+	print "I have problems initializing the translations (gettext). \
+Will use plain english instead"
 	print str(e)
 
 	#check if the _ function is initialized, if not, do a fallback!
 	if not _:
 		def _(msg):
-			"""fallback-function if the original function did not initialize propperly"""
+			"""fallback-function if the original function 
+			did not initialize propperly"""
 			return msg
 
 
@@ -66,22 +68,22 @@ def main(argv):
 	#cli options
 	from optparse import OptionParser
 	parser = OptionParser(usage = _("use --start to start the daemon"))
-	parser.add_option("--start",action="store_true", default=False, help=_("starts persy"))
-	parser.add_option("--initremote",action="store_true", default=False, help=_("initializes the remote repository"))
-	parser.add_option("--syncwithremote",action="store_true", default=False, help=_("syncs with a remote repository"))
-	parser.add_option("--browse",action="store_true", default=False, help=_("start a git browser"))
-	parser.add_option("--log",action="store_true", default=False, help=_("prints git log"))
-	parser.add_option("--status",action="store_true", default=False, help=_("prints git status"))
-	parser.add_option("--ignore",action="store_true", default=False, help=_("recreates list of all ignored files"))
-	parser.add_option("--verbose",action="store_true", default=False, help=_("print git output to stdout and set loglevel to DEBUG"))
-	parser.add_option("--actions",action="store_true", default=False, help=_("computer-readable actions in persy"))
-	parser.add_option("--optimize",action="store_true", default=False, help=_("optimizes the stored files. saves space and improves performance"))
+	parser.add_option("--start", action="store_true", default=False, help=_("starts persy"))
+	parser.add_option("--initremote", action="store_true", default=False, help=_("initializes the remote repository"))
+	parser.add_option("--syncwithremote", action="store_true", default=False, help=_("syncs with a remote repository"))
+	parser.add_option("--browse", action="store_true", default=False, help=_("start a git browser"))
+	parser.add_option("--log", action="store_true", default=False, help=_("prints git log"))
+	parser.add_option("--status", action="store_true", default=False, help=_("prints git status"))
+	parser.add_option("--ignore", action="store_true", default=False, help=_("recreates list of all ignored files"))
+	parser.add_option("--verbose", action="store_true", default=False, help=_("print git output to stdout and set loglevel to DEBUG"))
+	parser.add_option("--actions", action="store_true", default=False, help=_("computer-readable actions in persy"))
+	parser.add_option("--optimize", action="store_true", default=False, help=_("optimizes the stored files. saves space and improves performance"))
 	parser.add_option("--configfile", dest="configfile", default=None, help=_("use a non-default config file"))
-	parser.add_option("--config",action="store_true", default=False, help=_("needed flag to change configurations"))
-	parser.add_option("--version",action="store_true", default=False, help=_("prints the version"))
+	parser.add_option("--config", action="store_true", default=False, help=_("needed flag to change configurations"))
+	parser.add_option("--version", action="store_true", default=False, help=_("prints the version"))
 	parser.add_option("--uname", dest="uname", default="", help=_("username used in commit"))
 	parser.add_option("--mail", dest="mail", default="", help=_("useremail used in commit"))
-	parser.add_option("--headless",action="store_true", default=False, help=_("run in headless mode"))
+	parser.add_option("--headless", action="store_true", default=False, help=_("run in headless mode"))
 	parser.add_option("--path", dest="path", default="", help=_("path on the server"))
 	parser.add_option("--hostname", dest="hostname", default="", help=_("hostname of the remote server"))
 	parser.add_option("--add_dir", dest="add_dir", default="", help=_("add local wachted folders"))
@@ -120,7 +122,7 @@ def main(argv):
 				if config['local']['watched']:
 					config['local']['watched'] = [config['local']['watched'], options.add_dir]
 				else:
-					config['local']['watched'] = [options.add_dir,]
+					config['local']['watched'] = [options.add_dir]
 			else:
 				config['local']['watched'].append(options.add_dir)
 		if changed:
@@ -138,18 +140,18 @@ def main(argv):
 		config.write()
 
 
-	core = Core()
-	core.init(config, log)
+	core = Core(config, log)
+
 
 	#check if a local repository is initialized:
 	if not core.isLocalInitialized():
-		core.initLocal()
+		core.init_local()
 
 	if options.initremote:
 		core.initRemote()
 	elif options.version:
-		p = PersyHelper()
-		print p.getSoftwareVersion('persy')
+		persyhelper = PersyHelper()
+		print persyhelper.getSoftwareVersion('persy')
 	elif options.syncwithremote:
 		core.syncWithRemote()
 	elif options.browse:
@@ -169,11 +171,11 @@ def main(argv):
 		sys.exit(0)
 	else:
 		#check if all the icons are present, just warn is something is missing
-		filestocheck = (config.getAttribute('ICON_IDLE'),config.getAttribute('ICON_OK'),
-			config.getAttribute('ICON_UNSYNCED'),config.getAttribute('ICON_UNTRACKED'),
+		filestocheck = (config.getAttribute('ICON_IDLE'), config.getAttribute('ICON_OK'),
+			config.getAttribute('ICON_UNSYNCED'), config.getAttribute('ICON_UNTRACKED'),
 			config.getAttribute('ICON_WARN'), config.getAttribute('ICON_ERROR'), 
 			config.getAttribute('LOGO'))
-		fileresults = map(os.path.exists,filestocheck)
+		fileresults = map(os.path.exists, filestocheck)
 		i = 0 
 		for fileresult in fileresults:
 			if not fileresult:

@@ -20,7 +20,7 @@
 try:
 	import gettext
 	#localizations
-	LOCALEDIR='/usr/lib/persy/locale'
+	LOCALEDIR = '/usr/lib/persy/locale'
 	#init the localisation
 	gettext.install("messages", LOCALEDIR)
 except Exception as e:
@@ -61,7 +61,7 @@ class _Core():
 	the core functionaliy for persy
 	"""
 
-	def init(self, config, log):
+	def __init__(self, config, log):
 		"""
 		initializes the git binding
 		"""
@@ -76,8 +76,8 @@ class _Core():
 		if os.path.exists(self.config.getAttribute('GIT_LOCKFILE')):
 			try: 
 				os.remove(self.config.getAttribute('GIT_LOCKFILE'))
-			except Exception as e:
-				log.warn(str(e))
+			except Exception as err:
+				log.warn(str(err))
 			else:
 				log.warn(_("removed git lock file"))
 
@@ -89,7 +89,7 @@ class _Core():
 		stderr = std #default stderr
 		self.vcs = pug.PuG(self.config.getAttribute('USERHOME'), GIT_DIR=self.config.getAttribute('GIT_DIR'), stdin=stdin, stdout=stdout, stderr=stderr)
 
-	def initLocal(self):
+	def init_local(self):
 		"""
 		initialises the local repository
 		"""
@@ -107,8 +107,8 @@ class _Core():
 			self.vcs.config('user.name',self.config['general']['name'])
 			self.vcs.config('user.email',self.config['general']['mail'])
 			self.vcsignore()
-		except Exception as e:
-			self.log.critical(str(e), verbose=True)
+		except Exception as err:
+			self.log.critical(str(err), verbose=True)
 		else:
 			self.log.info(_("done"), verbose=True)
 
