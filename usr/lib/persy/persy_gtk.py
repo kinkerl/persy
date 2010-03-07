@@ -41,7 +41,6 @@ try:
 	from persy_helper import autorun
 	from persy_ssh import PersySSH
 	import subprocess
-	import gtk
 	import gtk.glade
 	import pygtk
 	import webbrowser
