@@ -103,6 +103,7 @@ class PersySSH():
 			os.chmod(self.config.getAttribute('LOCALSSHDIR'), 700)
 
 		if not self.localSSHKeysExist():
+			callcmd = []
 			callcmd.append('ssh-keygen')
 			callcmd.append('-q')
 			callcmd.append("-p %s"%password)
