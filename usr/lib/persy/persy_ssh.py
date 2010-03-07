@@ -35,6 +35,7 @@ except Exception as e:
 			return msg
 
 try:
+	import sys
 	import paramiko
 	import os
 except ImportError as e:
