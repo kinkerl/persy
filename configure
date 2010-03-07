@@ -35,7 +35,7 @@ for app in $apps; do
 done
 
 #python module tests
-pymods="gettext getpass platform paramiko subprocess pynotify pyinotify gtk gtk.glade pygtk webbrowser"
+pymods="gettext getpass platform paramiko subprocess pynotify pyinotify gtk gtk.glade pygtk webbrowser configobj"
 failedpymods=""
 for pymod in $pymods; do
     echo -n "Checking for python module $pymod... "
