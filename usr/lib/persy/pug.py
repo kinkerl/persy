@@ -17,6 +17,7 @@
 #along with persy; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 try:
+	import sys
 	import os
 	import subprocess2
 	from persy_vcs import VCS
