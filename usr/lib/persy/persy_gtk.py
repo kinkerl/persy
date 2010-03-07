@@ -601,7 +601,7 @@ class PersyGtkMenu():
 		dia.show()
 		result = dia.run()
 		if result == 77:
-			gtkcore.syncWithRemote
+			gtkcore.syncWithRemote()
 		dia.destroy()
 
 	def init_remote(self, widget, data=None):
