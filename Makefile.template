@@ -69,6 +69,7 @@ install: install_translations install_docs
 	install --mode=644 usr/lib/persy/example_config $(DEST)/lib/persy
 	
 	# install desktop starter
+	install -d $(DEST)/share/applications
 	install --mode=644 usr/share/applications/persy.desktop $(DEST)/share/applications/persy.desktop
 	
 	# install desktop icon
@@ -76,13 +77,13 @@ install: install_translations install_docs
 	install --mode=644 usr/share/icons/persy.svg $(DEST)/share/icons/persy.svg
 	
 	# install bash-completion
-	install -d /etc/bash_completion.d
-	install --mode=644 etc/bash_completion.d/persy /etc/bash_completion.d/persy
+	install -d ${DEST}/../etc/bash_completion.d
+	install --mode=644 etc/bash_completion.d/persy ${DEST}/../etc/bash_completion.d/persy
 
 remove: remove_docs
 	rm $(DEST)/bin/persy
 	rm -rf $(DEST)/lib/persy
 	rm $(DEST)/share/applications/persy.desktop
 	rm $(DEST)/share/icons/persy.svg
-	rm /etc/bash_completion.d/persy
+	rm ${DEST}/../etc/bash_completion.d/persy
 
