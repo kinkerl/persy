@@ -35,6 +35,7 @@ except Exception as e:
 			return msg
 
 try:
+	import sys
 	from configobj import ConfigObj
 	from persy_helper import PersyHelper
 	import os

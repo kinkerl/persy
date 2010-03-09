@@ -35,8 +35,10 @@ except Exception as e:
 			return msg
 
 try:
+	import sys
 	import paramiko
 	import os
+	import subprocess2
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -102,6 +104,7 @@ class PersySSH():
 			os.chmod(self.config.getAttribute('LOCALSSHDIR'), 700)
 
 		if not self.localSSHKeysExist():
+			callcmd = []
 			callcmd.append('ssh-keygen')
 			callcmd.append('-q')
 			callcmd.append("-p %s"%password)
@@ -140,7 +143,7 @@ class PersySSH():
 			return False
 		return True
 
-	def publishLocalSSHKeys(username, password, hostname):
+	def publishLocalSSHKeys(self, username, password, hostname):
 		"""
 		this function is not used (and not implemented yet)
 		"""

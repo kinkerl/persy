@@ -39,7 +39,7 @@ try:
 	import os
 	import pynotify
 	import gtk
-	import logging , logging.handlers
+	import logging.handlers
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)

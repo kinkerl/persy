@@ -27,7 +27,6 @@ if sys.platform == "win32":
     #FIRST_SIGNAL = win32con.CTRL_C_EVENT
     FIRST_SIGNAL = win32con.CTRL_BREAK_EVENT
 else:
-    import signal
     FIRST_SIGNAL = signal.SIGTERM # 15
     SECOND_SIGNAL = signal.SIGKILL # 9
 
