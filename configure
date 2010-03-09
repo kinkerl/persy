@@ -98,6 +98,7 @@ for doc in $docs; do
             if [ -z `which pandoc 2> /dev/null` ]; then
                 echo -e "skip (pandoc not installed)"
             else
+                echo -e "\tinstall -d \$(DEST)/share/man/man1" >> Makefile
                 echo -e "\tinstall --mode=644 usr/share/man/man1/persy.1.gz \$(DEST)/share/man/man1/persy.1.gz" >> Makefile
                 echo "yes"
                 build="$build doc-$doc"  
