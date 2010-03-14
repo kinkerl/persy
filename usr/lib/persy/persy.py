@@ -140,7 +140,8 @@ def main(argv):
 		config.write()
 
 
-	core = Core(config, log)
+	core = Core()
+	core.init(config, log)
 
 
 	#check if a local repository is initialized:

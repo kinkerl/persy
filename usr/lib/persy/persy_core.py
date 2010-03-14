@@ -61,7 +61,7 @@ class _Core():
 	the core functionaliy for persy
 	"""
 
-	def __init__(self, config, log):
+	def init(self, config, log):
 		"""
 		initializes the git binding
 		"""
