@@ -78,6 +78,7 @@ class PersyConfig():
 		self.attributes['LOCALSSHDIR']=os.path.join(self.attributes['USERHOME'],'.ssh')
 		self.attributes['PERSY_DIR'] = os.path.join(self.attributes['USERHOME'], '.persy')
 		self.attributes['GIT_DIR'] = os.path.join(self.attributes['PERSY_DIR'],'git')
+		self.attributes['GIT_WORK_TREE'] =self.attributes['USERHOME']
 		self.attributes['GIT_LOCKFILE'] = os.path.join(self.attributes['GIT_DIR'],'index.lock')
 		self.attributes['LOGFILE']=os.path.join(self.attributes['PERSY_DIR'],'default.log')
 		self.attributes['LOGFILE_GIT']=os.path.join(self.attributes['PERSY_DIR'],'git.log')
@@ -157,6 +158,14 @@ class PersyConfig():
 
 		#config check if everything is ok
 		#================================
+		#general GIT_DIR
+		if not config['general'].has_key('gitdir') or not config['general']['gitdir']:
+			config['general']['gitdir'] = self.attributes['GIT_DIR']
+
+		#general GIT_WORK_TREE
+		if not config['general'].has_key('gitworkdir') or not config['general']['gitworkdir']:
+			config['general']['gitworktree'] = self.attributes['GIT_WORK_TREE']
+
 		#general name
 		if not config['general'].has_key('name') or not config['general']['name']:
 			config['general']['name'] = 'default'

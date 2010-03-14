@@ -62,7 +62,7 @@ GIT_WORK_TREE = the root git repostitory
 	def __getEnv(self):
 		'''Gets all the default environment variables and add some new'''
 		ret = os.environ
-		ret['GIT_DIR'] = os.path.join(self.GIT_WORK_TREE, self.GIT_DIR)
+		ret['GIT_DIR'] = self.GIT_DIR
 		ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
 		return ret
 

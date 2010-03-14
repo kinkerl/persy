@@ -87,7 +87,7 @@ class _Core():
 		stdin = None #default stdin
 		stdout = std #default stdout
 		stderr = std #default stderr
-		self.vcs = pug.PuG(self.config.getAttribute('USERHOME'), GIT_DIR=self.config.getAttribute('GIT_DIR'), stdin=stdin, stdout=stdout, stderr=stderr)
+		self.vcs = pug.PuG(GIT_WORK_TREE=config['general']['gitworktree'], GIT_DIR=config['general']['gitdir'], stdin=stdin, stdout=stdout, stderr=stderr)
 
 	def init_local(self):
 		"""
