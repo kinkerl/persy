@@ -15,7 +15,7 @@ docs="man html"
 mos=""
 langs=""
 echo -n "Translations... "
-for langdir in `ls -d usr/share/persy/lib/locale/*/`; do
+for langdir in `ls -d usr/share/persy/locale/*/`; do
     lang=`echo $langdir | cut -d/ -f5`
     langs="$lang $langs"
     echo -n "$lang"
