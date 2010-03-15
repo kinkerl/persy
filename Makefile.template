@@ -16,8 +16,8 @@ ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 all: build
 
 genversion:
-	@echo "placing VERSION taken from debian/changelog in usr/share/persy/lib/VERSION"
-	@echo $(VERSION) > usr/share/persy/lib/VERSION
+	@echo "placing VERSION taken from debian/changelog in usr/share/persy/assets/VERSION"
+	@echo $(VERSION) > usr/share/persy/assets/VERSION
 
 doc-html: genversion
 	#build developer documentation and place it in usr/share/doc/persy
@@ -50,23 +50,24 @@ install: install_translations install_docs
 	install --mode=755 usr/bin/persy $(DEST)/bin/persy
     
 	# install libs
+	install -d $(DEST)/share/persy
 	install -d $(DEST)/share/persy/lib
-	install -d $(DEST)/share/persy/lib/assets
-	install -d $(DEST)/share/persy/lib/assets/dist
+	install -d $(DEST)/share/persy/assets
+	install -d $(DEST)/share/persy/assets/dist
 	install --mode=644 usr/share/persy/lib/*.py $(DEST)/share/persy/lib
 	install --mode=644 usr/share/persy/lib/persy.glade $(DEST)/share/persy/lib/persy.glade
-	install --mode=644 usr/share/persy/lib/VERSION $(DEST)/share/persy/lib/VERSION
-	install --mode=644 usr/share/persy/lib/assets/GPL-2 $(DEST)/share/persy/lib/assets/GPL-2
-	install --mode=644 usr/share/persy/lib/assets/*.svg $(DEST)/share/persy/lib/assets
-	install --mode=644 usr/share/persy/lib/assets/dist/*.svg $(DEST)/share/persy/lib/assets/dist
+	install --mode=644 usr/share/persy/assets/VERSION $(DEST)/share/persy/assets/VERSION
+	install --mode=644 usr/share/persy/assets/GPL-2 $(DEST)/share/persy/assets/GPL-2
+	install --mode=644 usr/share/persy/assets/*.svg $(DEST)/share/persy/assets
+	install --mode=644 usr/share/persy/assets/dist/*.svg $(DEST)/share/persy/assets/dist
 	chmod 755 $(DEST)/share/persy/lib/persy.py
 	
 	# install language:
-	install -d $(DEST)/share/persy/lib/locale
-	install --mode=644 usr/share/persy/lib/locale/messages.pot $(DEST)/share/persy/lib/locale/messages.pot
+	install -d $(DEST)/share/persy/locale
+	install --mode=644 usr/share/persy/locale/messages.pot $(DEST)/share/persy/locale/messages.pot
 	
 	# install example config
-	install --mode=644 usr/share/persy/lib/example_config $(DEST)/share/persy/lib
+	install --mode=644 usr/share/persy/example_config $(DEST)/share/persy
 	
 	# install desktop starter
 	install -d $(DEST)/share/applications

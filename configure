@@ -83,8 +83,8 @@ cat Makefile.template >> Makefile
 #add translation install
 echo -e "install_translations:" >> Makefile
 for lang in $langs; do
-    echo -e "\tinstall -d \$(DEST)/share/persy/lib/locale/$lang/LC_MESSAGES" >> Makefile
-    echo -e "\tinstall --mode=644 usr/share/persy/lib/locale/$lang/LC_MESSAGES/messages.mo \$(DEST)/share/persy/lib/locale/$lang/LC_MESSAGES/messages.mo" >> Makefile
+    echo -e "\tinstall -d \$(DEST)/share/persy/locale/$lang/LC_MESSAGES" >> Makefile
+    echo -e "\tinstall --mode=644 usr/share/persy/locale/$lang/LC_MESSAGES/messages.mo \$(DEST)/share/persy/locale/$lang/LC_MESSAGES/messages.mo" >> Makefile
 done
 echo -e "" >> Makefile
 
@@ -160,7 +160,7 @@ if [ -z `which xgettext 2> /dev/null` ]; then
     echo -e "no (xgettext not installed)" 
 else
     echo -e "languagefile:" >> Makefile
-    echo -e "\txgettext usr/share/persy/lib/*.py -o usr/share/persy/lib/locale/messages.pot" >> Makefile
+    echo -e "\txgettext usr/share/persy/lib/*.py -o usr/share/persy/locale/messages.pot" >> Makefile
     echo -e "" >> Makefile
     echo -e "yes"
     build="$build languagefile"    
@@ -168,7 +168,7 @@ fi
 
 # add clean
 echo -e "clean:" >> Makefile
-echo -e "\trm usr/share/persy/lib/VERSION" >> Makefile
+echo -e "\trm usr/share/persy/assets/VERSION" >> Makefile
 #echo -e "\trm usr/share/persy/lib/*.pyc" >> Makefile
 for doc in $rmdocs; do
     case $doc in

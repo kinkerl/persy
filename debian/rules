@@ -53,15 +53,15 @@ install: build
 	cp -r $(CURDIR)/etc $(CURDIR)/debian/persy/
 
 	#cleaning pyc files
-	rm -f $(CURDIR)/debian/persy/usr/lib/persy/*.pyc
+	rm -f $(CURDIR)/debian/persy/usr/share/persy/lib/*.pyc
 
 	#removing the jquery.js file and replacing it with a symlink
 	rm -f $(CURDIR)/debian/persy/usr/share/doc/persy/static/jquery.js
 	ln -s ../../../javascript/jquery/jquery.js $(CURDIR)/debian/persy/usr/share/doc/persy/static/jquery.js
 
 	#removing the GPL-2 file and replacing it with a symlink
-	rm -f $(CURDIR)/debian/persy/usr/lib/persy/assets/GPL-2
-	ln -s ../../../share/common-licenses/GPL-2 $(CURDIR)/debian/persy/usr/lib/persy/assets/GPL-2
+	rm -f $(CURDIR)/debian/persy/usr/share/persy/assets/GPL-2
+	ln -s ../../../share/common-licenses/GPL-2 $(CURDIR)/debian/persy/usr/share/persy/assets/GPL-2
 
 
 
