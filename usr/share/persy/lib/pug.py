@@ -164,7 +164,7 @@ GIT_WORK_TREE = the root git repostitory
 		callcmd.append(GIT)
 		callcmd.append('push')
 		callcmd.append(target)
-		callcmd.append(branch)
+		callcmd.append(branch+":refs/heads/"+branch)
 		for param in params:
 			callcmd.append(param)
 		rc = self.execute(callcmd, stdin, stdout, stderr)
