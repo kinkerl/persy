@@ -33,7 +33,7 @@ if [ "$1" = "--setenv" ]
 		export "GIT_WORK_TREE"=$HOME
 		
 	else 
-		/usr/lib/persy/persy.py $@
+		/usr/share/persy/lib/persy.py $@
 fi
 
 

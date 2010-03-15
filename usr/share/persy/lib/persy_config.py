@@ -21,7 +21,7 @@
 try:
 	import gettext
 	#localizations
-	LOCALEDIR='/usr/lib/persy/locale'
+	LOCALEDIR='/usr/share/persy/locale'
 	#init the localisation
 	gettext.install("messages", LOCALEDIR)
 except Exception as e:
@@ -83,9 +83,9 @@ class PersyConfig():
 		self.attributes['LOGFILE']=os.path.join(self.attributes['PERSY_DIR'],'default.log')
 		self.attributes['LOGFILE_GIT']=os.path.join(self.attributes['PERSY_DIR'],'git.log')
 		self.attributes['GITIGNOREFILE']=os.path.join(self.attributes['GIT_DIR'], 'info','exclude')
-		self.attributes['EXAMPLECONFIG']='/usr/lib/persy/example_config'
-		self.attributes['GLADEFILE']='/usr/lib/persy/persy.glade'
-		self.attributes['VERSIONFILE']='/usr/lib/persy/VERSION'
+		self.attributes['EXAMPLECONFIG']='/usr/share/persy/example_config'
+		self.attributes['GLADEFILE']='/usr/share/persy/lib/persy.glade'
+		self.attributes['VERSIONFILE']='/usr/share/persy/assets/VERSION'
 		self.attributes['HTMLDOCFILE']='/usr/share/doc/persy/index.html'
 		self.attributes['PERSY_BIN']='/usr/bin/persy'
 
@@ -96,26 +96,26 @@ class PersyConfig():
 			self.attributes['CONFIGFILE']=os.path.join(self.attributes['PERSY_DIR'],'config')
 
 		#path to some files and icons
-		self.attributes['ICON_IDLE'] = '/usr/lib/persy/assets/persy.svg'
-		self.attributes['ICON_OK'] = '/usr/lib/persy/assets/persy_ok.svg'
-		self.attributes['ICON_UNSYNCED'] = '/usr/lib/persy/assets/persy_unsynced.svg'
-		self.attributes['ICON_UNTRACKED'] = '/usr/lib/persy/assets/persy_untracked.svg'
-		self.attributes['ICON_WARN'] = '/usr/lib/persy/assets/persy_warn.svg'
-		self.attributes['ICON_ERROR'] = '/usr/lib/persy/assets/persy_error.svg'
+		self.attributes['ICON_IDLE'] = '/usr/share/persy/assets/persy.svg'
+		self.attributes['ICON_OK'] = '/usr/share/persy/assets/persy_ok.svg'
+		self.attributes['ICON_UNSYNCED'] = '/usr/share/persy/assets/persy_unsynced.svg'
+		self.attributes['ICON_UNTRACKED'] = '/usr/share/persy/assets/persy_untracked.svg'
+		self.attributes['ICON_WARN'] = '/usr/share/persy/assets/persy_warn.svg'
+		self.attributes['ICON_ERROR'] = '/usr/share/persy/assets/persy_error.svg'
 
 
 		#logo depends on DIST!
 		if self.attributes['DIST'][0] == 'Ubuntu':
-			self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
+			self.attributes['LOGO'] = '/usr/share/persy/assets/persy.svg'
 		elif self.attributes['DIST'][0] == 'LinuxMint':
-			self.attributes['LOGO'] = '/usr/lib/persy/assets/dist/persy_linuxmint.svg'
+			self.attributes['LOGO'] = '/usr/share/persy/assets/dist/persy_linuxmint.svg'
 		elif self.attributes['DIST'][0] == 'fedora':
-			self.attributes['LOGO'] = '/usr/lib/persy/assets/dist/persy_fedora.svg'
+			self.attributes['LOGO'] = '/usr/share/persy/assets/dist/persy_fedora.svg'
 		else:
-			self.attributes['LOGO'] = '/usr/lib/persy/assets/persy.svg'
+			self.attributes['LOGO'] = '/usr/share/persy/assets/persy.svg'
 
 		#path to the license file
-		self.attributes['LICENSE_FILE'] = '/usr/lib/persy/assets/GPL-2'
+		self.attributes['LICENSE_FILE'] = '/usr/share/persy/assets/GPL-2'
 
 		#git variables used by persy
 		self.attributes['SERVER_NICK']='origin'

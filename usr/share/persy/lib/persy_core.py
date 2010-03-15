@@ -20,7 +20,7 @@
 try:
 	import gettext
 	#localizations
-	LOCALEDIR = '/usr/lib/persy/locale'
+	LOCALEDIR = '/usr/share/persy/locale'
 	#init the localisation
 	gettext.install("messages", LOCALEDIR)
 except Exception as e:

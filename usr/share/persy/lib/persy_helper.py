@@ -21,7 +21,7 @@
 try:
 	import gettext
 	#localizations
-	LOCALEDIR='/usr/lib/persy/locale'
+	LOCALEDIR='/usr/share/persy/locale'
 	#init the localisation
 	gettext.install("messages", LOCALEDIR)
 except Exception as e:
@@ -167,7 +167,7 @@ class _PersyHelper():
 		"""
 		version = None
 		if name.lower() == 'persy':
-			filename = '/usr/lib/persy/VERSION'
+			filename = '/usr/share/persy/assets/VERSION'
 			if os.path.exists(filename):
 				try:
 					version = file(filename).read().strip()
