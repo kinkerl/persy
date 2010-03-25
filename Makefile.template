@@ -13,13 +13,13 @@ PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
-all: build
+all: genversion build
 
 genversion:
 	@echo "placing VERSION taken from debian/changelog in usr/share/persy/assets/VERSION"
 	@echo $(VERSION) > usr/share/persy/assets/VERSION
 
-doc-html: genversion
+doc-html:
 	#build developer documentation and place it in usr/share/doc/persy
 	
 	#create the folder for the documentation and clean it
@@ -30,14 +30,14 @@ doc-html: genversion
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
 
-doc-latex: genversion
+doc-latex:
 	cd doc && $(SPHINXBUILD) -a -b latex $(ALLSPHINXOPTS) _build/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in doc/_build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
 	      "run these through (pdf)latex."
 
-doc-man: genversion
+doc-man:
 	# builds(compresses) the manpage(replaces the github urls for the images)
 	mkdir -p usr/share/man/man1
 	cat README.markdown | sed 's/http:\/\/cloud.github.com\/downloads\/kinkerl\/persy/\/usr\/share\/doc\/persy\/images/g' | pandoc -s -w man  | gzip -c --best > usr/share/man/man1/persy.1.gz
