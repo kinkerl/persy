@@ -176,7 +176,7 @@ for doc in $rmdocs; do
                 ;;
         "html") 
                 echo -e "\trm -rf usr/share/doc" >> Makefile
-                echo -e "\trm doc/sphinxtogithub.pyc" >> Makefile
+                echo -e "\trm doc/*.pyc" >> Makefile
                 echo -e "\trm -rf doc/_tmp" >> Makefile
                 ;;
         "latex")
