@@ -20,6 +20,15 @@ fortune=False
 # will share the configuration file
 autoshare=True
 
+# advanced options: sets these two git environment variables. pls take a look at
+# the git documentation for this. you dont have to change these in a normal setup
+
+# the place of the gitrepository on the harddrive
+#gitdir=
+
+# this is the root directory of the directorytree persy will watch. 
+# it is ~ by default
+#gitworktree=
 
 # configurations for the local backup
 [local]

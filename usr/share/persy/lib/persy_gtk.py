@@ -20,7 +20,7 @@
 try:
 	import gettext
 	#localizations
-	LOCALEDIR='/usr/lib/persy/locale'
+	LOCALEDIR='/usr/share/persy/locale'
 	#init the localisation
 	gettext.install("messages", LOCALEDIR)
 except Exception as e:
@@ -36,23 +36,11 @@ except Exception as e:
 
 try:
 	import sys
-	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
-	from subprocess import Popen
 	from threading import Thread
-	from persy_config import PersyConfig
 	from persy_helper import PersyHelper
 	from persy_helper import autorun
-	from persy_core import Core
 	from persy_ssh import PersySSH
-	import os
-	import time
-	import logging , logging.handlers
-	import time, signal, operator
-	import paramiko
-	import pug
-	import pynotify
 	import subprocess
-	import gtk
 	import gtk.glade
 	import pygtk
 	import webbrowser
@@ -601,7 +589,7 @@ class PersyGtkMenu():
 		dia.show()
 		result = dia.run()
 		if result == 77:
-			gtkcore.syncWithRemote
+			self.gtkcore.syncWithRemote()
 		dia.destroy()
 
 	def init_remote(self, widget, data=None):
@@ -869,11 +857,11 @@ class PersyGtk():
 		"""
 		self.core.syncWithRemote()
 
-	def initLocal(self, unused_widget, unused_data = None):
+	def init_local(self, unused_widget, unused_data = None):
 		"""
-		calls the initLocal function in core
+		calls the init_local function in core
 		"""
-		self.core.initLocal()
+		self.core.init_local()
 
 	def initRemote(self, unused_widget, unused_data = None):
 		"""

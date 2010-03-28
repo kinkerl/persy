@@ -105,22 +105,22 @@ When running persy, its possible to run in the following states. most of them ar
   |persy_error.svg|, "error!"
 
 
-.. |persy_idle.svg| image:: ../usr/lib/persy/assets/persy_idle.svg
+.. |persy_idle.svg| image:: ../usr/share/persy/assets/persy_idle.svg
    :width: 64px
 
-.. |persy_untracked.svg| image:: ../usr/lib/persy/assets/persy_untracked.svg
+.. |persy_untracked.svg| image:: ../usr/share/persy/assets/persy_untracked.svg
    :width: 64px
 
-.. |persy_unsynced.svg| image:: ../usr/lib/persy/assets/persy_unsynced.svg
+.. |persy_unsynced.svg| image:: ../usr/share/persy/assets/persy_unsynced.svg
    :width: 64px
 
-.. |persy_ok.svg| image:: ../usr/lib/persy/assets/persy_ok.svg
+.. |persy_ok.svg| image:: ../usr/share/persy/assets/persy_ok.svg
    :width: 64px
 
-.. |persy_warn.svg| image:: ../usr/lib/persy/assets/persy_warn.svg
+.. |persy_warn.svg| image:: ../usr/share/persy/assets/persy_warn.svg
    :width: 64px
 
-.. |persy_error.svg| image:: ../usr/lib/persy/assets/persy_error.svg
+.. |persy_error.svg| image:: ../usr/share/persy/assets/persy_error.svg
    :width: 64px
 
 

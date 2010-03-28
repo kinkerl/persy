@@ -3,5 +3,5 @@ usr/share/man/
 usr/share/doc
 doc/_tmp/
 doc/_build/
-usr/lib/persy/VERSION
+usr/share/persy/assets/VERSION
 Makefile

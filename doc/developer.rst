@@ -26,6 +26,7 @@ At runtime you need the following packages (these names are taken from ubuntu an
  *   python-notify - notifications
  *   python-pyinotify - to get efficient information about filesystem changes
  *   python-paramiko - ssh library to initialize a remote server
+ *   python-configobj - configlib
 
 For some actions in the Makefile you also need:
 

@@ -50,7 +50,7 @@ copyright = u'2010, Dennis Schwertel'
 #release = '0'
 
 version = 'undefined'
-filename = '../usr/lib/persy/VERSION'
+filename = '../usr/share/persy/assets/VERSION'
 if os.path.exists(filename):
 	try:
 		version = file(filename).read().strip()
@@ -203,7 +203,7 @@ latex_documents = [
 #latex_use_modindex = True
 
 #adds to sys path so sphinx can import them
-sys.path.append(os.path.abspath('../usr/lib/persy'))
+sys.path.append(os.path.abspath('../usr/share/persy/lib'))
 
 sys.path.append(os.path.abspath('.'))
 

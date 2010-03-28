@@ -20,7 +20,7 @@
 try:
 	import gettext
 	#localizations
-	LOCALEDIR='/usr/lib/persy/locale'
+	LOCALEDIR='/usr/share/persy/locale'
 	#init the localisation
 	gettext.install("messages", LOCALEDIR)
 except Exception as e:
@@ -36,13 +36,9 @@ except Exception as e:
 
 try:
 	import sys
-	from pyinotify import WatchManager, Notifier, ThreadedNotifier, ProcessEvent, EventsCodes
-	from subprocess import Popen
+	from pyinotify import ProcessEvent
 	from threading import Thread
-	from persy_config import PersyConfig
-	from persy_helper import PersyHelper
 	import time
-	import paramiko
 	import subprocess
 except ImportError as e:
 	print _("You do not have all the dependencies:")
@@ -227,7 +223,8 @@ class TheSyncer(Thread):
 						self.core.git_commit(self.generateCommitMessage())
 					except Exception as e:
 						#self.errorlocalcounter += 1
-						#if self.errorlocalcounter > 1:						
+						#if self.errorlocalcounter > 1:
+						self.core.persy_stop()
 						self.log.critical(str(e))
 					else: 
 						self.errorlocalcounter = 0					
@@ -246,6 +243,7 @@ class TheSyncer(Thread):
 					except Exception as e:
 						self.errorremotecounter += 1
 						if self.errorremotecounter > 2:
+							self.core.persy_stop()
 							self.log.critical(str(e))
 					else:
 						okcounter += 1
@@ -255,7 +253,8 @@ class TheSyncer(Thread):
 						self.core.git_push(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
 					except Exception as e:
 						self.errorremotecounter += 1
-						if self.errorremotecounter > 2:					
+						if self.errorremotecounter > 2:		
+							self.core.persy_stop()
 							self.log.critical(str(e))
 					else:
 						okcounter += 1

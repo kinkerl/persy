@@ -20,7 +20,7 @@
 try:
 	import gettext
 	#localizations
-	LOCALEDIR='/usr/lib/persy/locale'
+	LOCALEDIR='/usr/share/persy/locale'
 	#init the localisation
 	gettext.install("messages", LOCALEDIR)
 except Exception as e:
@@ -39,7 +39,7 @@ try:
 	import os
 	import pynotify
 	import gtk
-	import logging , logging.handlers
+	import logging.handlers
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
