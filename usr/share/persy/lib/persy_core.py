@@ -169,6 +169,13 @@ class _Core():
 		"""
 		# i dont use clone because of massive errors when using it
 		# the best way iś to add the remote server and pull from it
+
+		#check to only do this if all of the remote watched directoris do NOT exist
+		for f in self.config['local']['watched']:
+			if os.path.exists(f):
+				self.log.critical(_("%f does already exist but it should not! Please remove it and try it again."))
+				return False 
+		
 		try:
 			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s@%s/%s"%(self.config['remote']['username'],self.config['remote']['hostname'],self.config['remote']['path']))
 			self.vcs.pull(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
