@@ -20,7 +20,6 @@ try:
 	import sys
 	import os
 	import subprocess2
-	from persy_vcs import VCS
 
 except ImportError as e:
 	print "You do not have all the dependencies:"
@@ -37,7 +36,7 @@ __copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 GIT = '/usr/bin/git'
 
-class PuG(VCS):
+class PuG():
 	"""
 	persy`s uncomplicated Git.
 	can execute pushs, pulls, adds, commits and so on. 
