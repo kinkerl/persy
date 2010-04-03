@@ -43,7 +43,7 @@ class PuG(VCS):
 	can execute pushs, pulls, adds, commits and so on. 
 	"""
 
-	def __init__(self, GIT_WORK_TREE, GIT_DIR='.git', stdin=None, stderr=None, stdout=None):
+	def __init__(self, GIT_WORK_TREE='.', GIT_DIR='.git', stdin=None, stderr=None, stdout=None):
 		'''
 GIT_DIR = the git index folder, relative to the repositorydir (default = .git)
 GIT_WORK_TREE = the root git repostitory
