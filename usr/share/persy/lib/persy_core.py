@@ -169,7 +169,7 @@ class _Core():
 		"""
 		# i dont use clone because of massive errors when using it
 		# the best way iś to add the remote server and pull from it
-		self.log.info('sync core')
+		self.log.debug('persy-core-sync called')
 		#check to only do this if all of the remote watched directoris do NOT exist
 		for f in self.config['local']['watched']:
 			if os.path.exists(f):
@@ -177,13 +177,13 @@ class _Core():
 				return False 
 		
 		try:
-			self.log.info('sync core remote add')
+			self.log.debug('persy-core-sync remote add')
 			self.vcs.remoteAdd(self.config.getAttribute('SERVER_NICK'),"ssh://%s@%s/%s"%(self.config['remote']['username'],self.config['remote']['hostname'],self.config['remote']['path']))
-			self.log.info('sync core pull')
+			self.log.debug('persy-core-sync pull')
 			self.vcs.pull(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
 		except Exception as e:
 			self.log.critical(str(e))
-		self.log.info('ende')
+		self.log.debug('persy-core-sync ende')
 		if not self.config['remote']['use_remote']:
 			self.config['remote']['use_remote'] = True
 			self.config.write()
