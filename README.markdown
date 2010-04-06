@@ -16,13 +16,13 @@ If you just want to backup your files and save nearly every step you do, run per
 If you want to sychronize your files, all you need is a server with ssh and git (in your local network or remote in the internet doesnt matter). 
 I have a old pc here in my local network for example. Give persy the server data it needs, follow the configuration, enable remote synchronization and there you go!
 
-If you are not looking at the online version of the documentation, you can find the most recent version at: http://kinkerl.github.com/persy/
+If you are not looking at the online version of the documentation, you can find the most recent version at: http://persy.digitalkultur.net
 
 See also
 ===========
 You can report BUGS, ask QUESTIONS and DOWNLOAD persy on [launchpad](https://launchpad.net/persy)
 
-You can view the SOURCE and DEVELOPMENT on [github](http://wiki.github.com/kinkerl/persy)
+You can view the SOURCE and DEVELOPMENT on [github](http://github.com/kinkerl/persy)
 
 Author
 ============
