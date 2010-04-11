@@ -86,10 +86,11 @@ Advanced Usage
 You can use persy without a centralized server to which every clients connects and performes the synchronization (like in the illustration image above). You can also run persy without a second computer at all and synchronize with other parts(repositories) on the filesystem. Right now, this is not the intended use and i will not cover this in the cli or the upcomming gui. You can however configure this in the git configuration for persy ~/.persy/git/config and i try to take care of the internal implementation. If you have questions regarding esoteric setups, feel free to mail me.
 
 
-persy's states
+States in persy
 --------------------------------------------
 
-When running persy, its possible to run in the following states. most of them are selfexplanatory.
+When running persy, its possible to run in the following states. A state is a simplification of the status of the file backup and synchronization.
+Most of them are selfexplanatory.
 
 
 .. csv-table:: 
@@ -97,10 +98,10 @@ When running persy, its possible to run in the following states. most of them ar
   :widths: 64, 400
 
 
-  |persy_idle.svg|, "idle, not running"
-  |persy_untracked.svg|, "untracked changes local"
-  |persy_unsynced.svg|, "all local changes are backupped"
-  |persy_ok.svg|, "persy is in sync with the server"
+  |persy_idle.svg|, "idle, persy is not running"
+  |persy_untracked.svg|, "local changes exist that are not saved in the local repository"
+  |persy_unsynced.svg|, "all local changes are saved"
+  |persy_ok.svg|, "all local changes are saved AND these changes are pushed to the remote server"
   |persy_warn.svg|, "warning!"
   |persy_error.svg|, "error!"
 

@@ -3,7 +3,7 @@ Troubleshooting
 
 When something is odd or just not working, please take your time to write a bug at launchpad_ to make persy better!
 
-more informations and quick help
+More informations and quick help
 -----------------------------------
 
 If you just want a more detailed output of the stuff persy does, start persy with the ``--verbose`` command line argument.
@@ -19,7 +19,7 @@ A green dog is ok, orange is an error state. If an error does occure, the error 
 The corresponding action to a test MAY fix a problem. Nothing bad will happen so you can always give it a try.
 
 
-advanced and manual troubleshooting
+Advanced and manual troubleshooting
 ------------------------------------
 
 To really check whats happening OR do some manual stuff with the git repository, use the a development/debugging Option ``--setenv`` (only for advanced users, notice the dot in the beginning). 
