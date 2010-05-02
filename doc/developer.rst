@@ -33,27 +33,6 @@ For some actions in the Makefile you also need:
  *   python-sphinx - build the documentation
  *   pandoc - build the manpage
 
-Debugging persy
---------------------------------
-A development/debugging Option is ``--setenv`` (notice the dot in the beginning). 
-
-.. code-block:: bash
-  :linenos:
-
-   . persy --setenv
-
-This sets the environment variables (``GIT_DIR``, ``GIT_WORK_TREE``) of the parent shell in a way that all git commands execute in the parent shell are operating on the persy git repository. 
-Take a look at the help message when using this option.
-This is useful if you want to start your own git viewer or want to mess with your data.
-
-If you just want a more detailed output of the stuff persy does, you can try the ``--verbose`` command line argument.
-
-.. code-block:: bash
-  :linenos:
-
-   persy --verbose
-
-
 
 
 Styleguide
@@ -184,14 +163,6 @@ _________________________________
 
 .. automodule:: persy_talker
 .. autoclass:: Talker
-   :members:
-
-
-PersyVCS
-_________________________________
-
-.. automodule:: persy_vcs
-.. autoclass:: VCS
    :members:
 
 
