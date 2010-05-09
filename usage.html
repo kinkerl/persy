@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Usage &mdash; persy v0.9 documentation</title>
+    <title>Usage &mdash; persy v0.9.1 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '0.9',
+        URL_ROOT:    '#',
+        VERSION:     '0.9.1',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,8 +19,8 @@
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="persy v0.9 documentation" href="index.html" />
-    <link rel="next" title="Developer Documentation" href="developer.html" />
+    <link rel="top" title="persy v0.9.1 documentation" href="index.html" />
+    <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
   </head>
   <body>
@@ -34,12 +34,12 @@
           <a href="modindex.html" title="Global Module Index"
              accesskey="M">modules</a> |</li>
         <li class="right" >
-          <a href="developer.html" title="Developer Documentation"
+          <a href="troubleshooting.html" title="Troubleshooting"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">persy v0.9 documentation</a> &raquo;</li> 
+        <li><a href="index.html">persy v0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,7 +54,7 @@
 <div class="section" id="quickstart">
 <h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
 <p>For a quick start, just run persy</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1</pre></td><td class="code"><div class="highlight"><pre> persy
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre> persy
 </pre></div>
 </td></tr></table></div>
 <p>persy can also be started from the the normal startup menu in the &#8220;accessory&#8221; category.
@@ -68,10 +68,10 @@ Now you have to add directories to persy. You can do this in the settings menu i
 <div class="section" id="quickstart-on-the-commandline">
 <h2>Quickstart on the commandline<a class="headerlink" href="#quickstart-on-the-commandline" title="Permalink to this headline">¶</a></h2>
 <p>You can also do this configuration in the commandline. This is recommended for experienced users only and is not necessary if you configured persy with the settings menu.</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></td><td class="code"><div class="highlight"><pre> persy --config --uname<span class="o">=</span>USERNAME
+4</pre></div></td><td class="code"><div class="highlight"><pre> persy --config --uname<span class="o">=</span>USERNAME
  persy --config --mail<span class="o">=</span>MAIL
  persy --config --add_dir<span class="o">=</span>DIR
  persy --start
@@ -85,10 +85,10 @@ Now you have to add directories to persy. You can do this in the settings menu i
 <img alt="images/sync.png" src="images/sync.png" />
 <p>The server just needs a ssh server with public key authentication and the git-core package.</p>
 <p>You only have to configure the client computer with persy installed! The normal workflow with a <strong>blank remote Server</strong> and an <strong>already initialized local repository</strong> is:</p>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></td><td class="code"><div class="highlight"><pre> persy --config --hostname<span class="o">=</span>SERVER
+4</pre></div></td><td class="code"><div class="highlight"><pre> persy --config --hostname<span class="o">=</span>SERVER
  persy --config --path<span class="o">=</span>PATH
  persy --initRemote
  persy --start
@@ -99,13 +99,13 @@ Now you have to add directories to persy. You can do this in the settings menu i
 <p class="first admonition-title">Warning</p>
 <p class="last">the synced directories should be empty before the sync. i had some problems with already existing files. you can start a sync and then add new files to the synced directory.</p>
 </div>
-<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><pre>1
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
 6
-7</pre></td><td class="code"><div class="highlight"><pre> persy --config --uname<span class="o">=</span>USERNAME
+7</pre></div></td><td class="code"><div class="highlight"><pre> persy --config --uname<span class="o">=</span>USERNAME
  persy --config --mail<span class="o">=</span>MAIL
  persy --config --hostname<span class="o">=</span>SERVER
  persy --config --path<span class="o">=</span>PATH
@@ -119,9 +119,10 @@ Now you have to add directories to persy. You can do this in the settings menu i
 <h2>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h2>
 <p>You can use persy without a centralized server to which every clients connects and performes the synchronization (like in the illustration image above). You can also run persy without a second computer at all and synchronize with other parts(repositories) on the filesystem. Right now, this is not the intended use and i will not cover this in the cli or the upcomming gui. You can however configure this in the git configuration for persy ~/.persy/git/config and i try to take care of the internal implementation. If you have questions regarding esoteric setups, feel free to mail me.</p>
 </div>
-<div class="section" id="persy-s-states">
-<h2>persy&#8217;s states<a class="headerlink" href="#persy-s-states" title="Permalink to this headline">¶</a></h2>
-<p>When running persy, its possible to run in the following states. most of them are selfexplanatory.</p>
+<div class="section" id="states-in-persy">
+<h2>States in persy<a class="headerlink" href="#states-in-persy" title="Permalink to this headline">¶</a></h2>
+<p>When running persy, its possible to run in the following states. A state is a simplification of the status of the file backup and synchronization.
+Most of them are selfexplanatory.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="14%" />
@@ -133,27 +134,27 @@ Now you have to add directories to persy. You can do this in the settings menu i
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td><object data="images/persy_idle.svg" type="image/svg+xml"><embed src="images/persy_idle.svg" type="image/svg+xml" /></object>
+<tr><td><object data="images/persy_idle.svg" type="image/svg+xml" width="64px"><embed src="images/persy_idle.svg" type="image/svg+xml" width="64px" /></object>
 </td>
-<td>idle, not running</td>
+<td>idle, persy is not running</td>
 </tr>
-<tr><td><object data="images/persy_untracked.svg" type="image/svg+xml"><embed src="images/persy_untracked.svg" type="image/svg+xml" /></object>
+<tr><td><object data="images/persy_untracked.svg" type="image/svg+xml" width="64px"><embed src="images/persy_untracked.svg" type="image/svg+xml" width="64px" /></object>
 </td>
-<td>untracked changes local</td>
+<td>local changes exist that are not saved in the local repository</td>
 </tr>
-<tr><td><object data="images/persy_unsynced.svg" type="image/svg+xml"><embed src="images/persy_unsynced.svg" type="image/svg+xml" /></object>
+<tr><td><object data="images/persy_unsynced.svg" type="image/svg+xml" width="64px"><embed src="images/persy_unsynced.svg" type="image/svg+xml" width="64px" /></object>
 </td>
-<td>all local changes are backupped</td>
+<td>all local changes are saved</td>
 </tr>
-<tr><td><object data="images/persy_ok.svg" type="image/svg+xml"><embed src="images/persy_ok.svg" type="image/svg+xml" /></object>
+<tr><td><object data="images/persy_ok.svg" type="image/svg+xml" width="64px"><embed src="images/persy_ok.svg" type="image/svg+xml" width="64px" /></object>
 </td>
-<td>persy is in sync with the server</td>
+<td>all local changes are saved AND these changes are pushed to the remote server</td>
 </tr>
-<tr><td><object data="images/persy_warn.svg" type="image/svg+xml"><embed src="images/persy_warn.svg" type="image/svg+xml" /></object>
+<tr><td><object data="images/persy_warn.svg" type="image/svg+xml" width="64px"><embed src="images/persy_warn.svg" type="image/svg+xml" width="64px" /></object>
 </td>
 <td>warning!</td>
 </tr>
-<tr><td><object data="images/persy_error.svg" type="image/svg+xml"><embed src="images/persy_error.svg" type="image/svg+xml" /></object>
+<tr><td><object data="images/persy_error.svg" type="image/svg+xml" width="64px"><embed src="images/persy_error.svg" type="image/svg+xml" width="64px" /></object>
 </td>
 <td>error!</td>
 </tr>
@@ -173,12 +174,12 @@ Now you have to add directories to persy. You can do this in the settings menu i
             </a></p>
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference external" href="">Usage</a><ul>
+<li><a class="reference external" href="#">Usage</a><ul>
 <li><a class="reference external" href="#quickstart">Quickstart</a></li>
 <li><a class="reference external" href="#quickstart-on-the-commandline">Quickstart on the commandline</a></li>
 <li><a class="reference external" href="#setup-for-syncing-and-or-using-a-remote-backup">Setup for syncing and/or using a remote backup</a></li>
 <li><a class="reference external" href="#advanced-usage">Advanced Usage</a></li>
-<li><a class="reference external" href="#persy-s-states">persy&#8217;s states</a></li>
+<li><a class="reference external" href="#states-in-persy">States in persy</a></li>
 </ul>
 </li>
 </ul>
@@ -187,8 +188,8 @@ Now you have to add directories to persy. You can do this in the settings menu i
             <p class="topless"><a href="installation.html"
                                   title="previous chapter">Installation</a></p>
             <h4>Next topic</h4>
-            <p class="topless"><a href="developer.html"
-                                  title="next chapter">Developer Documentation</a></p>
+            <p class="topless"><a href="troubleshooting.html"
+                                  title="next chapter">Troubleshooting</a></p>
           <div id="searchbox" style="display: none">
             <h3>Quick search</h3>
               <form class="search" action="search.html" method="get">
@@ -216,17 +217,17 @@ Now you have to add directories to persy. You can do this in the settings menu i
           <a href="modindex.html" title="Global Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="developer.html" title="Developer Documentation"
+          <a href="troubleshooting.html" title="Troubleshooting"
              >next</a> |</li>
         <li class="right" >
           <a href="installation.html" title="Installation"
              >previous</a> |</li>
-        <li><a href="index.html">persy v0.9 documentation</a> &raquo;</li> 
+        <li><a href="index.html">persy v0.9.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
       &copy; Copyright 2010, Dennis Schwertel.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
     </div>
   </body>
 </html>

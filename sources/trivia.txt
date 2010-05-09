@@ -18,10 +18,10 @@ These are some alternative logos for persy used on the corresponding distributio
   |persy_linuxmint.svg|, "linux mint"
   |persy_fedora.svg|, "fedora"
 
-.. |persy_linuxmint.svg| image:: ../usr/lib/persy/assets/dist/persy_linuxmint.svg
+.. |persy_linuxmint.svg| image:: ../usr/share/persy/assets/dist/persy_linuxmint.svg
    :width: 128px
 
-.. |persy_fedora.svg| image:: ../usr/lib/persy/assets/dist/persy_fedora.svg
+.. |persy_fedora.svg| image:: ../usr/share/persy/assets/dist/persy_fedora.svg
    :width: 128px
 
 Screenshots

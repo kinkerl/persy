@@ -32,6 +32,7 @@ Contents
    
    installation
    usage
+   troubleshooting
    developer
    trivia
    changes
