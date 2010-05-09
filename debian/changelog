@@ -1,3 +1,13 @@
+persy (0.9.1) lucid; urgency=low
+
+  * documentation updates
+  * added support for GIT_WORK_TREE and GIT_DIR in the configuration
+  * added support for multiple configurations
+  * experimental support for fancy remote git servers (like gitoris)
+  * bug fixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  Sun, 14 May 2010 16:57:08 +0200
+
 persy (0.9ubuntu1) lucid; urgency=low
 
   * Switch to dpkg-source 3.0 (quilt) format
