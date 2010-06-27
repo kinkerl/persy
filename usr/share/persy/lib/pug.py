@@ -3,24 +3,23 @@
 
 #License
 #=======
-#persy is free software: you can redistribute it and/or modify it
+#this is free software: you can redistribute it and/or modify it
 #under the terms of the GNU General Public License as published by the Free
 #Software Foundation, either version 2 of the License, or (at your option) any
 #later version.
 
-#persy is distributed in the hope that it will be useful,
+#this software is distributed in the hope that it will be useful,
 #but WITHOUT ANY WARRANTY; without even the implied warranty of
 #MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #General Public License for more details.
 
 #You should have received a copy of the GNU General Public License
-#along with persy; if not, write to the Free Software
+#along with this software; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 try:
 	import sys
 	import os
 	import subprocess2
-
 except ImportError as e:
 	print "You do not have all the dependencies:"
 	print str(e)
@@ -42,7 +41,7 @@ class PuG():
 	can execute pushs, pulls, adds, commits and so on. 
 	"""
 
-	def __init__(self, GIT_WORK_TREE='.', GIT_DIR='.git', stdin=None, stderr=None, stdout=None):
+	def __init__(self, cwd='.', GIT_WORK_TREE=None, GIT_DIR=None, stdin=None, stderr=None, stdout=None):
 		'''
 GIT_DIR = the git index folder, relative to the repositorydir (default = .git)
 GIT_WORK_TREE = the root git repostitory
@@ -51,18 +50,17 @@ GIT_WORK_TREE = the root git repostitory
 		self.GIT_WORK_TREE = GIT_WORK_TREE
 		self.stdin=stdin
 		self.stderr=stderr
-		self.stdout=subprocess2.PIPE
-		self.cwd = os.environ["HOME"]
+		self.stdout=stdout
+		self.cwd = cwd
 		self.lastoutput = ''
-
-	def getLastOutput(self):
-		return self.lastoutput
 
 	def __getEnv(self):
 		'''Gets all the default environment variables and add some new'''
 		ret = os.environ
-		ret['GIT_DIR'] = self.GIT_DIR
-		ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
+		if self.GIT_DIR:
+			ret['GIT_DIR'] = self.GIT_DIR
+		if self.GIT_WORK_TREE:
+			ret['GIT_WORK_TREE'] = self.GIT_WORK_TREE
 		return ret
 
 	def execute(self, callcmd, stdin=None, stdout=None, stderr=None):
@@ -224,6 +222,7 @@ GIT_WORK_TREE = the root git repostitory
 
 
 	def get_submodules(self, stdin=None, stdout=None, stderr=None, include_dir = None):
+		'''returns an array of all the submodules'''
 		submodules = []
 		callcmd = []
 		callcmd.append(GIT)
@@ -242,3 +241,20 @@ GIT_WORK_TREE = the root git repostitory
 						if os.path.abspath(possible_module).startswith(os.path.abspath(inc)):
 							submodules.append(possible_module)
 		return submodules
+
+	def getLastOutput(self):
+		'''returns the output of the last executed command if stdout was set to subprocess2.PIPE'''
+		return self.lastoutput
+
+
+if __name__== '__main__':
+
+	git = PuG(stdout=sys.stdout)
+	print "executing git status"
+	git.status()
+
+	print "executing git status piped!"
+	git.status(stdout=subprocess2.PIPE)
+	print git.getLastOutput()
+
+

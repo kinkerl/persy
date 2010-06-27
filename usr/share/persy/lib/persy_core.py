@@ -43,6 +43,7 @@ try:
 	import paramiko
 	import pug
 	import subprocess
+	import subprocess2
 except ImportError as e:
 	print _("You do not have all the dependencies:")
 	print str(e)
@@ -87,7 +88,8 @@ class _Core():
 		stdin = None #default stdin
 		stdout = std #default stdout
 		stderr = std #default stderr
-		self.vcs = pug.PuG(GIT_WORK_TREE=config['general']['gitworktree'], GIT_DIR=config['general']['gitdir'], stdin=stdin, stdout=stdout, stderr=stderr)
+		cwd = os.environ["HOME"]
+		self.vcs = pug.PuG(cwd=cwd, GIT_WORK_TREE=config['general']['gitworktree'], GIT_DIR=config['general']['gitdir'], stdin=stdin, stdout=subprocess2.PIPE, stderr=stderr)
 
 	def init_local(self):
 		"""
@@ -184,9 +186,8 @@ class _Core():
 		except Exception as e:
 			self.log.critical(str(e))
 		self.log.debug('persy-core-sync ende')
-		if not self.config['remote']['use_remote']:
-			self.config['remote']['use_remote'] = True
-			self.config.write()
+		self.config['remote']['use_remote'] = True
+		self.config.write()
 
 
 	def isInSyncWithRemote(self):
