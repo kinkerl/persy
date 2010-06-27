@@ -35,3 +35,22 @@ This is useful if you want to start your own git viewer or want to mess with you
 
 
 .. _launchpad: https://launchpad.net/persy
+
+Working with large repositories
+------------------------------------
+
+Persy can handle large repositorys quite well. The only problem is the initial pull from or push to a remote repository. This may take a very long time, depending on the size of your files. It might help to use a manual pull from a remote location. It is expected to be more stable this way. Please take a look at the "Manual pull from a remote repository" paragraph if you want to perform this. 
+
+Manual pull from a remote repository
+-------------------------------------
+
+To get a local checkout / backup from a remote repository you have start a terminal and switch into a "persy" environment. After you did this, you can make the git pull:
+
+.. code-block:: bash
+  :linenos:
+
+   . persy --setenv
+   git pull origin master
+
+This may take a long time depending on the size of your repostiory and can be usefull when the repository is to big to pull with persy or you dont have a graphical interface. 
+
