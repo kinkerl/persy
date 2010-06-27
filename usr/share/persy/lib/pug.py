@@ -183,6 +183,42 @@ GIT_WORK_TREE = the root git repostitory
 		if not (rc == 0 or rc == 128):
 			raise Exception("pull: %i"%rc)
 
+	def svn_pull(self, stdin=None, stdout=None, stderr=None, params = []):
+		'''pulls from a svn repository'''
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('svn')
+		callcmd.append('rebase')
+		for param in params:
+			callcmd.append(param)
+		rc = self.execute(callcmd, stdin, stdout, stderr)
+		#no errors or nothing to pull (128)
+		if not (rc == 0):
+			raise Exception("git-svn: %i"%rc)
+
+	def svn_push(self, stdin=None, stdout=None, stderr=None, params = []):
+		'''pushes commits to a svn repository'''
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('svn')
+		callcmd.append('dcommit')
+		rc = self.execute(callcmd, stdin, stdout, stderr)
+		#dont know! rc == 1 = nothing new added to commit!
+		if not (rc  == 0):
+			raise Exception("svn-commit: %i"%rc)
+
+	def svn_init(self, url, stdin=None, stdout=None, stderr=None, params = []):
+		'''initialize an empty repository'''
+		callcmd = []
+		callcmd.append(GIT)
+		callcmd.append('svn')
+		callcmd.append('init')
+		callcmd.append(url)
+		rc = self.execute(callcmd, stdin, stdout, stderr)
+		#0 = all ok, 128 = reinitialized, all ok
+		if not (rc  == 0):
+			raise Exception("init: %i "%rc)
+
 	def remoteAdd(self, nickname, url, stdin=None, stdout=None, stderr=None, params = []):
 		'''adds a remote repository'''
 		callcmd = []

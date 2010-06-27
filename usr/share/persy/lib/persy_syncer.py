@@ -239,7 +239,7 @@ class TheSyncer(Thread):
 					okcounter = 0
 					self.log.debug('git pull')
 					try:
-						self.core.git_pull(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
+						self.core.git_svn_pull()
 					except Exception as e:
 						self.errorremotecounter += 1
 						if self.errorremotecounter > 2:
@@ -250,7 +250,7 @@ class TheSyncer(Thread):
 
 					self.log.debug('git push')
 					try:
-						self.core.git_push(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
+						self.core.git_svn_push()
 					except Exception as e:
 						self.errorremotecounter += 1
 						if self.errorremotecounter > 2:		

@@ -389,6 +389,12 @@ class _Core():
 		"""
 		self.vcs.push(nickname,branch)
 
+	def git_svn_pull(self):
+		self.vcs.svn_pull()
+
+	def git_svn_push(self):
+		self.vcs.svn_push()
+
 	def git_get_submodules(self):
 		"""
 		returns all submodules in watched directories
