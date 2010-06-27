@@ -72,6 +72,20 @@ The corresponding action to a test MAY fix a problem. Nothing bad will happen so
 Take a look at the help message when using this option.
 This is useful if you want to start your own git viewer or want to mess with your data.</p>
 </div>
+<div class="section" id="working-with-large-repositories">
+<h2>Working with large repositories<a class="headerlink" href="#working-with-large-repositories" title="Permalink to this headline">¶</a></h2>
+<p>Persy can handle large repositorys quite well. The only problem is the initial pull from or push to a remote repository. This may take a very long time, depending on the size of your files. It might help to use a manual pull from a remote location. It is expected to be more stable this way. Please take a look at the &#8220;Manual pull from a remote repository&#8221; paragraph if you want to perform this.</p>
+</div>
+<div class="section" id="manual-pull-from-a-remote-repository">
+<h2>Manual pull from a remote repository<a class="headerlink" href="#manual-pull-from-a-remote-repository" title="Permalink to this headline">¶</a></h2>
+<p>To get a local checkout / backup from a remote repository you have start a terminal and switch into a &#8220;persy&#8221; environment. After you did this, you can make the git pull:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre> . persy --setenv
+ git pull origin master
+</pre></div>
+</td></tr></table></div>
+<p>This may take a long time depending on the size of your repostiory and can be usefull when the repository is to big to pull with persy or you dont have a graphical interface.</p>
+</div>
 </div>
 
 
@@ -88,6 +102,8 @@ This is useful if you want to start your own git viewer or want to mess with you
 <li><a class="reference external" href="#">Troubleshooting</a><ul>
 <li><a class="reference external" href="#more-informations-and-quick-help">More informations and quick help</a></li>
 <li><a class="reference external" href="#advanced-and-manual-troubleshooting">Advanced and manual troubleshooting</a></li>
+<li><a class="reference external" href="#working-with-large-repositories">Working with large repositories</a></li>
+<li><a class="reference external" href="#manual-pull-from-a-remote-repository">Manual pull from a remote repository</a></li>
 </ul>
 </li>
 </ul>
