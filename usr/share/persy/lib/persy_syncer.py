@@ -239,7 +239,10 @@ class TheSyncer(Thread):
 					okcounter = 0
 					self.log.debug('git pull')
 					try:
-						self.core.git_svn_pull()
+						if config['remote']['use_gitsvn']:
+							self.core.git_svn_pull()
+						else:
+							self.core.git_pull(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))					
 					except Exception as e:
 						self.errorremotecounter += 1
 						if self.errorremotecounter > 2:
@@ -250,7 +253,10 @@ class TheSyncer(Thread):
 
 					self.log.debug('git push')
 					try:
-						self.core.git_svn_push()
+						if config['remote']['use_gitsvn']:
+							self.core.git_svn_push()
+						else:
+							self.core.git_push(self.config.getAttribute('SERVER_NICK'),self.config.getAttribute('BRANCH'))
 					except Exception as e:
 						self.errorremotecounter += 1
 						if self.errorremotecounter > 2:		

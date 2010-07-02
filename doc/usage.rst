@@ -86,6 +86,32 @@ Advanced Usage
 You can use persy without a centralized server to which every clients connects and performes the synchronization (like in the illustration image above). You can also run persy without a second computer at all and synchronize with other parts(repositories) on the filesystem. Right now, this is not the intended use and i will not cover this in the cli or the upcomming gui. You can however configure this in the git configuration for persy ~/.persy/git/config and i try to take care of the internal implementation. If you have questions regarding esoteric setups, feel free to mail me.
 
 
+Usage with an SVN Backend (experimental)
+--------------------------------------------
+
+You dont have use git to synchronize with to a remote host. SVN is another may to connect from your local computer to a remote server. persy will use git-svn as a bridge between the client (git) and the server (svn).  
+
+.. warning::
+
+   This is not very well tested and just exists "because its possible". 
+
+Remove the .persy directory in your homefolder. 
+Start and Stop persy to generate the needed config files.
+Remove the git directory in .persy/git
+Alter .persy/config and add "use_gitsvn = True" to the remote section. 
+Initialize persy manually:
+
+.. code-block:: bash
+  :linenos:
+
+   . persy --setenv # manual mode for persy
+   git svn init <SVNREPOSITORYURL>
+   git checkout -b local-svn remotes/git-svn
+
+Start persy, enable remote synchronization and see if it works!
+Because of the nature of this quite unsupported feature, most of the settings on the remote settings tab are obsolete from now on.
+
+
 States in persy
 --------------------------------------------
 

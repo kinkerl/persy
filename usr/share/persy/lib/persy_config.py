@@ -286,6 +286,16 @@ class PersyConfig():
 		if not config['remote'].has_key('path') or not type(config['remote']['path']) is str:
 			config['remote']['path'] = self.attributes['DEFAULT_REMOTE_PATH']
 
+
+		#use gitsvn
+		if not config['remote'].has_key('use_gitsvn'):
+			config['remote']['use_gitsvn'] = False
+		if type(config['remote']['use_gitsvn']) is str and config['remote']['use_gitsvn'].lower()  == 'true':
+			config['remote']['use_gitsvn'] = True
+		if not type(config['remote']['use_gitsvn']) is bool:
+			config['remote']['use_gitsvn'] = False
+
+
 		self.config = config
 
 

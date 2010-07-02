@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-27 15:35+0200\n"
+"POT-Creation-Date: 2010-06-28 10:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: usr/share/persy/lib/persy.py:48 usr/share/persy/lib/persy_config.py:45
-#: usr/share/persy/lib/persy_core.py:47 usr/share/persy/lib/persy_gtk.py:49
+#: usr/share/persy/lib/persy_core.py:48 usr/share/persy/lib/persy_gtk.py:49
 #: usr/share/persy/lib/persy_helper.py:42 usr/share/persy/lib/persy_ssh.py:43
 #: usr/share/persy/lib/persy_syncer.py:44
 #: usr/share/persy/lib/persy_talker.py:44
@@ -25,7 +25,7 @@ msgid "You do not have all the dependencies:"
 msgstr ""
 
 #: usr/share/persy/lib/persy.py:52 usr/share/persy/lib/persy_config.py:49
-#: usr/share/persy/lib/persy_core.py:51 usr/share/persy/lib/persy_gtk.py:53
+#: usr/share/persy/lib/persy_core.py:52 usr/share/persy/lib/persy_gtk.py:53
 #: usr/share/persy/lib/persy_helper.py:46 usr/share/persy/lib/persy_ssh.py:47
 #: usr/share/persy/lib/persy_syncer.py:48
 #: usr/share/persy/lib/persy_talker.py:48
@@ -121,43 +121,43 @@ msgstr ""
 msgid "%s file is missing!"
 msgstr ""
 
-#: usr/share/persy/lib/persy_core.py:82
+#: usr/share/persy/lib/persy_core.py:83
 msgid "removed git lock file"
 msgstr ""
 
-#: usr/share/persy/lib/persy_core.py:97
+#: usr/share/persy/lib/persy_core.py:99
 msgid ""
 "username not set, cannot create git repository. use \"persy --config --"
 "name=NAME\" to set one"
 msgstr ""
 
-#: usr/share/persy/lib/persy_core.py:100
+#: usr/share/persy/lib/persy_core.py:102
 msgid ""
 "mail not set, cannot create git repository. use \"persy --config --mail=MAIL"
 "\" to set one"
 msgstr ""
 
-#: usr/share/persy/lib/persy_core.py:103
+#: usr/share/persy/lib/persy_core.py:105
 msgid "initialising local repository..."
 msgstr ""
 
-#: usr/share/persy/lib/persy_core.py:113 usr/share/persy/lib/persy_core.py:161
+#: usr/share/persy/lib/persy_core.py:115 usr/share/persy/lib/persy_core.py:163
 msgid "done"
 msgstr ""
 
-#: usr/share/persy/lib/persy_core.py:136
+#: usr/share/persy/lib/persy_core.py:138
 msgid "initialising and adding remote repository..."
 msgstr ""
 
-#: usr/share/persy/lib/persy_core.py:149
+#: usr/share/persy/lib/persy_core.py:151
 msgid "error creating dir, maybe it exists already?"
 msgstr ""
 
-#: usr/share/persy/lib/persy_core.py:151
+#: usr/share/persy/lib/persy_core.py:153
 msgid "error on remote git init"
 msgstr ""
 
-#: usr/share/persy/lib/persy_core.py:176
+#: usr/share/persy/lib/persy_core.py:178
 #, python-format
 msgid ""
 "%f does already exist but it should not! Please remove it and try it again."
