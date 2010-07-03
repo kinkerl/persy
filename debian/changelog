@@ -1,3 +1,10 @@
+persy (0.10) lucid; urgency=low
+
+  * small documentation updates
+  * added experimental support for remote svn repositories with git-svn
+
+ -- Dennis Schwertel <s@digitalkultur.net>  Sat, 3 Jul 2010 10:30:08 +0200
+
 persy (0.9.1) lucid; urgency=low
 
   * documentation updates
