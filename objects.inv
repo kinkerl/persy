@@ -1,6 +1,6 @@
 # Sphinx inventory version 1
 # Project: persy
-# Version: 0.9.1
+# Version: 0.10
 persy_config mod developer.html
 pug mod developer.html
 persy_ssh mod developer.html
@@ -63,6 +63,7 @@ persy_helper._PersyHelper class developer.html
 persy_talker.Talker.critical method developer.html
 persy_gtk.PersyGtk.help method developer.html
 pug.PuG.command method developer.html
+pug.PuG.svn_push method developer.html
 persy_core._Core.git_add method developer.html
 persy_gtk.PersyGtk.persy_toggle method developer.html
 persy_core._Core.git_push method developer.html
@@ -80,10 +81,12 @@ pug.PuG class developer.html
 pug.PuG.remoteAdd method developer.html
 persy_talker.Talker class developer.html
 persy_gtk.PersyGtk.browse method developer.html
+pug.PuG.svn_init method developer.html
 persy_gtk.PersyGtk class developer.html
 persy_core._Core.init method developer.html
 persy_gtk.PersyGtkMenu.removeWatchedEntry method developer.html
 pug.PuG.pull method developer.html
+pug.PuG.get_submodules method developer.html
 persy_gtk.PersyGtk.persy_start method developer.html
 pug.PuG.log method developer.html
 persy_gtk.PersyGtk.get_submodules method developer.html
@@ -98,6 +101,7 @@ persy_config.PersyConfig.write method developer.html
 persy_core._Core.init_local method developer.html
 persy_syncer.TheSyncer.generateCommitMessage method developer.html
 persy_ssh.PersySSH.checkRemoteServer method developer.html
+pug.PuG.getLastOutput method developer.html
 persy_core.Core function developer.html
 persy_core._Core.browse method developer.html
 persy_core._Core.optimize method developer.html
@@ -106,3 +110,4 @@ persy_gtk.PersyGtk.optimize method developer.html
 pug.PuG.init method developer.html
 pug.PuG.config method developer.html
 persy_syncer.TheSyncer class developer.html
+pug.PuG.svn_pull method developer.html

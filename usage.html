@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Usage &mdash; persy v0.9.1 documentation</title>
+    <title>Usage &mdash; persy v0.10 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '#',
-        VERSION:     '0.9.1',
+        VERSION:     '0.10',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="persy v0.9.1 documentation" href="index.html" />
+    <link rel="top" title="persy v0.10 documentation" href="index.html" />
     <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
   </head>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">persy v0.9.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">persy v0.10 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -119,6 +119,28 @@ Now you have to add directories to persy. You can do this in the settings menu i
 <h2>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h2>
 <p>You can use persy without a centralized server to which every clients connects and performes the synchronization (like in the illustration image above). You can also run persy without a second computer at all and synchronize with other parts(repositories) on the filesystem. Right now, this is not the intended use and i will not cover this in the cli or the upcomming gui. You can however configure this in the git configuration for persy ~/.persy/git/config and i try to take care of the internal implementation. If you have questions regarding esoteric setups, feel free to mail me.</p>
 </div>
+<div class="section" id="usage-with-an-svn-backend-experimental">
+<h2>Usage with an SVN Backend (experimental)<a class="headerlink" href="#usage-with-an-svn-backend-experimental" title="Permalink to this headline">¶</a></h2>
+<p>You dont have use git to synchronize with to a remote host. SVN is another may to connect from your local computer to a remote server. persy will use git-svn as a bridge between the client (git) and the server (svn).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This is not very well tested and just exists &#8220;because its possible&#8221;.</p>
+</div>
+<p>Remove the .persy directory in your homefolder.
+Start and Stop persy to generate the needed config files.
+Remove the git directory in .persy/git
+Alter .persy/config and add &#8220;use_gitsvn = True&#8221; to the remote section.
+Initialize persy manually:</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre> . persy --setenv <span class="c"># manual mode for persy</span>
+ git svn init &lt;SVNREPOSITORYURL&gt;
+ git checkout -b <span class="nb">local</span>-svn remotes/git-svn
+</pre></div>
+</td></tr></table></div>
+<p>Start persy, enable remote synchronization and see if it works!
+Because of the nature of this quite unsupported feature, most of the settings on the remote settings tab are obsolete from now on.</p>
+</div>
 <div class="section" id="states-in-persy">
 <h2>States in persy<a class="headerlink" href="#states-in-persy" title="Permalink to this headline">¶</a></h2>
 <p>When running persy, its possible to run in the following states. A state is a simplification of the status of the file backup and synchronization.
@@ -179,6 +201,7 @@ Most of them are selfexplanatory.</p>
 <li><a class="reference external" href="#quickstart-on-the-commandline">Quickstart on the commandline</a></li>
 <li><a class="reference external" href="#setup-for-syncing-and-or-using-a-remote-backup">Setup for syncing and/or using a remote backup</a></li>
 <li><a class="reference external" href="#advanced-usage">Advanced Usage</a></li>
+<li><a class="reference external" href="#usage-with-an-svn-backend-experimental">Usage with an SVN Backend (experimental)</a></li>
 <li><a class="reference external" href="#states-in-persy">States in persy</a></li>
 </ul>
 </li>
@@ -222,7 +245,7 @@ Most of them are selfexplanatory.</p>
         <li class="right" >
           <a href="installation.html" title="Installation"
              >previous</a> |</li>
-        <li><a href="index.html">persy v0.9.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">persy v0.10 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
