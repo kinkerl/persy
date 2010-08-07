@@ -134,10 +134,10 @@ class Talker:
 		if self.status_button:
 			self.status_button.set_label('Stop Persy')
 
-		try:
-			self.notify(_('starting Persy'), self.config.getAttribute('ICON_OK'))
-		except Exception as e:
-			self.log.warn(str(e))
+		#try:
+		#	self.notify(_('starting Persy'), self.config.getAttribute('ICON_OK'))
+		#except Exception as e:
+		#	self.log.warn(str(e))
 
 	def setStop(self):
 		"""
@@ -152,16 +152,18 @@ class Talker:
 		if self.status_button:
 			self.status_button.set_label('Start Persy')
 
-		try:
-			self.notify(_('stopping Persy'), self.config.getAttribute('ICON_IDLE'))
-		except Exception as e:
-			self.log.warn(str(e))
+		#try:
+		#	self.notify(_('stopping Persy'), self.config.getAttribute('ICON_IDLE'))
+		#except Exception as e:
+		#	self.log.warn(str(e))
 
 	def resetError(self):
 		"""
 		resets the error state
 		"""
 		self.error = False
+		if self.status_text:
+			self.status_text.set_sensitive(False)
 
 	def untracked_changes(self, uc):
 		"""
@@ -231,6 +233,8 @@ class Talker:
 			self.indicator.set_icon ('persy_warn')
 		if self.status_text:
 			self.status_text.set_label('Status: warning!')
+			self.status_text.set_sensitive(True)
+
 		try:
 			self.notify(msg, self.config.getAttribute('ICON_WARN'))
 		except Exception:
@@ -250,6 +254,7 @@ class Talker:
 			self.indicator.set_icon ('persy_error')
 		if self.status_text:
 			self.status_text.set_label('Status: an error occured')
+			self.status_text.set_sensitive(True)
 		try:
 			self.notify(msg, self.config.getAttribute('ICON_ERROR'))
 		except Exception:

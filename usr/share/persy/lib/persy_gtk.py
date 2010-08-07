@@ -637,6 +637,7 @@ class PersyGtk():
 
 		menuItem = gtk.MenuItem(_('Status: not running'))
 		menuItem.set_sensitive(False)
+		menuItem.connect('activate',self.showlog)
 		menuItem.show()
 		menu.append(menuItem)
 
@@ -699,7 +700,7 @@ class PersyGtk():
 		#actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
 		actions.append(('image', gtk.STOCK_PREFERENCES, _('Preferences'), self.open_menu))
 		#actions.append(('image', gtk.STOCK_HELP, _('help'), self.help))
-		#actions.append(('image', gtk.STOCK_ABOUT, _('about'), self.about))
+		actions.append(('image', gtk.STOCK_ABOUT, _('About'), self.about))
 		actions.append(('image', gtk.STOCK_QUIT, _('Quit'), self.quit_cb))
 
 		for action in actions:
@@ -724,7 +725,7 @@ class PersyGtk():
 				#create app indicator
 				import gobject
 				import appindicator
-				self.indicator = appindicator.Indicator ("persy", 'persy', appindicator.CATEGORY_APPLICATION_STATUS)
+				self.indicator = appindicator.Indicator ("persy", 'persy_idle', appindicator.CATEGORY_APPLICATION_STATUS)
 				self.indicator.set_status (appindicator.STATUS_ACTIVE)
 				self.indicator.set_menu(menu)
 				self.log.set_indicator(self.indicator)
