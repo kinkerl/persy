@@ -181,8 +181,28 @@ class PersyConfig():
 			config['general']['fortune'] = True
 		if not type(config['general']['fortune']) is bool:
 			config['general']['fortune'] = False
-			
-	    #general autoshare
+
+		#general create_gui_indicator
+		#flag to create an app indicator. default is True! 
+		if not config['general'].has_key('create_gui_indicator'):
+			config['general']['create_gui_indicator'] = True
+		if type(config['general']['create_gui_indicator']) is str and config['general']['create_gui_indicator'].lower()  == 'false':
+			config['general']['create_gui_indicator'] = False
+		if not type(config['general']['create_gui_indicator']) is bool:
+			config['general']['create_gui_indicator'] = True
+		
+		#general create_gui_statusicon
+		#flag to create a status icon. default is False. 
+		#Will still try to create a status icon if indicator fails! 
+		if not config['general'].has_key('create_gui_statusicon'):
+			config['general']['create_gui_statusicon'] = False
+		if type(config['general']['create_gui_statusicon']) is str and config['general']['create_gui_statusicon'].lower()  == 'true':
+			config['general']['create_gui_statusicon'] = True
+		if not type(config['general']['create_gui_statusicon']) is bool:
+			config['general']['create_gui_statusicon'] = False
+		
+	
+	    	#general autoshare
 		if not config['general'].has_key('autoshare'):
 			config['general']['autoshare'] = False
 		if type(config['general']['autoshare']) is str and config['general']['autoshare'].lower()  == 'true':

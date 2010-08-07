@@ -18,7 +18,7 @@ fortune=False
 # autoshare the configfile under ~/.persy/config 
 # if this is set to True, all the computer in a sync
 # will share the configuration file
-autoshare=True
+#autoshare=False
 
 # advanced options: sets these two git environment variables. pls take a look at
 # the git documentation for this. you dont have to change these in a normal setup
@@ -29,6 +29,12 @@ autoshare=True
 # this is the root directory of the directorytree persy will watch. 
 # it is ~ by default
 #gitworktree=
+
+# creates a statusicon. default is False
+#create_gui_statusicon = False
+
+#crate a indicator (known from ubuntu). default is True
+#create_gui_indicator = True
 
 # configurations for the local backup
 [local]
@@ -68,3 +74,6 @@ path = %(DEFAULT_REMOTE_PATH)s
 # the username for the auth on the server
 username = 
 
+# use the experimental gitsvn binding. take a look at the documentation
+# for this configuration
+#use_gitsvn = True

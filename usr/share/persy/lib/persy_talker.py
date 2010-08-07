@@ -64,6 +64,9 @@ class Talker:
 		initialized the logging and notification
 		"""
 		self.statusIcon = None
+		self.indicator = None
+		self.status_button = None
+		self.status_text = None
 		self.config = config
 		#init logging 
 		self.log = logging.getLogger("")
@@ -99,12 +102,38 @@ class Talker:
 		"""
 		self.statusIcon = icon
 
+	def set_indicator(self, indi):
+		"""
+		sets the indicator
+		"""
+		self.indicator = indi
+
+	def set_status_text(self, menu):
+		"""
+		sets the menu
+		"""
+		self.status_text = menu
+
+	def set_status_button(self, menu):
+		"""
+		sets the menu
+		"""
+		self.status_button = menu
+
 	def setStart(self):
 		"""
 		can be called to tell "everybody" when persy is started
 		"""
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))#from_stock(gtk.STOCK_HOME)
+		if self.indicator:
+			self.indicator.set_icon('persy_ok')
+
+		if self.status_text:
+			self.status_text.set_label('Status: running')
+		if self.status_button:
+			self.status_button.set_label('Stop Persy')
+
 		try:
 			self.notify(_('starting Persy'), self.config.getAttribute('ICON_OK'))
 		except Exception as e:
@@ -116,6 +145,13 @@ class Talker:
 		"""
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_IDLE'))#from_stock(gtk.STOCK_HOME)
+		if self.indicator:
+			self.indicator.set_icon('persy_idle')
+		if self.status_text:
+			self.status_text.set_label('Status: stopped')
+		if self.status_button:
+			self.status_button.set_label('Start Persy')
+
 		try:
 			self.notify(_('stopping Persy'), self.config.getAttribute('ICON_IDLE'))
 		except Exception as e:
@@ -135,9 +171,13 @@ class Talker:
 			if uc:
 				if self.statusIcon:
 					self.statusIcon.set_from_file(self.config.getAttribute('ICON_UNTRACKED'))
+				if self.indicator:
+					self.indicator.set_icon ('persy_untracked')
 			else:
 				if self.statusIcon:
 					self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))
+				if self.indicator:
+					self.indicator.set_icon ('persy_ok')
 
 	def unsynced_changes(self, uc):
 		"""
@@ -147,9 +187,13 @@ class Talker:
 			if uc:
 				if self.statusIcon:
 					self.statusIcon.set_from_file(self.config.getAttribute('ICON_UNSYNCED'))
+				if self.indicator:
+					self.indicator.set_icon ('persy_unsynced')
 			else:
 				if self.statusIcon:
 					self.statusIcon.set_from_file(self.config.getAttribute('ICON_OK'))
+				if self.indicator:
+					self.indicator.set_icon ('persy_ok')
 
 	def setLevel(self, lvl):
 		"""
@@ -183,6 +227,10 @@ class Talker:
 			print msg
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_WARN'))#from_stock(gtk.STOCK_HOME)
+		if self.indicator:
+			self.indicator.set_icon ('persy_warn')
+		if self.status_text:
+			self.status_text.set_label('Status: warning!')
 		try:
 			self.notify(msg, self.config.getAttribute('ICON_WARN'))
 		except Exception:
@@ -198,6 +246,10 @@ class Talker:
 			print msg
 		if self.statusIcon:
 			self.statusIcon.set_from_file(self.config.getAttribute('ICON_ERROR'))#from_stock(gtk.STOCK_HOME)
+		if self.indicator:
+			self.indicator.set_icon ('persy_error')
+		if self.status_text:
+			self.status_text.set_label('Status: an error occured')
 		try:
 			self.notify(msg, self.config.getAttribute('ICON_ERROR'))
 		except Exception:
