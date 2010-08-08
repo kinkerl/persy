@@ -166,6 +166,8 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(param)
 		rc = self.execute(callcmd, stdin, stdout, stderr)
 		#no errors or nothing to push (128)
+		if rc == 1:
+			raise Exception("Can not push to server. Maybe the server or the network is not available(%i)"%rc)		
 		if not (rc == 0 or rc == 128):
 			raise Exception("push: %i"%rc)
 
@@ -180,6 +182,8 @@ GIT_WORK_TREE = the root git repostitory
 			callcmd.append(param)
 		rc = self.execute(callcmd, stdin, stdout, stderr)
 		#no errors or nothing to pull (128)
+		if rc == 1:
+			raise Exception("Can not pull from server. Maybe the server or the network is not available(%i)"%rc)		
 		if not (rc == 0 or rc == 128):
 			raise Exception("pull: %i"%rc)
 
@@ -192,7 +196,9 @@ GIT_WORK_TREE = the root git repostitory
 		for param in params:
 			callcmd.append(param)
 		rc = self.execute(callcmd, stdin, stdout, stderr)
-		#no errors or nothing to pull (128)
+		if rc == 1:
+			raise Exception("Can not pull from server. Maybe the server or the network is not available(%i)"%rc)		
+
 		if not (rc == 0):
 			raise Exception("git-svn: %i"%rc)
 

@@ -70,6 +70,7 @@ class _Core():
 		self.log = log
 		self.worker = None
 		self.notifier = None
+		self.running = False
 
 		#initialzing the git binding
 		#===========================
@@ -298,7 +299,7 @@ class _Core():
 		"""
 		self.log.info("stop working")
 		self.log.setStop()
-
+		self.running = False
 		if self.worker:
 			try:
 				self.worker.stop()
@@ -322,6 +323,7 @@ class _Core():
 		"""
 		self.log.info("start working")
 		self.log.setStart()
+		self.running = True
 		FLAGS=EventsCodes.ALL_FLAGS
 		mask = FLAGS['IN_MODIFY'] | FLAGS['IN_DELETE_SELF']|FLAGS['IN_DELETE'] | FLAGS['IN_CREATE'] | FLAGS['IN_CLOSE_WRITE'] | FLAGS['IN_MOVE_SELF'] | FLAGS['IN_MOVED_TO'] | FLAGS['IN_MOVED_FROM'] # watched events
 

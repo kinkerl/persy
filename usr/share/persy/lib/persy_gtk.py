@@ -44,6 +44,7 @@ try:
 	import gtk.glade
 	import pygtk
 	import webbrowser
+	import os
 	pygtk.require("2.0")
 except ImportError as e:
 	print _("You do not have all the dependencies:")
@@ -614,6 +615,7 @@ class PersyGtk():
 
 	def __init__(self):
 		self.statusIcon = None
+		self.indicator = None
 		self.core = None
 
 
@@ -628,25 +630,78 @@ class PersyGtk():
 
 		self.log.info("Starting persy gtk")
 		self.log.info("watching over: %s"%config['local']['watched'])
-
+		import gtk
 		menu = gtk.Menu()
 
+
+
+		menuItem = gtk.MenuItem(_('Status: not running'))
+		menuItem.set_sensitive(False)
+		menuItem.connect('activate',self.showlog)
+		menuItem.show()
+		menu.append(menuItem)
+
+		self.log.set_status_text(menuItem)
+
+		menuItem = gtk.MenuItem(_("Start Persy"))
+		#menuItem.set_active(start)
+		menuItem.connect('activate',self.persy_toggle)
+		menuItem.show()
+		menu.append(menuItem)
+
+		self.log.set_status_button(menuItem)
+	
+
+		sep = gtk.SeparatorMenuItem()
+		sep.show()
+		menu.append(sep)
+
+
+		if self.config['local']['watched']:
+			menuItem = gtk.MenuItem(_('Watched folders')+':')
+			menuItem.set_sensitive(False)
+			menuItem.show()
+			menu.append(menuItem)
+
+			#watched = _('watching over:')+' \n'
+			for x in self.config['local']['watched']:
+				menuItem = gtk.ImageMenuItem(gtk.STOCK_DIRECTORY)
+				menuItem.get_children()[0].set_label(x)
+				menuItem.show()
+				menuItem.connect('activate', self.open_folder)
+				menu.append(menuItem)
+	
+				#watched += "- " + x + '\n'
+			#watched = watched[:-1]
+			#self.statusIcon.set_tooltip(watched)
+		else:
+			thewarning = _("Watching no directories or files!\nYou should add some in the settings menu")
+			menuItem = gtk.ImageMenuItem(gtk.STOCK_DIALOG_ERROR)
+			menuItem.get_children()[0].set_label(thewarning)
+			menuItem.connect('activate', self.open_menu)
+			menuItem.show()
+			menu.append(menuItem)
+			self.log.warn(thewarning)
+			#self.statusIcon.set_tooltip(thewarning)
+
+		sep = gtk.SeparatorMenuItem()
+		sep.show()
+		menu.append(sep)
+
 		actions = []
-		actions.append(('check', start, _("start/stop Persy"), self.persy_toggle))
-		actions.append(('image', gtk.STOCK_EXECUTE, _('sync Remote'), self.persy_sync_remote))
-		actions.append(('check', self.config['remote']['use_remote'], _("auto sync Remote"), self.persy_sync_toggle))
+		#actions.append(('check', start, _("start/stop Persy"), self.persy_toggle))
+		#actions.append(('image', gtk.STOCK_EXECUTE, _('sync Remote'), self.persy_sync_remote))
+		#actions.append(('check', self.config['remote']['use_remote'], _("auto sync Remote"), self.persy_sync_toggle))
 		#if self.config['general']['prefgitbrowser'] != "":
 		#	actions.append(('image', gtk.STOCK_EXECUTE, _("start %s")%config['general']['prefgitbrowser'], self.browse))
 		#dont need it!
 		#actions.append(('image', gtk.STOCK_EXECUTE, _('optimize'), self.optimize))
 		#actions.append(('image', gtk.STOCK_HELP, _('show Log'), self.showlog))
 		#actions.append(('image', gtk.STOCK_HELP, _('show git Log'), self.showgitlog))
-		actions.append(('image', gtk.STOCK_ABOUT, _('settings'), self.open_menu))
-		actions.append(('image', gtk.STOCK_HELP, _('help'), self.help))
-		actions.append(('image', gtk.STOCK_ABOUT, _('about'), self.about))
-		actions.append(('image', gtk.STOCK_QUIT, _('quit'), self.quit_cb))
-
-
+		actions.append(('image', gtk.STOCK_PREFERENCES, _('Preferences'), self.open_menu))
+		#actions.append(('image', gtk.STOCK_HELP, _('help'), self.help))
+		actions.append(('image', gtk.STOCK_ABOUT, _('About'), self.about))
+		actions.append(('image', gtk.STOCK_QUIT, _('Quit'), self.quit_cb))
 
 		for action in actions:
 			menuItem = None
@@ -657,25 +712,36 @@ class PersyGtk():
 				menuItem = gtk.CheckMenuItem(action[2])
 				menuItem.set_active(action[1])
 			menuItem.connect('activate', action[3])
+			menuItem.show()
 			menu.append(menuItem)
 
-		self.statusIcon = gtk.StatusIcon()
-		self.log.setStatusIcon(self.statusIcon)
-		self.statusIcon.set_from_file(self.config.getAttribute('ICON_IDLE'))
-		if self.config['local']['watched']:
-			watched = _('watching over:')+' \n'
-			for x in self.config['local']['watched']:
-				watched += "- " + x + '\n'
-			watched = watched[:-1]
-			self.statusIcon.set_tooltip(watched)
-		else:
-			thewarning = _("watching no directories or files! You should add some in the settings menu (local -> watched)")
-			self.log.warn(thewarning)
-			self.statusIcon.set_tooltip(thewarning)
-		self.statusIcon.connect('popup-menu', self.popup_menu_cb, menu)
-		self.statusIcon.set_visible(True)
 
-		
+
+
+
+		createstatusicon = False #tmp flag to 
+		if self.config['general']['create_gui_indicator']: #default is true	
+			try:
+				#create app indicator
+				import gobject
+				import appindicator
+				self.indicator = appindicator.Indicator ("persy", 'persy_idle', appindicator.CATEGORY_APPLICATION_STATUS)
+				self.indicator.set_status (appindicator.STATUS_ACTIVE)
+				self.indicator.set_menu(menu)
+				self.log.set_indicator(self.indicator)
+			except Exception as e:
+				createstatusicon = True
+
+		if createstatusicon or self.config['general']['create_gui_statusicon']: #default is false
+			#if app indicator was not created because of an error or the config commands to create one, create status icon
+			self.statusIcon = gtk.StatusIcon()
+			self.log.setStatusIcon(self.statusIcon)
+			self.statusIcon.set_from_file(self.config.getAttribute('ICON_IDLE'))
+			self.statusIcon.connect('popup-menu', self.popup_menu_cb, menu)
+			self.statusIcon.set_visible(True)
+
+
+
 		if start:
 			self.persy_start()
 		try:
@@ -791,10 +857,10 @@ class PersyGtk():
 		"""
 		toggles the state of persy (start/stop)
 		"""
-		if widget and widget.active:
-			self.persy_start()
-		else:
+		if self.core.running:
 			self.persy_stop()
+		else:
+			self.persy_start()
 
 	def persy_sync_remote(self, unused_widget = None, unused_data = None):
 		self.log.info("onetimesync")
@@ -841,6 +907,16 @@ class PersyGtk():
 		creates a new PersyGtkMenu instance
 		"""
 		PersyGtkMenu(self.config, self.log, self)
+
+	def open_folder(self, unused_widget = None, unused_data = None):
+		#this is linux only,
+		#FIXME: this will have problems with absolute/relative filenames
+		os.system('xdg-open "%s/%s"' % (self.config.getAttribute('USERHOME'),unused_widget.get_children()[0].get_label())) 
+		#On OSX, I can open a window in the finder with
+		#os.system('open "%s"' % foldername)
+		#and on Windows with
+		#os.startfile(foldername)
+
 
 	def help(self, unused_widget = None, unused_data = None):
 		"""
