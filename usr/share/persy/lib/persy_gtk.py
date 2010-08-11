@@ -656,6 +656,17 @@ class PersyGtk():
 		sep.show()
 		menu.append(sep)
 
+		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+		menuItem.get_children()[0].set_label('synchronize now')
+		menuItem.connect('activate', self.persy_sync_remote)
+		menuItem.show()
+		if not self.config['remote']['use_remote']:
+			menuItem.set_sensitive(False)
+		menu.append(menuItem)
+
+		sep = gtk.SeparatorMenuItem()
+		sep.show()
+		menu.append(sep)
 
 		if self.config['local']['watched']:
 			menuItem = gtk.MenuItem(_('Watched folders')+':')
@@ -688,9 +699,12 @@ class PersyGtk():
 		sep.show()
 		menu.append(sep)
 
+		
+
+
 		actions = []
 		#actions.append(('check', start, _("start/stop Persy"), self.persy_toggle))
-		#actions.append(('image', gtk.STOCK_EXECUTE, _('sync Remote'), self.persy_sync_remote))
+
 		#actions.append(('check', self.config['remote']['use_remote'], _("auto sync Remote"), self.persy_sync_toggle))
 		#if self.config['general']['prefgitbrowser'] != "":
 		#	actions.append(('image', gtk.STOCK_EXECUTE, _("start %s")%config['general']['prefgitbrowser'], self.browse))
