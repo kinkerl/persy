@@ -429,6 +429,9 @@ class PersyGtkMenu():
 		#write the configuration
 		self.config.write()
 
+		#set the sensitivity of the sync now button in the menu
+		self.gtkcore.check_syncnow()
+
 	def addWatchedEntry(self, widget, watched):
 		"""
 		code for adding a new entry for a watched directory to the gui
@@ -616,8 +619,14 @@ class PersyGtk():
 	def __init__(self):
 		self.statusIcon = None
 		self.indicator = None
+		self.syncnow = None
 		self.core = None
 
+	def check_syncnow(self):
+		if self.config['remote']['use_remote']:
+			self.syncnow.set_sensitive(True)
+		else:
+			self.syncnow.set_sensitive(False)
 
 	def init(self, core, config, log, start=False):
 		"""
@@ -656,13 +665,12 @@ class PersyGtk():
 		sep.show()
 		menu.append(sep)
 
-		menuItem = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
-		menuItem.get_children()[0].set_label('synchronize now')
-		menuItem.connect('activate', self.persy_sync_remote)
-		menuItem.show()
-		if not self.config['remote']['use_remote']:
-			menuItem.set_sensitive(False)
-		menu.append(menuItem)
+		self.syncnow = gtk.ImageMenuItem(gtk.STOCK_EXECUTE)
+		self.syncnow.get_children()[0].set_label('synchronize now')
+		self.syncnow.connect('activate', self.persy_sync_remote)
+		self.syncnow.show()
+		self.check_syncnow()
+		menu.append(self.syncnow)
 
 		sep = gtk.SeparatorMenuItem()
 		sep.show()
