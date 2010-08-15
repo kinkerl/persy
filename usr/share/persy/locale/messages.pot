@@ -8,8 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-03 10:32+0200\n"
-"POT-Creation-Date: 2010-08-07 12:48+0200\n"
+"POT-Creation-Date: 2010-08-11 14:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -459,45 +458,45 @@ msgstr ""
 msgid "Status: not running"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:645
+#: usr/share/persy/lib/persy_gtk.py:646
 msgid "Start Persy"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:660
+#: usr/share/persy/lib/persy_gtk.py:672
 msgid "Watched folders"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:677
+#: usr/share/persy/lib/persy_gtk.py:689
 msgid ""
 "Watching no directories or files!\n"
 "You should add some in the settings menu"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:700
+#: usr/share/persy/lib/persy_gtk.py:715
 msgid "Preferences"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:702
+#: usr/share/persy/lib/persy_gtk.py:717
 msgid "About"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:703
+#: usr/share/persy/lib/persy_gtk.py:718
 msgid "Quit"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:781
+#: usr/share/persy/lib/persy_gtk.py:796
 msgid "About Persy"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:784 usr/share/persy/lib/persy_gtk.py:789
+#: usr/share/persy/lib/persy_gtk.py:799 usr/share/persy/lib/persy_gtk.py:804
 msgid "undefined"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:794
+#: usr/share/persy/lib/persy_gtk.py:809
 msgid "personal synchronization"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:798
+#: usr/share/persy/lib/persy_gtk.py:813
 msgid "Sorry, i have a problem finding/reading the licence"
 msgstr ""
 
@@ -508,12 +507,4 @@ msgstr ""
 
 #: usr/share/persy/lib/persy_syncer.py:233
 msgid "watching no directories"
-msgstr ""
-
-#: usr/share/persy/lib/persy_talker.py:138
-msgid "starting Persy"
-msgstr ""
-
-#: usr/share/persy/lib/persy_talker.py:156
-msgid "stopping Persy"
 msgstr ""
