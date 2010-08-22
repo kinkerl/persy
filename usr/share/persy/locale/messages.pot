@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-11 14:23+0200\n"
+"POT-Creation-Date: 2010-08-22 08:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -392,111 +392,111 @@ msgstr ""
 msgid "show"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:450
+#: usr/share/persy/lib/persy_gtk.py:453
 msgid "choose"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:458
+#: usr/share/persy/lib/persy_gtk.py:461
 msgid " - "
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:513 usr/share/persy/lib/persy_gtk.py:531
-#: usr/share/persy/lib/persy_gtk.py:549 usr/share/persy/lib/persy_gtk.py:566
+#: usr/share/persy/lib/persy_gtk.py:516 usr/share/persy/lib/persy_gtk.py:534
+#: usr/share/persy/lib/persy_gtk.py:552 usr/share/persy/lib/persy_gtk.py:569
 msgid "all ok"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:517
+#: usr/share/persy/lib/persy_gtk.py:520
 msgid ""
 "the remote repository is not ok. maybe the path on the server is incorrect "
 "or it is not initialized. run the \"initialize\" action to do so"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:535
+#: usr/share/persy/lib/persy_gtk.py:538
 msgid ""
 "the connection to the server was not possible. please check your settings "
 "above and if you have published your ssh public key to the server. if not, "
 "you can run the \"publish\" action"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:553
+#: usr/share/persy/lib/persy_gtk.py:556
 msgid ""
 "no local ssh keys are present. these are important for a serverconnection. "
 "you may want to run the \"create\" action to create these"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:570
+#: usr/share/persy/lib/persy_gtk.py:573
 msgid ""
 "persy is not in sync with the remote server. you may want to run the \"link"
 "\" action to fix this"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:583 usr/share/persy/lib/persy_gtk.py:597
+#: usr/share/persy/lib/persy_gtk.py:586 usr/share/persy/lib/persy_gtk.py:600
 msgid "Question!"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:586
+#: usr/share/persy/lib/persy_gtk.py:589
 msgid "synchronize now"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:587
+#: usr/share/persy/lib/persy_gtk.py:590
 msgid ""
 "Do you want to synchronize now? This should only be done once at the "
 "beginning."
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:600
+#: usr/share/persy/lib/persy_gtk.py:603
 msgid "initialize now"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:601
+#: usr/share/persy/lib/persy_gtk.py:604
 msgid ""
 "Do you want to initialize now? This should only be done once at the "
 "beginning."
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:638
+#: usr/share/persy/lib/persy_gtk.py:647
 msgid "Status: not running"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:646
+#: usr/share/persy/lib/persy_gtk.py:655
 msgid "Start Persy"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:672
+#: usr/share/persy/lib/persy_gtk.py:680
 msgid "Watched folders"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:689
+#: usr/share/persy/lib/persy_gtk.py:697
 msgid ""
 "Watching no directories or files!\n"
 "You should add some in the settings menu"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:715
+#: usr/share/persy/lib/persy_gtk.py:723
 msgid "Preferences"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:717
+#: usr/share/persy/lib/persy_gtk.py:725
 msgid "About"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:718
+#: usr/share/persy/lib/persy_gtk.py:726
 msgid "Quit"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:796
+#: usr/share/persy/lib/persy_gtk.py:804
 msgid "About Persy"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:799 usr/share/persy/lib/persy_gtk.py:804
+#: usr/share/persy/lib/persy_gtk.py:807 usr/share/persy/lib/persy_gtk.py:812
 msgid "undefined"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:809
+#: usr/share/persy/lib/persy_gtk.py:817
 msgid "personal synchronization"
 msgstr ""
 
-#: usr/share/persy/lib/persy_gtk.py:813
+#: usr/share/persy/lib/persy_gtk.py:821
 msgid "Sorry, i have a problem finding/reading the licence"
 msgstr ""
 
