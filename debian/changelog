@@ -1,3 +1,11 @@
+persy (0.11) lucid; urgency=low
+
+  * added application indicator (ubuntu)
+  * old statusicon implemented as fallback
+  * redesigned menu
+
+ -- Dennis Schwertel <s@digitalkultur.net>  Sat, 22 Aug 2010 9:00:08 +0200
+
 persy (0.10) lucid; urgency=low
 
   * small documentation updates
