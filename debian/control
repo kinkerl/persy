@@ -3,7 +3,7 @@ Section: admin
 Priority: optional
 Maintainer: Dennis Schwertel <s@digitalkultur.net>
 Build-Depends: debhelper (>= 5)
-Standards-Version: 3.8.4
+Standards-Version: 3.9.1
 Homepage: https://launchpad.net/persy
 
 Package: persy
