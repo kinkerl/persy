@@ -153,7 +153,7 @@ class TheSyncer(Thread):
 		generates a nice commit message. 
 		uses fortune if possible
 		"""
-		commitDesc = 'commit'
+		commitDesc = ''
 		if self.config['general']['fortune']:
 			try:
 				callcmd = []
@@ -173,7 +173,7 @@ class TheSyncer(Thread):
 		except Exception as e:
 			pass
 
-		commitDesc += ' - from '
+		commitDesc += 'h:'
 		if hostname:
 			commitDesc += hostname		
 		else:
