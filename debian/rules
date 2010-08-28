@@ -62,7 +62,7 @@ install: build
 	#removing the GPL-2 file and replacing it with a symlink
 	rm -f $(CURDIR)/debian/persy/usr/share/persy/assets/GPL-2
 	ln -s ../../../share/common-licenses/GPL-2 $(CURDIR)/debian/persy/usr/share/persy/assets/GPL-2
-
+	dh_icons
 
 
 # Build architecture-independent files here.
@@ -97,6 +97,8 @@ binary-indep: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+	dh_icons
+	
 binary-arch:
 
 binary: binary-indep 

@@ -1,7 +1,0 @@
-#!/bin/sh
-set -e
-
-#reload the icon cache
-gtk-update-icon-cache /usr/share/icons/ubuntu-mono-light
-gtk-update-icon-cache /usr/share/icons/ubuntu-mono-dark
-gtk-update-icon-cache /usr/share/icons/hicolor

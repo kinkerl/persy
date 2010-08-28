@@ -153,7 +153,7 @@ class TheSyncer(Thread):
 		generates a nice commit message. 
 		uses fortune if possible
 		"""
-		commitDesc = 'Backup by me'
+		commitDesc = ''
 		if self.config['general']['fortune']:
 			try:
 				callcmd = []
@@ -165,6 +165,20 @@ class TheSyncer(Thread):
 				commitDesc = stdoutdata.strip("\n\r")
 			except Exception as e:
 				pass #just silently do nothing
+
+		hostname = False
+		try:
+			from socket import gethostname; 
+			hostname = gethostname()
+		except Exception as e:
+			pass
+
+		commitDesc += 'h:'
+		if hostname:
+			commitDesc += hostname		
+		else:
+			commitDesc += 'unknown'
+
 		return commitDesc
 
 	def stop(self):
