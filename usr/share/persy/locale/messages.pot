@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-25 14:20+0200\n"
+"POT-Creation-Date: 2010-08-28 16:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -505,6 +505,6 @@ msgstr ""
 msgid "error with %s event. maybe problem with path?"
 msgstr ""
 
-#: usr/share/persy/lib/persy_syncer.py:233
+#: usr/share/persy/lib/persy_syncer.py:247
 msgid "watching no directories"
 msgstr ""
