@@ -1,2 +1,3 @@
+# http://wiki.debian.org/debian/watch/
 version=3
 http://github.com/kinkerl/persy/downloads /kinkerl/persy/tarball/(.+)
