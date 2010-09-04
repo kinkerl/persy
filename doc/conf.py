@@ -225,9 +225,3 @@ if not os.path.exists('_tmp'):
 	os.mkdir('_tmp')
 out = file('_tmp/fortune', 'w')
 out.write(stdoutdata)
-
-
-
-#converts the changelog
-import debchangelog2rst
-debchangelog2rst.convert('../debian/changelog', '_tmp/changelog')

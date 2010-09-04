@@ -13,9 +13,9 @@
 #MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 #General Public License for more details.
 
-#You should have received a copy of the GNU General Public License
-#along with persy; if not, write to the Free Software
-#Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#You should have received a copy of the GNU General Public License along
+#with this software; if not, write to the Free Software Foundation, Inc.,
+#51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 try:
 	import gettext
@@ -60,7 +60,7 @@ except Exception as e:
 gtk.gdk.threads_init()
 
 __author__ = "Dennis Schwertel"
-__copyright__ = "Copyright (C) 2010 Dennis Schwertel"
+__copyright__ = "Copyright (C) 2009, 2010 Dennis Schwertel"
 
 
 

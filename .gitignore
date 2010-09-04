@@ -1,7 +1,5 @@
 *.pyc
-usr/share/man/
-usr/share/doc
+src/usr/share/man/
 doc/_tmp/
 doc/_build/
-usr/share/persy/assets/VERSION
-Makefile
+build/*

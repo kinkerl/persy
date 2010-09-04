@@ -9,7 +9,7 @@ Description
 persy is an automated incremental backup tool for your personal files and folders.
 It also has the ability to synchronize your folders over multiple machines.
 So, it is comparable to dropbox_ and ubuntuone_ but with one major difference: 
-you dont need a user account in a cloud in the internet where you dont really know where your stuff is and who may have access to it. 
+you don't need a user account in a cloud in the internet where you don't really know where your stuff is and who may have access to it. 
 
 With persy, you control every step and station in the process but persy tries to keep most of the annoying things out of the way.
 If you just want to backup your files and save nearly every step you do, run persy and add your folders to persy in the "backup" settings tab. 

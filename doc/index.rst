@@ -35,7 +35,6 @@ Contents
    troubleshooting
    developer
    trivia
-   changes
 
 Indices and tables
 ------------------

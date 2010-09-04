@@ -1,3 +1,6 @@
+LANGS=de 
+SHELL=/bin/sh
+
 PREFIX=/usr
 DEST=$(DESTDIR)$(PREFIX)
 
@@ -74,8 +77,12 @@ install: install_translations install_docs
 	install --mode=644 usr/share/applications/persy.desktop $(DEST)/share/applications/persy.desktop
 	
 	# install desktop icon
-	install -d $(DEST)/share/icons
-	install --mode=644 usr/share/icons/persy.svg $(DEST)/share/icons/persy.svg
+	install -d $(DEST)/share/icons/hicolor/scalable/apps/
+	install -d $(DEST)/share/icons/ubuntu-mono-dark/scalable/apps/
+	install -d $(DEST)/share/icons/ubuntu-mono-light/scalable/apps/
+	install --mode=644 usr/share/icons/hicolor/scalable/apps/*.svg $(DEST)/share/icons/hicolor/scalable/apps
+	install --mode=644 usr/share/icons/ubuntu-mono-dark/scalable/apps/*.svg $(DEST)/share/icons/ubuntu-mono-dark/scalable/apps
+	install --mode=644 usr/share/icons/ubuntu-mono-light/scalable/apps/*.svg $(DEST)/share/icons/ubuntu-mono-light/scalable/apps
 	
 	# install bash-completion
 	install -d ${DEST}/../etc/bash_completion.d
@@ -87,4 +94,38 @@ remove: remove_docs
 	rm $(DEST)/share/applications/persy.desktop
 	rm $(DEST)/share/icons/persy.svg
 	rm ${DEST}/../etc/bash_completion.d/persy
+
+install_translations:
+	install -d $(DEST)/share/persy/locale/de/LC_MESSAGES
+	install --mode=644 usr/share/persy/locale/de/LC_MESSAGES/messages.mo $(DEST)/share/persy/locale/de/LC_MESSAGES/messages.mo
+
+install_docs:
+	install -d $(DEST)/share/man/man1
+	install --mode=644 usr/share/man/man1/persy.1.gz $(DEST)/share/man/man1/persy.1.gz
+	#install -d $(DEST)/share/doc/persy
+	#install -d $(DEST)/share/doc/persy/images
+	#install -d $(DEST)/share/doc/persy/sources
+	#install -d $(DEST)/share/doc/persy/static
+	#install --mode=644 usr/share/doc/persy/*.html $(DEST)/share/doc/persy
+	#install --mode=644 usr/share/doc/persy/objects.inv $(DEST)/share/doc/persy/objects.inv
+	#install --mode=644 usr/share/doc/persy/searchindex.js $(DEST)/share/doc/persy/searchindex.js
+	#install --mode=644 usr/share/doc/persy/images/* $(DEST)/share/doc/persy/images
+	#install --mode=644 usr/share/doc/persy/sources/*.txt $(DEST)/share/doc/persy/sources
+	#install --mode=644 usr/share/doc/persy/static/* $(DEST)/share/doc/persy/static
+	
+remove_docs:
+	rm $(DEST)/share/man/man1/persy.1.gz
+	rm -rf $(DEST)/share/doc/persy
+
+languagefile:
+	xgettext usr/share/persy/lib/*.py -o usr/share/persy/locale/messages.pot
+
+clean:
+	rm usr/share/persy/assets/VERSION
+	rm -rf usr/share/man/man1
+	rm -rf usr/share/doc
+	rm doc/*.pyc
+	rm -rf doc/_tmp
+
+build: genversion doc-man doc-html languagefile
 
