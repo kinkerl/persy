@@ -50,5 +50,5 @@ languagefile:
 	xgettext src/usr/share/persy/lib/*.py -o build/persy_$(VERSION)/usr/share/persy/locale/messages.pot
 
 tarorig:
-	tar -pcz -C build/persy_$(VERSION) -f build/persy_$(VERSION).orig.tar.gz etc usr Makefile
+	tar -pcz -C build/persy_$(VERSION) -f build/persy_$(VERSION).orig.tar.gz etc usr Makefile README.markdown
 
