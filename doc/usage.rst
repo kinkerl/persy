@@ -79,6 +79,13 @@ The normal workflow with a **already initialized remote Server** and **no local 
    persy --syncwithremote
    persy --start
 
+Limitations
+--------------------------------------------
+
+Persy does have some limitations in its usage. Some of them are just "good-to-know" and some may break the usefullness for you.
+
+ *   persy can not track empty folders. This is a shortcoming in git but will hopefully fixed in a future version of it.  
+ *   git repositores inside of watched folders can not be tracked. This is also an issue in git and the way git is handeling git repositories in git repositories("submodules"). If YOU have an idea how to fix this without a "hack" please feel free to contact me. 
 
 Advanced Usage
 --------------------------------------------
