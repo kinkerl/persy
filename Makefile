@@ -10,7 +10,7 @@ PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
-all: clean prepare genversion doc-man languagefile tarorig
+all: clean prepare genversion doc-man tarorig
 
 clean:
 	rm -rf build/*
@@ -46,8 +46,8 @@ doc-man:
 	@echo
 	@echo "Build finished; the manpage is in usr/share/man/man1/persy.1.gz."
 
-languagefile:
-	xgettext src/usr/share/persy/lib/*.py -o build/persy_$(VERSION)/usr/share/persy/locale/messages.pot
+language:
+	xgettext src/usr/share/persy/lib/*.py -o src/usr/share/persy/locale/messages.pot
 
 tarorig:
 	tar -pcz -C build/persy_$(VERSION) -f build/persy_$(VERSION).orig.tar.gz etc usr Makefile README.markdown
