@@ -35,7 +35,7 @@ doc-html:
 	mkdir -p build/persy_$(VERSION)/usr/share/doc/persy
 	rm -rf build/persy_$(VERSION)/usr/share/doc/persy/*
 	
-	cd doc && $(SPHINXBUILD) -a -b html $(ALLSPHINXOPTS) ../build/persy_$(VERSION)/src/usr/share/doc/persy
+	cd doc && $(SPHINXBUILD) -a -b html $(ALLSPHINXOPTS) ../build/persy_$(VERSION)/usr/share/doc/persy
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
 
