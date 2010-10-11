@@ -177,11 +177,11 @@ class PersyGtkMenu():
 		textGeneralName.set_label('<b>'+_("backup options")+'</b>')
 
 		textGeneralName = self.wTree.get_widget('labelLocalSleep')
-		textGeneralName.set_label(_("time to wait after an action for a backup (in seconds)"))
+		textGeneralName.set_label(_("time to wait for a backup after an file action (in seconds)"))
 
 		textGeneralName = self.wTree.get_widget('spinLocalSleep')
 		textGeneralName.set_value(int(config['local']['sleep']))
-		textGeneralName.set_tooltip_text(_("time to wait after an action for a backup (in seconds)"))
+		textGeneralName.set_tooltip_text(_("time to wait for a backup after an file action (in seconds)"))
 
 
 		textGeneralName = self.wTree.get_widget('labelCategoryExclude')
@@ -206,7 +206,7 @@ class PersyGtkMenu():
 		textGeneralName.set_label('<b>'+_("excluded submodules / directories")+'</b>')
 
 		textGeneralName = self.wTree.get_widget('label1')
-		textGeneralName.set_text("these directories are git submodules and can not be tracked with persy:")
+		textGeneralName.set_text(_("these directories are git submodules and can not be tracked with persy")+':')
 
 
 		textGeneralName = self.wTree.get_widget('label2')
