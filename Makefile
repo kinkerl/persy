@@ -8,7 +8,7 @@ PAPER         =
 # Internal variables used in sphinx
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) . 
 
 all: clean prepare genversion doc-man languagefile tarorig
 
@@ -24,18 +24,20 @@ prepare:
 	mkdir -p build/persy_$(VERSION)
 	cp -r src/* build/persy_$(VERSION)/
 
+
 genversion:
-	@echo "placing VERSION taken from debian/changelog in usr/share/persy/assets/VERSION"
-	@echo $(VERSION) > build/persy_$(VERSION)/usr/share/persy/assets/VERSION
+	echo $(VERSION) > build/persy_$(VERSION)/usr/share/persy/assets/VERSION
 
 doc-html:
 	#build developer documentation and place it in usr/share/doc/persy
+	mkdir -p doc/_tmp
+	echo $(VERSION) > doc/_tmp/VERSION
 	
 	#create the folder for the documentation and clean it
 	mkdir -p build/persy_$(VERSION)/usr/share/doc/persy
 	rm -rf build/persy_$(VERSION)/usr/share/doc/persy/*
 	
-	cd doc && $(SPHINXBUILD) -a -b html $(ALLSPHINXOPTS) ../build/persy_$(VERSION)/src/usr/share/doc/persy
+	cd doc && $(SPHINXBUILD) -a -b html $(ALLSPHINXOPTS) ../build/persy_$(VERSION)/usr/share/doc/persy
 	@echo
 	@echo "Build finished. The HTML pages are in usr/share/doc"
 
@@ -49,6 +51,9 @@ doc-man:
 languagefile:
 	xgettext src/usr/share/persy/lib/*.py -o build/persy_$(VERSION)/usr/share/persy/locale/messages.pot
 
-tarorig:
+build: prepare genversion doc-html doc-man languagefile
+	@echo "building..."
+
+tarorig: build
 	tar -pcz -C build/persy_$(VERSION) -f build/persy_$(VERSION).orig.tar.gz etc usr Makefile README.markdown
 

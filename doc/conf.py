@@ -38,7 +38,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'persy'
-copyright = u'2010, Dennis Schwertel'
+copyright = u'2010, 2011 Dennis Schwertel'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -50,7 +50,7 @@ copyright = u'2010, Dennis Schwertel'
 #release = '0'
 
 version = 'undefined'
-filename = '../usr/share/persy/assets/VERSION'
+filename = '_tmp/VERSION'
 if os.path.exists(filename):
 	try:
 		version = file(filename).read().strip()
@@ -203,7 +203,7 @@ latex_documents = [
 #latex_use_modindex = True
 
 #adds to sys path so sphinx can import them
-sys.path.append(os.path.abspath('../usr/share/persy/lib'))
+sys.path.append(os.path.abspath('../src/usr/share/persy/lib'))
 
 sys.path.append(os.path.abspath('.'))
 
