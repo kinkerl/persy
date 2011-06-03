@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Usage &mdash; persy v0.11.1 documentation</title>
+    <title>Usage &mdash; persy v0.11.2 documentation</title>
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     '0.11.1',
+        URL_ROOT:    '',
+        VERSION:     '0.11.2',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="persy v0.11.1 documentation" href="index.html" />
+    <link rel="top" title="persy v0.11.2 documentation" href="index.html" />
     <link rel="next" title="Troubleshooting" href="troubleshooting.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
   </head>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">persy v0.11.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">persy v0.11.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -115,6 +115,16 @@ Now you have to add directories to persy. You can do this in the settings menu i
 </pre></div>
 </td></tr></table></div>
 </div>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<p>Persy does have some limitations in its usage. Some of them are just &#8220;good-to-know&#8221; and some may break the usefullness for you.</p>
+<blockquote>
+<ul class="simple">
+<li>persy can not track empty folders. This is a shortcoming in git but will hopefully fixed in a future version of it.</li>
+<li>git repositores inside of watched folders can not be tracked. This is also an issue in git and the way git is handeling git repositories in git repositories(&#8220;submodules&#8221;). If YOU have an idea how to fix this without a &#8220;hack&#8221; please feel free to contact me.</li>
+</ul>
+</blockquote>
+</div>
 <div class="section" id="advanced-usage">
 <h2>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h2>
 <p>You can use persy without a centralized server to which every clients connects and performes the synchronization (like in the illustration image above). You can also run persy without a second computer at all and synchronize with other parts(repositories) on the filesystem. Right now, this is not the intended use and i will not cover this in the cli or the upcomming gui. You can however configure this in the git configuration for persy ~/.persy/git/config and i try to take care of the internal implementation. If you have questions regarding esoteric setups, feel free to mail me.</p>
@@ -147,8 +157,8 @@ Because of the nature of this quite unsupported feature, most of the settings on
 Most of them are selfexplanatory.</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="14%" />
-<col width="86%" />
+<col width="27%" />
+<col width="73%" />
 </colgroup>
 <thead valign="bottom">
 <tr><th class="head">icon</th>
@@ -156,27 +166,27 @@ Most of them are selfexplanatory.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td><object data="images/persy_idle.svg" type="image/svg+xml" width="64px"><embed src="images/persy_idle.svg" type="image/svg+xml" width="64px" /></object>
+<tr><td><object data="images/persy_idle1.svg" type="image/svg+xml" width="150px"><embed src="images/persy_idle1.svg" type="image/svg+xml" width="150px" /></object>
 </td>
 <td>idle, persy is not running</td>
 </tr>
-<tr><td><object data="images/persy_untracked.svg" type="image/svg+xml" width="64px"><embed src="images/persy_untracked.svg" type="image/svg+xml" width="64px" /></object>
+<tr><td><object data="images/persy_untracked1.svg" type="image/svg+xml" width="150px"><embed src="images/persy_untracked1.svg" type="image/svg+xml" width="150px" /></object>
 </td>
 <td>local changes exist that are not saved in the local repository</td>
 </tr>
-<tr><td><object data="images/persy_unsynced.svg" type="image/svg+xml" width="64px"><embed src="images/persy_unsynced.svg" type="image/svg+xml" width="64px" /></object>
+<tr><td><object data="images/persy_unsynced1.svg" type="image/svg+xml" width="150px"><embed src="images/persy_unsynced1.svg" type="image/svg+xml" width="150px" /></object>
 </td>
 <td>all local changes are saved</td>
 </tr>
-<tr><td><object data="images/persy_ok.svg" type="image/svg+xml" width="64px"><embed src="images/persy_ok.svg" type="image/svg+xml" width="64px" /></object>
+<tr><td><object data="images/persy_ok1.svg" type="image/svg+xml" width="150px"><embed src="images/persy_ok1.svg" type="image/svg+xml" width="150px" /></object>
 </td>
 <td>all local changes are saved AND these changes are pushed to the remote server</td>
 </tr>
-<tr><td><object data="images/persy_warn.svg" type="image/svg+xml" width="64px"><embed src="images/persy_warn.svg" type="image/svg+xml" width="64px" /></object>
+<tr><td><object data="images/persy_warn1.svg" type="image/svg+xml" width="150px"><embed src="images/persy_warn1.svg" type="image/svg+xml" width="150px" /></object>
 </td>
 <td>warning!</td>
 </tr>
-<tr><td><object data="images/persy_error.svg" type="image/svg+xml" width="64px"><embed src="images/persy_error.svg" type="image/svg+xml" width="64px" /></object>
+<tr><td><object data="images/persy_error1.svg" type="image/svg+xml" width="150px"><embed src="images/persy_error1.svg" type="image/svg+xml" width="150px" /></object>
 </td>
 <td>error!</td>
 </tr>
@@ -200,6 +210,7 @@ Most of them are selfexplanatory.</p>
 <li><a class="reference external" href="#quickstart">Quickstart</a></li>
 <li><a class="reference external" href="#quickstart-on-the-commandline">Quickstart on the commandline</a></li>
 <li><a class="reference external" href="#setup-for-syncing-and-or-using-a-remote-backup">Setup for syncing and/or using a remote backup</a></li>
+<li><a class="reference external" href="#limitations">Limitations</a></li>
 <li><a class="reference external" href="#advanced-usage">Advanced Usage</a></li>
 <li><a class="reference external" href="#usage-with-an-svn-backend-experimental">Usage with an SVN Backend (experimental)</a></li>
 <li><a class="reference external" href="#states-in-persy">States in persy</a></li>
@@ -245,12 +256,12 @@ Most of them are selfexplanatory.</p>
         <li class="right" >
           <a href="installation.html" title="Installation"
              >previous</a> |</li>
-        <li><a href="index.html">persy v0.11.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">persy v0.11.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2010, Dennis Schwertel.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.4.
+      &copy; Copyright 2010, 2011 Dennis Schwertel.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
     </div>
   </body>
 </html>
