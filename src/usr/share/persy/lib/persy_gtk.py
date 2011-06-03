@@ -116,7 +116,7 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('textGeneralName')
 		textGeneralName.set_text(config['general']['name'])
-		textGeneralName.set_tooltip_text(_("the name used in git. the default should be fine"))
+		textGeneralName.set_tooltip_text(_("username to distinguish different users for one share"))
 
 
 		textGeneralName = self.wTree.get_widget('labelGeneralMail')
@@ -124,7 +124,7 @@ class PersyGtkMenu():
 
 		textGeneralName = self.wTree.get_widget('textGeneralMail')
 		textGeneralName.set_text(config['general']['mail'])
-		textGeneralName.set_tooltip_text(_("the mail used in git. the default should be fine"))
+		textGeneralName.set_tooltip_text(_("email to distinguish different users for one share"))
 
 		textGeneralName = self.wTree.get_widget('labelCategoryAdvanced')
 		textGeneralName.set_label('<b>'+_("advanced")+'</b>')
@@ -165,7 +165,7 @@ class PersyGtkMenu():
 
 		#local configuration
 		textGeneralName = self.wTree.get_widget('labelLocalWatched')
-		textGeneralName.set_label('<b>'+_("list of folders persy is watching")+'</b>')
+		textGeneralName.set_label('<b>'+_("monitored folders in persy")+'</b>')
 
 		for watched in config['local']['watched']:
 			self.addWatchedEntry(None, watched)
@@ -177,11 +177,11 @@ class PersyGtkMenu():
 		textGeneralName.set_label('<b>'+_("backup options")+'</b>')
 
 		textGeneralName = self.wTree.get_widget('labelLocalSleep')
-		textGeneralName.set_label(_("time to wait after an action for a backup (in seconds)"))
+		textGeneralName.set_label(_("time to wait for a backup after an file action (in seconds)"))
 
 		textGeneralName = self.wTree.get_widget('spinLocalSleep')
 		textGeneralName.set_value(int(config['local']['sleep']))
-		textGeneralName.set_tooltip_text(_("time to wait after an action for a backup (in seconds)"))
+		textGeneralName.set_tooltip_text(_("time to wait for a backup after an file action (in seconds)"))
 
 
 		textGeneralName = self.wTree.get_widget('labelCategoryExclude')
@@ -206,7 +206,7 @@ class PersyGtkMenu():
 		textGeneralName.set_label('<b>'+_("excluded submodules / directories")+'</b>')
 
 		textGeneralName = self.wTree.get_widget('label1')
-		textGeneralName.set_text("these directories are submodules and can not be tracked with persy:")
+		textGeneralName.set_text(_("these directories are git submodules and can not be tracked with persy")+':')
 
 
 		textGeneralName = self.wTree.get_widget('label2')

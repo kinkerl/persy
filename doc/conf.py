@@ -105,7 +105,20 @@ html_theme = 'default'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#html_theme_options = {}
+html_theme_options = {
+	'sidebarbgcolor'	: '#333333',
+	'sidebarlinkcolor'	: '#66a2c4',
+
+
+	'headtextcolor'		: '#66a2c4',#73c466',
+	'headlinkcolor'		: '#66a2c4',
+	'visitedlinkcolor'	: '#66a2c4',
+	'linkcolor'		: '#66a2c4',
+
+	'footerbgcolor'		: '#111111',
+	'relbarbgcolor'		: '#111111'
+
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
@@ -203,7 +216,7 @@ latex_documents = [
 #latex_use_modindex = True
 
 #adds to sys path so sphinx can import them
-sys.path.append(os.path.abspath('../src/usr/share/persy/lib'))
+sys.path.append(os.path.abspath(os.path.dirname(__file__)+'/../src/usr/share/persy/lib'))
 
 sys.path.append(os.path.abspath('.'))
 
