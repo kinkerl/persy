@@ -1,0 +1,289 @@
+persy (0.11.1) lucid; urgency=low
+
+  * fixed show stopper bug with the icons sets on non-ubuntu distributions
+  * uses the hostname as the default git commit message
+
+ -- Dennis Schwertel <s@digitalkultur.net>  Sat, 28 Aug 2010 16:00:08 +0200
+
+persy (0.11) lucid; urgency=low
+
+  * added application indicator (ubuntu)
+  * old statusicon implemented as fallback
+  * redesigned menu
+
+ -- Dennis Schwertel <s@digitalkultur.net>  Sat, 22 Aug 2010 9:00:08 +0200
+
+persy (0.10) lucid; urgency=low
+
+  * small documentation updates
+  * added experimental support for remote svn repositories with git-svn
+
+ -- Dennis Schwertel <s@digitalkultur.net>  Sat, 3 Jul 2010 10:30:08 +0200
+
+persy (0.9.1) lucid; urgency=low
+
+  * documentation updates
+  * added support for GIT_WORK_TREE and GIT_DIR in the configuration
+  * added support for multiple configurations
+  * experimental support for fancy remote git servers (like gitoris)
+  * bug fixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  Sun, 14 May 2010 16:57:08 +0200
+
+persy (0.9ubuntu1) lucid; urgency=low
+
+  * Switch to dpkg-source 3.0 (quilt) format
+
+ -- Dennis Schwertel <s@digitalkultur.net>  Sun, 02 May 2010 13:57:08 +0200
+
+persy (0.9) karmic; urgency=low
+
+  * new and improved documentation
+  * new build and installation system
+  * new logos for linux mint and fedora
+  * new ability to easy start persy at login
+  * new and easy autorun at login options
+  * added support for different remote server ports 
+  * added list of submodules (files in submodules are not tracked in persy)
+  * possibility to install persy on every linux distribution (make install!)
+  * language updates
+  * settings gui updates
+  * some bugfixes and cleanups
+
+ -- Dennis Schwertel <s@digitalkultur.net>  18 Feb 2010 13:21:00 +0100
+
+
+persy (0.8.1) karmic; urgency=low
+
+  * added headless mode
+  * added username for serverauth
+  * some bugfixes and cleanups
+
+ -- Dennis Schwertel <s@digitalkultur.net>  05 Feb 2010 10:21:00 +0100
+
+
+persy (0.8) karmic; urgency=low
+
+  * rewrote the settings gui
+  * added environment tests
+
+ -- Dennis Schwertel <s@digitalkultur.net>  27 Jan 2010 22:10:00 +0100
+
+persy (0.7.2.1) karmic; urgency=low
+
+  * moved the doc building code out of debian/rules and in its own script
+  * fingers crossed it will NOW build on launchpad!
+
+ -- Dennis Schwertel <s@digitalkultur.net>  19 Jan 2010 23:10:00 +0100
+
+persy (0.7.2) karmic; urgency=low
+
+  * fixed wrong glade file
+  * using pandoc for most of the documentation
+  * added help functionality and help files
+ 
+ -- Dennis Schwertel <s@digitalkultur.net>  18 Jan 2010 23:10:00 +0100
+
+persy (0.7.1) karmic; urgency=low
+
+  * fixing missing glade dependency
+  * added autoshare ability to the configuration file
+  * some bugfixes
+ 
+ -- Dennis Schwertel <s@digitalkultur.net>  16 Jan 2010 12:10:00 +0100
+
+persy (0.7) karmic; urgency=low
+
+  * new settings gui
+  * removed initLocal command
+  * readme updated
+  * added manpage autoupdate
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  10 Jan 2010 18:10:00 +0100
+
+persy (0.6.2) karmic; urgency=low
+
+  * added a last remote sync when closing persy
+  * updated package
+  * readme updated
+
+ -- Dennis Schwertel <s@digitalkultur.net>  21 Dec 2009 14:10:00 +0100
+
+persy (0.6.1.3) karmic; urgency=low
+
+  * fixed a problem with a non-existant configuration file
+  * added an experimental gui frame (will add more in the future)
+
+ -- Dennis Schwertel <s@digitalkultur.net>  03 Dec 2009 22:28:00 +0100
+
+
+persy (0.6.1.2) karmic; urgency=low
+
+  * fixed a show-stopper bug, thanks again emorrp1
+
+ -- Dennis Schwertel <s@digitalkultur.net>  26 Nov 2009 22:34:00 +0100
+
+
+persy (0.6.1.1) karmic; urgency=low
+
+  * fixed a show-stopper bug, thanks emorrp1
+
+ -- Dennis Schwertel <s@digitalkultur.net>  26 Nov 2009 22:20:00 +0100
+
+persy (0.6.1) karmic; urgency=low
+
+  * removed an warning when changing files in a git submodule
+
+ -- Dennis Schwertel <s@digitalkultur.net>  23 Nov 2009 18:20:00 +0100
+
+persy (0.6) karmic; urgency=low
+
+  * The "almost there" release
+  * reorganized every single line of code
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  23 Nov 2009 9:20:00 +0100
+
+persy (0.5) jaunty; urgency=low
+
+  * The "media whore" release
+  * localization started
+  * readme improved
+  * updated configfile with more default values 
+  * updated configfile with some explanations
+  * replaced a deprecated python-apt function
+  * set icon svg size to 128x128px (and fixing a gtk warning with this)
+  * implemented delayed error reporting (finaly!)
+
+ -- Dennis Schwertel <s@digitalkultur.net>  27 Oct 2009 10:20:00 +0100
+
+persy (0.4.3) jaunty; urgency=low
+
+  * added a config option for a prefered gui browser
+  * added active remote sync
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  18 Oct 2009 14:20:00 +0100
+
+persy (0.4.2) jaunty; urgency=low
+
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  1 Sep 2009 14:20:00 +0100
+
+persy (0.4.1) jaunty; urgency=low
+
+  * added support for short forms of added directories
+
+ -- Dennis Schwertel <s@digitalkultur.net>  25 Aug 2009 20:20:00 +0100
+
+persy (0.4) jaunty; urgency=low
+
+  * fortune support
+  * new icons for unsynced and untracked
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  13 Aug 2009 17:41:00 +0100
+
+persy (0.3.6) jaunty; urgency=low
+
+  * added svg icons for all the stati 
+  * added secret cli option to set environment variables in the parent shell
+  * improved statusicon tooltip
+  * improved display of logs
+  * added support for qgit (gitk is still prefered)
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  11 Aug 2009 12:34:00 +0100
+
+
+
+persy (0.3.5.1) jaunty; urgency=low
+
+  * added svg icon 
+
+ -- Dennis Schwertel <s@digitalkultur.net>  06 Aug 2009 23:33:00 +0100
+
+
+persy (0.3.5) jaunty; urgency=low
+ 
+  * fixed path to VERSION file
+  * make the code more robust
+  * added GPL in the about dialog
+  * added optimize function
+  * added new icons for untracked and unsynced files
+  * added new svg icons
+  * created a markdown README file
+  * lots of bugfixes
+  * added untracked and unsynced status (experimental)
+ 
+ -- Dennis Schwertel <s@digitalkultur.net>  06 Aug 2009 20:33:00 +0100
+
+persy (0.3.4) jaunty; urgency=low
+ 
+  * added bash completion
+  * code cleanups (logging, gtk, config, threads)
+  * new VERSION file introduced
+  * added exclusion of files by pattern
+  * added exclusion of files bigger than x kb
+  * removed git-gc after a commit for performance
+ 
+ -- Dennis Schwertel <s@digitalkultur.net>  27 Jul 2009 19:04:00 +0100
+
+persy (0.3.3) jaunty; urgency=low
+ 
+  * Bugfix release:
+  * git logging
+  * config warnings
+  * code cleaning
+  * inotify KeyError
+  * error handling in pug.init
+ 
+ -- Philip Morrell <ubuntu.emorrp1@mamber.net>  22 Jul 2009 13:29:04 +0100
+
+
+persy (0.3.2) jaunty; urgency=low
+
+  * added desktop entry + icon
+  * added notifications on critical error
+  * fixed typo that was breaking any config attempts -- thanks to Philip Morrell
+
+ -- Dennis Schwertel <s@digitalkultur.net>  21 Jul 2009 14:51:00 +0000
+
+persy (0.3.1) jaunty; urgency=low
+
+  * fixed absolute path problem
+
+ -- Dennis Schwertel <s@digitalkultur.net>  21 Jul 2009 14:51:00 +0000
+
+persy (0.3) jaunty; urgency=low
+
+  * fist implementation of a tray icon
+  * much better error handling
+  * lots of bugfixes
+
+ -- Dennis Schwertel <s@digitalkultur.net>  21 Jul 2009 14:46:00 +0000
+
+
+persy (0.2.1) jaunty; urgency=low
+
+  * small bugfixes which prevented 0.2 to work
+
+ -- Dennis Schwertel <s@digitalkultur.net>  14 Jul 2009 18:56:00 +0000
+
+persy (0.2) jaunty; urgency=low
+
+  * introduced the git abstraction PuG
+  * lots of changes
+  * lots of cleanups
+  * lots of bugfixes
+  * yay
+
+ -- Dennis Schwertel <s@digitalkultur.net>  14 Jul 2009 17:56:00 +0000
+
+persy (0.1) jaunty; urgency=low
+
+  * Initial release
+
+ -- Dennis Schwertel <s@digitalkultur.net>  07 Jul 2009 22:56:00 +0000
