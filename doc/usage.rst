@@ -128,52 +128,33 @@ Most of them are selfexplanatory.
 
 .. csv-table:: 
   :header: "icon", "state"
-  :widths: 64, 400
+  :widths: 150, 400
 
 
-  |persy_idle.svg| |persy_idle_mono.svg|, "idle, persy is not running"
-  |persy_untracked.svg| |persy_untracked_mono.svg|, "local changes exist that are not saved in the local repository"
-  |persy_unsynced.svg| |persy_unsynced_mono.svg|, "all local changes are saved"
-  |persy_ok.svg| |persy_ok_mono.svg|, "all local changes are saved AND these changes are pushed to the remote server"
-  |persy_warn.svg| |persy_warn_mono.svg|, "warning!"
-  |persy_error.svg| |persy_error_mono.svg|, "error!"
-
-
-.. |persy_idle.svg| image:: ../src/usr/share/persy/assets/persy_idle.svg
-   :width: 64px
-
-.. |persy_untracked.svg| image:: ../src/usr/share/persy/assets/persy_untracked.svg
-   :width: 64px
-
-.. |persy_unsynced.svg| image:: ../src/usr/share/persy/assets/persy_unsynced.svg
-   :width: 64px
-
-.. |persy_ok.svg| image:: ../src/usr/share/persy/assets/persy_ok.svg
-   :width: 64px
-
-.. |persy_warn.svg| image:: ../src/usr/share/persy/assets/persy_warn.svg
-   :width: 64px
-
-.. |persy_error.svg| image:: ../src/usr/share/persy/assets/persy_error.svg
-   :width: 64px
+  |persy_idle_mono.svg|, "idle, persy is not running"
+  |persy_untracked_mono.svg|, "local changes exist that are not saved in the local repository"
+  |persy_unsynced_mono.svg|, "all local changes are saved"
+  |persy_ok_mono.svg|, "all local changes are saved AND these changes are pushed to the remote server"
+  |persy_warn_mono.svg|, "warning!"
+  |persy_error_mono.svg|, "error!"
 
 
 
 .. |persy_idle_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_idle.svg
-   :width: 64px
+   :width: 150px
 
 .. |persy_untracked_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_untracked.svg
-   :width: 64px
+   :width: 150px
 
 .. |persy_unsynced_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_unsynced.svg
-   :width: 64px
+   :width: 150px
 
 .. |persy_ok_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_ok.svg
-   :width: 64px
+   :width: 150px
 
 .. |persy_warn_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_warn.svg
-   :width: 64px
+   :width: 150px
 
 .. |persy_error_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_error.svg
-   :width: 64px
+   :width: 150px
 

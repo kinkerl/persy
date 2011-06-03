@@ -6,7 +6,7 @@ DEST=$(DESTDIR)$(PREFIX)
 
 all: build
 
-install: install_translations install_docs
+install: install_translations install_docs 
 	# install persy
 	install -d $(DEST)/bin
 	install --mode=755 usr/bin/persy $(DEST)/bin/persy
@@ -51,13 +51,20 @@ install_translations:
 	install -d $(DEST)/share/persy/locale/de/LC_MESSAGES
 	install --mode=644 usr/share/persy/locale/de/LC_MESSAGES/messages.mo $(DEST)/share/persy/locale/de/LC_MESSAGES/messages.mo
 
+install_docs:
+	#manpage
+	install -d $(DEST)/share/man/man1/
+	install --mode=644 usr/share/man/man1/persy.1.gz $(DEST)/share/man/man1/
 
-clean:
-	rm usr/share/persy/assets/VERSION
-	rm -rf usr/share/man/man1
-	rm -rf usr/share/doc
-	rm doc/*.pyc
-	rm -rf doc/_tmp
+	install -d $(DEST)/share/doc/persy
+	install -d $(DEST)/share/doc/persy/images
+	install -d $(DEST)/share/doc/persy/sources
+	install -d $(DEST)/share/doc/persy/static
+	install --mode=644 usr/share/doc/persy/*.html $(DEST)/share/doc/persy/
+	install --mode=644 usr/share/doc/persy/*.inv $(DEST)/share/doc/persy/
+	install --mode=644 usr/share/doc/persy/*.js $(DEST)/share/doc/persy/
+	install --mode=644 usr/share/doc/persy/images/* $(DEST)/share/doc/persy/images/
+	install --mode=644 usr/share/doc/persy/sources/* $(DEST)/share/doc/persy/sources/
+	install --mode=644 usr/share/doc/persy/static/* $(DEST)/share/doc/persy/static/
 
-build: genversion doc-man doc-html languagefile
 
