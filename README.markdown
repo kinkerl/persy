@@ -5,10 +5,6 @@ It also has the ability to synchronize your folders over multiple machines.
 
 Building persy
 ============
-Dependencies:
- *   python-sphinx
- *   pandoc
-
 To create a release for persy, just run make:
 	VERSION="x.x.x" make
 This will create a final release in the build directory and a tar.gz for further distribution.
@@ -20,7 +16,7 @@ Go into the release (builded) version of persy or grap the orig.tar.gz and run:
 
 Author
 ============
-Copyright (C) 2009, 2010 Dennis Schwertel <s@digitalkultur.net>
+Copyright (C) 2009 - 2011 Dennis Schwertel <s@digitalkultur.net>
 
 License
 ============
