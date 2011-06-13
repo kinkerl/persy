@@ -44,13 +44,6 @@ Contents
    developer
    trivia
 
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 
 .. _dropbox: https://www.dropbox.com
 .. _ubuntuone: https://one.ubuntu.com/
