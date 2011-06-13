@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -12,12 +14,13 @@
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     '0.11.2',
-        COLLAPSE_MODINDEX: false,
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="persy v0.11.2 documentation" href="#" />
     <link rel="next" title="Installation" href="installation.html" /> 
@@ -29,9 +32,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             accesskey="M">modules</a> |</li>
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="N">next</a> |</li>
@@ -55,52 +55,61 @@ If you just want to backup your files and save nearly every step you do, run per
 If you want to sychronize your files, all you need is a server with ssh and git (in your local network or remote in the internet doesnt matter).
 I have a old pc here in my local network for example. Give persy the server data it needs, follow the configuration, enable remote synchronization and there you go!</p>
 <p>If you are not looking at the online version of the documentation, you can find the most recent version at: <a class="reference external" href="http://persy.digitalkultur.net">http://persy.digitalkultur.net</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">persy is considered feature complete. I will fix bugs but not add new features. If you think persy is missing anything or want to contribute just write me a message.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">if something blows up, you might need some experience with git. If you are happy with solving a conflict in git: go ahead and have fun with persy!</p>
+</div>
 <div class="section" id="get-persy">
 <h2>Get persy<a class="headerlink" href="#get-persy" title="Permalink to this headline">¶</a></h2>
-<p>If you want to get the latest version of persy, take a look at the <a class="reference external" href="installation.html#installation"><em>Installation</em></a>-section!
+<p>If you want to get the latest version of persy, take a look at the <a class="reference internal" href="installation.html#installation"><em>Installation</em></a>-section!
 There you will find links to the ppa for Ubunu, the source package and maybe more!</p>
 </div>
 <div class="section" id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference external" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference external" href="usage.html">Usage</a><ul>
-<li class="toctree-l2"><a class="reference external" href="usage.html#quickstart">Quickstart</a></li>
-<li class="toctree-l2"><a class="reference external" href="usage.html#quickstart-on-the-commandline">Quickstart on the commandline</a></li>
-<li class="toctree-l2"><a class="reference external" href="usage.html#setup-for-syncing-and-or-using-a-remote-backup">Setup for syncing and/or using a remote backup</a></li>
-<li class="toctree-l2"><a class="reference external" href="usage.html#limitations">Limitations</a></li>
-<li class="toctree-l2"><a class="reference external" href="usage.html#advanced-usage">Advanced Usage</a></li>
-<li class="toctree-l2"><a class="reference external" href="usage.html#usage-with-an-svn-backend-experimental">Usage with an SVN Backend (experimental)</a></li>
-<li class="toctree-l2"><a class="reference external" href="usage.html#states-in-persy">States in persy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#quickstart">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#quickstart-on-the-commandline">Quickstart on the commandline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#setup-for-syncing-and-or-using-a-remote-backup">Setup for syncing and/or using a remote backup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#advanced-usage">Advanced Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#usage-with-an-svn-backend-experimental">Usage with an SVN Backend (experimental)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#states-in-persy">States in persy</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference external" href="troubleshooting.html">Troubleshooting</a><ul>
-<li class="toctree-l2"><a class="reference external" href="troubleshooting.html#more-informations-and-quick-help">More informations and quick help</a></li>
-<li class="toctree-l2"><a class="reference external" href="troubleshooting.html#advanced-and-manual-troubleshooting">Advanced and manual troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference external" href="troubleshooting.html#working-with-large-repositories">Working with large repositories</a></li>
-<li class="toctree-l2"><a class="reference external" href="troubleshooting.html#manual-pull-from-a-remote-repository">Manual pull from a remote repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#more-informations-and-quick-help">More informations and quick help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#advanced-and-manual-troubleshooting">Advanced and manual troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#working-with-large-repositories">Working with large repositories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#manual-pull-from-a-remote-repository">Manual pull from a remote repository</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference external" href="developer.html">Developer Documentation</a><ul>
-<li class="toctree-l2"><a class="reference external" href="developer.html#contributing">Contributing</a></li>
-<li class="toctree-l2"><a class="reference external" href="developer.html#dependencies">Dependencies</a></li>
-<li class="toctree-l2"><a class="reference external" href="developer.html#styleguide">Styleguide</a></li>
-<li class="toctree-l2"><a class="reference external" href="developer.html#code-documentation">Code Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer.html#styleguide">Styleguide</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference external" href="trivia.html">Trivia</a><ul>
-<li class="toctree-l2"><a class="reference external" href="trivia.html#new-logos">New Logos</a></li>
-<li class="toctree-l2"><a class="reference external" href="trivia.html#screenshots">Screenshots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trivia.html">Trivia</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="trivia.html#new-logos">New Logos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trivia.html#screenshots">Screenshots</a></li>
 </ul>
 </li>
 </ul>
 </div>
+</div>
 <div class="section" id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="genindex.html"><em>Index</em></a></li>
-<li><a class="reference external" href="modindex.html"><em>Module Index</em></a></li>
-<li><a class="reference external" href="search.html"><em>Search Page</em></a></li>
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
 </div>
 </div>
@@ -114,34 +123,34 @@ There you will find links to the ppa for Ubunu, the source package and maybe mor
             <p class="logo"><a href="#">
               <img class="logo" src="static/persy.png" alt="Logo"/>
             </a></p>
-            <h3><a href="#">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">Welcome to persy&#8217;s documentation!</a><ul>
-<li><a class="reference external" href="#get-persy">Get persy</a></li>
-<li><a class="reference external" href="#contents">Contents</a><ul>
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to persy&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#get-persy">Get persy</a></li>
+<li><a class="reference internal" href="#contents">Contents</a><ul>
 </ul>
 </li>
-<li><a class="reference external" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Next topic</h4>
-            <p class="topless"><a href="installation.html"
-                                  title="next chapter">Installation</a></p>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="next chapter">Installation</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -153,17 +162,14 @@ There you will find links to the ppa for Ubunu, the source package and maybe mor
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="modindex.html" title="Global Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="installation.html" title="Installation"
              >next</a> |</li>
         <li><a href="#">persy v0.11.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2010, 2011 Dennis Schwertel.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.6.
+        &copy; Copyright 2010, 2011 Dennis Schwertel.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
     </div>
   </body>
 </html>

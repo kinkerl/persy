@@ -1,6 +1,12 @@
-/**
- * Sphinx stylesheet -- default theme
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*
+ * default.css_t
+ * ~~~~~~~~~~~~~
+ *
+ * Sphinx stylesheet -- default theme.
+ *
+ * :copyright: Copyright 2007-2010 by the Sphinx team, see AUTHORS.
+ * :license: BSD, see LICENSE for details.
+ *
  */
 
 @import url("basic.css");
@@ -10,14 +16,14 @@
 body {
     font-family: sans-serif;
     font-size: 100%;
-    background-color: #11303d;
+    background-color: #111111;
     color: #000;
     margin: 0;
     padding: 0;
 }
 
 div.document {
-    background-color: #1c4e63;
+    background-color: #333333;
 }
 
 div.documentwrapper {
@@ -49,7 +55,7 @@ div.footer a {
 }
 
 div.related {
-    background-color: #133f52;
+    background-color: #111111;
     line-height: 30px;
     color: #ffffff;
 }
@@ -98,19 +104,25 @@ div.sphinxsidebar ul {
 }
 
 div.sphinxsidebar a {
-    color: #98dbcc;
+    color: #66a2c4;
 }
 
 div.sphinxsidebar input {
-    border: 1px solid #98dbcc;
+    border: 1px solid #66a2c4;
     font-family: sans-serif;
     font-size: 1em;
 }
 
-/* -- body styles ----------------------------------------------------------- */
+
+/* -- hyperlink styles ------------------------------------------------------ */
 
 a {
-    color: #355f7c;
+    color: #66a2c4;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #66a2c4;
     text-decoration: none;
 }
 
@@ -118,10 +130,9 @@ a:hover {
     text-decoration: underline;
 }
 
-div.body p, div.body dd, div.body li {
-    text-align: justify;
-    line-height: 130%;
-}
+
+
+/* -- body styles ----------------------------------------------------------- */
 
 div.body h1,
 div.body h2,
@@ -132,7 +143,7 @@ div.body h6 {
     font-family: 'Trebuchet MS', sans-serif;
     background-color: #f2f2f2;
     font-weight: normal;
-    color: #20435c;
+    color: #66a2c4;
     border-bottom: 1px solid #ccc;
     margin: 20px -20px 10px -20px;
     padding: 3px 0 3px 10px;
@@ -146,14 +157,14 @@ div.body h5 { font-size: 110%; }
 div.body h6 { font-size: 100%; }
 
 a.headerlink {
-    color: #c60f0f;
+    color: #66a2c4;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
 }
 
 a.headerlink:hover {
-    background-color: #c60f0f;
+    background-color: #66a2c4;
     color: white;
 }
 
@@ -221,10 +232,24 @@ tt {
     font-size: 0.95em;
 }
 
+th {
+    background-color: #ede;
+}
+
 .warning tt {
     background: #efc2c2;
 }
 
 .note tt {
     background: #d6d6d6;
+}
+
+.viewcode-back {
+    font-family: sans-serif;
+}
+
+div.viewcode-block:target {
+    background-color: #f4debf;
+    border-top: 1px solid #ac9;
+    border-bottom: 1px solid #ac9;
 }

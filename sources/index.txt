@@ -17,6 +17,14 @@ I have a old pc here in my local network for example. Give persy the server data
 
 If you are not looking at the online version of the documentation, you can find the most recent version at: http://persy.digitalkultur.net
 
+.. note::
+
+   persy is considered feature complete. I will fix bugs but not add new features. If you think persy is missing anything or want to contribute just write me a message.
+
+.. warning::
+
+   if something blows up, you might need some experience with git. If you are happy with solving a conflict in git: go ahead and have fun with persy! 
+
 Get persy
 -----------------
 
