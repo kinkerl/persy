@@ -81,19 +81,27 @@ Now you have to add directories to persy. You can do this in the settings menu i
 </div>
 <div class="section" id="setup-for-syncing-and-or-using-a-remote-backup">
 <h2>Setup for syncing and/or using a remote backup<a class="headerlink" href="#setup-for-syncing-and-or-using-a-remote-backup" title="Permalink to this headline">¶</a></h2>
-<p>If you want to sync or backup your files on a remote server, you have to enable a public key authentication for the server (more information). No extra persy serversoftware is required as you can see in this illustration:</p>
+<p>If you want to sync or backup your files on a remote server, you have to enable a public key authentication for the server. No extra persy serversoftware is required as you can see in this illustration:</p>
 <img alt="images/sync.png" src="images/sync.png" />
-<p>The server just needs a ssh server with public key authentication and the git-core package.</p>
-<p>You only have to configure the client computer with persy installed! The normal workflow with a <strong>blank remote Server</strong> and an <strong>already initialized local repository</strong> is:</p>
+<p>The server just needs a ssh server with public key authentication and the git-core package.
+You only have to configure the client computer with persy installed.</p>
+<div class="section" id="setup-a-remote-server-and-connect-the-first-persy-instance-to-it">
+<h3>Setup a remote server and connect the first persy instance to it<a class="headerlink" href="#setup-a-remote-server-and-connect-the-first-persy-instance-to-it" title="Permalink to this headline">¶</a></h3>
+<p>The normal (cli) workflow with a <strong>blank remote Server</strong> and an <strong>already initialized local repository</strong> is:</p>
 <div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre> persy --config --hostname<span class="o">=</span>SERVER
+4</pre></div></td><td class="code"><div class="highlight"><pre> persy --config --hostname<span class="o">=</span>SERVERNAME
  persy --config --path<span class="o">=</span>PATH
  persy --initRemote
  persy --start
 </pre></div>
 </td></tr></table></div>
+<p>Persy will try to connect to the server with ssh and uses public key authentification. You can test this and try the connection yourself (&#8220;ssh SERVERNAME&#8221; from the commandline. public key authentification is correctly set up if you do not need to provide a password for a successfull login) or use the environment tests in the persy config dialoge.
+If the connection works, persy will try to create the destinationfolder (PATH) and greats a git repository in this location. git has to be installed on the server.</p>
+</div>
+<div class="section" id="connect-a-second-persy-instance-to-a-server">
+<h3>Connect a second persy instance to a server<a class="headerlink" href="#connect-a-second-persy-instance-to-a-server" title="Permalink to this headline">¶</a></h3>
 <p>The normal workflow with a <strong>already initialized remote Server</strong> and <strong>no local repository</strong>.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -115,6 +123,7 @@ Now you have to add directories to persy. You can do this in the settings menu i
 </pre></div>
 </td></tr></table></div>
 </div>
+</div>
 <div class="section" id="limitations">
 <h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
 <p>Persy does have some limitations in its usage. Some of them are just &#8220;good-to-know&#8221; and some may break the usefullness for you.</p>
@@ -134,7 +143,7 @@ Now you have to add directories to persy. You can do this in the settings menu i
 <p>You dont have use git to synchronize with to a remote host. SVN is another may to connect from your local computer to a remote server. persy will use git-svn as a bridge between the client (git) and the server (svn).</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">This is not very well tested and just exists &#8220;because its possible&#8221;.</p>
+<p class="last">This is not very well tested and just exists &#8220;because its possible&#8221;. This works but the guide does have an error in the setup for git-svn. I do not use this setup right now and if you manage to get it to work, i will update this section</p>
 </div>
 <p>Remove the .persy directory in your homefolder.
 Start and Stop persy to generate the needed config files.
@@ -209,7 +218,11 @@ Most of them are selfexplanatory.</p>
 <li><a class="reference internal" href="#">Usage</a><ul>
 <li><a class="reference internal" href="#quickstart">Quickstart</a></li>
 <li><a class="reference internal" href="#quickstart-on-the-commandline">Quickstart on the commandline</a></li>
-<li><a class="reference internal" href="#setup-for-syncing-and-or-using-a-remote-backup">Setup for syncing and/or using a remote backup</a></li>
+<li><a class="reference internal" href="#setup-for-syncing-and-or-using-a-remote-backup">Setup for syncing and/or using a remote backup</a><ul>
+<li><a class="reference internal" href="#setup-a-remote-server-and-connect-the-first-persy-instance-to-it">Setup a remote server and connect the first persy instance to it</a></li>
+<li><a class="reference internal" href="#connect-a-second-persy-instance-to-a-server">Connect a second persy instance to a server</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#limitations">Limitations</a></li>
 <li><a class="reference internal" href="#advanced-usage">Advanced Usage</a></li>
 <li><a class="reference internal" href="#usage-with-an-svn-backend-experimental">Usage with an SVN Backend (experimental)</a></li>

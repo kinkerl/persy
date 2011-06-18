@@ -46,21 +46,32 @@ You can configure your desktop environment to execute persy at login.
 Setup for syncing and/or using a remote backup
 ----------------------------------------------
 
-If you want to sync or backup your files on a remote server, you have to enable a public key authentication for the server (more information). No extra persy serversoftware is required as you can see in this illustration:
+If you want to sync or backup your files on a remote server, you have to enable a public key authentication for the server. No extra persy serversoftware is required as you can see in this illustration:
 
 .. image:: images/sync.png
 
 The server just needs a ssh server with public key authentication and the git-core package.
+You only have to configure the client computer with persy installed.
 
-You only have to configure the client computer with persy installed! The normal workflow with a **blank remote Server** and an **already initialized local repository** is:
+Setup a remote server and connect the first persy instance to it
+________________________________________________________________
+
+The normal (cli) workflow with a **blank remote Server** and an **already initialized local repository** is:
+
 
 .. code-block:: bash
   :linenos:
 
-   persy --config --hostname=SERVER
+   persy --config --hostname=SERVERNAME
    persy --config --path=PATH
    persy --initRemote
    persy --start
+
+Persy will try to connect to the server with ssh and uses public key authentification. You can test this and try the connection yourself ("ssh SERVERNAME" from the commandline. public key authentification is correctly set up if you do not need to provide a password for a successfull login) or use the environment tests in the persy config dialoge. 
+If the connection works, persy will try to create the destinationfolder (PATH) and greats a git repository in this location. git has to be installed on the server. 
+
+Connect a second persy instance to a server
+___________________________________________
 
 The normal workflow with a **already initialized remote Server** and **no local repository**.
 
@@ -78,6 +89,7 @@ The normal workflow with a **already initialized remote Server** and **no local 
    persy --config --add_dir=DIR
    persy --syncwithremote
    persy --start
+
 
 Limitations
 --------------------------------------------
@@ -100,7 +112,7 @@ You dont have use git to synchronize with to a remote host. SVN is another may t
 
 .. warning::
 
-   This is not very well tested and just exists "because its possible". 
+   This is not very well tested and just exists "because its possible". This works but the guide does have an error in the setup for git-svn. I do not use this setup right now and if you manage to get it to work, i will update this section
 
 Remove the .persy directory in your homefolder. 
 Start and Stop persy to generate the needed config files.
