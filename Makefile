@@ -51,7 +51,7 @@ doc-man:
 language:
 	xgettext src/usr/share/persy/lib/*.py -o src/usr/share/persy/locale/messages.pot
 
-build: prepare genversion doc-html doc-man languagefile
+build: prepare genversion doc-html doc-man language
 	@echo "building..."
 
 tarorig: build
