@@ -1,15 +1,3 @@
-LANGS=de 
-SHELL=/bin/sh
-
-SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
-PAPER         =
-
-# Internal variables used in sphinx
-PAPEROPT_a4     = -D latex_paper_size=a4
-PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d /tmp/_build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) . 
-
 all: clean prepare genversion doc-man tarorig
 
 clean:
@@ -28,18 +16,6 @@ prepare:
 genversion:
 	echo $(VERSION) > build/persy_$(VERSION)/usr/share/persy/assets/VERSION
 
-doc-html:
-	#build developer documentation and place it in usr/share/doc/persy
-	mkdir -p doc/_tmp
-	echo $(VERSION) > doc/_tmp/VERSION
-	
-	#create the folder for the documentation and clean it
-	mkdir -p build/persy_$(VERSION)/usr/share/doc/persy
-	rm -rf build/persy_$(VERSION)/usr/share/doc/persy/*
-	
-	cd doc && $(SPHINXBUILD) -a -b html $(ALLSPHINXOPTS) ../build/persy_$(VERSION)/usr/share/doc/persy
-	@echo
-	@echo "Build finished. The HTML pages are in usr/share/doc"
 
 doc-man:
 	# builds(compresses) the manpage(replaces the github urls for the images)
@@ -51,7 +27,7 @@ doc-man:
 language:
 	xgettext src/usr/share/persy/lib/*.py -o src/usr/share/persy/locale/messages.pot
 
-build: prepare genversion doc-html doc-man language
+build: prepare genversion doc-man language
 	@echo "building..."
 
 tarorig: build
