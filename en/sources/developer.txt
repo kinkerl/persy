@@ -6,8 +6,10 @@ Contributing
 ---------------------------------
 If you want to contribute in anyway, please go to github_ or launchpad_.
 
+
 persy-dev Package
 ________________________________
+
 If you want to Test your code or release it, you might want to take a look at the persy-dev package.
 It can be found at github (http://github.com/kinkerl/persy-dev) and stores all the files which are not a direct part of the persy application (this includes artwork).
 
@@ -33,88 +35,46 @@ For some actions in the Makefile you also need:
  *   python-sphinx - build the documentation
  *   pandoc - build the manpage
 
-
-
-Styleguide
----------------------------------
-This is not really a guide, just some random guidelines and these are far from complete.
-I will add new stuff when needed. 
-
-Bye the way, a good guide is writte by google: http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
-
-docstrings
-_________________________________
-
-If you write code (module, class or function), please document it with docstrings. 
-persy uses Sphinx to convert the docstrings into a complete code documentation (like this one).
-
-Here is an example for a docstring:
-
-.. code-block:: python
-  :linenos:
-
-   def public_fn_with_googley_docstring(name, state=None):
-       """This function does something.
-
-       Args:
-          name (str):  The name to use.
-
-       Kwargs:
-          state (bool): Current state to be in.
-
-       Returns:
-          int.  The return code::
-
-             0 -- Success!
-             1 -- No good.
-             2 -- Try again.
-
-       Raises:
-          AttributeError, KeyError
-
-       A really great idea.  A way you might use me is
-
-       >>> print public_fn_with_googley_docstring(name='foo', state=None)
-       0
-
-       BTW, this always returns 0.  **NEVER** use with :class:`MyPublicClass`.
-
-       """
-       return 0
-
-
-
-publishing
-__________________________________
-
-Before publishing anything, make a quick check if everything is ok:
- 1)   run persy
- 2)   run the tests, you need the persy-dev package for this
-
-    .. code-block:: bash
-      :linenos:
-
-      ./makerelease.sh test
-
- 3)   create a debian package, you also need the persy-dev package for this
- 
-    .. code-block:: bash
-      :linenos:
-
-      ./makerelease.sh makedeb
-
-
-naming
-________________________________
-How you should name your functions and stuff. This is taken from the google styleguide above:
-
-module_name, package_name, ClassName, method_name, ExceptionName, function_name, GLOBAL_VAR_NAME, instance_var_name, function_parameter_name, local_var_name.  
-
-.. note::
-
-   i know not every function in persy confirms to this guideline... this should change!
-
-
-
 .. _github: http://github.com/kinkerl/persy
 .. _launchpad: https://launchpad.net/persy
+
+
+Writing Documentation
+--------------------------
+
+The documentation is split into several independent packages depending on the language it is written in(persy-doc-fr, persy-doc-en). It consists of some files written in REST_-Markup and is rendered to an HTML version with Sphinx_. 
+
+
+
+Building a new HTML Documentation
+__________________________________
+
+.. note::
+   Sphinx must be installed for this action. On Ubuntu, it is part of the python-sphinx package.
+
+First, you have to change in the project root of the documentation This is should be the parent directory of "/doc".  You can run 
+
+.. code-block:: bash
+  :linenos:
+
+   make
+
+This will render the documentation found in /doc and place the result in /build. You can use your favorite browser to view the result. 
+
+
+
+.. _Sphinx: http://sphinx.pocoo.org/
+.. _REST: http://en.wikipedia.org/wiki/ReStructuredText
+
+
+Create a release of persy
+--------------------------
+
+This is straigt forward. Go in the project root folder and run the following command:
+
+.. code-block:: bash
+  :linenos:
+
+   VERSION="x.x.x" make tarorig
+
+This will create a release-quality version of persy in /build/persy_x.x.x/ and an additional tarball in /build used for distribution and further packaging.

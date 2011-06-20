@@ -152,21 +152,21 @@ Most of them are selfexplanatory.
 
 
 
-.. |persy_idle_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_idle.svg
+.. |persy_idle_mono.svg| image:: images/icons/ubuntu-mono-dark/scalable/apps/persy_idle.svg
    :width: 150px
 
-.. |persy_untracked_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_untracked.svg
+.. |persy_untracked_mono.svg| image:: images/icons/ubuntu-mono-dark/scalable/apps/persy_untracked.svg
    :width: 150px
 
-.. |persy_unsynced_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_unsynced.svg
+.. |persy_unsynced_mono.svg| image:: images/icons/ubuntu-mono-dark/scalable/apps/persy_unsynced.svg
    :width: 150px
 
-.. |persy_ok_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_ok.svg
+.. |persy_ok_mono.svg| image:: images/icons/ubuntu-mono-dark/scalable/apps/persy_ok.svg
    :width: 150px
 
-.. |persy_warn_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_warn.svg
+.. |persy_warn_mono.svg| image:: images/icons/ubuntu-mono-dark/scalable/apps/persy_warn.svg
    :width: 150px
 
-.. |persy_error_mono.svg| image:: ../src/usr/share/icons/ubuntu-mono-dark/scalable/apps/persy_error.svg
+.. |persy_error_mono.svg| image:: images/icons/ubuntu-mono-dark/scalable/apps/persy_error.svg
    :width: 150px
 
