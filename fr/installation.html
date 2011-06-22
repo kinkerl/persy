@@ -1,0 +1,128 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; persy v documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="static/translations.js"></script>
+    <link rel="top" title="persy v documentation" href="index.html" />
+    <link rel="prev" title="Bienvenue sur la documentation de Persy !" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Bienvenue sur la documentation de Persy !"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">persy v documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>Si vous le pouvez, installez le paquet debian. Il gèrera &#8220;tous&#8221; les problèmes.
+Vous pouvez trouver la dernière version de persy dans son dépôt PPA sur Launchpad.
+Pour ajouter ce dépôt à votre installation Ubuntu, lancez la commande suivante dans un terminal (vous pouvez aussi utiliser l&#8217;interface graphique du gestionnaire de dépôt).</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre> sudo add-apt-repository ppa:tmassassin/ppa
+</pre></div>
+</td></tr></table></div>
+<p>Puis rafraichissez le gestionnaire de paquets</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre> sudo apt-get update
+</pre></div>
+</td></tr></table></div>
+<p>Après l&#8217;ajout du dépôt, vous pouvez installer persy en cliquant sur <a class="reference external" href="apt://persy">ce lien (apt://persy)</a>, par le gestionnaire graphique de paquets, ou par la ligne de commande :</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre> sudo aptitude install persy
+</pre></div>
+</td></tr></table></div>
+<p>Si vous n&#8217;utilisez pas Ubuntu, ou si vous voulez télécharger directement le paquet debian ou les sources, rendez vous sur <a class="reference external" href="https://launchpad.net/~tmassassin/+archive/ppa/+packages">https://launchpad.net/~tmassassin/+archive/ppa/+packages</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Vous pouvez trouver la dernière version sur github. Elle peut ne pas fonctionner du tout mais elle est à la pointe et contient les nouvelles fonctionnalités : <tt class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">git://github.com/kinkerl/persy.git</span></tt></p>
+</div>
+<p>Décompresser le dernier paquet source dans votre répertoire favori.
+Vous pouvez consulter la documentation développeur pour connaitre les dépendences requises. Sinon, par chance, configure vous indiquera ce qui lui manque.
+A l&#8217;intérieur de l&#8217;arborescence décompressée, lancez la commande suivante pour installer persy.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre> ./configure
+ make
+ make install
+</pre></div>
+</td></tr></table></div>
+<p>Après l&#8217;installation, vous devrez procéder à la configuration depuis le menu de param-tres de persy, selon votre environnement, besoins et souhaits.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="static/persy.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Bienvenue sur la documentation de Persy !</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Bienvenue sur la documentation de Persy !"
+             >previous</a> |</li>
+        <li><a href="index.html">persy v documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011 Dennis Schwertel.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>
