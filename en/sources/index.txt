@@ -44,13 +44,6 @@ Contents
    developer
    trivia
 
-Documentation in other Languages
------------------------------------------------
-
-.. toctree::
-   :maxdepth: 1
-   
-   French <index_fr>
 
 .. _dropbox: https://www.dropbox.com
 .. _ubuntuone: https://one.ubuntu.com/

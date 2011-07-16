@@ -52,7 +52,7 @@ __________________________________
 .. note::
    Sphinx must be installed for this action. On Ubuntu, it is part of the python-sphinx package.
 
-First, you have to change in the project root of the documentation This is should be the parent directory of "/doc".  You can run 
+First, you have to change in the project root of the documentation for you language(persy-doc-en). The directory should be the parent directory of "/doc".  You can run 
 
 .. code-block:: bash
   :linenos:
