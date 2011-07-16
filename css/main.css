@@ -1,0 +1,109 @@
+body{
+	background: #111111;
+	padding: 0px;
+	margin: 0px;
+	color: #333333;
+	font-size: 11px;
+	font-family:Verdana;
+}
+
+#content{
+	margin: 30px auto;
+	padding: 40px 0px 20px 0px;
+	width: 750px;
+	background: #333333;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+img { 
+	border : 0 none;
+}
+
+.middelcol{
+	float: left;
+	width: 50%;
+}
+
+#logo{
+	margin: 0px auto;
+	display: block;
+}
+
+
+
+.element{
+	height: 34px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 5px;
+	background: #555;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	font-weight: bold;
+	color: white;
+}
+
+.rightcol .element{
+	color: white;
+}
+
+.facebook iframe{
+	margin-left: 10px;
+	margin-top: 7px;
+}
+
+.issues{
+	background: #73c466;
+}
+
+.contribute{
+	background: #c48966;
+}
+
+.documentation{
+	background: #66a2c4;
+}
+
+.screenshots{
+	background: #b865c4;
+}
+
+.element .pad{
+	padding: 10px;
+}
+
+.element a{
+	text-decoration: none;
+	color: inherit;
+}
+
+
+.rightcol p{
+	color: #fff;	
+}
+.rightcol{
+	float: left;
+	width: 50%;
+}
+
+
+
+
+.clear {
+	clear: both;
+}
+
+#screenshot{
+	color: #fff;
+	#margin-top: 20px;
+	background: #555;
+	padding: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+#screenshot img{
+	float: right;
+	margin: 3px 10px;
+}

@@ -38,6 +38,8 @@ Contenu
    :maxdepth: 2
    
    installation
+   usage
+   troubleshooting
 
 Indices and tables
 ------------------

@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Usage &mdash; persy v0.11.2 documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.11.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="static/translations.js"></script>
+    <link rel="top" title="persy v0.11.2 documentation" href="index.html" />
+    <link rel="next" title="Dépannage" href="troubleshooting.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="Dépannage"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">persy v0.11.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>Comment utiliser Persy pour un être humain normal (si ces explications ne vous semblent pas assez “humaines”, prévenez moi).</p>
+<div class="section" id="guide-rapide">
+<h2>Guide rapide<a class="headerlink" href="#guide-rapide" title="Permalink to this headline">¶</a></h2>
+<p>Pour faire simple, démarrez juste Persy :</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre> persy
+</pre></div>
+</td></tr></table></div>
+<p>Persy peut également être lancé depuis le menu de démarrage, dans la catégorie des accessoires.
+Vous pouvez maintenant ajouter des répertoires à synchroniser dans Persy. Pour faire cela, allez dans le menu des paramètres, choix “Sauvegarde” (voir l&#8217;image ci dessous)</p>
+<img alt="images/persy_settings_quickstart.png" src="images/persy_settings_quickstart.png" />
+<p>Les répertoires synchronisés et les fichiers surveillés doivent être indiqués avec leur chemin absolu (commençant par /) ou avec le chemin relatif depuis votre dossier personnel.</p>
+<p>Après avoir paramétré les répertoires à synchroniser (et éventuellement passé en revue les autres options de configuration), vous voudrez démarrer la synchronisation par Persy. Pour cela, faite juste un clic droit sur l&#8217;icône de la barre d&#8217;état et cochez le choix &#8220;Démarrer/Arrêter Persy&#8221;.</p>
+<img alt="images/start_persy.png" src="images/start_persy.png" />
+<p>C&#8217;est tout; à partir de maintenant, Persy fonctionne et sauvegarde vos fichiers.</p>
+</div>
+<div class="section" id="guide-rapide-en-ligne-de-commande">
+<h2>Guide rapide en ligne de commande<a class="headerlink" href="#guide-rapide-en-ligne-de-commande" title="Permalink to this headline">¶</a></h2>
+<p>Vous pouvez également réaliser cette configuration en ligne de commande. C&#8217;est une méthode recommandée uniquement pour les utilisateurs expérimentés, et il n&#8217;est pas nécessaire de procéder ainsi si vous avez configuré Persy par son menu de paramétrage.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre> persy --config --uname<span class="o">=</span>USERNAME
+ persy --config --mail<span class="o">=</span>MAIL
+ persy --config --add_dir<span class="o">=</span>DIR
+ persy --start
+</pre></div>
+</td></tr></table></div>
+<p>Vous pouvez configurer votre environnement de bureau pour qu&#8217;il lance Persy à la connexion.</p>
+</div>
+<div class="section" id="configuration-pour-un-depot-sur-un-serveur-distant">
+<h2>Configuration pour un dépôt sur un serveur distant<a class="headerlink" href="#configuration-pour-un-depot-sur-un-serveur-distant" title="Permalink to this headline">¶</a></h2>
+<p>Si vous souhaitez synchroniser ou sauvegarder vos fichiers sur un dépôt d&#8217;un serveur distant, vous devez activer une authentification à clé publique sur le serveur (plus d&#8217;information sur <a class="reference external" href="http://progit.org/book/fr/ch4-3.html">progit.org</a>). Aucun module logiciel &#8216;serveur&#8217; de Persy n&#8217;est nécessaire comme le montre cette illustration :</p>
+<img alt="images/sync.png" src="images/sync.png" />
+<p>Le serveur distant à juste besoin de disposer d&#8217;un serveur ssh avec une authentification à clé publique et du paquet git-core.</p>
+<p>Vous avez simplement à configurer Persy sur le poste client.</p>
+<p>###Configuration d&#8217;un dépôt distant et connexion du premier client Persy</p>
+<p>L&#8217;enchainement normal avec un <strong>serveur distant vierge</strong> et un <strong>dépôt local déjà initialisé</strong> est le suivant :</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre> persy --config --hostname<span class="o">=</span>SERVER
+ persy --config --path<span class="o">=</span>PATH
+ persy --initRemote
+ persy --start
+</pre></div>
+</td></tr></table></div>
+<p>###Configuration d&#8217;un second client Persy à un dépôt existant</p>
+<p>L&#8217;enchainement normal avec un <strong>serveur distant déjà initialisé</strong> et <strong>sans dépôt local</strong> est le suivant :</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Les répertoires locaux doivent être vides pour lancer la synchronisation. Il y a quelques problèmes avec les fichiers pré-existants. Vous devez démarrer la synchronisation puis ajouter des fichiers dans le répertoire.</p>
+</div>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre> persy --config --uname<span class="o">=</span>USERNAME
+ persy --config --mail<span class="o">=</span>MAIL
+ persy --config --hostname<span class="o">=</span>SERVER
+ persy --config --path<span class="o">=</span>PATH
+ persy --config --add_dir<span class="o">=</span>DIR
+ persy --syncwithremote
+ persy --start
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="limitations">
+<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<p>Persy présente certaines limitation de son utilisation. Certaine sont justes &#8216;bonnes à savoir&#8217;, d&#8217;autres peuvent perturber l&#8217;utilisation. que vous souhaitez en faire.</p>
+<blockquote>
+Persy ne peut pas synchroniser des répertoire vides. C&#8217;est un problème interne à <strong>git</strong> qui sera, j&#8217;espère, réglé dans une future version.
+Les répertoires propres à git inclus dans l&#8217;arborescence synchronisée ne peuvent pas être eux-mêmes synchronisé. C&#8217;est aussi un problème lié à la façon dont <strong>git</strong> gère les dépôts dans les dépôts (“sous-modules”). Si VOUS avez une idée de solution à ce problème qui n&#8217;induise pas de “hack”, n&#8217;hésitez pas à me contacter.</blockquote>
+</div>
+<div class="section" id="utilisation-avancee">
+<h2>Utilisation avancée<a class="headerlink" href="#utilisation-avancee" title="Permalink to this headline">¶</a></h2>
+<p>Vous pouvez utiliser Persy sans serveur central auprès duquel tous les clients se synchronisent (voir l&#8217;illustration ci dessus). Vous pouvez aussi utiliser Persy sur une seule machine, pour synchroniser deux répertoires (dépôts) sur des systèmes de fichiers différents. Toutefois, ce n&#8217;est pas l&#8217;usage principal et il ne sera pas développé dans le client logiciel ou son interface.
+Vous pouvez toutefois configurer cela dans le fichier de paramétrage de git pour Persy (~/.persy/git/config) et je ferais attention à ne pas gêner cela dans le code.
+Si vous avez des questions relatives à ces configurations spéciales, n&#8217;hésitez pas à me contacter.</p>
+</div>
+<div class="section" id="utilisation-avec-un-serveur-svn-experimental">
+<h2>Utilisation avec un serveur SVN (experimental)<a class="headerlink" href="#utilisation-avec-un-serveur-svn-experimental" title="Permalink to this headline">¶</a></h2>
+<p>Vous n&#8217;êtes pas obligé d&#8217;utiliser git pour vous synchroniser avec votre serveur distant. SVN est une autre solution pour vous y connecter. Persy utilise <strong>git-svn</strong> comme pont entre le client (git) et le serveur (svn).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Ce n&#8217;est pas fortement testé et cela existe &#8220;juste parce que c&#8217;est possible&#8221;.</p>
+</div>
+<p>Effacez le répertoire .persy dans votre Dossier personnel.
+Faites un arrêt/démarrage de Persy pour régénérer les fichiers de configuration.
+Effacez le répertoire du dépôt git dans .persy/git
+Éditer le fichier .persy/config et ajoutez &#8220;use_gitsvn = True&#8221; à la section &#8216;distant&#8217;
+Initialisez Persy manuellement :</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre> . persy --setenv <span class="c"># mode manuel pour persy</span>
+ git svn init &lt;SVNREPOSITORYURL&gt;
+ git checkout -b <span class="nb">local</span>-svn remotes/git-svn
+</pre></div>
+</td></tr></table></div>
+<p>Démarrez Persy, autorisez la synchronisation avec le dépot distant et voyez si ça marche !
+A cause de la nature quasiment non-supporté de cette fonctionnalité, beaucoup de paramètres de Persy deviennent inopérant ou sans objet.</p>
+</div>
+<div class="section" id="l-indicateur-d-etat-de-persy">
+<h2>L&#8217;indicateur d&#8217;état de Persy<a class="headerlink" href="#l-indicateur-d-etat-de-persy" title="Permalink to this headline">¶</a></h2>
+<p>Pendant son fonctionnement, Persy peut passer par divers états. Un état est une représentation simplifiée du processus de synchronisation et de sauvegarde des fichiers.
+La plupart ont une signification évidente.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Icône</th>
+<th class="head">Etat</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><object data="images/persy_idle.svg" type="image/svg+xml" width="150px"><embed src="images/persy_idle.svg" type="image/svg+xml" width="150px" /></object>
+</td>
+<td>Dormant; Persy ne fonctionne pas</td>
+</tr>
+<tr><td><object data="images/persy_untracked.svg" type="image/svg+xml" width="150px"><embed src="images/persy_untracked.svg" type="image/svg+xml" width="150px" /></object>
+</td>
+<td>Il existe des modifications qui ne sont même pas sauvegardées dans le dépôt local.</td>
+</tr>
+<tr><td><object data="images/persy_unsynced.svg" type="image/svg+xml" width="150px"><embed src="images/persy_unsynced.svg" type="image/svg+xml" width="150px" /></object>
+</td>
+<td>Toutes les modifications sont sauvegardées dans le dépôt local.</td>
+</tr>
+<tr><td><object data="images/persy_ok.svg" type="image/svg+xml" width="150px"><embed src="images/persy_ok.svg" type="image/svg+xml" width="150px" /></object>
+</td>
+<td>Toutes les modifications sont sauvegardées dans le dépôt local ET ont été répercutées sur le dépôt distant.</td>
+</tr>
+<tr><td><object data="images/persy_warn.svg" type="image/svg+xml" width="150px"><embed src="images/persy_warn.svg" type="image/svg+xml" width="150px" /></object>
+</td>
+<td>Attention !</td>
+</tr>
+<tr><td><object data="images/persy_error.svg" type="image/svg+xml" width="150px"><embed src="images/persy_error.svg" type="image/svg+xml" width="150px" /></object>
+</td>
+<td>Erreur !</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="static/persy.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Usage</a><ul>
+<li><a class="reference internal" href="#guide-rapide">Guide rapide</a></li>
+<li><a class="reference internal" href="#guide-rapide-en-ligne-de-commande">Guide rapide en ligne de commande</a></li>
+<li><a class="reference internal" href="#configuration-pour-un-depot-sur-un-serveur-distant">Configuration pour un dépôt sur un serveur distant</a></li>
+<li><a class="reference internal" href="#limitations">Limitations</a></li>
+<li><a class="reference internal" href="#utilisation-avancee">Utilisation avancée</a></li>
+<li><a class="reference internal" href="#utilisation-avec-un-serveur-svn-experimental">Utilisation avec un serveur SVN (experimental)</a></li>
+<li><a class="reference internal" href="#l-indicateur-d-etat-de-persy">L&#8217;indicateur d&#8217;état de Persy</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="troubleshooting.html"
+                        title="next chapter">Dépannage</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="Dépannage"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="index.html">persy v0.11.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011 Dennis Schwertel.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dépannage &mdash; persy v0.11.2 documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.11.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="static/translations.js"></script>
+    <link rel="top" title="persy v0.11.2 documentation" href="index.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">persy v0.11.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="depannage">
+<h1>Dépannage<a class="headerlink" href="#depannage" title="Permalink to this headline">¶</a></h1>
+<p>Si vous observer quelque chose de bizarre, ou simplement qui ne fonctionne pas, prenez s&#8217;il vous plaît le temps de rapporter un bug sur <a class="reference external" href="https://launchpad.net/persy">launchpad</a> pour permettre d&#8217;améliorer Persy !</p>
+<div class="section" id="plus-d-informations-et-aide-rapide">
+<h2>Plus d&#8217;informations et aide rapide<a class="headerlink" href="#plus-d-informations-et-aide-rapide" title="Permalink to this headline">¶</a></h2>
+<p>Si vous souhaitez disposer d&#8217;informations détaillées sur ce que fait Persy, lancez le en ligne de commande avec l&#8217;option <tt class="docutils literal"><span class="pre">--verbose</span></tt>.
+Cela peut vous permettre des informations intéressance sur ce qui arrive.</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre> persy --verbose
+</pre></div>
+</td></tr></table></div>
+<p>Quand quelque chose ne fonctionne pas avec la synchronisation, vous pouvez tester vos paramètres et votre environnement avec 4 tests rapides disponible sur l&#8217;onglet synchronisation du menu de configuration.
+Un chien vert indique que tout va bien, un chien orange indique un problème. Si une erreur est survenue, le message d&#8217;erreur est affiché en tant que notification.
+L&#8217;action qui correspond à un test PEUT résoudre le problème. Comme rien de grave ne peut se produire, vous pouvez toujours essayer.</p>
+</div>
+<div class="section" id="depannage-avancee-et-manuel">
+<h2>Dépannage avancée et manuel<a class="headerlink" href="#depannage-avancee-et-manuel" title="Permalink to this headline">¶</a></h2>
+<p>Pour vérifier vraiment ce qui se passe OU gérer manuellement certaine affires avec le dépôt git, vous pouvez utiliser l&#8217;option du mode développement/débogage <tt class="docutils literal"><span class="pre">--setenv</span></tt> (réservé uniquement aux utilisateurs avancés, notez le point au début de la ligne de commande).</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre> . persy --setenv
+</pre></div>
+</td></tr></table></div>
+<p>Ceci définit les variables d&#8217;environnement (<tt class="docutils literal"><span class="pre">GIT_DIR</span></tt>, <tt class="docutils literal"><span class="pre">GIT_WORK_TREE</span></tt>) du shell parent de façon à ce que toutes les commandes git exécutées dans le shell parent concernent le dépôt git de Persy.
+Lisez les messages d&#8217;aide lorsque vous utilisez cette option.
+Ceci est utile si vous voulez utiliser votre propre visionneuse git ou manipuler vos données.</p>
+</div>
+<div class="section" id="travailler-avec-de-grands-depots">
+<h2>Travailler avec de grands dépôts<a class="headerlink" href="#travailler-avec-de-grands-depots" title="Permalink to this headline">¶</a></h2>
+<p>Persy peut gérer correctement de grands dépôts. Le seul problème est la synchronisation initiale à partir ou depuis un dépôt distant. Selon la taille de vos fichiers, cela peut prendre très longtemps. Il pourrait être plus efficace d&#8217;utiliser un autre moyen pour initialiser la synchronisation à partir, ou vers un dépôt distant. Le fonctionnement devrait être plus stable de cette façon. Merci de lire le paragraphe &#8220;Initialiser manuellement depuis un dépôt distant&#8221; si vous envisagez de faire cela.</p>
+</div>
+<div class="section" id="initialiser-manuellement-depuis-un-depot-distant">
+<h2>Initialiser manuellement depuis un dépôt distant<a class="headerlink" href="#initialiser-manuellement-depuis-un-depot-distant" title="Permalink to this headline">¶</a></h2>
+<p>Pour obtenir localement une extraction à partir d&#8217;un dépôt distant, vous devez lancer un terminal et passer dans l&#8217;environnement de Persy. Après avoir fait cela, vous pouvez récupérer votre copie locale par un git pull :</p>
+<div class="highlight-bash"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre> . persy --setenv
+ git pull origin master
+</pre></div>
+</td></tr></table></div>
+<p>Cela peut prendre longtemps selon la taille de votre dépôt et peut être utile lorsqu&#8217;il est trop gros pour être descendu avec Persy; ou si vous ne disposez pas d&#8217;une interface graphique.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="static/persy.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Dépannage</a><ul>
+<li><a class="reference internal" href="#plus-d-informations-et-aide-rapide">Plus d&#8217;informations et aide rapide</a></li>
+<li><a class="reference internal" href="#depannage-avancee-et-manuel">Dépannage avancée et manuel</a></li>
+<li><a class="reference internal" href="#travailler-avec-de-grands-depots">Travailler avec de grands dépôts</a></li>
+<li><a class="reference internal" href="#initialiser-manuellement-depuis-un-depot-distant">Initialiser manuellement depuis un dépôt distant</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage.html"
+                        title="previous chapter">Usage</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             >previous</a> |</li>
+        <li><a href="index.html">persy v0.11.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, 2011 Dennis Schwertel.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>
