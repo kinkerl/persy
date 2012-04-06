@@ -6,7 +6,7 @@ DEST=$(DESTDIR)$(PREFIX)
 
 all: build
 
-install: install_translations install_docs 
+install: install_translations 
 	# install persy
 	install -d $(DEST)/bin
 	install --mode=755 usr/bin/persy $(DEST)/bin/persy
